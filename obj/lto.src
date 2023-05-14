@@ -3,52 +3,21 @@
 	section	.text,"ax",@progbits
 	public	__Zmld4vec2
 __Zmld4vec2:
-	ld	hl, -4
-	call	__frameset
-	ld	de, (ix + 6)
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	push	hl
+	ld	iy, (ix + 6)
 	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	pea	ix + 15
-	push	de
-	call	__ZN4vec2mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4vec2mlERKd
-__ZN4vec2mlERKd:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
+	ld	e, (ix + 12)
+	ld	bc, (ix + 15)
+	ld	a, (ix + 18)
 	call	__fmul
 	ld	(ix - 3), bc
 	ld	d, a
-	ld	iy, (ix + 9)
-	ld	iy, (iy + 4)
-	push	hl
-	pop	bc
-	ld	a, e
-	lea	hl, iy
-	ld	iy, (ix + 9)
-	ld	e, (iy + 7)
+	ld	bc, (ix + 19)
+	ld	a, (ix + 22)
 	call	__fmul
-	ld	iy, (ix + 6)
 	ld	hl, (ix - 3)
 	ld	(iy), hl
 	ld	(iy + 3), d
@@ -63,59 +32,26 @@ __ZN4vec2mlERKd:
 	section	.text,"ax",@progbits
 	public	__ZmldRK4vec3
 __ZmldRK4vec3:
-	ld	hl, -4
-	call	__frameset
-	ld	bc, (ix + 6)
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 7
+	ld	sp, hl
 	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	push	de
-	push	bc
-	call	__ZNK4vec3mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3mlERKd
-__ZNK4vec3mlERKd:
-	ld	hl, -11
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	ld	hl, (iy)
-	ld	d, (iy + 3)
-	ld	iy, (ix + 9)
+	ld	e, (ix + 12)
+	ld	iy, (ix + 15)
+	ld	bc, (iy)
 	ld	a, (iy + 3)
-	ld	(ix - 11), hl
-	ld	e, d
 	call	__fmul
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
-	ld	iy, (ix + 9)
 	ld	bc, (iy + 4)
-	ld	(ix - 7), bc
-	push	hl
-	pop	bc
-	ld	a, d
-	ld	hl, (ix - 7)
-	ld	e, (iy + 7)
+	ld	a, (iy + 7)
 	call	__fmul
 	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	hl, (iy + 8)
-	ld	bc, (ix - 11)
-	ld	a, d
-	ld	e, (iy + 11)
+	ld	d, a
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
 	call	__fmul
 	ld	iy, (ix + 6)
 	ld	hl, (ix - 3)
@@ -124,8 +60,7 @@ __ZNK4vec3mlERKd:
 	ld	(iy + 3), l
 	ld	hl, (ix - 7)
 	ld	(iy + 4), hl
-	ld	l, (ix - 8)
-	ld	(iy + 7), l
+	ld	(iy + 7), d
 	ld	(iy + 8), bc
 	ld	(iy + 11), a
 	lea	hl, iy
@@ -137,66 +72,30 @@ __ZNK4vec3mlERKd:
 	section	.text,"ax",@progbits
 	public	__ZmidRK4vec3
 __ZmidRK4vec3:
-	ld	hl, -12
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 12), hl
-	ld	(ix - 9), a
-	ld	(ix - 8), hl
-	ld	(ix - 5), a
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	push	de
-	pea	ix - 12
-	push	bc
-	call	__ZN4vec3miERKS_
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4vec3miERKS_
-__ZN4vec3miERKS_:
-	ld	hl, -7
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	bc, (iy)
-	ld	hl, (hl)
-	ld	a, (iy + 3)
-	ld	iy, (ix + 12)
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 7
+	ld	sp, hl
+	ld	bc, (ix + 9)
+	ld	d, (ix + 12)
+	ld	iy, (ix + 15)
+	ld	hl, (iy)
+	ld	a, d
 	ld	e, (iy + 3)
 	call	__fsub
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	iy, (ix + 12)
 	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 9)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
+	ld	bc, (ix + 9)
+	ld	a, d
 	ld	e, (iy + 7)
 	call	__fsub
 	ld	(ix - 7), bc
 	ld	d, a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 12)
 	ld	hl, (iy + 8)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	ld	iy, (ix + 12)
+	ld	bc, (ix + 9)
+	ld	a, (ix + 12)
 	ld	e, (iy + 11)
 	call	__fsub
 	ld	iy, (ix + 6)
@@ -218,67 +117,26 @@ __ZN4vec3miERKS_:
 	section	.text,"ax",@progbits
 	public	__ZpldRK4vec3
 __ZpldRK4vec3:
-	ld	hl, -12
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	de, (ix + 9)
-	ld	a, (ix + 12)
-	ld	hl, (ix + 15)
-	ld	(ix - 12), de
-	ld	(ix - 9), a
-	ld	(ix - 8), de
-	ld	(ix - 5), a
-	ld	(ix - 4), de
-	ld	(ix - 1), a
-	pea	ix - 12
-	push	hl
-	push	bc
-	call	__ZNK4vec3plERKS_
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3plERKS_
-__ZNK4vec3plERKS_:
-	ld	hl, -7
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 7
+	ld	sp, hl
+	ld	hl, (ix + 9)
+	ld	e, (ix + 12)
+	ld	iy, (ix + 15)
 	ld	bc, (iy)
-	ld	hl, (hl)
 	ld	a, (iy + 3)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 3)
 	call	__fadd
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
-	ld	iy, (ix + 9)
 	ld	bc, (iy + 4)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 9)
 	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
 	call	__fadd
 	ld	(ix - 7), bc
 	ld	d, a
-	ld	iy, (ix + 9)
 	ld	bc, (iy + 8)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 8)
-	ld	iy, (ix + 9)
 	ld	a, (iy + 11)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 11)
 	call	__fadd
 	ld	iy, (ix + 6)
 	ld	hl, (ix - 3)
@@ -299,8 +157,11 @@ __ZNK4vec3plERKS_:
 	section	.text,"ax",@progbits
 	public	__Z3powRK4vec3d
 __Z3powRK4vec3d:
-	ld	hl, -8
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 8
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	bc, (ix + 12)
 	ld	hl, (iy)
@@ -314,10 +175,9 @@ __Z3powRK4vec3d:
 	call	_pow
 	ld	(ix - 3), hl
 	ld	(ix - 4), e
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
+	ld	hl, 12
+	add	hl, sp
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy + 4)
 	ld	a, (iy + 7)
@@ -331,10 +191,9 @@ __Z3powRK4vec3d:
 	call	_pow
 	ld	(ix - 7), hl
 	ld	(ix - 8), e
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
+	ld	hl, 12
+	add	hl, sp
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy + 8)
 	ld	a, (iy + 11)
@@ -346,10 +205,9 @@ __Z3powRK4vec3d:
 	push	de
 	push	hl
 	call	_pow
-	pop	bc
-	pop	bc
-	pop	bc
-	pop	bc
+	ld	iy, 12
+	add	iy, sp
+	ld	sp, iy
 	ld	iy, (ix + 6)
 	ld	bc, (ix - 3)
 	ld	(iy), bc
@@ -370,8 +228,11 @@ __Z3powRK4vec3d:
 	section	.text,"ax",@progbits
 	public	__Z5crossRK4vec3S1_
 __Z5crossRK4vec3S1_:
-	ld	hl, -28
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 28
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	bc, (ix + 12)
 	ld	hl, (iy + 4)
@@ -489,83 +350,44 @@ __Z5crossRK4vec3S1_:
 	section	.text,"ax",@progbits
 	public	__ZmldRK4vec4
 __ZmldRK4vec4:
-	ld	hl, -4
-	call	__frameset
-	ld	bc, (ix + 6)
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 11
+	ld	sp, hl
 	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	push	de
-	push	bc
-	call	__ZNK4vec4mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec4mlERKd
-__ZNK4vec4mlERKd:
-	ld	hl, -15
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	ld	hl, (iy)
-	ld	d, (iy + 3)
-	ld	iy, (ix + 9)
+	ld	e, (ix + 12)
+	ld	iy, (ix + 15)
+	ld	bc, (iy)
 	ld	a, (iy + 3)
-	ld	(ix - 3), hl
-	ld	e, d
 	call	__fmul
-	ld	(ix - 6), bc
-	ld	(ix - 7), a
-	ld	bc, (ix + 9)
-	push	bc
-	pop	iy
-	ld	iy, (iy + 4)
-	push	hl
-	pop	bc
-	ld	a, d
-	lea	hl, iy
-	ld	iy, (ix + 9)
-	ld	e, (iy + 7)
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
 	call	__fmul
-	ld	(ix - 10), bc
-	ld	(ix - 11), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 8)
-	ld	bc, (ix - 3)
-	ld	a, d
-	ld	e, (iy + 11)
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
 	call	__fmul
-	ld	(ix - 14), bc
-	ld	(ix - 15), a
-	ld	hl, (iy + 12)
-	ld	bc, (ix - 3)
-	ld	a, d
-	ld	e, (iy + 15)
+	ld	(ix - 11), bc
+	ld	d, a
+	ld	bc, (iy + 12)
+	ld	a, (iy + 15)
 	call	__fmul
 	ld	iy, (ix + 6)
-	ld	hl, (ix - 6)
+	ld	hl, (ix - 3)
 	ld	(iy), hl
-	ld	l, (ix - 7)
+	ld	l, (ix - 4)
 	ld	(iy + 3), l
-	ld	hl, (ix - 10)
+	ld	hl, (ix - 7)
 	ld	(iy + 4), hl
-	ld	l, (ix - 11)
+	ld	l, (ix - 8)
 	ld	(iy + 7), l
-	ld	hl, (ix - 14)
+	ld	hl, (ix - 11)
 	ld	(iy + 8), hl
-	ld	l, (ix - 15)
-	ld	(iy + 11), l
+	ld	(iy + 11), d
 	ld	(iy + 12), bc
 	ld	(iy + 15), a
 	lea	hl, iy
@@ -577,8 +399,11 @@ __ZNK4vec4mlERKd:
 	section	.text,"ax",@progbits
 	public	__Z3dotRK4vec2S1_
 __Z3dotRK4vec2S1_:
-	ld	hl, -8
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 8
+	ld	sp, hl
 	ld	iy, (ix + 6)
 	ld	bc, (ix + 9)
 	ld	hl, (iy)
@@ -628,8 +453,11 @@ __Z3dotRK4vec2S1_:
 	section	.text,"ax",@progbits
 	public	__Z3dotRK4vec3S1_
 __Z3dotRK4vec3S1_:
-	ld	hl, -11
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 11
+	ld	sp, hl
 	ld	iy, (ix + 6)
 	ld	de, (ix + 9)
 	ld	hl, (iy)
@@ -692,134 +520,132 @@ __Z3dotRK4vec3S1_:
 	section	.text,"ax",@progbits
 	public	__Z3mindd
 __Z3mindd:
-	call	__frameset0
-	ld	bc, (ix + 6)
-	ld	a, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	e, (ix + 15)
+	ld	iy, 0
+	add	iy, sp
+	ld	bc, (iy + 3)
+	ld	a, (iy + 6)
+	ld	hl, (iy + 9)
+	ld	e, (iy + 12)
 	call	__fcmp
-	jp	m, BB14_2
+	jp	m, BB9_2
 	ld	d, 0
-	jr	BB14_3
-BB14_2:
-	ld	d, 1
-BB14_3:
 	bit	0, d
-	jr	nz, BB14_5
+	jr	z, BB9_3
+	jr	BB9_4
+BB9_2:
+	ld	d, 1
+	bit	0, d
+	jr	nz, BB9_4
+BB9_3:
 	push	bc
 	pop	hl
-BB14_5:
+BB9_4:
 	bit	0, d
-	jr	nz, BB14_7
+	jr	z, BB9_6
+	ret
+BB9_6:
 	ld	e, a
-BB14_7:
-	pop	ix
 	ret
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	__Z3maxdd
 __Z3maxdd:
-	call	__frameset0
-	ld	hl, (ix + 6)
-	ld	e, (ix + 9)
-	ld	bc, (ix + 12)
-	ld	a, (ix + 15)
+	ld	iy, 0
+	add	iy, sp
+	ld	hl, (iy + 3)
+	ld	e, (iy + 6)
+	ld	bc, (iy + 9)
+	ld	a, (iy + 12)
 	call	__fcmp
-	jp	m, BB15_2
+	jp	m, BB10_2
 	ld	d, 0
-	jr	BB15_3
-BB15_2:
-	ld	d, 1
-BB15_3:
 	bit	0, d
-	jr	nz, BB15_5
+	jr	z, BB10_3
+	jr	BB10_4
+BB10_2:
+	ld	d, 1
+	bit	0, d
+	jr	nz, BB10_4
+BB10_3:
 	push	hl
 	pop	bc
-BB15_5:
+BB10_4:
 	bit	0, d
-	jr	nz, BB15_7
-	ld	a, e
-BB15_7:
+	jr	z, BB10_6
 	push	bc
 	pop	hl
 	ld	e, a
-	pop	ix
+	ret
+BB10_6:
+	ld	a, e
+	push	bc
+	pop	hl
+	ld	e, a
 	ret
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	__Z9normalizeRK4vec3
 __Z9normalizeRK4vec3:
-	ld	hl, -11
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 7
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
-	ld	(ix - 11), hl
-	ld	d, (iy + 3)
+	ld	(ix - 3), hl
+	lea	hl, iy + 3
+	ld	a, (hl)
+	ld	(ix - 7), a
+	lea	de, iy + 4
 	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	lea	hl, iy + 3
+	ld	a, (hl)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	bc, (ix - 11)
-	ld	a, d
+	push	bc
+	pop	iy
+	ld	(ix - 4), a
+	ld	bc, (ix - 3)
+	ld	a, (ix - 7)
 	push	bc
 	pop	hl
-	ld	e, d
+	ld	e, a
 	call	__fmul
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
+	lea	hl, iy
+	ld	e, (ix - 4)
 	call	__fadd
-	ld	(ix - 7), bc
+	ld	(ix - 3), bc
 	ld	d, a
+	ld	iy, (ix + 9)
+	lea	hl, iy + 8
 	ld	bc, (iy + 8)
-	ld	a, (iy + 11)
+	push	hl
+	pop	iy
+	lea	hl, iy + 3
+	ld	a, (hl)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	ld	hl, (ix - 7)
+	ld	hl, (ix - 3)
 	ld	e, d
 	call	__fadd
 	ld	l, a
 	push	hl
 	push	bc
 	call	_sqrt
-	pop	bc
-	pop	bc
-	ld	(ix - 4), hl
-	ld	(ix - 1), e
-	pea	ix - 4
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	__ZNK4vec3dvERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3dvERKd
-__ZNK4vec3dvERKd:
-	ld	hl, -7
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
+	ld	iy, 6
+	add	iy, sp
+	ld	sp, iy
 	ld	iy, (ix + 9)
+	ld	bc, (iy)
 	ld	a, (iy + 3)
 	call	__fdiv
 	ld	(ix - 3), bc
@@ -851,65 +677,48 @@ __ZNK4vec3dvERKd:
 	section	.text,"ax",@progbits
 	public	__Z9normalizeRK4vec2
 __Z9normalizeRK4vec2:
-	ld	hl, -8
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 5
+	ld	sp, hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
-	ld	(ix - 8), hl
-	ld	d, (iy + 3)
+	ld	(ix - 3), hl
+	lea	hl, iy + 3
+	ld	a, (hl)
+	ld	(ix - 5), a
+	lea	de, iy + 4
 	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	lea	hl, iy + 3
+	ld	a, (hl)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
 	push	bc
 	pop	iy
-	ld	(ix - 5), a
-	ld	bc, (ix - 8)
-	ld	a, d
+	ld	(ix - 4), a
+	ld	bc, (ix - 3)
+	ld	a, (ix - 5)
 	push	bc
 	pop	hl
-	ld	e, d
+	ld	e, a
 	call	__fmul
 	lea	hl, iy
-	ld	e, (ix - 5)
+	ld	e, (ix - 4)
 	call	__fadd
 	ld	l, a
 	push	hl
 	push	bc
 	call	_sqrt
-	pop	bc
-	pop	bc
-	ld	(ix - 4), hl
-	ld	(ix - 1), e
-	pea	ix - 4
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	__ZNK4vec2dvERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec2dvERKd
-__ZNK4vec2dvERKd:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
+	ld	iy, 6
+	add	iy, sp
+	ld	sp, iy
 	ld	iy, (ix + 9)
+	ld	bc, (iy)
 	ld	a, (iy + 3)
 	call	__fdiv
 	ld	(ix - 3), bc
@@ -932,8 +741,11 @@ __ZNK4vec2dvERKd:
 	section	.text,"ax",@progbits
 	public	__Z8lengthSQRK4vec3
 __Z8lengthSQRK4vec3:
-	ld	hl, -6
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 6
+	ld	sp, hl
 	ld	iy, (ix + 6)
 	ld	hl, (iy)
 	ld	(ix - 6), hl
@@ -980,8 +792,11 @@ __Z8lengthSQRK4vec3:
 	section	.text,"ax",@progbits
 	public	__Z8lengthSQRK4vec2
 __Z8lengthSQRK4vec2:
-	ld	hl, -4
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 4
+	ld	sp, hl
 	ld	iy, (ix + 6)
 	ld	hl, (iy)
 	ld	(ix - 4), hl
@@ -1015,8 +830,11 @@ __Z8lengthSQRK4vec2:
 	section	.text,"ax",@progbits
 	public	__Z5clampddd
 __Z5clampddd:
-	ld	hl, -5
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 5
+	ld	sp, hl
 	ld	de, (ix + 6)
 	ld	iy, (ix + 12)
 	ld	hl, (ix + 18)
@@ -1031,38 +849,56 @@ __Z5clampddd:
 	ld	d, 1
 	ld	l, 0
 	ld	a, d
-	jp	m, BB22_2
+	jp	m, BB15_2
 	ld	a, l
-BB22_2:
+BB15_2:
 	ld	(ix - 5), a
 	ld	hl, (ix + 18)
 	ld	e, (ix + 21)
 	ld	bc, (ix + 6)
 	ld	a, (ix + 9)
 	call	__fcmp
-	jp	m, BB22_4
-	ld	d, 0
-BB22_4:
+	jp	p, BB15_8
 	bit	0, d
 	ld	e, (ix + 15)
-	jr	nz, BB22_6
-	ld	hl, (ix + 6)
-	ld	(ix - 4), hl
-BB22_6:
+	jr	z, BB15_9
+BB15_4:
 	bit	0, d
-	jr	nz, BB22_8
-	ld	a, (ix + 9)
-	ld	(ix - 1), a
-BB22_8:
+	jr	z, BB15_10
+BB15_5:
 	ld	a, (ix - 5)
 	bit	0, a
-	jr	nz, BB22_10
-	ld	iy, (ix - 4)
-BB22_10:
+	jr	z, BB15_11
+BB15_6:
 	bit	0, a
-	jr	nz, BB22_12
+	jr	z, BB15_12
+BB15_7:
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+BB15_8:
+	ld	d, 0
+	bit	0, d
+	ld	e, (ix + 15)
+	jr	nz, BB15_4
+BB15_9:
+	ld	hl, (ix + 6)
+	ld	(ix - 4), hl
+	bit	0, d
+	jr	nz, BB15_5
+BB15_10:
+	ld	a, (ix + 9)
+	ld	(ix - 1), a
+	ld	a, (ix - 5)
+	bit	0, a
+	jr	nz, BB15_6
+BB15_11:
+	ld	iy, (ix - 4)
+	bit	0, a
+	jr	nz, BB15_7
+BB15_12:
 	ld	e, (ix - 1)
-BB22_12:
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -1072,8 +908,11 @@ BB22_12:
 	section	.text,"ax",@progbits
 	public	__Z6rotated
 __Z6rotated:
-	ld	hl, -12
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	lea	hl, ix - 12
+	ld	sp, hl
 	ld	de, (ix + 9)
 	ld	l, (ix + 12)
 	push	hl
@@ -1081,8 +920,9 @@ __Z6rotated:
 	call	_cos
 	ld	(ix - 3), hl
 	ld	(ix - 4), e
-	pop	hl
-	pop	hl
+	ld	hl, 6
+	add	hl, sp
+	ld	sp, hl
 	ld	l, (ix + 12)
 	push	hl
 	ld	hl, (ix + 9)
@@ -1091,8 +931,9 @@ __Z6rotated:
 	push	hl
 	pop	bc
 	ld	a, e
-	pop	hl
-	pop	hl
+	ld	hl, 6
+	add	hl, sp
+	ld	sp, hl
 	call	__fneg
 	ld	(ix - 7), bc
 	ld	(ix - 8), a
@@ -1103,15 +944,17 @@ __Z6rotated:
 	call	_sin
 	ld	(ix - 11), hl
 	ld	(ix - 12), e
-	pop	hl
-	pop	hl
+	ld	hl, 6
+	add	hl, sp
+	ld	sp, hl
 	ld	l, (ix + 12)
 	push	hl
 	ld	hl, (ix + 9)
 	push	hl
 	call	_cos
-	pop	bc
-	pop	bc
+	ld	iy, 6
+	add	iy, sp
+	ld	sp, iy
 	ld	iy, (ix + 6)
 	ld	bc, (ix - 3)
 	ld	(iy), bc
@@ -1136,57 +979,55 @@ __Z6rotated:
 	section	.text,"ax",@progbits
 	public	_main
 _main:
-	ld	hl, -1629
-	call	__frameset
+	push	ix
+	ld	ix, 0
+	add	ix, sp
+	ld	hl, -1614
+	add	hl, sp
+	ld	sp, hl
 	ld	bc, -156
+	lea	hl, ix
+	add	hl, bc
+	ld	bc, -1583
 	lea	iy, ix
 	add	iy, bc
-	ld	bc, -1602
+	ld	(iy), hl
+	ld	bc, -1536
 	lea	hl, ix
 	add	hl, bc
-	ld	(hl), iy
+	push	hl
+	pop	de
 	push	ix
-	ld	bc, -1456
+	ld	bc, -1542
 	add	ix, bc
-	lea	de, ix
+	ld	(ix), de
 	pop	ix
-	ld	(ix - 3), de
+	ld	a, -128
 	push	ix
-	ld	de, -1584
-	add	ix, de
-	lea	bc, ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	bc, -1583
+	add	ix, bc
+	ld	iy, (ix)
 	pop	ix
 	lea	hl, iy
-	ld	de, -1621
+	ld	bc, -1587
 	lea	iy, ix
-	add	iy, de
+	add	iy, bc
 	ld	(iy), hl
-	ld	de, (ix - 3)
 	push	de
 	pop	iy
-	ld	de, -1587
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), iy
-	lea	hl, iy + 20
+	lea	hl, iy + 100
 	push	ix
-	ld	de, -1615
-	add	ix, de
+	ld	bc, -1580
+	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	lea	hl, iy + 4
-	ld	de, -1596
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	push	bc
-	pop	iy
-	ld	bc, -1590
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
 	lea	hl, iy
-	ld	bc, -1593
+	ld	bc, -1577
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
@@ -1196,13 +1037,13 @@ _main:
 	call	_gfx_SetDraw
 	pop	hl
 	call	_os_GetCSC
-	ld	bc, -1599
+	ld	bc, -1539
 	lea	hl, ix
 	add	hl, bc
 	ld	(hl), a
 	or	a, a
 	sbc	hl, hl
-	ld	bc, -1602
+	ld	bc, -1583
 	lea	iy, ix
 	add	iy, bc
 	ld	iy, (iy)
@@ -1294,12 +1135,12 @@ _main:
 	ld	(ix - 11), -64
 	ld	(ix - 10), iy
 	ld	(ix - 7), 64
-	ld	de, -1587
+	ld	de, -1542
 	lea	hl, ix
 	add	hl, de
 	ld	iy, (hl)
-	ld	(iy + 20), 0
-	ld	de, -1615
+	ld	(iy + 100), 0
+	ld	de, -1580
 	lea	iy, ix
 	add	iy, de
 	ld	hl, (iy)
@@ -1312,30 +1153,23 @@ _main:
 	pop	iy
 	ldir
 	lea	iy, iy + 4
-	ld	de, 320
-	ld	bc, 0
-BB24_1:
-	push	bc
+	ld	de, 0
+BB17_1:
+	ld	bc, -1542
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), de
+	push	de
 	pop	hl
-	or	a, a
-	sbc	hl, de
-	jr	z, BB24_3
-	push	bc
-	pop	hl
-	lea	de, iy
-	push	hl
-	pop	iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1602
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	add	iy, iy
-	ld	de, (ix - 3)
+	lea	bc, iy
 	push	de
 	pop	iy
+	add	iy, iy
+	push	bc
+	pop	iy
 	sbc	hl, hl
+	push	de
+	pop	bc
 	ld	a, l
 	call	__ltof
 	ld	hl, -6324224
@@ -1352,45 +1186,71 @@ BB24_1:
 	ld	(iy - 1), a
 	ld	(iy), hl
 	ld	(iy + 3), 63
-	ld	de, 2
-	ld	bc, -1602
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	de, 320
 	lea	iy, iy + 8
-	jr	BB24_1
-BB24_3:
-	ld	bc, -1587
+	ld	bc, 2
+	ld	(ix - 3), de
+	ld	de, -1542
 	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
 	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, -8388608
-	ex	de, hl
-	ld	(iy + 4), de
-	ld	(iy + 7), 63
+	ld	de, (ix - 3)
+	push	hl
+	pop	de
+	ld	bc, 320
 	or	a, a
-	sbc	hl, hl
-	ld	(iy + 12), hl
-	ld	(iy + 15), -128
-	ld	(iy + 8), hl
-	ld	(iy + 11), h
-	ld	(iy + 16), de
-	ld	(iy + 19), 63
-	ld	bc, -1599
+	sbc	hl, bc
+	jr	nz, BB17_1
+	ld	a, 63
+	ld	l, a
+	ld	bc, -1568
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), l
+	ld	de, 0
+	push	ix
+	ld	bc, -1562
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	xor	a, a
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	bc, -1567
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	de, -8388608
+	push	ix
+	ld	bc, -1571
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	push	ix
+	ld	bc, -1555
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	(ix), l
+	pop	ix
+	ld	bc, -1539
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
-BB24_4:
-	ld	bc, -1599
+BB17_3:
+	ld	bc, -1539
 	lea	hl, ix
 	add	hl, bc
 	ld	(hl), a
 	call	_clock
-	ld	bc, -1611
+	ld	bc, -1590
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
@@ -1400,310 +1260,762 @@ BB24_4:
 	ld	(ix), e
 	pop	ix
 	call	_gfx_ZeroScreen
-	ld	bc, -1599
+	ld	bc, -1539
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
 	cp	a, 2
-	jp	nz, BB24_6
-	ld	bc, -1587
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, 8182053
-	ld	(iy - 12), hl
-	ld	(iy - 9), 63
-	ld	de, 2109532
-	ld	(iy - 4), de
-	ld	(iy - 1), -66
-	ld	(iy - 8), de
-	ld	(iy - 5), 62
-	ld	(iy), hl
-	ld	(iy + 3), 63
-	ld	bc, -1596
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	pea	iy - 12
-	ld	bc, -1593
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	__ZN4mat2mlERKS_
-	ld	bc, -1587
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, -1596
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	ix
-	ld	bc, -1593
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	ld	bc, 16
-	ldir
-	ld	bc, -1596
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	scf
-	sbc	hl, hl
-	jp	BB24_8
-BB24_6:
-	cp	a, 3
-	ld	hl, 0
-	ld	bc, -1587
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	iy, (iy)
-	push	ix
-	ld	bc, -1596
-	push	af
-	add	ix, bc
-	pop	af
-	ld	de, (ix)
-	pop	ix
-	jp	nz, BB24_8
-	ld	(ix - 3), de
-	ld	de, -1590
+	jp	nz, BB17_5
+	ld	de, -1562
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
-	ld	hl, 8182053
-	push	bc
-	pop	iy
-	ld	(iy + 116), hl
-	ld	(iy + 119), 63
-	ld	de, (ix - 3)
-	ex	de, hl
-	ld	de, 2109532
-	ld	(iy + 124), de
-	ld	(iy + 127), 62
-	ld	(iy + 120), de
-	ld	(iy + 123), -66
-	ld	de, -1587
+	ld	(ix - 3), bc
+	ld	bc, -1563
 	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	de, 8182053
-	ld	(iy), de
-	ld	(iy + 3), 63
-	push	hl
-	pea	iy - 12
-	ld	de, -1593
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	call	__ZN4mat2mlERKS_
-	ld	bc, -1587
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, -1596
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
+	add	iy, bc
+	ld	d, (iy)
+	ld	a, d
+	ld	hl, 2109532
+	ld	e, -66
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
 	push	ix
-	ld	bc, -1593
+	ld	de, -1539
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1571
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	lea	bc, iy
+	push	ix
+	ld	de, -1568
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	hl, 8182053
+	ld	de, (ix - 3)
+	ld	e, 63
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
 	add	ix, bc
 	ld	hl, (ix)
 	pop	ix
-	ld	bc, 16
-	ldir
-	ld	bc, -1596
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	hl, 1
-BB24_8:
 	push	ix
-	ld	bc, -1608
+	ld	bc, -1542
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1562
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	ld	hl, 8182053
+	ld	e, 63
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, a
+	lea	bc, iy
+	ld	(ix - 3), bc
+	ld	bc, -1568
+	lea	iy, ix
+	add	iy, bc
+	ld	a, (iy)
+	ld	iy, 2109532
+	lea	hl, iy
+	ld	e, 62
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1562
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, -66
+	call	__fmul
+	ld	(ix - 3), de
+	ld	de, -1545
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1567
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	a, d
+	ld	hl, 8182053
+	ld	e, 63
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	hl, 8182053
+	ld	de, (ix - 3)
+	ld	e, 63
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1549
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	lea	bc, iy
+	ld	de, (ix - 3)
+	ld	a, d
+	ld	hl, 2109532
+	ld	e, 62
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	bc, -1549
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
+	push	ix
+	ld	bc, -1552
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1567
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	or	a, a
-	sbc	hl, hl
-	ld	(iy - 12), hl
-	ld	(iy - 9), h
-	ld	(iy - 8), hl
-	ld	(iy - 5), h
-	ld	bc, -1590
+	ld	bc, -1546
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	push	ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	a, -1
+	jp	BB17_7
+BB17_5:
+	cp	a, 3
+	jp	nz, BB17_8
+	ld	de, -1562
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	lea	bc, iy
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	hl, 2109532
+	ld	e, 62
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1571
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1568
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	a, d
+	ld	hl, 8182053
+	ld	e, 63
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	lea	bc, iy
+	ld	de, -1563
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	hl, 8182053
+	ld	de, (ix - 3)
+	ld	e, 63
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	iyl, a
+	push	ix
+	ld	de, -1571
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	ld	hl, 2109532
+	ld	e, -66
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, iyl
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1562
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	hl, 2109532
+	ld	de, (ix - 3)
+	ld	e, 62
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1567
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	a, d
+	ld	hl, 8182053
+	ld	e, 63
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	hl, 8182053
+	ld	de, (ix - 3)
+	ld	e, 63
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1549
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	lea	bc, iy
+	ld	de, (ix - 3)
+	ld	a, d
+	ld	hl, 2109532
+	ld	e, -66
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	bc, -1549
 	lea	iy, ix
 	add	iy, bc
-	ld	iy, (iy)
-	ld	(iy + 108), hl
-	ld	(iy + 111), h
-	ld	(iy + 112), hl
-	ld	(iy + 115), h
-	ld	(iy), hl
-	ld	(iy + 3), h
-	ld	hl, -8388608
-	ld	(iy + 4), hl
-	ld	(iy + 7), 63
-	push	iy
-	push	de
-	pea	iy + 100
-	call	__ZN4mat2mlERK4vec2
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, 0
-BB24_9:
-	push	bc
-	pop	hl
-	ld	de, 160
-	or	a, a
-	sbc	hl, de
-	jp	z, BB24_24
-	ld	de, -1605
+	ld	hl, (iy)
+	push	ix
+	ld	bc, -1552
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1555
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1567
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	bc, -1546
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	push	ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	a, 1
+BB17_7:
+	push	ix
+	ld	bc, -1584
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	iy, 0
+	ld	d, iyh
+	jr	BB17_9
+BB17_8:
+	ld	d, 0
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), d
+	ld	iy, 0
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1571
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1568
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+BB17_9:
+	ld	bc, (ix - 3)
+	ld	(ix - 3), de
+	ld	de, -1571
 	lea	hl, ix
 	add	hl, de
 	ld	(hl), bc
-	push	bc
-	pop	hl
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1568
+	add	ix, bc
+	ld	(ix), e
+	pop	ix
+	ld	a, e
+	lea	hl, iy
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1567
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1564
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1562
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1555
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1598
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+BB17_10:
+	ld	de, -1549
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), iy
+	lea	hl, iy
 	ld	c, 3
 	call	__ishl
 	push	hl
 	pop	de
 	ld	(ix - 3), bc
-	ld	bc, -1615
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	add	hl, de
-	push	hl
-	ld	de, -1596
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1590
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	bc, (ix - 3)
-	call	__ZN4mat2mlERK4vec2
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, -1590
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy)
-	ld	de, (iy + 3)
-	ld	bc, (iy + 6)
-	ld	(ix - 3), bc
-	ld	bc, -1587
+	ld	bc, -1580
 	lea	iy, ix
 	add	iy, bc
 	ld	iy, (iy)
-	ld	(iy - 12), hl
-	ld	(iy - 9), de
-	ld	bc, (ix - 3)
-	ld	(iy - 6), c
-	ld	(iy - 5), b
-	or	a, a
-	sbc	hl, hl
-	ex	de, hl
-	ld	hl, -3670016
+	add	iy, de
+	ld	hl, (iy)
 	push	ix
-	ld	bc, -1599
+	ld	bc, -1552
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	ex	de, hl
-	ld	a, 66
+	ld	d, (iy + 3)
+	ld	bc, -1542
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), d
+	ld	hl, (iy + 4)
 	push	ix
-	ld	bc, -1602
+	ld	bc, -1545
 	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, (iy + 7)
+	dec	bc
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), e
+	ld	bc, (ix - 3)
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1567
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1564
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
 	ld	(ix), a
 	pop	ix
-BB24_11:
-	push	hl
-	pop	bc
-	ld	de, 150
-	or	a, a
-	sbc	hl, de
-	jp	z, BB24_17
-	ld	de, -1618
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
 	push	ix
-	ld	de, -1621
+	ld	de, -1571
 	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1568
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
+	add	ix, bc
 	ld	hl, (ix)
 	pop	ix
-	add	hl, bc
-	lea	de, iy
-	ld	bc, -1590
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	pea	iy + 108
-	push	de
-	pop	iy
-	pea	iy - 12
-	push	hl
-	call	__ZN7AA_Line15rayIntersectionERK4vec2PS0_
-	pop	hl
-	pop	hl
-	pop	hl
-	bit	0, a
-	jp	z, BB24_15
-	ld	de, -1590
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	hl, (iy + 108)
 	push	ix
-	ld	de, -1628
-	add	ix, de
-	ld	(ix), hl
+	ld	bc, -1559
+	add	ix, bc
+	ld	e, (ix)
 	pop	ix
-	ld	a, (iy + 111)
-	dec	de
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), a
-	ld	hl, (iy + 100)
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
 	push	ix
-	ld	de, -1624
+	ld	de, -1539
 	add	ix, de
-	ld	(ix), hl
+	ld	(ix), bc
 	pop	ix
-	ld	a, (iy + 103)
-	dec	de
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), a
-	ld	bc, (iy + 112)
-	ld	hl, (iy + 104)
-	ld	a, (iy + 115)
-	ld	e, (iy + 107)
-	call	__fmul
-	push	bc
-	pop	iy
+	ld	de, (ix - 3)
 	ld	d, a
 	ld	(ix - 3), de
 	push	ix
-	ld	de, -1628
+	ld	de, -1555
 	add	ix, de
 	ld	bc, (ix)
 	pop	ix
@@ -1713,27 +2025,331 @@ BB24_11:
 	ld	a, (ix)
 	pop	ix
 	push	ix
-	ld	de, -1624
+	ld	de, -1545
 	add	ix, de
 	ld	hl, (ix)
 	pop	ix
 	ld	de, (ix - 3)
 	ld	(ix - 3), bc
 	push	ix
-	ld	bc, -1625
+	ld	bc, -1546
 	add	ix, bc
 	ld	e, (ix)
 	pop	ix
 	ld	bc, (ix - 3)
 	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1562
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
 	lea	hl, iy
-	ld	e, d
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	ld	bc, -1542
+	lea	iy, ix
+	add	iy, bc
+	ld	e, (iy)
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
 	call	__fadd
 	push	bc
-	pop	hl
-	ld	e, a
+	pop	iy
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	(ix), d
+	pop	ix
+	ld	e, d
+	ld	d, a
+	ld	bc, (ix - 3)
+	ld	bc, 0
+	xor	a, a
+	call	__fcmp
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	(ix), d
+	pop	ix
+	ld	bc, (ix - 3)
+	lea	hl, iy
+	jr	nz, BB17_13
+	ld	e, d
+	call	__fcmp
+	jp	nz, BB17_19
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	ld	d, 67
+	ld	iy, 8257536
+	jp	BB17_142
+BB17_13:
+	ld	e, d
+	call	__fcmp
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1552
+	push	af
+	add	ix, bc
+	pop	af
+	ld	(ix), iy
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	nz, BB17_24
+	ld	bc, -1583
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	hl, (iy)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_40
+	ld	bc, (iy + 3)
+	ld	a, (iy + 6)
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
 	ld	(ix - 3), de
-	ld	de, -1599
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_40
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	bc, (iy + 7)
+	ld	de, (iy + 11)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, a
+	ld	a, (iy + 14)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, d
+	ld	a, (iy + 10)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_18
+	ld	bc, -1602
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	bc, -1605
+	lea	iy, ix
+	add	iy, bc
+	ld	e, (iy)
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	iy, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_149
+BB17_18:
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	ld	de, -1583
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	jp	BB17_41
+BB17_19:
+	ld	bc, -1552
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	ld	bc, -1583
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	ld	hl, (iy)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_82
+	ld	bc, (iy + 3)
+	ld	a, (iy + 6)
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_91
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	bc, (iy + 7)
+	ld	de, (iy + 11)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (iy + 14)
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (iy + 10)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_23
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1542
 	lea	iy, ix
 	add	iy, de
 	ld	bc, (iy)
@@ -1744,48 +2360,1722 @@ BB24_11:
 	pop	ix
 	ld	de, (ix - 3)
 	call	__fcmp
-	jp	p, BB24_15
-	ld	(ix - 3), de
-	ld	de, -1608
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	inc	bc
+	jp	p, BB17_151
+BB17_23:
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	ld	de, -1583
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	ld	(ix - 3), bc
 	push	ix
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	push	ix
-	ld	bc, -1599
+	ld	bc, -1546
 	add	ix, bc
-	ld	(ix), hl
+	ld	d, (ix)
 	pop	ix
-	ld	de, (ix - 3)
-	ld	bc, -1602
+	jp	BB17_92
+BB17_24:
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	ld	iy, 8257536
+BB17_25:
+	ld	(ix - 3), bc
+	ld	bc, -1574
 	lea	hl, ix
 	add	hl, bc
-	ld	(hl), e
+	ld	de, (hl)
+	push	ix
+	ld	bc, -1587
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	add	hl, de
+	ld	hl, (hl)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	ld	bc, (ix - 3)
+	push	ix
+	ld	de, -1542
+	push	af
+	add	ix, de
+	pop	af
+	ld	(ix), bc
+	pop	ix
+	jp	nz, BB17_29
+	ld	bc, -1559
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), a
+	ld	bc, -1574
+	lea	iy, ix
+	add	iy, bc
+	ld	de, (iy)
 	push	ix
 	ld	bc, -1587
 	add	ix, bc
 	ld	iy, (ix)
 	pop	ix
-	jr	BB24_16
-BB24_15:
-	ld	bc, -1587
+	add	iy, de
+	ld	hl, (iy + 3)
+	ld	a, (iy + 6)
+	push	hl
+	pop	iy
+	lea	bc, iy
+	ld	de, -1605
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_33
+	ld	bc, -1611
 	lea	hl, ix
 	add	hl, bc
-	ld	iy, (hl)
-BB24_16:
-	ld	de, 15
-	ld	bc, -1618
+	ld	(hl), iy
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1587
+	add	ix, bc
+	ld	iy, (ix)
+	pop	ix
+	add	iy, de
+	ld	bc, (ix - 3)
+	ld	bc, (iy + 7)
+	ld	de, (iy + 11)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1614
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (iy + 14)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (iy + 10)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_33
+	ld	bc, -1614
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
+	ld	e, d
+	ld	bc, -1608
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	lea	bc, iy
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	a, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fcmp
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	push	af
+	add	ix, bc
+	pop	af
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	m, BB17_33
+	jp	BB17_35
+BB17_29:
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_34
+	ld	bc, -1559
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), a
+	ld	bc, -1574
+	lea	iy, ix
+	add	iy, bc
+	ld	de, (iy)
+	push	ix
+	ld	bc, -1587
+	add	ix, bc
+	ld	iy, (ix)
+	pop	ix
+	add	iy, de
+	ld	hl, (iy + 3)
+	ld	a, (iy + 6)
+	push	hl
+	pop	iy
+	lea	bc, iy
+	ld	de, -1602
+	lea	hl, ix
 	add	hl, de
-	jp	BB24_11
-BB24_17:
-	ld	de, -1599
+	ld	(hl), a
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_33
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1587
+	add	ix, bc
+	ld	iy, (ix)
+	pop	ix
+	add	iy, de
+	ld	bc, (ix - 3)
+	ld	bc, (iy + 7)
+	ld	de, (iy + 11)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	e, (iy + 14)
+	push	ix
+	ld	bc, -1614
+	add	ix, bc
+	ld	(ix), e
+	pop	ix
+	push	ix
+	ld	bc, -1611
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	d, a
+	ld	e, a
+	ld	a, (iy + 10)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_33
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	bc, -1614
+	lea	iy, ix
+	add	iy, bc
+	ld	e, (iy)
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1611
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	call	__fcmp
+	ld	e, d
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	push	af
+	add	ix, bc
+	pop	af
+	ld	iy, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_35
+BB17_33:
+	ld	d, 67
+	ld	iy, 8257536
+	ld	bc, -1559
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	jp	BB17_39
+BB17_34:
+	ld	d, 67
+	jp	BB17_38
+BB17_35:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1611
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	lea	bc, iy
+	ld	de, -1602
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_37
+	ld	bc, -1584
+	lea	iy, ix
+	add	iy, bc
+	ld	a, (iy)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	a, e
+BB17_37:
+	ld	d, 67
+	ld	iy, 8257536
+BB17_38:
+	ld	bc, -1574
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+BB17_39:
+	ld	bc, 15
+	add	hl, bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	bc, 150
+	or	a, a
+	sbc	hl, bc
+	ld	hl, -3670016
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	push	af
+	add	ix, de
+	pop	af
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	nz, BB17_25
+	jp	BB17_142
+BB17_40:
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+BB17_41:
+	ld	hl, (iy + 15)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_46
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	bc, (iy + 18)
+	ld	a, (iy + 21)
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_45
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -134
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -130
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
+	ld	l, (ix - 127)
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	(ix), l
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -131
+	add	ix, bc
+	ld	a, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_45
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_153
+BB17_45:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+BB17_46:
+	ld	iy, 8257536
+BB17_47:
+	ld	hl, (ix - 126)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_52
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 123)
+	ld	a, (ix - 120)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_51
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyl, a
+	ld	bc, (ix - 119)
+	ld	de, (ix - 115)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 112)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyl
+	ld	a, (ix - 116)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_51
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyl
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_155
+BB17_51:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_52:
+	ld	hl, (ix - 111)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_57
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 108)
+	ld	a, (ix - 105)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_56
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	bc, (ix - 104)
+	ld	hl, (ix - 100)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	l, (ix - 97)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), l
+	pop	ix
+	lea	hl, iy
+	ld	d, a
+	ld	e, a
+	ld	a, (ix - 101)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_56
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_157
+BB17_56:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_57:
+	ld	hl, (ix - 96)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_62
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 93)
+	ld	a, (ix - 90)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_61
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyl, a
+	ld	bc, (ix - 89)
+	ld	de, (ix - 85)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 82)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyl
+	ld	a, (ix - 86)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_61
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyl
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_159
+BB17_61:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_62:
+	ld	hl, (ix - 81)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_67
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 78)
+	ld	a, (ix - 75)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_66
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	bc, (ix - 74)
+	ld	hl, (ix - 70)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	l, (ix - 67)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), l
+	pop	ix
+	lea	hl, iy
+	ld	d, a
+	ld	e, a
+	ld	a, (ix - 71)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_66
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_161
+BB17_66:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_67:
+	ld	hl, (ix - 66)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_72
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 63)
+	ld	a, (ix - 60)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_71
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyl, a
+	ld	bc, (ix - 59)
+	ld	de, (ix - 55)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 52)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyl
+	ld	a, (ix - 56)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_71
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyl
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_163
+BB17_71:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_72:
+	ld	hl, (ix - 51)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_77
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 48)
+	ld	a, (ix - 45)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_76
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	bc, (ix - 44)
+	ld	hl, (ix - 40)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	l, (ix - 37)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), l
+	pop	ix
+	lea	hl, iy
+	ld	d, a
+	ld	e, a
+	ld	a, (ix - 41)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_76
+	ld	bc, -1605
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_165
+BB17_76:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+BB17_77:
+	ld	hl, (ix - 36)
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_83
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 33)
+	ld	a, (ix - 30)
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_81
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyl, a
+	ld	bc, (ix - 29)
+	ld	de, (ix - 25)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 22)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyl
+	ld	a, (ix - 26)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_81
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyl
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_167
+BB17_81:
+	ld	bc, -1559
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	bc, -1574
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), hl
+	ld	bc, -1542
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	ld	d, 67
+	ld	iy, 8257536
+	jr	BB17_84
+BB17_82:
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	jp	BB17_93
+BB17_83:
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	ld	d, 67
+BB17_84:
+	ld	hl, (ix - 21)
+	ld	bc, 1
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_89
+	ld	de, -1602
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	bc, (ix - 18)
+	ld	a, (ix - 15)
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_88
+	ld	(ix - 3), de
+	ld	de, -1552
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1546
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	bc, (ix - 14)
+	ld	hl, (ix - 10)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	l, (ix - 7)
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	(ix), l
+	pop	ix
+	lea	hl, iy
+	ld	d, a
+	ld	e, a
+	ld	a, (ix - 11)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_88
+	ld	bc, -1539
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB17_169
+BB17_88:
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1602
+	jp	BB17_140
+BB17_89:
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	hl, -3670016
+BB17_90:
+	ld	de, (ix - 3)
+	jp	BB17_142
+BB17_91:
+	ld	hl, -3670016
+	push	hl
+	pop	bc
+	ld	a, 66
+	ld	(ix - 3), bc
+	ld	bc, -1546
+	lea	hl, ix
+	add	hl, bc
+	ld	d, (hl)
+BB17_92:
+	ld	bc, (ix - 3)
+BB17_93:
+	ld	hl, (iy + 15)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_98
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	bc, (iy + 18)
+	ld	a, (iy + 21)
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_97
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	(ix - 3), de
+	ld	de, -134
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -130
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, (ix - 127)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	push	ix
+	ld	bc, -131
+	add	ix, bc
+	ld	a, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_97
+	lea	hl, iy
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1605
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_170
+BB17_97:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jr	BB17_99
+BB17_98:
+	ld	iy, 8257536
+BB17_99:
+	ld	hl, (ix - 126)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_104
+	ld	(ix - 3), de
+	ld	de, -1602
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 123)
+	ld	a, (ix - 120)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_103
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyh, a
+	ld	bc, (ix - 119)
+	ld	de, (ix - 115)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 112)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyh
+	ld	a, (ix - 116)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_103
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_172
+BB17_103:
+	ld	de, -1559
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
@@ -1793,47 +4083,838 @@ BB24_17:
 	lea	iy, ix
 	add	iy, de
 	ld	a, (iy)
-	ld	hl, -3670016
-	ld	e, 65
-	call	__fmul
-	ld	hl, 8257536
-	ld	e, 67
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_104:
+	ld	hl, (ix - 111)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_109
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 108)
+	ld	a, (ix - 105)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
 	call	__fcmp
-	ld	d, 1
-	jp	m, BB24_19
-	ld	d, 0
-BB24_19:
-	bit	0, d
-	jr	nz, BB24_21
+	jp	p, BB17_108
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
 	push	bc
 	pop	hl
-BB24_21:
-	bit	0, d
-	ld	d, e
-	jr	nz, BB24_23
+	ld	bc, (ix - 104)
+	ld	iy, (ix - 100)
+	ld	d, (ix - 97)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (ix - 101)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_108
+	lea	hl, iy
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1605
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_174
+BB17_108:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_109:
+	ld	hl, (ix - 96)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_114
+	ld	(ix - 3), de
+	ld	de, -1602
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 93)
+	ld	a, (ix - 90)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
 	ld	d, a
-BB24_23:
-	push	hl
-	pop	bc
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_113
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyh, a
+	ld	bc, (ix - 89)
+	ld	de, (ix - 85)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 82)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyh
+	ld	a, (ix - 86)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_113
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_176
+BB17_113:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1602
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_114:
+	ld	hl, (ix - 81)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_119
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 78)
+	ld	a, (ix - 75)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_118
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	bc, (ix - 74)
+	ld	iy, (ix - 70)
+	ld	d, (ix - 67)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (ix - 71)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_118
+	lea	hl, iy
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1605
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_178
+BB17_118:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_119:
+	ld	hl, (ix - 66)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_124
+	ld	(ix - 3), de
+	ld	de, -1602
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 63)
+	ld	a, (ix - 60)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_123
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyh, a
+	ld	bc, (ix - 59)
+	ld	de, (ix - 55)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 52)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyh
+	ld	a, (ix - 56)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_123
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_180
+BB17_123:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1602
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_124:
+	ld	hl, (ix - 51)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_129
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 48)
+	ld	a, (ix - 45)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_128
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	bc, (ix - 44)
+	ld	iy, (ix - 40)
+	ld	d, (ix - 37)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (ix - 41)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_128
+	lea	hl, iy
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1605
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_182
+BB17_128:
+	ld	de, -1542
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB17_129:
+	ld	hl, (ix - 36)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_134
+	ld	(ix - 3), de
+	ld	de, -1602
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 33)
+	ld	a, (ix - 30)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_133
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iyh, a
+	ld	bc, (ix - 29)
+	ld	de, (ix - 25)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	d, (ix - 22)
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	e, iyh
+	ld	a, (ix - 26)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_133
+	ld	bc, -1608
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	e, d
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_184
+BB17_133:
+	ld	de, -1559
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1602
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	d, 67
+	ld	iy, 8257536
+	jr	BB17_135
+BB17_134:
+	ld	d, 67
+BB17_135:
+	ld	hl, (ix - 21)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB17_141
+	ld	de, -1605
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	ld	bc, (ix - 18)
+	ld	a, (ix - 15)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	de, -1552
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	or	a, a
+	sbc	hl, hl
+	ld	e, h
+	call	__fcmp
+	jp	p, BB17_139
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	bc, (ix - 14)
+	ld	iy, (ix - 10)
+	ld	d, (ix - 7)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1539
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	push	ix
+	ld	bc, -1545
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	e, a
+	ld	a, (ix - 11)
+	ld	bc, (ix - 3)
+	call	__fcmp
+	jp	m, BB17_139
+	lea	hl, iy
+	ld	e, d
+	ld	(ix - 3), de
+	ld	de, -1539
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB17_186
+BB17_139:
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1605
+BB17_140:
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	d, 67
+	ld	hl, -3670016
+	ld	iy, 8257536
+	jr	BB17_142
+BB17_141:
+	ld	hl, -3670016
+BB17_142:
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, 65
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fcmp
+	ld	e, 1
+	jp	m, BB17_147
+	ld	e, 0
+	bit	0, e
+	jp	z, BB17_148
+BB17_144:
+	bit	0, e
+	jr	nz, BB17_146
+BB17_145:
+	ld	d, a
+BB17_146:
+	lea	bc, iy
 	ld	a, d
 	call	__ftoul
 	push	bc
 	ld	hl, 224
 	push	hl
 	call	_gfx_Darken
-	pop	de
-	pop	de
+	ld	iy, 6
+	add	iy, sp
+	ld	sp, iy
 	push	hl
 	call	_gfx_SetColor
 	pop	hl
 	ld	bc, -393216
-	ld	a, 67
-	ld	de, -1599
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
+	ld	d, 67
+	ld	a, d
 	ld	(ix - 3), bc
-	ld	bc, -1602
+	ld	bc, -1542
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	ld	bc, -1559
 	lea	iy, ix
 	add	iy, bc
 	ld	e, (iy)
@@ -1841,25 +4922,25 @@ BB24_23:
 	call	__fdiv
 	push	bc
 	pop	iy
-	ld	d, a
+	ld	e, a
 	ld	(ix - 3), de
 	push	ix
-	ld	de, -1605
+	ld	de, -1549
 	add	ix, de
 	ld	hl, (ix)
 	pop	ix
 	ld	c, 1
 	call	__ishl
 	push	ix
-	ld	de, -1599
+	ld	de, -1539
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
 	ld	bc, 7340032
-	ld	a, 67
-	lea	hl, iy
 	ld	de, (ix - 3)
-	ld	e, d
+	ld	a, d
+	lea	hl, iy
+	ld	d, e
 	call	__fsub
 	or	a, a
 	sbc	hl, hl
@@ -1875,26 +4956,2078 @@ BB24_23:
 	ld	de, 2
 	push	de
 	push	hl
-	ld	bc, -1599
+	ld	bc, -1539
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
 	push	hl
 	call	_gfx_FillRectangle_NoClip
-	ld	de, -1605
+	ld	bc, -1549
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	hl, 12
+	add	hl, sp
+	ld	sp, hl
+	inc	iy
+	lea	hl, iy
+	ld	de, 160
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB17_10
+	jp	BB17_189
+BB17_147:
+	bit	0, e
+	jp	nz, BB17_144
+BB17_148:
+	push	bc
+	pop	iy
+	bit	0, e
+	jp	z, BB17_145
+	jp	BB17_146
+BB17_149:
+	ld	(ix - 3), de
+	ld	de, -1598
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
 	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	bc, -3670016
+	ld	a, 66
+	call	__fcmp
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1583
+	push	af
+	add	ix, bc
+	pop	af
+	ld	iy, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_41
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_41
+BB17_151:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
 	pop	hl
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	bc, -3670016
+	ld	a, 66
+	call	__fcmp
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1583
+	push	af
+	add	ix, bc
+	pop	af
+	ld	iy, (ix)
+	pop	ix
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_93
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_93
+BB17_153:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
 	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_47
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_47
+BB17_155:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	e, iyl
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
 	pop	hl
-	inc	bc
-	jp	BB24_9
-BB24_24:
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_52
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_52
+BB17_157:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_57
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_57
+BB17_159:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	e, iyl
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_62
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_62
+BB17_161:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_67
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_67
+BB17_163:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	e, iyl
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_72
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_72
+BB17_165:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	jp	p, BB17_77
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	a, d
+	jp	BB17_77
+BB17_167:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	e, iyl
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	d, 67
+	ld	iy, 8257536
+	jp	p, BB17_188
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	a, (ix)
+	pop	ix
+	jp	BB17_84
+BB17_169:
+	ld	(ix - 3), de
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1559
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	d, 67
+	ld	hl, -3670016
+	ld	iy, 8257536
+	jp	p, BB17_142
+	jp	BB17_187
+BB17_170:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_99
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_99
+BB17_172:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, -1594
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_104
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_104
+BB17_174:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_109
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_109
+BB17_176:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, -1594
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_114
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_114
+BB17_178:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_119
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_119
+BB17_180:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, -1594
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_124
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_124
+BB17_182:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1608
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1559
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	iy, 8257536
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1546
+	push	af
+	add	ix, bc
+	pop	af
+	ld	d, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jp	p, BB17_129
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_129
+BB17_184:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1574
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	ld	de, (ix - 3)
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	ld	a, iyh
+	ld	de, -1594
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1542
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	e, d
+	ld	bc, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1605
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	d, 67
+	ld	iy, 8257536
+	jp	p, BB17_135
+	ld	bc, -1584
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	jp	BB17_135
+BB17_186:
+	ld	de, -1598
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	dec	de
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1559
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1539
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1545
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1594
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1595
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), de
+	ld	de, -1542
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
+	push	bc
+	pop	hl
+	push	ix
+	ld	bc, -1559
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	de, (ix - 3)
+	ld	e, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1574
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	ld	d, 67
+	ld	hl, -3670016
+	ld	iy, 8257536
+	jp	p, BB17_142
+BB17_187:
+	push	ix
+	ld	bc, -1584
+	add	ix, bc
+	ld	a, (ix)
+	pop	ix
+	inc	a
+	push	ix
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1542
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1559
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	jp	BB17_90
+BB17_188:
+	ld	(ix - 3), de
+	ld	de, -1574
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	ld	de, (ix - 3)
+	jp	BB17_84
+BB17_189:
 	call	_clock
 	ld	(ix - 3), de
-	ld	de, -1611
+	ld	de, -1590
 	lea	iy, ix
 	add	iy, de
 	ld	bc, (iy)
@@ -1914,11 +7047,12 @@ BB24_24:
 	ld	e, 56
 	call	__fmul
 	ld	l, a
+	ld	de, 0
 	ld	(ix - 3), bc
 	push	ix
-	ld	bc, -1608
+	ld	bc, -1584
 	add	ix, bc
-	ld	de, (ix)
+	ld	e, (ix)
 	pop	ix
 	push	de
 	push	hl
@@ -1926,22 +7060,20 @@ BB24_24:
 	push	bc
 	ld	hl, _.str
 	push	hl
-	ld	bc, -1593
+	ld	bc, -1577
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
 	push	hl
 	call	_sprintf
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
+	ld	hl, 15
+	add	hl, sp
+	ld	sp, hl
 	ld	hl, -2
 	push	hl
 	call	_gfx_SetTextFGColor
 	pop	hl
-	ld	bc, -1593
+	ld	bc, -1577
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
@@ -1960,354 +7092,22 @@ BB24_24:
 	ld	de, 4
 	push	de
 	push	hl
-	ld	de, -1593
+	ld	de, -1577
 	lea	hl, ix
 	add	hl, de
 	ld	hl, (hl)
 	push	hl
 	call	_gfx_PrintStringXY
-	pop	hl
-	pop	hl
-	pop	hl
+	ld	hl, 9
+	add	hl, sp
+	ld	sp, hl
 	call	_gfx_SwapDraw
 	call	_os_GetCSC
 	cp	a, 9
-	jp	nz, BB24_4
+	jp	nz, BB17_3
 	call	_gfx_End
 	or	a, a
 	sbc	hl, hl
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4mat2mlERKS_
-__ZN4mat2mlERKS_:
-	ld	hl, -26
-	call	__frameset
-	ld	bc, (ix + 9)
-	ld	iy, (ix + 12)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	(ix - 9), hl
-	ld	a, (iy + 3)
-	ld	(ix - 10), a
-	push	bc
-	pop	iy
-	ld	hl, (iy)
-	ld	(ix - 3), hl
-	ld	d, (iy + 3)
-	ld	(ix - 11), d
-	ld	iy, (ix + 12)
-	ld	bc, (iy + 4)
-	ld	(ix - 26), bc
-	ld	hl, (ix + 12)
-	push	hl
-	pop	iy
-	ld	a, (iy + 7)
-	ld	(ix - 23), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 8)
-	ld	(ix - 14), hl
-	ld	e, (iy + 11)
-	ld	(ix - 15), e
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 6), a
-	ld	bc, (ix - 9)
-	ld	a, (ix - 10)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 6)
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy), bc
-	ld	(iy + 3), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 4)
-	ld	(ix - 6), hl
-	ld	d, (iy + 7)
-	ld	(ix - 16), d
-	ld	hl, (iy + 12)
-	ld	(ix - 19), hl
-	ld	e, (iy + 15)
-	ld	(ix - 20), e
-	ld	bc, (ix - 26)
-	ld	a, (ix - 23)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 23), a
-	ld	bc, (ix - 9)
-	ld	a, (ix - 10)
-	ld	hl, (ix - 6)
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 23)
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy + 4), bc
-	ld	(iy + 7), a
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 8)
-	ld	(ix - 9), hl
-	ld	d, (iy + 11)
-	ld	(ix - 10), d
-	ld	hl, (iy + 12)
-	ld	(ix - 23), hl
-	ld	e, (iy + 15)
-	ld	(ix - 26), e
-	ld	bc, (ix - 14)
-	ld	a, (ix - 15)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 14), a
-	ld	bc, (ix - 9)
-	ld	a, d
-	ld	hl, (ix - 3)
-	ld	e, (ix - 11)
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 14)
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	ld	bc, (ix - 19)
-	ld	a, (ix - 20)
-	ld	hl, (ix - 23)
-	ld	e, (ix - 26)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 9)
-	ld	a, (ix - 10)
-	ld	hl, (ix - 6)
-	ld	e, (ix - 16)
-	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy + 12), bc
-	ld	iy, (ix + 6)
-	ld	(iy + 15), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4mat2mlERK4vec2
-__ZN4mat2mlERK4vec2:
-	ld	hl, -16
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	de, (ix + 12)
-	ld	hl, (iy)
-	ld	(ix - 7), hl
-	ld	a, (iy + 3)
-	lea	bc, iy
-	ld	(ix - 8), a
-	push	de
-	pop	hl
-	ld	hl, (hl)
-	ld	(ix - 3), hl
-	push	de
-	pop	iy
-	ld	a, (iy + 3)
-	ex	de, hl
-	ld	(ix - 4), a
-	push	bc
-	pop	iy
-	ld	bc, (iy + 8)
-	push	hl
-	pop	iy
-	ld	hl, (iy + 4)
-	ld	(ix - 11), hl
-	ld	e, (iy + 7)
-	ld	(ix - 12), e
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	call	__fmul
-	ld	(ix - 15), bc
-	ld	(ix - 16), a
-	ld	bc, (ix - 7)
-	ld	a, (ix - 8)
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
-	call	__fmul
-	ld	hl, (ix - 15)
-	ld	e, (ix - 16)
-	call	__fadd
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	hl, (iy + 4)
-	ld	(ix - 15), hl
-	ld	d, (iy + 7)
-	ld	hl, (iy + 12)
-	ld	bc, (ix - 11)
-	ld	a, (ix - 12)
-	ld	e, (iy + 15)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 11), a
-	ld	bc, (ix - 15)
-	ld	a, d
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 11)
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 7)
-	ld	(iy), hl
-	ld	l, (ix - 8)
-	ld	(iy + 3), l
-	ld	(iy + 4), bc
-	ld	(iy + 7), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN7AA_Line15rayIntersectionERK4vec2PS0_
-__ZN7AA_Line15rayIntersectionERK4vec2PS0_:
-	ld	hl, -12
-	call	__frameset
-	ld	hl, (ix + 6)
-	ld	iy, (ix + 9)
-	ld	bc, 0
-	ld	d, b
-	ld	hl, (hl)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB27_5
-	ld	hl, (iy + 4)
-	ld	e, (iy + 7)
-	ld	a, d
-	call	__fcmp
-	jp	z, BB27_11
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 3)
-	ld	a, (iy + 6)
-	push	bc
-	pop	iy
-	ld	(ix - 1), a
-	call	__fdiv
-	or	a, a
-	sbc	hl, hl
-	ld	e, d
-	call	__fcmp
-	jp	p, BB27_11
-	ld	(ix - 8), iy
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	e, (iy + 3)
-	call	__fmul
-	push	bc
-	pop	hl
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 7)
-	ld	iy, (ix + 6)
-	ld	iy, (iy + 11)
-	ld	(ix - 11), iy
-	ld	iy, (ix + 6)
-	ld	e, (iy + 14)
-	ld	(ix - 12), e
-	ld	(ix - 5), hl
-	ld	(ix - 2), a
-	ld	e, a
-	ld	a, (iy + 10)
-	call	__fcmp
-	jp	m, BB27_11
-	ld	hl, (ix - 11)
-	ld	e, (ix - 12)
-	ld	bc, (ix - 5)
-	ld	a, (ix - 2)
-	call	__fcmp
-	jp	p, BB27_10
-	jp	BB27_11
-BB27_5:
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB27_11
-	ld	hl, (ix + 9)
-	push	hl
-	pop	iy
-	ld	hl, (iy)
-	ld	e, (iy + 3)
-	ld	iy, 0
-	lea	bc, iy
-	ld	a, d
-	call	__fcmp
-	jp	z, BB27_11
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 3)
-	ld	a, (iy + 6)
-	push	bc
-	pop	iy
-	ld	(ix - 2), a
-	call	__fdiv
-	or	a, a
-	sbc	hl, hl
-	ld	e, d
-	call	__fcmp
-	jp	p, BB27_11
-	ld	(ix - 5), iy
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 4)
-	ld	e, (iy + 7)
-	call	__fmul
-	push	bc
-	pop	hl
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 7)
-	ld	iy, (ix + 6)
-	ld	iy, (iy + 11)
-	ld	(ix - 11), iy
-	ld	iy, (ix + 6)
-	ld	e, (iy + 14)
-	ld	(ix - 12), e
-	ld	(ix - 8), hl
-	ld	(ix - 1), a
-	ld	e, a
-	ld	a, (iy + 10)
-	call	__fcmp
-	jp	m, BB27_11
-	ld	hl, (ix - 11)
-	ld	e, (ix - 12)
-	ld	bc, (ix - 8)
-	ld	a, (ix - 1)
-	call	__fcmp
-	ld	bc, (ix - 5)
-	jp	m, BB27_11
-BB27_10:
-	ld	iy, (ix + 12)
-	ld	d, 1
-	ld	(iy), bc
-	ld	a, (ix - 2)
-	ld	(iy + 3), a
-	ld	hl, (ix - 8)
-	ld	(iy + 4), hl
-	ld	a, (ix - 1)
-	ld	(iy + 7), a
-BB27_11:
-	ld	a, d
 	ld	sp, ix
 	pop	ix
 	ret
@@ -2320,37 +7120,35 @@ _.str:
 
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	extern	__Unwind_SjLj_Register
-	extern	__frameset
 	extern	_gfx_SetTextFGColor
+	extern	_gfx_Begin
+	extern	__fadd
+	extern	_gfx_Darken
+	extern	__ftoul
+	extern	__ishl
+	extern	__iand
+	extern	__ltof
+	extern	_os_GetCSC
+	extern	__fsub
 	extern	_gfx_FillRectangle_NoClip
 	extern	_sprintf
-	extern	_gfx_Begin
 	extern	_sin
-	extern	__fadd
 	extern	__lsub
 	extern	_pow
 	extern	_gfx_GetStringWidth
 	extern	_sqrt
-	extern	_gfx_Darken
-	extern	__ftoul
+	extern	__ishru
 	extern	__ultof
 	extern	_gfx_SwapDraw
-	extern	__ishl
 	extern	__fmul
-	extern	__ishru
 	extern	_gfx_SetDraw
 	extern	__Unwind_SjLj_Unregister
-	extern	__iand
 	extern	__fneg
 	extern	_gfx_ZeroScreen
 	extern	__fdiv
 	extern	_gfx_SetColor
-	extern	__ltof
-	extern	_gfx_End
 	extern	_gfx_PrintStringXY
-	extern	_os_GetCSC
+	extern	_gfx_End
 	extern	__fcmp
-	extern	__frameset0
 	extern	_cos
 	extern	_clock
-	extern	__fsub
