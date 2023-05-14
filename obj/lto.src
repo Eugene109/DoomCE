@@ -1,0 +1,2356 @@
+	section	.text,"ax",@progbits
+	assume	adl = 1
+	section	.text,"ax",@progbits
+	public	__Zmld4vec2
+__Zmld4vec2:
+	ld	hl, -4
+	call	__frameset
+	ld	de, (ix + 6)
+	ld	hl, (ix + 9)
+	ld	a, (ix + 12)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	pea	ix + 15
+	push	de
+	call	__ZN4vec2mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4vec2mlERKd
+__ZN4vec2mlERKd:
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	e, (iy + 3)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	iy, (ix + 9)
+	ld	iy, (iy + 4)
+	push	hl
+	pop	bc
+	ld	a, e
+	lea	hl, iy
+	ld	iy, (ix + 9)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	(iy + 3), d
+	ld	(iy + 4), bc
+	ld	(iy + 7), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__ZmldRK4vec3
+__ZmldRK4vec3:
+	ld	hl, -4
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	hl, (ix + 9)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	push	de
+	push	bc
+	call	__ZNK4vec3mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3mlERKd
+__ZNK4vec3mlERKd:
+	ld	hl, -11
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	ld	hl, (iy)
+	ld	d, (iy + 3)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	ld	(ix - 11), hl
+	ld	e, d
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	(ix - 7), bc
+	push	hl
+	pop	bc
+	ld	a, d
+	ld	hl, (ix - 7)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	hl, (iy + 8)
+	ld	bc, (ix - 11)
+	ld	a, d
+	ld	e, (iy + 11)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	l, (ix - 4)
+	ld	(iy + 3), l
+	ld	hl, (ix - 7)
+	ld	(iy + 4), hl
+	ld	l, (ix - 8)
+	ld	(iy + 7), l
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__ZmidRK4vec3
+__ZmidRK4vec3:
+	ld	hl, -12
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	hl, (ix + 9)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 12), hl
+	ld	(ix - 9), a
+	ld	(ix - 8), hl
+	ld	(ix - 5), a
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	push	de
+	pea	ix - 12
+	push	bc
+	call	__ZN4vec3miERKS_
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4vec3miERKS_
+__ZN4vec3miERKS_:
+	ld	hl, -7
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	bc, (iy)
+	ld	hl, (hl)
+	ld	a, (iy + 3)
+	ld	iy, (ix + 12)
+	ld	e, (iy + 3)
+	call	__fsub
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	iy, (ix + 12)
+	ld	hl, (iy + 4)
+	lea	de, iy
+	ld	iy, (ix + 9)
+	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	ld	e, (iy + 7)
+	call	__fsub
+	ld	(ix - 7), bc
+	ld	d, a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 8)
+	ld	iy, (ix + 12)
+	ld	hl, (iy + 8)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 11)
+	ld	iy, (ix + 12)
+	ld	e, (iy + 11)
+	call	__fsub
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	l, (ix - 4)
+	ld	(iy + 3), l
+	ld	hl, (ix - 7)
+	ld	(iy + 4), hl
+	ld	(iy + 7), d
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__ZpldRK4vec3
+__ZpldRK4vec3:
+	ld	hl, -12
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	de, (ix + 9)
+	ld	a, (ix + 12)
+	ld	hl, (ix + 15)
+	ld	(ix - 12), de
+	ld	(ix - 9), a
+	ld	(ix - 8), de
+	ld	(ix - 5), a
+	ld	(ix - 4), de
+	ld	(ix - 1), a
+	pea	ix - 12
+	push	hl
+	push	bc
+	call	__ZNK4vec3plERKS_
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3plERKS_
+__ZNK4vec3plERKS_:
+	ld	hl, -7
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	bc, (iy)
+	ld	hl, (hl)
+	ld	a, (iy + 3)
+	ld	iy, (ix + 12)
+	ld	e, (iy + 3)
+	call	__fadd
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	iy, (ix + 12)
+	ld	hl, (iy + 4)
+	lea	de, iy
+	ld	iy, (ix + 9)
+	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	ld	e, (iy + 7)
+	call	__fadd
+	ld	(ix - 7), bc
+	ld	d, a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 8)
+	ld	iy, (ix + 12)
+	ld	hl, (iy + 8)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 11)
+	ld	iy, (ix + 12)
+	ld	e, (iy + 11)
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	l, (ix - 4)
+	ld	(iy + 3), l
+	ld	hl, (ix - 7)
+	ld	(iy + 4), hl
+	ld	(iy + 7), d
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z3powRK4vec3d
+__Z3powRK4vec3d:
+	ld	hl, -8
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	bc, (ix + 12)
+	ld	hl, (iy)
+	ld	a, (iy + 3)
+	ld	e, (ix + 15)
+	push	de
+	push	bc
+	ld	e, a
+	push	de
+	push	hl
+	call	_pow
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 7)
+	ld	e, (ix + 15)
+	push	de
+	ld	de, (ix + 12)
+	push	de
+	ld	e, a
+	push	de
+	push	hl
+	call	_pow
+	ld	(ix - 7), hl
+	ld	(ix - 8), e
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 8)
+	ld	a, (iy + 11)
+	ld	e, (ix + 15)
+	push	de
+	ld	de, (ix + 12)
+	push	de
+	ld	e, a
+	push	de
+	push	hl
+	call	_pow
+	pop	bc
+	pop	bc
+	pop	bc
+	pop	bc
+	ld	iy, (ix + 6)
+	ld	bc, (ix - 3)
+	ld	(iy), bc
+	ld	a, (ix - 4)
+	ld	(iy + 3), a
+	ld	bc, (ix - 7)
+	ld	(iy + 4), bc
+	ld	a, (ix - 8)
+	ld	(iy + 7), a
+	ld	(iy + 8), hl
+	ld	(iy + 11), e
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z5crossRK4vec3S1_
+__Z5crossRK4vec3S1_:
+	ld	hl, -28
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	bc, (ix + 12)
+	ld	hl, (iy + 4)
+	ld	(ix - 3), hl
+	ld	a, (iy + 7)
+	lea	de, iy
+	ld	(ix - 4), a
+	push	bc
+	pop	iy
+	ld	hl, (iy + 8)
+	ld	(ix - 7), hl
+	ld	a, (iy + 11)
+	lea	hl, iy
+	ld	(ix - 8), a
+	push	de
+	pop	iy
+	ld	bc, (iy + 8)
+	push	hl
+	pop	iy
+	ld	hl, (iy + 4)
+	ld	(ix - 14), hl
+	ld	d, (iy + 7)
+	ld	(ix - 15), d
+	ld	iy, (ix + 9)
+	ld	a, (iy + 11)
+	call	__fneg
+	push	bc
+	pop	iy
+	ld	(ix - 27), iy
+	ld	e, a
+	ld	(ix - 28), e
+	push	hl
+	pop	bc
+	ld	a, d
+	lea	hl, iy
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	ld	hl, (ix - 7)
+	ld	e, (ix - 8)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	(ix - 18), bc
+	ld	(ix - 19), a
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 11), hl
+	ld	d, (iy + 3)
+	ld	(ix - 20), d
+	ld	hl, (ix + 12)
+	ld	bc, (hl)
+	ld	(ix - 23), bc
+	ld	iy, (ix + 12)
+	ld	a, (iy + 3)
+	ld	(ix - 24), a
+	ld	hl, (ix - 27)
+	ld	e, (ix - 28)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 27), a
+	ld	bc, (ix - 11)
+	ld	a, d
+	ld	hl, (ix - 7)
+	ld	e, (ix - 8)
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 27)
+	call	__fadd
+	call	__fneg
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	call	__fneg
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 23)
+	ld	a, (ix - 24)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	bc, (ix - 11)
+	ld	a, (ix - 20)
+	ld	hl, (ix - 14)
+	ld	e, (ix - 15)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 18)
+	ld	(iy), hl
+	ld	l, (ix - 19)
+	ld	(iy + 3), l
+	ld	hl, (ix - 7)
+	ld	(iy + 4), hl
+	ld	l, (ix - 8)
+	ld	(iy + 7), l
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__ZmldRK4vec4
+__ZmldRK4vec4:
+	ld	hl, -4
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	hl, (ix + 9)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	push	de
+	push	bc
+	call	__ZNK4vec4mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec4mlERKd
+__ZNK4vec4mlERKd:
+	ld	hl, -15
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	ld	hl, (iy)
+	ld	d, (iy + 3)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	ld	(ix - 3), hl
+	ld	e, d
+	call	__fmul
+	ld	(ix - 6), bc
+	ld	(ix - 7), a
+	ld	bc, (ix + 9)
+	push	bc
+	pop	iy
+	ld	iy, (iy + 4)
+	push	hl
+	pop	bc
+	ld	a, d
+	lea	hl, iy
+	ld	iy, (ix + 9)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	(ix - 10), bc
+	ld	(ix - 11), a
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 8)
+	ld	bc, (ix - 3)
+	ld	a, d
+	ld	e, (iy + 11)
+	call	__fmul
+	ld	(ix - 14), bc
+	ld	(ix - 15), a
+	ld	hl, (iy + 12)
+	ld	bc, (ix - 3)
+	ld	a, d
+	ld	e, (iy + 15)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 6)
+	ld	(iy), hl
+	ld	l, (ix - 7)
+	ld	(iy + 3), l
+	ld	hl, (ix - 10)
+	ld	(iy + 4), hl
+	ld	l, (ix - 11)
+	ld	(iy + 7), l
+	ld	hl, (ix - 14)
+	ld	(iy + 8), hl
+	ld	l, (ix - 15)
+	ld	(iy + 11), l
+	ld	(iy + 12), bc
+	ld	(iy + 15), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z3dotRK4vec2S1_
+__Z3dotRK4vec2S1_:
+	ld	hl, -8
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	bc, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 7), hl
+	ld	a, (iy + 3)
+	lea	de, iy
+	ld	(ix - 8), a
+	push	bc
+	pop	hl
+	ld	hl, (hl)
+	push	bc
+	pop	iy
+	ld	(ix - 3), hl
+	ld	a, (iy + 3)
+	ld	(ix - 4), a
+	push	de
+	pop	iy
+	ld	bc, (iy + 4)
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 4)
+	lea	de, iy
+	ld	iy, (ix + 6)
+	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	ld	e, (iy + 7)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	bc, (ix - 7)
+	ld	a, (ix - 8)
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z3dotRK4vec3S1_
+__Z3dotRK4vec3S1_:
+	ld	hl, -11
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	de, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 7), hl
+	ld	a, (iy + 3)
+	ld	(ix - 8), a
+	push	de
+	pop	hl
+	ld	hl, (hl)
+	ld	(ix - 3), hl
+	push	de
+	pop	iy
+	ld	a, (iy + 3)
+	ex	de, hl
+	ld	(ix - 4), a
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 4)
+	push	hl
+	pop	iy
+	ld	hl, (iy + 4)
+	lea	de, iy
+	ld	iy, (ix + 6)
+	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	(ix - 11), bc
+	ld	d, a
+	ld	bc, (ix - 7)
+	ld	a, (ix - 8)
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fmul
+	ld	hl, (ix - 11)
+	ld	e, d
+	call	__fadd
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 8)
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 8)
+	ld	iy, (ix + 6)
+	ld	a, (iy + 11)
+	ld	iy, (ix + 9)
+	ld	e, (iy + 11)
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z3mindd
+__Z3mindd:
+	call	__frameset0
+	ld	bc, (ix + 6)
+	ld	a, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	e, (ix + 15)
+	call	__fcmp
+	jp	m, BB14_2
+	ld	d, 0
+	jr	BB14_3
+BB14_2:
+	ld	d, 1
+BB14_3:
+	bit	0, d
+	jr	nz, BB14_5
+	push	bc
+	pop	hl
+BB14_5:
+	bit	0, d
+	jr	nz, BB14_7
+	ld	e, a
+BB14_7:
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z3maxdd
+__Z3maxdd:
+	call	__frameset0
+	ld	hl, (ix + 6)
+	ld	e, (ix + 9)
+	ld	bc, (ix + 12)
+	ld	a, (ix + 15)
+	call	__fcmp
+	jp	m, BB15_2
+	ld	d, 0
+	jr	BB15_3
+BB15_2:
+	ld	d, 1
+BB15_3:
+	bit	0, d
+	jr	nz, BB15_5
+	push	hl
+	pop	bc
+BB15_5:
+	bit	0, d
+	jr	nz, BB15_7
+	ld	a, e
+BB15_7:
+	push	bc
+	pop	hl
+	ld	e, a
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z9normalizeRK4vec3
+__Z9normalizeRK4vec3:
+	ld	hl, -11
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 11), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	bc, (ix - 11)
+	ld	a, d
+	push	bc
+	pop	hl
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 7)
+	ld	e, (ix - 8)
+	call	__fadd
+	ld	(ix - 7), bc
+	ld	d, a
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	hl, (ix - 7)
+	ld	e, d
+	call	__fadd
+	ld	l, a
+	push	hl
+	push	bc
+	call	_sqrt
+	pop	bc
+	pop	bc
+	ld	(ix - 4), hl
+	ld	(ix - 1), e
+	pea	ix - 4
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	__ZNK4vec3dvERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3dvERKd
+__ZNK4vec3dvERKd:
+	ld	hl, -7
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	e, (iy + 3)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	call	__fdiv
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	call	__fdiv
+	ld	(ix - 7), bc
+	ld	d, a
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
+	call	__fdiv
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	l, (ix - 4)
+	ld	(iy + 3), l
+	ld	hl, (ix - 7)
+	ld	(iy + 4), hl
+	ld	(iy + 7), d
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z9normalizeRK4vec2
+__Z9normalizeRK4vec2:
+	ld	hl, -8
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 8), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 5), a
+	ld	bc, (ix - 8)
+	ld	a, d
+	push	bc
+	pop	hl
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 5)
+	call	__fadd
+	ld	l, a
+	push	hl
+	push	bc
+	call	_sqrt
+	pop	bc
+	pop	bc
+	ld	(ix - 4), hl
+	ld	(ix - 1), e
+	pea	ix - 4
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	__ZNK4vec2dvERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec2dvERKd
+__ZNK4vec2dvERKd:
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	e, (iy + 3)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	call	__fdiv
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	call	__fdiv
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	(iy + 3), d
+	ld	(iy + 4), bc
+	ld	(iy + 7), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8lengthSQRK4vec3
+__Z8lengthSQRK4vec3:
+	ld	hl, -6
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	hl, (iy)
+	ld	(ix - 6), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 3), a
+	ld	bc, (ix - 6)
+	ld	a, d
+	push	bc
+	pop	hl
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 3)
+	call	__fadd
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 8)
+	ld	iy, (ix + 6)
+	ld	a, (iy + 11)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8lengthSQRK4vec2
+__Z8lengthSQRK4vec2:
+	ld	hl, -4
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	hl, (iy)
+	ld	(ix - 4), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 1), a
+	ld	bc, (ix - 4)
+	ld	a, d
+	push	bc
+	pop	hl
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 1)
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z5clampddd
+__Z5clampddd:
+	ld	hl, -5
+	call	__frameset
+	ld	de, (ix + 6)
+	ld	iy, (ix + 12)
+	ld	hl, (ix + 18)
+	ld	(ix - 4), hl
+	ld	a, (ix + 21)
+	ld	(ix - 1), a
+	ex	de, hl
+	ld	e, (ix + 9)
+	lea	bc, iy
+	ld	a, (ix + 15)
+	call	__fcmp
+	ld	d, 1
+	ld	l, 0
+	ld	a, d
+	jp	m, BB22_2
+	ld	a, l
+BB22_2:
+	ld	(ix - 5), a
+	ld	hl, (ix + 18)
+	ld	e, (ix + 21)
+	ld	bc, (ix + 6)
+	ld	a, (ix + 9)
+	call	__fcmp
+	jp	m, BB22_4
+	ld	d, 0
+BB22_4:
+	bit	0, d
+	ld	e, (ix + 15)
+	jr	nz, BB22_6
+	ld	hl, (ix + 6)
+	ld	(ix - 4), hl
+BB22_6:
+	bit	0, d
+	jr	nz, BB22_8
+	ld	a, (ix + 9)
+	ld	(ix - 1), a
+BB22_8:
+	ld	a, (ix - 5)
+	bit	0, a
+	jr	nz, BB22_10
+	ld	iy, (ix - 4)
+BB22_10:
+	bit	0, a
+	jr	nz, BB22_12
+	ld	e, (ix - 1)
+BB22_12:
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z6rotated
+__Z6rotated:
+	ld	hl, -12
+	call	__frameset
+	ld	de, (ix + 9)
+	ld	l, (ix + 12)
+	push	hl
+	push	de
+	call	_cos
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+	pop	hl
+	pop	hl
+	ld	l, (ix + 12)
+	push	hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	_sin
+	push	hl
+	pop	bc
+	ld	a, e
+	pop	hl
+	pop	hl
+	call	__fneg
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	l, (ix + 12)
+	push	hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	_sin
+	ld	(ix - 11), hl
+	ld	(ix - 12), e
+	pop	hl
+	pop	hl
+	ld	l, (ix + 12)
+	push	hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	_cos
+	pop	bc
+	pop	bc
+	ld	iy, (ix + 6)
+	ld	bc, (ix - 3)
+	ld	(iy), bc
+	ld	a, (ix - 4)
+	ld	(iy + 3), a
+	ld	bc, (ix - 7)
+	ld	(iy + 8), bc
+	ld	a, (ix - 8)
+	ld	(iy + 11), a
+	ld	bc, (ix - 11)
+	ld	(iy + 4), bc
+	ld	a, (ix - 12)
+	ld	(iy + 7), a
+	ld	(iy + 12), hl
+	ld	(iy + 15), e
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_main
+_main:
+	ld	hl, -1629
+	call	__frameset
+	ld	bc, -156
+	lea	iy, ix
+	add	iy, bc
+	ld	bc, -1602
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	push	ix
+	ld	bc, -1456
+	add	ix, bc
+	lea	de, ix
+	pop	ix
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1584
+	add	ix, de
+	lea	bc, ix
+	pop	ix
+	lea	hl, iy
+	ld	de, -1621
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), hl
+	ld	de, (ix - 3)
+	push	de
+	pop	iy
+	ld	de, -1587
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), iy
+	lea	hl, iy + 20
+	push	ix
+	ld	de, -1615
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
+	lea	hl, iy + 4
+	ld	de, -1596
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), hl
+	push	bc
+	pop	iy
+	ld	bc, -1590
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	lea	hl, iy
+	ld	bc, -1593
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), hl
+	call	_gfx_Begin
+	ld	hl, 1
+	push	hl
+	call	_gfx_SetDraw
+	pop	hl
+	call	_os_GetCSC
+	ld	bc, -1599
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), a
+	or	a, a
+	sbc	hl, hl
+	ld	bc, -1602
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	ld	(iy), hl
+	ld	hl, 2097152
+	ld	(iy + 3), hl
+	ld	(iy + 6), 65
+	ld	(iy + 7), hl
+	ld	(iy + 10), -63
+	ld	de, -2097152
+	ld	(iy + 11), de
+	ld	(iy + 14), 64
+	ld	bc, 1
+	ld	(iy + 15), bc
+	ld	(iy + 18), de
+	ld	(iy + 21), 64
+	ld	(ix - 3), bc
+	ld	bc, -134
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), de
+	push	ix
+	ld	bc, -131
+	add	ix, bc
+	ld	(ix), 64
+	pop	ix
+	push	ix
+	inc	bc
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	(ix - 127), 65
+	ld	iy, 0
+	ld	(ix - 126), iy
+	ld	(ix - 123), de
+	ld	(ix - 120), 64
+	ld	(ix - 119), de
+	ld	(ix - 116), 64
+	ld	(ix - 115), hl
+	ld	(ix - 112), 65
+	ld	bc, (ix - 3)
+	ld	(ix - 111), bc
+	ld	(ix - 108), hl
+	ld	(ix - 105), 65
+	ld	(ix - 104), hl
+	ld	(ix - 101), -63
+	ld	(ix - 100), de
+	ld	(ix - 97), 64
+	ld	(ix - 96), iy
+	ld	(ix - 93), hl
+	ld	(ix - 90), -63
+	ld	(ix - 89), de
+	ld	(ix - 86), -64
+	ld	(ix - 85), hl
+	ld	(ix - 82), 65
+	ld	(ix - 81), bc
+	ld	(ix - 78), de
+	ld	(ix - 75), -64
+	ld	(ix - 74), hl
+	ld	(ix - 71), -63
+	ld	(ix - 70), de
+	ld	(ix - 67), -64
+	ld	(ix - 66), iy
+	ld	(ix - 63), de
+	ld	(ix - 60), -64
+	ld	(ix - 59), hl
+	ld	(ix - 56), -63
+	ld	(ix - 55), de
+	ld	(ix - 52), -64
+	ld	(ix - 51), bc
+	ld	(ix - 48), hl
+	ld	(ix - 45), -63
+	ld	(ix - 44), de
+	ld	(ix - 41), -64
+	ld	(ix - 40), hl
+	ld	(ix - 37), 65
+	ld	(ix - 36), iy
+	ld	(ix - 33), de
+	ld	(ix - 30), 64
+	ld	hl, -6291456
+	ld	(ix - 29), hl
+	ld	(ix - 26), -64
+	ld	(ix - 25), iy
+	ld	(ix - 22), 64
+	ld	(ix - 21), bc
+	ld	(ix - 18), de
+	ld	(ix - 15), 64
+	ld	(ix - 14), hl
+	ld	(ix - 11), -64
+	ld	(ix - 10), iy
+	ld	(ix - 7), 64
+	ld	de, -1587
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	ld	(iy + 20), 0
+	ld	de, -1615
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	push	hl
+	pop	iy
+	inc	iy
+	ld	bc, 1279
+	lea	de, iy
+	push	hl
+	pop	iy
+	ldir
+	lea	iy, iy + 4
+	ld	de, 320
+	ld	bc, 0
+BB24_1:
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	jr	z, BB24_3
+	push	bc
+	pop	hl
+	lea	de, iy
+	push	hl
+	pop	iy
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	add	iy, iy
+	ld	de, (ix - 3)
+	push	de
+	pop	iy
+	sbc	hl, hl
+	ld	a, l
+	call	__ltof
+	ld	hl, -6324224
+	ld	e, 67
+	call	__fdiv
+	or	a, a
+	sbc	hl, hl
+	ld	e, 64
+	call	__fmul
+	ld	hl, -8388608
+	ld	e, -65
+	call	__fadd
+	ld	(iy - 4), bc
+	ld	(iy - 1), a
+	ld	(iy), hl
+	ld	(iy + 3), 63
+	ld	de, 2
+	ld	bc, -1602
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	add	hl, de
+	push	hl
+	pop	bc
+	ld	de, 320
+	lea	iy, iy + 8
+	jr	BB24_1
+BB24_3:
+	ld	bc, -1587
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	hl, -8388608
+	ex	de, hl
+	ld	(iy + 4), de
+	ld	(iy + 7), 63
+	or	a, a
+	sbc	hl, hl
+	ld	(iy + 12), hl
+	ld	(iy + 15), -128
+	ld	(iy + 8), hl
+	ld	(iy + 11), h
+	ld	(iy + 16), de
+	ld	(iy + 19), 63
+	ld	bc, -1599
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+BB24_4:
+	ld	bc, -1599
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), a
+	call	_clock
+	ld	bc, -1611
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), hl
+	push	ix
+	dec	bc
+	add	ix, bc
+	ld	(ix), e
+	pop	ix
+	call	_gfx_ZeroScreen
+	ld	bc, -1599
+	lea	hl, ix
+	add	hl, bc
+	ld	a, (hl)
+	cp	a, 2
+	jp	nz, BB24_6
+	ld	bc, -1587
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	hl, 8182053
+	ld	(iy - 12), hl
+	ld	(iy - 9), 63
+	ld	de, 2109532
+	ld	(iy - 4), de
+	ld	(iy - 1), -66
+	ld	(iy - 8), de
+	ld	(iy - 5), 62
+	ld	(iy), hl
+	ld	(iy + 3), 63
+	ld	bc, -1596
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	pea	iy - 12
+	ld	bc, -1593
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	__ZN4mat2mlERKS_
+	ld	bc, -1587
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	bc, -1596
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	push	ix
+	ld	bc, -1593
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	bc, 16
+	ldir
+	ld	bc, -1596
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	scf
+	sbc	hl, hl
+	jp	BB24_8
+BB24_6:
+	cp	a, 3
+	ld	hl, 0
+	ld	bc, -1587
+	lea	iy, ix
+	push	af
+	add	iy, bc
+	pop	af
+	ld	iy, (iy)
+	push	ix
+	ld	bc, -1596
+	push	af
+	add	ix, bc
+	pop	af
+	ld	de, (ix)
+	pop	ix
+	jp	nz, BB24_8
+	ld	(ix - 3), de
+	ld	de, -1590
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	hl, 8182053
+	push	bc
+	pop	iy
+	ld	(iy + 116), hl
+	ld	(iy + 119), 63
+	ld	de, (ix - 3)
+	ex	de, hl
+	ld	de, 2109532
+	ld	(iy + 124), de
+	ld	(iy + 127), 62
+	ld	(iy + 120), de
+	ld	(iy + 123), -66
+	ld	de, -1587
+	lea	iy, ix
+	add	iy, de
+	ld	iy, (iy)
+	ld	de, 8182053
+	ld	(iy), de
+	ld	(iy + 3), 63
+	push	hl
+	pea	iy - 12
+	ld	de, -1593
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	call	__ZN4mat2mlERKS_
+	ld	bc, -1587
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	bc, -1596
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	push	ix
+	ld	bc, -1593
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	ld	bc, 16
+	ldir
+	ld	bc, -1596
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	ld	hl, 1
+BB24_8:
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	or	a, a
+	sbc	hl, hl
+	ld	(iy - 12), hl
+	ld	(iy - 9), h
+	ld	(iy - 8), hl
+	ld	(iy - 5), h
+	ld	bc, -1590
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	ld	(iy + 108), hl
+	ld	(iy + 111), h
+	ld	(iy + 112), hl
+	ld	(iy + 115), h
+	ld	(iy), hl
+	ld	(iy + 3), h
+	ld	hl, -8388608
+	ld	(iy + 4), hl
+	ld	(iy + 7), 63
+	push	iy
+	push	de
+	pea	iy + 100
+	call	__ZN4mat2mlERK4vec2
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	bc, 0
+BB24_9:
+	push	bc
+	pop	hl
+	ld	de, 160
+	or	a, a
+	sbc	hl, de
+	jp	z, BB24_24
+	ld	de, -1605
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	push	bc
+	pop	hl
+	ld	c, 3
+	call	__ishl
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
+	ld	bc, -1615
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
+	add	hl, de
+	push	hl
+	ld	de, -1596
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	ld	de, -1590
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	ld	bc, (ix - 3)
+	call	__ZN4mat2mlERK4vec2
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	bc, -1590
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	hl, (iy)
+	ld	de, (iy + 3)
+	ld	bc, (iy + 6)
+	ld	(ix - 3), bc
+	ld	bc, -1587
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	ld	(iy - 12), hl
+	ld	(iy - 9), de
+	ld	bc, (ix - 3)
+	ld	(iy - 6), c
+	ld	(iy - 5), b
+	or	a, a
+	sbc	hl, hl
+	ex	de, hl
+	ld	hl, -3670016
+	push	ix
+	ld	bc, -1599
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ex	de, hl
+	ld	a, 66
+	push	ix
+	ld	bc, -1602
+	add	ix, bc
+	ld	(ix), a
+	pop	ix
+BB24_11:
+	push	hl
+	pop	bc
+	ld	de, 150
+	or	a, a
+	sbc	hl, de
+	jp	z, BB24_17
+	ld	de, -1618
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	push	ix
+	ld	de, -1621
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	add	hl, bc
+	lea	de, iy
+	ld	bc, -1590
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	pea	iy + 108
+	push	de
+	pop	iy
+	pea	iy - 12
+	push	hl
+	call	__ZN7AA_Line15rayIntersectionERK4vec2PS0_
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jp	z, BB24_15
+	ld	de, -1590
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	ld	hl, (iy + 108)
+	push	ix
+	ld	de, -1628
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
+	ld	a, (iy + 111)
+	dec	de
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	hl, (iy + 100)
+	push	ix
+	ld	de, -1624
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
+	ld	a, (iy + 103)
+	dec	de
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), a
+	ld	bc, (iy + 112)
+	ld	hl, (iy + 104)
+	ld	a, (iy + 115)
+	ld	e, (iy + 107)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1628
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	push	ix
+	ld	de, -1624
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1625
+	add	ix, bc
+	ld	e, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	(ix - 3), de
+	ld	de, -1599
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	ld	de, -1602
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__fcmp
+	jp	p, BB24_15
+	ld	(ix - 3), de
+	ld	de, -1608
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	inc	bc
+	push	ix
+	add	ix, de
+	ld	(ix), bc
+	pop	ix
+	push	ix
+	ld	bc, -1599
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	de, (ix - 3)
+	ld	bc, -1602
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), e
+	push	ix
+	ld	bc, -1587
+	add	ix, bc
+	ld	iy, (ix)
+	pop	ix
+	jr	BB24_16
+BB24_15:
+	ld	bc, -1587
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+BB24_16:
+	ld	de, 15
+	ld	bc, -1618
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	add	hl, de
+	jp	BB24_11
+BB24_17:
+	ld	de, -1599
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	ld	de, -1602
+	lea	iy, ix
+	add	iy, de
+	ld	a, (iy)
+	ld	hl, -3670016
+	ld	e, 65
+	call	__fmul
+	ld	hl, 8257536
+	ld	e, 67
+	call	__fcmp
+	ld	d, 1
+	jp	m, BB24_19
+	ld	d, 0
+BB24_19:
+	bit	0, d
+	jr	nz, BB24_21
+	push	bc
+	pop	hl
+BB24_21:
+	bit	0, d
+	ld	d, e
+	jr	nz, BB24_23
+	ld	d, a
+BB24_23:
+	push	hl
+	pop	bc
+	ld	a, d
+	call	__ftoul
+	push	bc
+	ld	hl, 224
+	push	hl
+	call	_gfx_Darken
+	pop	de
+	pop	de
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	bc, -393216
+	ld	a, 67
+	ld	de, -1599
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	(ix - 3), bc
+	ld	bc, -1602
+	lea	iy, ix
+	add	iy, bc
+	ld	e, (iy)
+	ld	bc, (ix - 3)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -1605
+	add	ix, de
+	ld	hl, (ix)
+	pop	ix
+	ld	c, 1
+	call	__ishl
+	push	ix
+	ld	de, -1599
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
+	ld	bc, 7340032
+	ld	a, 67
+	lea	hl, iy
+	ld	de, (ix - 3)
+	ld	e, d
+	call	__fsub
+	or	a, a
+	sbc	hl, hl
+	ld	e, 63
+	call	__fmul
+	call	__ftoul
+	push	bc
+	pop	hl
+	lea	bc, iy
+	ld	a, d
+	call	__ftoul
+	push	bc
+	ld	de, 2
+	push	de
+	push	hl
+	ld	bc, -1599
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	_gfx_FillRectangle_NoClip
+	ld	de, -1605
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	inc	bc
+	jp	BB24_9
+BB24_24:
+	call	_clock
+	ld	(ix - 3), de
+	ld	de, -1611
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	push	ix
+	dec	de
+	add	ix, de
+	ld	a, (ix)
+	pop	ix
+	ld	de, (ix - 3)
+	call	__lsub
+	push	hl
+	pop	bc
+	ld	a, e
+	call	__ultof
+	or	a, a
+	sbc	hl, hl
+	ld	e, 56
+	call	__fmul
+	ld	l, a
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -1608
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	push	de
+	push	hl
+	ld	bc, (ix - 3)
+	push	bc
+	ld	hl, _.str
+	push	hl
+	ld	bc, -1593
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	_sprintf
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, -2
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	ld	bc, -1593
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	_gfx_GetStringWidth
+	push	hl
+	pop	de
+	pop	hl
+	ld	hl, 320
+	or	a, a
+	sbc	hl, de
+	ld	c, 1
+	call	__ishru
+	ld	bc, 255
+	call	__iand
+	ld	de, 4
+	push	de
+	push	hl
+	ld	de, -1593
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	call	_gfx_PrintStringXY
+	pop	hl
+	pop	hl
+	pop	hl
+	call	_gfx_SwapDraw
+	call	_os_GetCSC
+	cp	a, 9
+	jp	nz, BB24_4
+	call	_gfx_End
+	or	a, a
+	sbc	hl, hl
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4mat2mlERKS_
+__ZN4mat2mlERKS_:
+	ld	hl, -26
+	call	__frameset
+	ld	bc, (ix + 9)
+	ld	iy, (ix + 12)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	(ix - 9), hl
+	ld	a, (iy + 3)
+	ld	(ix - 10), a
+	push	bc
+	pop	iy
+	ld	hl, (iy)
+	ld	(ix - 3), hl
+	ld	d, (iy + 3)
+	ld	(ix - 11), d
+	ld	iy, (ix + 12)
+	ld	bc, (iy + 4)
+	ld	(ix - 26), bc
+	ld	hl, (ix + 12)
+	push	hl
+	pop	iy
+	ld	a, (iy + 7)
+	ld	(ix - 23), a
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 8)
+	ld	(ix - 14), hl
+	ld	e, (iy + 11)
+	ld	(ix - 15), e
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 6), a
+	ld	bc, (ix - 9)
+	ld	a, (ix - 10)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 6)
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy), bc
+	ld	(iy + 3), a
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 4)
+	ld	(ix - 6), hl
+	ld	d, (iy + 7)
+	ld	(ix - 16), d
+	ld	hl, (iy + 12)
+	ld	(ix - 19), hl
+	ld	e, (iy + 15)
+	ld	(ix - 20), e
+	ld	bc, (ix - 26)
+	ld	a, (ix - 23)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 23), a
+	ld	bc, (ix - 9)
+	ld	a, (ix - 10)
+	ld	hl, (ix - 6)
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 23)
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy + 4), bc
+	ld	(iy + 7), a
+	ld	iy, (ix + 12)
+	ld	hl, (iy + 8)
+	ld	(ix - 9), hl
+	ld	d, (iy + 11)
+	ld	(ix - 10), d
+	ld	hl, (iy + 12)
+	ld	(ix - 23), hl
+	ld	e, (iy + 15)
+	ld	(ix - 26), e
+	ld	bc, (ix - 14)
+	ld	a, (ix - 15)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 14), a
+	ld	bc, (ix - 9)
+	ld	a, d
+	ld	hl, (ix - 3)
+	ld	e, (ix - 11)
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 14)
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy + 8), bc
+	ld	(iy + 11), a
+	ld	bc, (ix - 19)
+	ld	a, (ix - 20)
+	ld	hl, (ix - 23)
+	ld	e, (ix - 26)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	bc, (ix - 9)
+	ld	a, (ix - 10)
+	ld	hl, (ix - 6)
+	ld	e, (ix - 16)
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy + 12), bc
+	ld	iy, (ix + 6)
+	ld	(iy + 15), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4mat2mlERK4vec2
+__ZN4mat2mlERK4vec2:
+	ld	hl, -16
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	de, (ix + 12)
+	ld	hl, (iy)
+	ld	(ix - 7), hl
+	ld	a, (iy + 3)
+	lea	bc, iy
+	ld	(ix - 8), a
+	push	de
+	pop	hl
+	ld	hl, (hl)
+	ld	(ix - 3), hl
+	push	de
+	pop	iy
+	ld	a, (iy + 3)
+	ex	de, hl
+	ld	(ix - 4), a
+	push	bc
+	pop	iy
+	ld	bc, (iy + 8)
+	push	hl
+	pop	iy
+	ld	hl, (iy + 4)
+	ld	(ix - 11), hl
+	ld	e, (iy + 7)
+	ld	(ix - 12), e
+	ld	iy, (ix + 9)
+	ld	a, (iy + 11)
+	call	__fmul
+	ld	(ix - 15), bc
+	ld	(ix - 16), a
+	ld	bc, (ix - 7)
+	ld	a, (ix - 8)
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fmul
+	ld	hl, (ix - 15)
+	ld	e, (ix - 16)
+	call	__fadd
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	hl, (iy + 4)
+	ld	(ix - 15), hl
+	ld	d, (iy + 7)
+	ld	hl, (iy + 12)
+	ld	bc, (ix - 11)
+	ld	a, (ix - 12)
+	ld	e, (iy + 15)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 11), a
+	ld	bc, (ix - 15)
+	ld	a, d
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 11)
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	hl, (ix - 7)
+	ld	(iy), hl
+	ld	l, (ix - 8)
+	ld	(iy + 3), l
+	ld	(iy + 4), bc
+	ld	(iy + 7), a
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN7AA_Line15rayIntersectionERK4vec2PS0_
+__ZN7AA_Line15rayIntersectionERK4vec2PS0_:
+	ld	hl, -12
+	call	__frameset
+	ld	hl, (ix + 6)
+	ld	iy, (ix + 9)
+	ld	bc, 0
+	ld	d, b
+	ld	hl, (hl)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB27_5
+	ld	hl, (iy + 4)
+	ld	e, (iy + 7)
+	ld	a, d
+	call	__fcmp
+	jp	z, BB27_11
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 3)
+	ld	a, (iy + 6)
+	push	bc
+	pop	iy
+	ld	(ix - 1), a
+	call	__fdiv
+	or	a, a
+	sbc	hl, hl
+	ld	e, d
+	call	__fcmp
+	jp	p, BB27_11
+	ld	(ix - 8), iy
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	e, (iy + 3)
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 7)
+	ld	iy, (ix + 6)
+	ld	iy, (iy + 11)
+	ld	(ix - 11), iy
+	ld	iy, (ix + 6)
+	ld	e, (iy + 14)
+	ld	(ix - 12), e
+	ld	(ix - 5), hl
+	ld	(ix - 2), a
+	ld	e, a
+	ld	a, (iy + 10)
+	call	__fcmp
+	jp	m, BB27_11
+	ld	hl, (ix - 11)
+	ld	e, (ix - 12)
+	ld	bc, (ix - 5)
+	ld	a, (ix - 2)
+	call	__fcmp
+	jp	p, BB27_10
+	jp	BB27_11
+BB27_5:
+	ld	bc, 1
+	or	a, a
+	sbc	hl, bc
+	jp	nz, BB27_11
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
+	ld	hl, (iy)
+	ld	e, (iy + 3)
+	ld	iy, 0
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	z, BB27_11
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 3)
+	ld	a, (iy + 6)
+	push	bc
+	pop	iy
+	ld	(ix - 2), a
+	call	__fdiv
+	or	a, a
+	sbc	hl, hl
+	ld	e, d
+	call	__fcmp
+	jp	p, BB27_11
+	ld	(ix - 5), iy
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 4)
+	ld	e, (iy + 7)
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 7)
+	ld	iy, (ix + 6)
+	ld	iy, (iy + 11)
+	ld	(ix - 11), iy
+	ld	iy, (ix + 6)
+	ld	e, (iy + 14)
+	ld	(ix - 12), e
+	ld	(ix - 8), hl
+	ld	(ix - 1), a
+	ld	e, a
+	ld	a, (iy + 10)
+	call	__fcmp
+	jp	m, BB27_11
+	ld	hl, (ix - 11)
+	ld	e, (ix - 12)
+	ld	bc, (ix - 8)
+	ld	a, (ix - 1)
+	call	__fcmp
+	ld	bc, (ix - 5)
+	jp	m, BB27_11
+BB27_10:
+	ld	iy, (ix + 12)
+	ld	d, 1
+	ld	(iy), bc
+	ld	a, (ix - 2)
+	ld	(iy + 3), a
+	ld	hl, (ix - 8)
+	ld	(iy + 4), hl
+	ld	a, (ix - 1)
+	ld	(iy + 7), a
+BB27_11:
+	ld	a, d
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.rodata,"a",@progbits
+	private	_.str
+_.str:
+	db	"render time: %f, counter: %d", 0
+
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
+	extern	__Unwind_SjLj_Register
+	extern	__frameset
+	extern	_gfx_SetTextFGColor
+	extern	_gfx_FillRectangle_NoClip
+	extern	_sprintf
+	extern	_gfx_Begin
+	extern	_sin
+	extern	__fadd
+	extern	__lsub
+	extern	_pow
+	extern	_gfx_GetStringWidth
+	extern	_sqrt
+	extern	_gfx_Darken
+	extern	__ftoul
+	extern	__ultof
+	extern	_gfx_SwapDraw
+	extern	__ishl
+	extern	__fmul
+	extern	__ishru
+	extern	_gfx_SetDraw
+	extern	__Unwind_SjLj_Unregister
+	extern	__iand
+	extern	__fneg
+	extern	_gfx_ZeroScreen
+	extern	__fdiv
+	extern	_gfx_SetColor
+	extern	__ltof
+	extern	_gfx_End
+	extern	_gfx_PrintStringXY
+	extern	_os_GetCSC
+	extern	__fcmp
+	extern	__frameset0
+	extern	_cos
+	extern	_clock
+	extern	__fsub

@@ -1,0 +1,131 @@
+// #include <graphx.h>
+// #include <sys/timers.h>
+// #include <ti/getcsc.h>
+
+#include <stdio.h>
+#include <time.h>
+
+#include "matrixMath.h"
+#include "vectorMath.h"
+
+typedef unsigned uint8_t;
+
+void rayCast();
+
+// Axis-Aligned line
+
+// +Y is forward,
+// +X is right
+// X is parallel to x-axis
+enum LineType { X_LINE, Y_LINE };
+class AA_Line {
+  public:
+    AA_Line(LineType X_Y_line, double off, double min, double max) {
+        type = X_Y_line;
+        pos = off;
+        min_value = min;
+        max_value = max;
+    }
+    bool rayIntersection(const vec2 &ray, vec2 *hit) {
+        if (type == X_LINE) {
+            printf("hiiii");
+            if (ray.y == 0) {
+                return false;
+            }
+            double mult = pos / ray.y;
+            if (mult > 0) {
+                double xPos = ray.x * mult;
+                if (min_value <= xPos && xPos <= max_value) {
+                    *hit = vec2(xPos, pos);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        } else if (type == Y_LINE) {
+            if (ray.x == 0) {
+                return false;
+            }
+            double mult = pos / ray.x;
+            if (mult > 0) {
+                double yPos = ray.y * mult;
+                if (min_value <= yPos && yPos <= max_value) {
+                    *hit = vec2(pos, yPos);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+    LineType type;
+    double pos;
+    double min_value, max_value;
+};
+
+int main(void) {
+
+    uint8_t key;
+    uint8_t add = 0;
+
+    uint8_t count = 16;
+
+    clock_t start_t, end_t;
+    double total_t = 1;
+
+    const uint8_t NUM_LINES = 10;
+    AA_Line lines[NUM_LINES] = {AA_Line(X_LINE, 10, -10, 7),  AA_Line(Y_LINE, 7, 7, 10),
+                                AA_Line(X_LINE, 7, 7, 10),    AA_Line(Y_LINE, 10, -10, 7),
+
+                                AA_Line(X_LINE, -10, -7, 10), AA_Line(Y_LINE, -7, -10, -7),
+                                AA_Line(X_LINE, -7, -10, -7), AA_Line(Y_LINE, -10, 10, -7),
+
+                                AA_Line(X_LINE, 7, -7, 3),    AA_Line(Y_LINE, 7, -7, 3)};
+
+    uint8_t counter = 0;
+    uint8_t scaleCounter = 0;
+
+    vec2 cam_forward = vec2(0, 1);
+    do {
+        start_t = clock();
+        // for(int a = 0; a < count; ++a){
+        //     //switch to gfx_FillTriangle_NoClip
+        //     gfx_SetColor(add+(a));
+        //     gfx_FillTriangle_NoClip(rand()%320,rand()%240, rand()%320,rand()%240, rand()%320,rand()%240);
+        // }
+
+        for (int a = 0; a < 320; a += 2) {
+            //
+            vec2 ray = normalize(vec2((a / (320 - 1)) * 2 - 1, 1.0));
+            vec2 hit = vec2();
+            double dist = 100;
+            for (int i = 0; i < NUM_LINES; ++i) {
+                vec2 current_hit = vec2();
+                double current_dist = 0;
+                if (lines[i].rayIntersection(ray, &current_hit)) {
+                    current_dist = dot(cam_forward, current_hit);
+                    printf("hit: %f ", current_dist);
+                    if (current_dist < dist) {
+                        hit = current_hit;
+                        dist = current_dist;
+                    }
+                }
+            }
+            dist = sqrt(dist);
+            // dist /= 5.0;
+            printf("%f ", dist);
+        }
+        break;
+        end_t = clock();
+        total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+        // char str[100];
+        // sprintf(str, "FPS: %f", 1 / total_t);
+    } while (true);
+
+    /* End graphics drawing */
+    // gfx_End();
+
+    return 0;
+}
