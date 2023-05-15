@@ -9,7 +9,7 @@ Section          Base   Top    High   Length
 .fini            D1A96D D1A9A1            34h
 .text            D1A9A1 D204EE          5B4Dh
 .data            D204EE D204EE             0h
-.rodata          D204EE D20605           117h
+.rodata          D204EE D2060F           121h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h

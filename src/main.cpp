@@ -157,7 +157,7 @@ int main(void) {
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
-        sprintf(str, "render time: %f, counter: %d", total_t, counter);
+        sprintf(str, "REV 0.0.6 render time: %f, counter: %d", total_t, counter);
         counter = 0;
         gfx_SetTextFGColor(254);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
