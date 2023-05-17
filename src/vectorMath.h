@@ -11,6 +11,8 @@
 // #include <sstream>
 // #include <iomanip>
 
+#include "fixed.h"
+
 using namespace std;
 
 class vec2 {
@@ -30,19 +32,13 @@ class vec2 {
         }
     }
 
-    vec2 operator*(const double &a) { // idk if this
-        return vec2(x * a, y * a);
-    }
+    vec2 operator*(const double &a) { return vec2(x * a, y * a); }
     void operator*=(double a) { // or this
         x *= a;
         y *= a;
     }
-    vec2 operator/(const double &a) { // idk if this
-        return vec2(x / a, y / a);
-    }
-    const vec2 operator/(const double &a) const { // idk if this
-        return vec2(x / a, y / a);
-    }
+    vec2 operator/(const double &a) { return vec2(x / a, y / a); }
+    const vec2 operator/(const double &a) const { return vec2(x / a, y / a); }
     void operator/=(double a) { // or this
         x /= a;
         y /= a;
@@ -73,6 +69,63 @@ class vec2 {
 
 vec2 operator*(double a, vec2 b) { return b * a; }
 
+class ivec2 {
+  public:
+    ivec2() : x(0), y(0) {}
+    ivec2(int x_in, int y_in) : x(x_in), y(y_in) {}
+    ivec2(int in) : x(in), y(in) {}
+
+    double operator[](unsigned i) {
+        switch (i) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        default:
+            return 6969696969.69;
+        }
+    }
+
+    ivec2 operator*(int a) { return ivec2((x * a) >> SHIFT, (y * a) >> SHIFT); }
+    const ivec2 operator*(int a) const { return ivec2((x * a) >> SHIFT, (y * a) >> SHIFT); }
+    ivec2 operator/(int a) { return ivec2((x << SHIFT) / a, (y << SHIFT) / a); }
+    const ivec2 operator/(int a) const { return ivec2((x << SHIFT) / a, (y << SHIFT) / a); }
+
+    const ivec2 operator+(const ivec2 &a) const { return ivec2(x + a.x, y + a.y); }
+    ivec2 operator+(const ivec2 &a) { return ivec2(x + a.x, y + a.y); }
+    ivec2 operator+(int a) { return ivec2(x + a, y + a); }
+
+    const ivec2 operator-(const ivec2 &a) const { return ivec2(x - a.x, y - a.y); }
+    ivec2 operator-(const ivec2 &a) { return ivec2(x - a.x, y - a.y); }
+    ivec2 operator-(int a) { return ivec2(x - a, y - a); }
+
+    void operator*=(int a) { // or this
+        x *= a;
+        y *= a;
+        x = x >> SHIFT;
+        y = y >> SHIFT;
+    }
+    void operator/=(int a) { // or this
+        x = x << SHIFT;
+        y = y << SHIFT;
+        x /= a;
+        y /= a;
+    }
+    void operator+=(ivec2 a) {
+        x += a.x;
+        y += a.y;
+    }
+    void operator-=(ivec2 a) {
+        x -= a.x;
+        y -= a.y;
+    }
+
+    int x;
+    int y;
+};
+
+ivec2 operator*(int a, ivec2 b) { return b * a; }
+
 class vec3 {
   public:
     vec3() : x(0), y(0), z(0) {}
@@ -94,29 +147,17 @@ class vec3 {
         }
     }
 
-    vec3 operator*(const double &a) { // idk if this
-        return vec3(x * a, y * a, z * a);
-    }
-    const vec3 operator*(const double &a) const { // idk if this
-        return vec3(x * a, y * a, z * a);
-    }
-    vec3 operator*(const vec3 &a) { // idk if this
-        return vec3(x * a.x, y * a.y, z * a.z);
-    }
-    const vec3 operator*(const vec3 &a) const { // idk if this
-        return vec3(x * a.x, y * a.y, z * a.z);
-    }
+    vec3 operator*(const double &a) { return vec3(x * a, y * a, z * a); }
+    const vec3 operator*(const double &a) const { return vec3(x * a, y * a, z * a); }
+    vec3 operator*(const vec3 &a) { return vec3(x * a.x, y * a.y, z * a.z); }
+    const vec3 operator*(const vec3 &a) const { return vec3(x * a.x, y * a.y, z * a.z); }
     void operator*=(double a) { // or this
         x *= a;
         y *= a;
         z *= a;
     }
-    vec3 operator/(const double &a) { // idk if this
-        return vec3(x / a, y / a, z / a);
-    }
-    const vec3 operator/(const double &a) const { // idk if this
-        return vec3(x / a, y / a, z / a);
-    }
+    vec3 operator/(const double &a) { return vec3(x / a, y / a, z / a); }
+    const vec3 operator/(const double &a) const { return vec3(x / a, y / a, z / a); }
     void operator/=(double a) { // or this
         x /= a;
         y /= a;
@@ -176,21 +217,15 @@ class vec4 {
         }
     }
 
-    vec4 operator*(const double &a) { // idk if this
-        return vec4(x * a, y * a, z * a, w * a);
-    }
-    const vec4 operator*(const double &a) const { // idk if this
-        return vec4(x * a, y * a, z * a, w * a);
-    }
+    vec4 operator*(const double &a) { return vec4(x * a, y * a, z * a, w * a); }
+    const vec4 operator*(const double &a) const { return vec4(x * a, y * a, z * a, w * a); }
     void operator*=(double a) { // or this
         x *= a;
         y *= a;
         z *= a;
         w *= a;
     }
-    vec4 operator/(const double &a) { // idk if this
-        return vec4(x / a, y / a, z / a, w / a);
-    }
+    vec4 operator/(const double &a) { return vec4(x / a, y / a, z / a, w / a); }
     void operator/=(double a) { // or this
         x /= a;
         y /= a;
@@ -227,6 +262,7 @@ vec3 cross(const vec3 &a, const vec3 &b) {
 vec4 operator*(double a, const vec4 &b) { return b * a; }
 
 double dot(const vec2 &a, const vec2 &b) { return a.x * b.x + a.y * b.y; }
+int dot(const ivec2 &a, const ivec2 &b) { return (a.x * b.x + a.y * b.y) >> SHIFT; }
 double dot(const vec3 &a, const vec3 &b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
 // void printVec4(vec4 a){
