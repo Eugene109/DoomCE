@@ -3,23 +3,20 @@
 	section	.text,"ax",@progbits
 	public	__Z5f_cosi
 __Z5f_cosi:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
+	call	__frameset0
 	ld	hl, (ix + 6)
 	ld	bc, 804
-	ld.sis	de, 2
+	ld	iy, __ZL8cosTable
 	call	__idivs
 	push	hl
-	pop	iy
-	ld	c, e
-	ld	b, d
+	pop	de
+	ld.sis	bc, 2
 	call	__srems
 	add.sis	hl, bc
 	or	a, a
 	sbc.sis	hl, bc
 	jr	nz, BB0_2
-	lea	hl, iy
+	ex	de, hl
 	ld	bc, 804
 	call	__imulu
 	push	hl
@@ -31,14 +28,12 @@ __Z5f_cosi:
 	call	__imulu
 	push	hl
 	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	hl, (hl)
-	pop	ix
-	ret
+	add	iy, de
+	ld	hl, (iy)
+	jr	BB0_3
 BB0_2:
 	ld	bc, -804
-	lea	hl, iy
+	ex	de, hl
 	call	__imulu
 	ld	de, (ix + 6)
 	add	hl, de
@@ -46,12 +41,10 @@ BB0_2:
 	call	__imulu
 	push	hl
 	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	de, (hl)
-	or	a, a
-	sbc	hl, hl
-	sbc	hl, de
+	add	iy, de
+	ld	hl, (iy)
+	call	__ineg
+BB0_3:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -59,78 +52,110 @@ BB0_2:
 	section	.text,"ax",@progbits
 	public	__Z5f_sini
 __Z5f_sini:
-	ld	iy, 0
-	add	iy, sp
-	ld	hl, (iy + 3)
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 6)
 	ld	de, 402
 	ld	bc, 804
+	ld	iy, __ZL8cosTable
 	add	hl, de
-	push	hl
-	pop	de
+	ld	(ix - 3), hl
 	call	__idivs
 	push	hl
-	pop	iy
+	pop	de
 	ld.sis	bc, 2
 	call	__srems
 	add.sis	hl, bc
 	or	a, a
 	sbc.sis	hl, bc
 	jr	nz, BB1_2
-	lea	hl, iy
+	ex	de, hl
 	ld	bc, 804
 	call	__imulu
 	push	hl
-	pop	bc
-	ex	de, hl
+	pop	de
+	ld	hl, (ix - 3)
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	ld	bc, 3
 	call	__imulu
 	push	hl
 	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	de, (hl)
-	or	a, a
-	sbc	hl, hl
-	sbc	hl, de
-	ret
+	add	iy, de
+	ld	hl, (iy)
+	call	__ineg
+	jr	BB1_3
 BB1_2:
 	ld	bc, -804
-	lea	hl, iy
+	ex	de, hl
 	call	__imulu
+	ld	de, (ix - 3)
 	add	hl, de
 	ld	bc, 3
 	call	__imulu
 	push	hl
 	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	hl, (hl)
+	add	iy, de
+	ld	hl, (iy)
+BB1_3:
+	ld	sp, ix
+	pop	ix
 	ret
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	__Zmld4vec2
 __Zmld4vec2:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	push	hl
-	ld	iy, (ix + 6)
+	ld	hl, -4
+	call	__frameset
+	ld	de, (ix + 6)
 	ld	hl, (ix + 9)
-	ld	e, (ix + 12)
-	ld	bc, (ix + 15)
-	ld	a, (ix + 18)
+	ld	a, (ix + 12)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	pea	ix + 15
+	push	de
+	call	__ZN4vec2mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4vec2mlERKd
+__ZN4vec2mlERKd:
+	ld	hl, -7
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	hl, (hl)
+	ld	bc, (iy)
+	ld	(ix - 7), bc
+	ld	d, (iy + 3)
+	ld	a, d
+	ld	iy, (ix + 9)
+	ld	e, (iy + 3)
 	call	__fmul
 	ld	(ix - 3), bc
-	ld	d, a
-	ld	bc, (ix + 19)
-	ld	a, (ix + 22)
+	ld	(ix - 4), a
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	ld	hl, (ix - 7)
+	ld	e, d
 	call	__fmul
+	ld	iy, (ix + 6)
 	ld	hl, (ix - 3)
 	ld	(iy), hl
-	ld	(iy + 3), d
+	ld	l, (ix - 4)
+	ld	(iy + 3), l
 	ld	(iy + 4), bc
 	ld	(iy + 7), a
 	lea	hl, iy
@@ -142,9 +167,7 @@ __Zmld4vec2:
 	section	.text,"ax",@progbits
 	public	__Zmli5ivec2
 __Zmli5ivec2:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
+	call	__frameset0
 	ld	iy, (ix + 6)
 	ld	bc, (ix + 9)
 	ld	hl, (ix + 12)
@@ -169,24 +192,54 @@ __Zmli5ivec2:
 	section	.text,"ax",@progbits
 	public	__ZmldRK4vec3
 __ZmldRK4vec3:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 7
-	ld	sp, hl
+	ld	hl, -4
+	call	__frameset
+	ld	bc, (ix + 6)
 	ld	hl, (ix + 9)
-	ld	e, (ix + 12)
-	ld	iy, (ix + 15)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	push	de
+	push	bc
+	call	__ZNK4vec3mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3mlERKd
+__ZNK4vec3mlERKd:
+	ld	hl, -11
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	hl, (hl)
 	ld	bc, (iy)
-	ld	a, (iy + 3)
+	ld	(ix - 11), bc
+	ld	d, (iy + 3)
+	ld	a, d
+	ld	iy, (ix + 9)
+	ld	e, (iy + 3)
 	call	__fmul
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
 	ld	bc, (iy + 4)
 	ld	a, (iy + 7)
+	ld	hl, (ix - 11)
+	ld	e, d
 	call	__fmul
 	ld	(ix - 7), bc
-	ld	d, a
+	ld	(ix - 8), a
 	ld	bc, (iy + 8)
 	ld	a, (iy + 11)
 	call	__fmul
@@ -197,7 +250,8 @@ __ZmldRK4vec3:
 	ld	(iy + 3), l
 	ld	hl, (ix - 7)
 	ld	(iy + 4), hl
-	ld	(iy + 7), d
+	ld	l, (ix - 8)
+	ld	(iy + 7), l
 	ld	(iy + 8), bc
 	ld	(iy + 11), a
 	lea	hl, iy
@@ -209,30 +263,66 @@ __ZmldRK4vec3:
 	section	.text,"ax",@progbits
 	public	__ZmidRK4vec3
 __ZmidRK4vec3:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 7
-	ld	sp, hl
-	ld	bc, (ix + 9)
-	ld	d, (ix + 12)
-	ld	iy, (ix + 15)
-	ld	hl, (iy)
-	ld	a, d
+	ld	hl, -12
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	hl, (ix + 9)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 12), hl
+	ld	(ix - 9), a
+	ld	(ix - 8), hl
+	ld	(ix - 5), a
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	push	de
+	pea	ix - 12
+	push	bc
+	call	__ZN4vec3miERKS_
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN4vec3miERKS_
+__ZN4vec3miERKS_:
+	ld	hl, -7
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	bc, (iy)
+	ld	hl, (hl)
+	ld	a, (iy + 3)
+	ld	iy, (ix + 12)
 	ld	e, (iy + 3)
 	call	__fsub
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	iy, (ix + 12)
 	ld	hl, (iy + 4)
-	ld	bc, (ix + 9)
-	ld	a, d
+	lea	de, iy
+	ld	iy, (ix + 9)
+	ld	a, (iy + 7)
+	push	de
+	pop	iy
 	ld	e, (iy + 7)
 	call	__fsub
 	ld	(ix - 7), bc
 	ld	d, a
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 8)
+	ld	iy, (ix + 12)
 	ld	hl, (iy + 8)
-	ld	bc, (ix + 9)
-	ld	a, (ix + 12)
+	ld	iy, (ix + 9)
+	ld	a, (iy + 11)
+	ld	iy, (ix + 12)
 	ld	e, (iy + 11)
 	call	__fsub
 	ld	iy, (ix + 6)
@@ -254,26 +344,67 @@ __ZmidRK4vec3:
 	section	.text,"ax",@progbits
 	public	__ZpldRK4vec3
 __ZpldRK4vec3:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 7
-	ld	sp, hl
-	ld	hl, (ix + 9)
-	ld	e, (ix + 12)
-	ld	iy, (ix + 15)
+	ld	hl, -12
+	call	__frameset
+	ld	bc, (ix + 6)
+	ld	de, (ix + 9)
+	ld	a, (ix + 12)
+	ld	hl, (ix + 15)
+	ld	(ix - 12), de
+	ld	(ix - 9), a
+	ld	(ix - 8), de
+	ld	(ix - 5), a
+	ld	(ix - 4), de
+	ld	(ix - 1), a
+	pea	ix - 12
+	push	hl
+	push	bc
+	call	__ZNK4vec3plERKS_
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3plERKS_
+__ZNK4vec3plERKS_:
+	ld	hl, -7
+	call	__frameset
+	ld	de, (ix + 9)
+	ld	iy, (ix + 12)
+	push	de
+	pop	hl
+	ld	hl, (hl)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
+	push	de
+	pop	iy
+	ld	e, (iy + 3)
 	call	__fadd
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
+	lea	de, iy
+	ld	hl, (iy + 4)
+	ld	iy, (ix + 12)
 	ld	bc, (iy + 4)
 	ld	a, (iy + 7)
+	push	de
+	pop	iy
+	ld	e, (iy + 7)
 	call	__fadd
 	ld	(ix - 7), bc
 	ld	d, a
+	ld	hl, (iy + 8)
+	ld	iy, (ix + 12)
 	ld	bc, (iy + 8)
+	ld	iy, (ix + 12)
 	ld	a, (iy + 11)
+	ld	iy, (ix + 9)
+	ld	e, (iy + 11)
 	call	__fadd
 	ld	iy, (ix + 6)
 	ld	hl, (ix - 3)
@@ -294,11 +425,8 @@ __ZpldRK4vec3:
 	section	.text,"ax",@progbits
 	public	__Z3powRK4vec3d
 __Z3powRK4vec3d:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 8
-	ld	sp, hl
+	ld	hl, -8
+	call	__frameset
 	ld	iy, (ix + 9)
 	ld	bc, (ix + 12)
 	ld	hl, (iy)
@@ -309,12 +437,13 @@ __Z3powRK4vec3d:
 	ld	e, a
 	push	de
 	push	hl
-	call	_pow
+	call	_powf
 	ld	(ix - 3), hl
 	ld	(ix - 4), e
-	ld	hl, 12
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy + 4)
 	ld	a, (iy + 7)
@@ -325,12 +454,13 @@ __Z3powRK4vec3d:
 	ld	e, a
 	push	de
 	push	hl
-	call	_pow
+	call	_powf
 	ld	(ix - 7), hl
 	ld	(ix - 8), e
-	ld	hl, 12
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
 	ld	iy, (ix + 9)
 	ld	hl, (iy + 8)
 	ld	a, (iy + 11)
@@ -341,10 +471,11 @@ __Z3powRK4vec3d:
 	ld	e, a
 	push	de
 	push	hl
-	call	_pow
-	ld	iy, 12
-	add	iy, sp
-	ld	sp, iy
+	call	_powf
+	pop	bc
+	pop	bc
+	pop	bc
+	pop	bc
 	ld	iy, (ix + 6)
 	ld	bc, (ix - 3)
 	ld	(iy), bc
@@ -365,116 +496,93 @@ __Z3powRK4vec3d:
 	section	.text,"ax",@progbits
 	public	__Z5crossRK4vec3S1_
 __Z5crossRK4vec3S1_:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 28
-	ld	sp, hl
+	ld	hl, -24
+	call	__frameset
 	ld	iy, (ix + 9)
-	ld	bc, (ix + 12)
 	ld	hl, (iy + 4)
 	ld	(ix - 3), hl
-	ld	a, (iy + 7)
-	lea	de, iy
-	ld	(ix - 4), a
-	push	bc
-	pop	iy
-	ld	hl, (iy + 8)
-	ld	(ix - 7), hl
-	ld	a, (iy + 11)
-	lea	hl, iy
-	ld	(ix - 8), a
-	push	de
-	pop	iy
-	ld	bc, (iy + 8)
-	push	hl
-	pop	iy
-	ld	hl, (iy + 4)
-	ld	(ix - 14), hl
-	ld	d, (iy + 7)
-	ld	(ix - 15), d
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	call	__fneg
-	push	bc
-	pop	iy
-	ld	(ix - 27), iy
-	ld	e, a
-	ld	(ix - 28), e
-	push	hl
-	pop	bc
-	ld	a, d
-	lea	hl, iy
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 4)
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
-	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
-	ld	(ix - 18), bc
-	ld	(ix - 19), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 11), hl
-	ld	d, (iy + 3)
-	ld	(ix - 20), d
-	ld	hl, (ix + 12)
-	ld	bc, (hl)
-	ld	(ix - 23), bc
+	ld	e, (iy + 7)
+	ld	(ix - 4), e
 	ld	iy, (ix + 12)
-	ld	a, (iy + 3)
-	ld	(ix - 24), a
-	ld	hl, (ix - 27)
-	ld	e, (ix - 28)
+	ld	bc, (iy + 8)
+	ld	(ix - 15), bc
+	ld	iy, (ix + 12)
+	ld	a, (iy + 11)
+	ld	(ix - 16), a
 	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 27), a
-	ld	bc, (ix - 11)
-	ld	a, d
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 27)
-	call	__fadd
-	call	__fneg
 	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 4)
-	call	__fneg
+	ld	d, a
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 8)
+	ld	(ix - 19), hl
+	ld	e, (iy + 11)
+	ld	(ix - 20), e
+	ld	iy, (ix + 12)
+	ld	bc, (iy + 4)
+	ld	(ix - 11), bc
+	ld	iy, (ix + 12)
+	ld	a, (iy + 7)
+	ld	(ix - 12), a
+	call	__fmul
 	push	bc
 	pop	hl
 	ld	e, a
-	ld	bc, (ix - 23)
-	ld	a, (ix - 24)
+	ld	bc, (ix - 7)
+	ld	a, d
+	call	__fsub
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	hl, (ix + 9)
+	ld	bc, (hl)
+	ld	(ix - 23), bc
+	ld	iy, (ix + 9)
+	ld	a, (iy + 3)
+	ld	(ix - 24), a
+	ld	hl, (ix - 15)
+	ld	e, (ix - 16)
 	call	__fmul
+	ld	(ix - 15), bc
+	ld	(ix - 16), a
+	ld	iy, (ix + 12)
+	ld	bc, (iy)
+	ld	d, (iy + 3)
 	push	bc
 	pop	iy
-	ld	d, a
-	ld	bc, (ix - 11)
-	ld	a, (ix - 20)
-	ld	hl, (ix - 14)
-	ld	e, (ix - 15)
+	ld	a, d
+	ld	hl, (ix - 19)
+	ld	e, (ix - 20)
 	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
+	ld	hl, (ix - 15)
+	ld	e, (ix - 16)
+	call	__fsub
+	ld	(ix - 15), bc
+	ld	(ix - 16), a
+	ld	bc, (ix - 23)
+	ld	a, (ix - 24)
+	ld	hl, (ix - 11)
+	ld	e, (ix - 12)
+	call	__fmul
+	ld	(ix - 11), bc
+	ld	(ix - 12), a
+	lea	bc, iy
+	ld	a, d
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 11)
+	ld	a, (ix - 12)
+	call	__fsub
 	ld	iy, (ix + 6)
-	ld	hl, (ix - 18)
-	ld	(iy), hl
-	ld	l, (ix - 19)
-	ld	(iy + 3), l
 	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
+	ld	(iy), hl
 	ld	l, (ix - 8)
+	ld	(iy + 3), l
+	ld	hl, (ix - 15)
+	ld	(iy + 4), hl
+	ld	l, (ix - 16)
 	ld	(iy + 7), l
 	ld	(iy + 8), bc
 	ld	(iy + 11), a
@@ -487,44 +595,82 @@ __Z5crossRK4vec3S1_:
 	section	.text,"ax",@progbits
 	public	__ZmldRK4vec4
 __ZmldRK4vec4:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 11
-	ld	sp, hl
+	ld	hl, -4
+	call	__frameset
+	ld	bc, (ix + 6)
 	ld	hl, (ix + 9)
-	ld	e, (ix + 12)
-	ld	iy, (ix + 15)
+	ld	a, (ix + 12)
+	ld	de, (ix + 15)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 4
+	push	de
+	push	bc
+	call	__ZNK4vec4mlERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec4mlERKd
+__ZNK4vec4mlERKd:
+	ld	hl, -16
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	hl, (hl)
 	ld	bc, (iy)
-	ld	a, (iy + 3)
-	call	__fmul
 	ld	(ix - 3), bc
-	ld	(ix - 4), a
+	ld	d, (iy + 3)
+	ld	a, d
+	ld	(ix - 16), d
+	ld	iy, (ix + 9)
+	ld	e, (iy + 3)
+	call	__fmul
+	ld	(ix - 6), bc
+	ld	(ix - 7), a
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
 	ld	bc, (iy + 4)
 	ld	a, (iy + 7)
+	ld	hl, (ix - 3)
+	ld	e, d
 	call	__fmul
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
+	ld	(ix - 10), bc
+	ld	(ix - 11), a
+	ld	iy, (ix + 9)
 	ld	bc, (iy + 8)
+	ld	de, (ix + 9)
+	push	de
+	pop	iy
 	ld	a, (iy + 11)
+	ld	e, (ix - 16)
 	call	__fmul
-	ld	(ix - 11), bc
-	ld	d, a
+	ld	(ix - 14), bc
+	ld	(ix - 15), a
 	ld	bc, (iy + 12)
 	ld	a, (iy + 15)
+	ld	hl, (ix - 3)
 	call	__fmul
 	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
+	ld	hl, (ix - 6)
 	ld	(iy), hl
-	ld	l, (ix - 4)
+	ld	l, (ix - 7)
 	ld	(iy + 3), l
-	ld	hl, (ix - 7)
+	ld	hl, (ix - 10)
 	ld	(iy + 4), hl
-	ld	l, (ix - 8)
+	ld	l, (ix - 11)
 	ld	(iy + 7), l
-	ld	hl, (ix - 11)
+	ld	hl, (ix - 14)
 	ld	(iy + 8), hl
-	ld	(iy + 11), d
+	ld	l, (ix - 15)
+	ld	(iy + 11), l
 	ld	(iy + 12), bc
 	ld	(iy + 15), a
 	lea	hl, iy
@@ -536,47 +682,30 @@ __ZmldRK4vec4:
 	section	.text,"ax",@progbits
 	public	__Z3dotRK4vec2S1_
 __Z3dotRK4vec2S1_:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 8
-	ld	sp, hl
-	ld	iy, (ix + 6)
-	ld	bc, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 7), hl
-	ld	a, (iy + 3)
-	lea	de, iy
-	ld	(ix - 8), a
-	push	bc
+	ld	hl, -3
+	call	__frameset
+	ld	de, (ix + 6)
+	ld	iy, (ix + 9)
+	push	de
 	pop	hl
 	ld	hl, (hl)
-	push	bc
-	pop	iy
-	ld	(ix - 3), hl
+	ld	bc, (iy)
 	ld	a, (iy + 3)
-	ld	(ix - 4), a
 	push	de
 	pop	iy
+	ld	e, (iy + 3)
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	hl, (iy + 4)
+	ld	iy, (ix + 9)
 	ld	bc, (iy + 4)
 	ld	iy, (ix + 9)
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 6)
 	ld	a, (iy + 7)
-	push	de
-	pop	iy
+	ld	iy, (ix + 6)
 	ld	e, (iy + 7)
 	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 7)
-	ld	a, (ix - 8)
 	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
-	call	__fmul
-	lea	hl, iy
 	ld	e, d
 	call	__fadd
 	push	bc
@@ -590,9 +719,7 @@ __Z3dotRK4vec2S1_:
 	section	.text,"ax",@progbits
 	public	__Z3dotRK5ivec2S1_
 __Z3dotRK5ivec2S1_:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
+	call	__frameset0
 	ld	hl, (ix + 6)
 	ld	iy, (ix + 9)
 	ld	bc, (hl)
@@ -615,61 +742,44 @@ __Z3dotRK5ivec2S1_:
 	section	.text,"ax",@progbits
 	public	__Z3dotRK4vec3S1_
 __Z3dotRK4vec3S1_:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 11
-	ld	sp, hl
-	ld	iy, (ix + 6)
-	ld	de, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 7), hl
-	ld	a, (iy + 3)
-	ld	(ix - 8), a
-	push	de
-	pop	hl
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 6)
+	ld	iy, (ix + 9)
 	ld	hl, (hl)
-	ld	(ix - 3), hl
-	push	de
-	pop	iy
+	ld	bc, (iy)
 	ld	a, (iy + 3)
-	ex	de, hl
-	ld	(ix - 4), a
 	ld	iy, (ix + 6)
-	ld	bc, (iy + 4)
-	push	hl
-	pop	iy
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 6)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
+	ld	e, (iy + 3)
 	call	__fmul
-	ld	(ix - 11), bc
+	ld	(ix - 3), bc
 	ld	d, a
-	ld	bc, (ix - 7)
-	ld	a, (ix - 8)
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 4)
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	ld	iy, (ix + 6)
+	ld	e, (iy + 7)
+	ld	iy, (ix + 6)
 	call	__fmul
-	ld	hl, (ix - 11)
+	ld	hl, (ix - 3)
 	ld	e, d
 	call	__fadd
 	ld	(ix - 3), bc
 	ld	d, a
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 9)
 	ld	hl, (iy + 8)
-	ld	iy, (ix + 6)
-	ld	a, (iy + 11)
 	ld	iy, (ix + 9)
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
+	ld	iy, (ix + 6)
 	ld	e, (iy + 11)
 	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 3)
+	ld	a, d
 	call	__fadd
 	push	bc
 	pop	hl
@@ -682,132 +792,134 @@ __Z3dotRK4vec3S1_:
 	section	.text,"ax",@progbits
 	public	__Z3mindd
 __Z3mindd:
-	ld	iy, 0
-	add	iy, sp
-	ld	bc, (iy + 3)
-	ld	a, (iy + 6)
-	ld	hl, (iy + 9)
-	ld	e, (iy + 12)
+	call	__frameset0
+	ld	bc, (ix + 6)
+	ld	a, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	e, (ix + 15)
 	call	__fcmp
-	jp	m, BB13_2
+	jp	m, BB18_2
 	ld	d, 0
-	bit	0, d
-	jr	z, BB13_3
-	jr	BB13_4
-BB13_2:
+	jr	BB18_3
+BB18_2:
 	ld	d, 1
+BB18_3:
 	bit	0, d
-	jr	nz, BB13_4
-BB13_3:
+	jr	nz, BB18_5
 	push	bc
 	pop	hl
-BB13_4:
+BB18_5:
 	bit	0, d
-	jr	z, BB13_6
-	ret
-BB13_6:
+	jr	nz, BB18_7
 	ld	e, a
+BB18_7:
+	pop	ix
 	ret
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	__Z3maxdd
 __Z3maxdd:
-	ld	iy, 0
-	add	iy, sp
-	ld	hl, (iy + 3)
-	ld	e, (iy + 6)
-	ld	bc, (iy + 9)
-	ld	a, (iy + 12)
+	call	__frameset0
+	ld	hl, (ix + 6)
+	ld	e, (ix + 9)
+	ld	bc, (ix + 12)
+	ld	a, (ix + 15)
 	call	__fcmp
-	jp	m, BB14_2
+	jp	m, BB19_2
 	ld	d, 0
-	bit	0, d
-	jr	z, BB14_3
-	jr	BB14_4
-BB14_2:
+	jr	BB19_3
+BB19_2:
 	ld	d, 1
+BB19_3:
 	bit	0, d
-	jr	nz, BB14_4
-BB14_3:
+	jr	nz, BB19_5
 	push	hl
 	pop	bc
-BB14_4:
+BB19_5:
 	bit	0, d
-	jr	z, BB14_6
-	push	bc
-	pop	hl
-	ld	e, a
-	ret
-BB14_6:
+	jr	nz, BB19_7
 	ld	a, e
+BB19_7:
 	push	bc
 	pop	hl
 	ld	e, a
+	pop	ix
 	ret
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	__Z9normalizeRK4vec3
 __Z9normalizeRK4vec3:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 7
-	ld	sp, hl
+	ld	hl, -7
+	call	__frameset
 	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 3), hl
-	lea	hl, iy + 3
-	ld	a, (hl)
-	ld	(ix - 7), a
-	lea	de, iy + 4
-	ld	bc, (iy + 4)
-	push	de
-	pop	iy
-	lea	hl, iy + 3
-	ld	a, (hl)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 4), a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 4)
-	call	__fadd
-	ld	(ix - 3), bc
+	ld	(ix - 7), bc
 	ld	d, a
-	ld	iy, (ix + 9)
-	lea	hl, iy + 8
-	ld	bc, (iy + 8)
-	push	hl
-	pop	iy
-	lea	hl, iy + 3
-	ld	a, (hl)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	ld	hl, (ix - 3)
+	ld	hl, (ix - 7)
 	ld	e, d
+	call	__fadd
+	ld	(ix - 7), bc
+	ld	d, a
+	ld	bc, (iy + 8)
+	ld	a, (iy + 11)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 7)
+	ld	a, d
 	call	__fadd
 	ld	l, a
 	push	hl
 	push	bc
-	call	_sqrt
-	ld	iy, 6
-	add	iy, sp
-	ld	sp, iy
+	call	_sqrtf
+	pop	bc
+	pop	bc
+	ld	(ix - 4), hl
+	ld	(ix - 1), e
+	pea	ix - 4
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	__ZNK4vec3dvERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec3dvERKd
+__ZNK4vec3dvERKd:
+	ld	hl, -7
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	e, (iy + 3)
 	ld	iy, (ix + 9)
-	ld	bc, (iy)
 	ld	a, (iy + 3)
 	call	__fdiv
 	ld	(ix - 3), bc
@@ -839,48 +951,61 @@ __Z9normalizeRK4vec3:
 	section	.text,"ax",@progbits
 	public	__Z9normalizeRK4vec2
 __Z9normalizeRK4vec2:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 5
-	ld	sp, hl
+	ld	hl, -7
+	call	__frameset
 	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 3), hl
-	lea	hl, iy + 3
-	ld	a, (hl)
-	ld	(ix - 5), a
-	lea	de, iy + 4
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	(ix - 7), bc
+	ld	d, a
 	ld	bc, (iy + 4)
-	push	de
-	pop	iy
-	lea	hl, iy + 3
-	ld	a, (hl)
+	ld	a, (iy + 7)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 4), a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 5)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 4)
+	ld	hl, (ix - 7)
+	ld	e, d
 	call	__fadd
 	ld	l, a
 	push	hl
 	push	bc
-	call	_sqrt
-	ld	iy, 6
-	add	iy, sp
-	ld	sp, iy
+	call	_sqrtf
+	pop	bc
+	pop	bc
+	ld	(ix - 4), hl
+	ld	(ix - 1), e
+	pea	ix - 4
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	__ZNK4vec2dvERKd
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZNK4vec2dvERKd
+__ZNK4vec2dvERKd:
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 9)
+	ld	iy, (ix + 12)
+	ld	bc, (hl)
+	lea	hl, iy
+	ld	hl, (hl)
+	ld	e, (iy + 3)
 	ld	iy, (ix + 9)
-	ld	bc, (iy)
 	ld	a, (iy + 3)
 	call	__fdiv
 	ld	(ix - 3), bc
@@ -903,39 +1028,64 @@ __Z9normalizeRK4vec2:
 	section	.text,"ax",@progbits
 	public	__Z8lengthSQRK4vec3
 __Z8lengthSQRK4vec3:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 6
-	ld	sp, hl
+	ld	hl, -3
+	call	__frameset
 	ld	iy, (ix + 6)
-	ld	hl, (iy)
-	ld	(ix - 6), hl
-	ld	d, (iy + 3)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	d, a
 	ld	bc, (iy + 4)
 	ld	a, (iy + 7)
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 3), a
-	ld	bc, (ix - 6)
-	ld	a, d
-	push	bc
-	pop	hl
+	ld	hl, (ix - 3)
 	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 3)
 	call	__fadd
 	ld	(ix - 3), bc
 	ld	d, a
-	ld	iy, (ix + 6)
 	ld	bc, (iy + 8)
-	ld	iy, (ix + 6)
 	ld	a, (iy + 11)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 3)
+	ld	a, d
+	call	__fadd
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8lengthSQRK4vec2
+__Z8lengthSQRK4vec2:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	(ix - 3), bc
+	ld	d, a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
 	push	bc
 	pop	hl
 	ld	e, a
@@ -952,51 +1102,10 @@ __Z8lengthSQRK4vec3:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	public	__Z8lengthSQRK4vec2
-__Z8lengthSQRK4vec2:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 4
-	ld	sp, hl
-	ld	iy, (ix + 6)
-	ld	hl, (iy)
-	ld	(ix - 4), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 1), a
-	ld	bc, (ix - 4)
-	ld	a, d
-	push	bc
-	pop	hl
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fadd
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
 	public	__Z5clampddd
 __Z5clampddd:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 5
-	ld	sp, hl
+	ld	hl, -5
+	call	__frameset
 	ld	de, (ix + 6)
 	ld	iy, (ix + 12)
 	ld	hl, (ix + 18)
@@ -1011,56 +1120,38 @@ __Z5clampddd:
 	ld	d, 1
 	ld	l, 0
 	ld	a, d
-	jp	m, BB19_2
+	jp	m, BB26_2
 	ld	a, l
-BB19_2:
+BB26_2:
 	ld	(ix - 5), a
 	ld	hl, (ix + 18)
 	ld	e, (ix + 21)
 	ld	bc, (ix + 6)
 	ld	a, (ix + 9)
 	call	__fcmp
-	jp	p, BB19_8
-	bit	0, d
-	ld	e, (ix + 15)
-	jr	z, BB19_9
-BB19_4:
-	bit	0, d
-	jr	z, BB19_10
-BB19_5:
-	ld	a, (ix - 5)
-	bit	0, a
-	jr	z, BB19_11
-BB19_6:
-	bit	0, a
-	jr	z, BB19_12
-BB19_7:
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-BB19_8:
+	jp	m, BB26_4
 	ld	d, 0
+BB26_4:
 	bit	0, d
 	ld	e, (ix + 15)
-	jr	nz, BB19_4
-BB19_9:
+	jr	nz, BB26_6
 	ld	hl, (ix + 6)
 	ld	(ix - 4), hl
+BB26_6:
 	bit	0, d
-	jr	nz, BB19_5
-BB19_10:
+	jr	nz, BB26_8
 	ld	a, (ix + 9)
 	ld	(ix - 1), a
+BB26_8:
 	ld	a, (ix - 5)
 	bit	0, a
-	jr	nz, BB19_6
-BB19_11:
+	jr	nz, BB26_10
 	ld	iy, (ix - 4)
+BB26_10:
 	bit	0, a
-	jr	nz, BB19_7
-BB19_12:
+	jr	nz, BB26_12
 	ld	e, (ix - 1)
+BB26_12:
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -1070,68 +1161,41 @@ BB19_12:
 	section	.text,"ax",@progbits
 	public	__Z6rotated
 __Z6rotated:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 12
-	ld	sp, hl
+	ld	hl, -7
+	call	__frameset
 	ld	de, (ix + 9)
 	ld	l, (ix + 12)
 	push	hl
 	push	de
-	call	_cos
+	call	_cosf
 	ld	(ix - 3), hl
 	ld	(ix - 4), e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
 	ld	l, (ix + 12)
 	push	hl
 	ld	hl, (ix + 9)
 	push	hl
-	call	_sin
+	call	_sinf
+	ld	(ix - 7), hl
+	pop	bc
+	pop	bc
 	push	hl
 	pop	bc
 	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
 	call	__fneg
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	l, (ix + 12)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	_sin
-	ld	(ix - 11), hl
-	ld	(ix - 12), e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	l, (ix + 12)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	_cos
-	ld	iy, 6
-	add	iy, sp
-	ld	sp, iy
 	ld	iy, (ix + 6)
-	ld	bc, (ix - 3)
-	ld	(iy), bc
-	ld	a, (ix - 4)
-	ld	(iy + 3), a
-	ld	bc, (ix - 7)
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	d, (ix - 4)
+	ld	(iy + 3), d
 	ld	(iy + 8), bc
-	ld	a, (ix - 8)
 	ld	(iy + 11), a
-	ld	bc, (ix - 11)
+	ld	bc, (ix - 7)
 	ld	(iy + 4), bc
-	ld	a, (ix - 12)
-	ld	(iy + 7), a
+	ld	(iy + 7), e
 	ld	(iy + 12), hl
-	ld	(iy + 15), e
+	ld	(iy + 15), d
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -1141,11 +1205,8 @@ __Z6rotated:
 	section	.text,"ax",@progbits
 	public	__Z6rotatei
 __Z6rotatei:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 15
-	ld	sp, hl
+	ld	hl, -9
+	call	__frameset
 	ld	bc, (ix + 9)
 	ld	e, 59
 	push	bc
@@ -1158,81 +1219,45 @@ __Z6rotatei:
 	call	__ltof
 	ld	hl, -8388608
 	call	__fmul
-	ld	(ix - 3), bc
+	ld	(ix - 6), bc
 	ld	l, a
-	ld	(ix - 6), hl
+	ld	(ix - 9), hl
 	push	hl
 	push	bc
-	call	_cos
+	call	_cosf
 	push	hl
 	pop	bc
 	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
 	ld	hl, -8388608
 	ld	e, 67
 	call	__fmul
 	call	__ftol
-	ld	(ix - 9), bc
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	or	a, a
-	sbc	hl, hl
-	sbc	hl, bc
-	ld	(ix - 12), hl
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 15), bc
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_cos
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	iy, (ix + 6)
+	ld	(ix - 3), bc
 	ld	hl, (ix - 9)
-	ld	(iy), hl
-	ld	hl, (ix - 12)
+	push	hl
+	ld	hl, (ix - 6)
+	push	hl
+	call	_sinf
+	push	hl
+	pop	bc
+	ld	a, e
+	pop	hl
+	pop	hl
+	ld	hl, -8388608
+	ld	e, 67
+	call	__fmul
+	call	__ftol
+	push	bc
+	pop	hl
+	call	__ineg
+	ld	iy, (ix + 6)
+	ld	de, (ix - 3)
+	ld	(iy), de
 	ld	(iy + 6), hl
-	ld	hl, (ix - 15)
-	ld	(iy + 3), hl
-	ld	(iy + 9), bc
+	ld	(iy + 3), bc
+	ld	(iy + 9), de
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -1240,220 +1265,67 @@ __Z6rotatei:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	public	__Z12drawTexStripPKhhjhih
-__Z12drawTexStripPKhhjhih:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	lea	hl, ix - 17
-	ld	sp, hl
-	ld	hl, (ix + 6)
-	ld	(ix - 14), hl
-	ld	a, (ix + 9)
-	ld	(ix - 11), a
-	ld	hl, (ix + 12)
-	ld	(ix - 6), hl
-	ld	a, (ix + 15)
-	ld	(ix - 7), a
-	ld	hl, (ix + 18)
-	ld	(ix - 17), hl
-	ld	l, (ix + 21)
-	ld	(ix - 10), l
-	ld	a, 1
-	ld	bc, 0
-	ld	c, l
-	ld	(ix - 3), bc
-	push	bc
-	pop	iy
-	dec	iy
-	lea	hl, iy
-	call	__imulu
-	push	hl
-	pop	de
-	lea	hl, iy
-	ld	c, a
-	call	__ishl
-	push	hl
-	pop	bc
-	inc	bc
-	ex	de, hl
-	call	__imulu
-	ld	c, a
-	call	__ishru
-	push	hl
-	pop	bc
-	dec	a
-	call	__ultof
-	ld	hl, -5592405
-	ld	e, 62
-	call	__fmul
-	call	__ftoul
-	push	bc
-	pop	de
-	ld	hl, (ix - 17)
-	ld	bc, 256
-	call	__irems
-	ld	bc, (ix - 3)
-	call	__imulu
-	ld	c, 8
-	call	__ishrs
-	ld	bc, (ix - 3)
-	call	__imulu
-	add	hl, de
-	ld	(ix - 17), hl
-	ld	hl, _malloc
-	push	hl
-	ld	l, (ix - 10)
-	push	hl
-	ld	hl, 1
-	push	hl
-	call	_gfx_AllocSprite
-	push	hl
-	pop	iy
-	ld	hl, 9
-	add	hl, sp
-	ld	sp, hl
-	ld	(ix - 10), iy
-	ld	hl, (ix - 14)
-	ld	de, (ix - 17)
-	add	hl, de
-	ld	de, (ix - 3)
-	push	de
-	push	hl
-	pea	iy + 2
-	call	_memcpy
-	ld	a, (ix - 11)
-	ld	hl, 9
-	add	hl, sp
-	ld	sp, hl
-	ld	bc, 0
-	push	bc
-	pop	hl
-	ld	c, a
-	push	bc
-	pop	iy
-	ld	de, (ix - 6)
-	add	iy, de
-	ld	l, (ix - 7)
-	ex	de, hl
-	ld	hl, (ix - 3)
-	ld	(ix - 14), bc
-	call	__imulu
-	ld	(ix - 17), hl
-	ld	(ix - 3), de
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	de, 321
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB22_3
-	ld	de, 240
-	push	bc
-	pop	hl
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB22_3
-	ld	l, a
-	push	hl
-	push	hl
-	ld	l, (ix - 7)
-	push	hl
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 10)
-	push	hl
-	call	_gfx_ScaledSprite_NoClip
-	ld	hl, 15
-	jr	BB22_4
-BB22_3:
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetColor
-	pop	hl
-	ld	hl, (ix - 17)
-	push	hl
-	ld	hl, (ix - 14)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	ld	hl, (ix - 6)
-	push	hl
-	call	_gfx_Rectangle
-	ld	hl, 12
-BB22_4:
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, (ix - 10)
-	ld	(ix + 6), hl
-	ld	sp, ix
-	pop	ix
-	jp	_free
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
 	public	_main
 _main:
-	push	ix
-	ld	ix, 0
-	add	ix, sp
-	ld	hl, -917
-	add	hl, sp
-	ld	sp, hl
-	ld	bc, -141
+	ld	hl, -929
+	call	__frameset
+	ld	de, -147
 	lea	hl, ix
-	add	hl, bc
-	ld	bc, -908
+	add	hl, de
+	ld	de, -895
 	lea	iy, ix
-	add	iy, bc
+	add	iy, de
 	ld	(iy), hl
-	ld	bc, -276
+	ld	de, -276
+	lea	iy, ix
+	add	iy, de
+	ld	de, -901
 	lea	hl, ix
-	add	hl, bc
+	add	hl, de
+	ld	(hl), iy
+	ld	de, -883
+	lea	hl, ix
+	add	hl, de
 	push	ix
-	ld	bc, -865
-	add	ix, bc
+	ld	de, -889
+	add	ix, de
 	ld	(ix), hl
 	pop	ix
-	ld	bc, -147
-	lea	hl, ix
-	add	hl, bc
-	push	ix
-	ld	bc, -895
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	bc, -856
-	lea	hl, ix
-	add	hl, bc
 	push	hl
-	pop	de
+	pop	bc
+	ld	hl, 256
 	push	ix
-	ld	bc, -859
-	add	ix, bc
-	ld	(ix), de
-	pop	ix
-	push	ix
-	ld	bc, -865
-	add	ix, bc
-	ld	iy, (ix)
+	ld	de, -898
+	add	ix, de
+	ld	(ix), hl
 	pop	ix
 	lea	hl, iy
-	ld	bc, -901
+	ld	de, -913
 	lea	iy, ix
-	add	iy, bc
+	add	iy, de
 	ld	(iy), hl
-	push	de
+	push	bc
 	pop	iy
-	lea	hl, iy + 100
+	lea	hl, iy + 127
 	push	ix
-	ld	bc, -892
+	ld	bc, -923
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	lea	hl, iy + 115
+	push	ix
+	ld	bc, -910
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	lea	hl, iy + 109
+	push	ix
+	ld	bc, -916
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
 	lea	hl, iy
-	ld	bc, -880
+	ld	bc, -886
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
@@ -1463,30 +1335,28 @@ _main:
 	call	_gfx_SetDraw
 	pop	hl
 	call	_os_GetCSC
-	ld	de, -868
+	ld	de, -892
 	lea	hl, ix
 	add	hl, de
 	ld	(hl), a
 	or	a, a
 	sbc	hl, hl
-	push	hl
-	pop	bc
-	ld	de, -865
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	(iy), bc
-	ld	hl, 2560
-	ld	(iy + 3), hl
-	ld	hl, -2560
-	ld	(iy + 6), hl
+	ld	de, -901
+	lea	iy, ix
+	add	iy, de
+	ld	iy, (iy)
+	ld	(iy), hl
+	ld	bc, 2560
+	ld	(iy + 3), bc
+	ld	de, -2560
+	ld	(iy + 6), de
 	ld	de, 1792
 	ld	(iy + 9), de
-	ld	(iy + 12), bc
-	ld	bc, 4352
-	ld	(iy + 15), bc
-	ld	bc, 2560
+	ld	(iy + 12), hl
+	ld	hl, 4352
+	ld	(iy + 15), hl
 	ld	(iy + 18), bc
+	ld	hl, -2560
 	ld	(iy + 21), hl
 	ld	(iy + 24), de
 	ld	hl, 1
@@ -1515,110 +1385,119 @@ _main:
 	ld	hl, 1
 	ld	(iy + 81), hl
 	ld	(iy + 84), bc
-	ld	bc, -2560
-	ld	(iy + 87), bc
+	ld	hl, -2560
+	ld	(iy + 87), hl
 	ld	(iy + 90), de
-	dec	hl
+	ld	hl, 0
 	ld	(iy + 93), hl
 	ld	hl, 4352
 	ld	(iy + 96), hl
-	ld	hl, 2560
-	ld	(iy + 99), hl
-	ld	(iy + 102), bc
+	ld	(iy + 99), bc
+	ld	hl, -2560
+	ld	(iy + 102), hl
 	ld	(iy + 105), de
-	ld	hl, 0
-	ld	(iy + 108), hl
-	ld	(iy + 111), bc
+	ld	de, 0
+	ld	(iy + 108), de
+	ld	(iy + 111), hl
 	ld	hl, -1792
 	ld	(iy + 114), hl
-	ld	de, 2560
-	ld	(iy + 117), de
-	ld	de, 0
+	ld	(iy + 117), bc
 	ld	(iy + 120), de
 	ld	de, 4352
 	ld	(iy + 123), de
-	ld	(iy + 126), bc
+	ld	de, -2560
+	ld	(iy + 126), de
 	ld	de, -895
 	lea	iy, ix
 	add	iy, de
 	ld	iy, (iy)
 	ld	(iy), hl
-	ld	de, 2560
-	ld	(iy + 3), de
+	ld	(iy + 3), bc
 	ld	de, 1
 	ld	(iy + 6), de
 	ld	(iy + 9), hl
-	ld	(iy + 12), bc
-	ld	de, -132
+	ld	de, -2560
+	ld	(iy + 12), de
+	ld	bc, -132
 	lea	iy, ix
-	add	iy, de
+	add	iy, bc
 	ld	(iy), hl
-	ld	iy, 0
+	ld	bc, 0
+	ld	(ix - 3), de
 	push	ix
 	ld	de, -129
 	add	ix, de
-	ld	(ix), iy
+	ld	(ix), bc
 	pop	ix
-	ld	de, 768
-	ld	(ix - 126), de
+	ld	bc, 768
+	ld	(ix - 126), bc
 	ld	(ix - 123), hl
-	ld	(ix - 120), bc
+	ld	de, (ix - 3)
+	push	de
+	pop	iy
+	ld	(ix - 120), iy
 	ld	(ix - 117), hl
-	ld	(ix - 114), iy
+	ld	de, 0
+	ld	(ix - 114), de
 	ld	(ix - 111), hl
-	ld	(ix - 108), bc
+	ld	(ix - 108), iy
 	ld	(ix - 105), hl
-	ld	(ix - 102), iy
+	ld	(ix - 102), de
+	push	de
+	pop	bc
+	ld	de, 768
 	ld	(ix - 99), de
 	ld	(ix - 96), hl
-	ld	(ix - 93), bc
+	ld	(ix - 93), iy
 	ld	(ix - 90), hl
 	ld	de, 1
 	ld	(ix - 87), de
-	ld	(ix - 84), bc
-	push	bc
-	pop	de
+	ld	(ix - 84), iy
 	ld	(ix - 81), hl
-	ld	hl, 2560
-	ld	(ix - 78), hl
-	ld	(ix - 75), iy
+	ld	de, 2560
+	ld	(ix - 78), de
+	push	bc
+	pop	hl
+	ld	(ix - 75), hl
 	ld	bc, 4352
 	ld	(ix - 72), bc
-	ld	(ix - 69), de
-	ld	de, -1792
-	ld	(ix - 66), de
-	ld	(ix - 63), hl
-	ld	(ix - 60), iy
-	ld	hl, 1792
-	ld	(ix - 57), hl
+	ld	(ix - 69), iy
+	ld	bc, -1792
+	ld	(ix - 66), bc
+	ld	(ix - 63), de
+	ld	(ix - 60), hl
+	ld	de, 1792
+	ld	(ix - 57), de
 	ld	bc, -1280
 	ld	(ix - 54), bc
-	ld	de, 512
-	ld	(ix - 51), de
-	ld	(ix - 48), iy
-	ld	(ix - 45), hl
-	ld	(ix - 42), hl
+	ld	iy, 512
+	ld	(ix - 51), iy
+	ld	(ix - 48), hl
+	ld	(ix - 45), de
+	ld	(ix - 42), de
 	ld	(ix - 39), bc
-	ld	(ix - 36), de
-	push	de
-	pop	iy
-	ld	de, 1
-	ld	(ix - 33), de
-	ld	(ix - 30), hl
-	ld	(ix - 27), bc
+	push	bc
+	pop	hl
+	ld	(ix - 36), iy
+	ld	bc, 1
+	ld	(ix - 33), bc
+	ld	(ix - 30), de
+	ld	(ix - 27), hl
+	push	hl
+	pop	bc
 	ld	(ix - 24), iy
-	dec	de
-	ld	(ix - 21), de
-	ld	(ix - 18), hl
-	ld	(ix - 15), hl
+	ld	hl, 0
+	ld	(ix - 21), hl
+	ld	(ix - 18), de
+	ld	(ix - 15), de
 	ld	(ix - 12), bc
 	ld	(ix - 9), iy
-	ld	de, -859
+	ld	de, -889
 	lea	hl, ix
 	add	hl, de
 	ld	iy, (hl)
-	ld	(iy + 100), c
-	ld	de, -892
+	ld	(iy + 127), 0
+	ld	de, -923
 	lea	iy, ix
 	add	iy, de
 	ld	iy, (iy)
@@ -1628,87 +1507,108 @@ _main:
 	ex	de, hl
 	lea	hl, iy
 	ldir
-	ld	de, 0
-BB23_1:
-	ex	de, hl
-	lea	de, iy
-	push	hl
-	pop	iy
-	push	hl
-	pop	bc
-	ld	(ix - 3), de
+	ld	de, 320
+	ld	bc, -901
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	ld	bc, 0
+BB29_1:
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	jp	z, BB29_3
+	push	bc
+	pop	hl
+	ld	de, -895
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), bc
 	push	ix
-	ld	de, -859
 	add	ix, de
-	ld	(ix), bc
+	ld	iy, (ix)
 	pop	ix
 	add	iy, iy
-	ld	de, (ix - 3)
-	push	de
-	pop	iy
 	sbc	hl, hl
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
 	ld	a, l
 	call	__ltof
-	ld	hl, -6324224
-	ld	d, 67
-	ld	e, d
-	call	__fdiv
-	or	a, a
-	sbc	hl, hl
-	ld	e, 64
+	ld	hl, -3313369
+	ld	e, 63
 	call	__fmul
 	ld	hl, -8388608
-	ld	e, -65
+	ld	e, -61
 	call	__fadd
-	ld	e, d
-	call	__fmul
 	call	__ftol
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -901
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
 	ld	(iy), bc
 	ld	hl, 256
 	ld	(iy + 3), hl
-	lea	iy, iy + 6
-	ld	bc, 4
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	add	hl, bc
 	ld	de, (ix - 3)
-	push	hl
-	pop	de
-	ld	bc, 320
-	or	a, a
-	sbc	hl, bc
-	jr	nz, BB23_1
+	ld	de, 4
+	ld	bc, -895
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	add	hl, de
+	push	ix
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	de, 320
+	lea	iy, iy + 6
+	ld	bc, -901
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	ld	(ix - 3), de
+	ld	de, -895
+	lea	iy, ix
+	add	iy, de
+	ld	bc, (iy)
+	ld	de, (ix - 3)
+	jp	BB29_1
+BB29_3:
 	ld	hl, 256
-	ld	bc, -874
+	ex	de, hl
+	ld	bc, -889
+	lea	hl, ix
+	add	hl, bc
+	ld	iy, (hl)
+	ld	(iy + 115), de
+	or	a, a
+	sbc	hl, hl
+	ld	(iy + 121), hl
+	ld	(iy + 118), hl
+	ld	(iy + 124), de
+	ld	bc, -901
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
-	or	a, a
-	sbc	hl, hl
 	push	ix
-	ld	bc, -877
+	ld	bc, -907
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	push	ix
-	ld	bc, -898
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	bc, -868
+	ld	bc, -892
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
-BB23_3:
-	ld	bc, -868
+BB29_4:
+	ld	bc, -892
 	lea	hl, ix
 	add	hl, bc
 	ld	(hl), a
 	call	_clock
-	ld	bc, -904
+	ld	bc, -919
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
@@ -1718,795 +1618,188 @@ BB23_3:
 	ld	(ix), e
 	pop	ix
 	call	_gfx_ZeroScreen
-	ld	bc, -868
+	ld	bc, -892
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
 	cp	a, 1
-	jr	nz, BB23_5
+	jr	nz, BB29_6
 	ld	hl, (_playerPos)
-	ld	bc, -877
+	ld	bc, -901
 	lea	iy, ix
 	add	iy, bc
 	ld	de, (iy)
 	or	a, a
 	sbc	hl, de
 	push	ix
-	ld	bc, -859
+	ld	bc, -895
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
 	ld	(_playerPos), hl
 	ld	hl, (_playerPos+3)
 	push	ix
-	ld	bc, -874
+	ld	bc, -898
 	add	ix, bc
 	ld	de, (ix)
 	pop	ix
 	or	a, a
 	sbc	hl, de
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	(_playerPos+3), hl
-	jr	BB23_8
-BB23_5:
+	jr	BB29_8
+BB29_6:
 	cp	a, 4
-	jr	nz, BB23_7
-	ld	iy, (_playerPos)
-	ld	bc, -877
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	add	iy, de
-	ld	(_playerPos), iy
-	ld	hl, (_playerPos+3)
-	push	ix
-	ld	bc, -874
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	(_playerPos+3), hl
-	ld	bc, -859
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	jr	BB23_8
-BB23_7:
+	jr	nz, BB29_9
 	ld	hl, (_playerPos)
-	ld	bc, -859
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	hl, (_playerPos+3)
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-BB23_8:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_10
-	ld	a, 0
-BB23_10:
-	ld	hl, (iy + 18)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_12
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_12:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_14
-	ld	(ix - 3), bc
-	ld	bc, -862
+	ld	bc, -901
 	lea	iy, ix
 	add	iy, bc
 	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_14:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -865
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	hl, (iy + 21)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 24)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(iy + 3), de
-	ld	bc, (ix - 3)
-	ld	(iy + 6), bc
-	ld	(iy + 9), hl
-	ld	hl, (iy + 27)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_16
-	ld	a, 0
-BB23_16:
-	ld	hl, (iy + 45)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_18
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_18:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_20
-	ld	(ix - 3), bc
-	ld	bc, -862
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_20:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -865
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	hl, (iy + 48)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 51)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(iy + 30), de
-	ld	bc, (ix - 3)
-	ld	(iy + 33), bc
-	ld	(iy + 36), hl
-	ld	hl, (iy + 54)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_22
-	ld	a, 0
-BB23_22:
-	ld	hl, (iy + 72)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_24
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_24:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_26
-	ld	(ix - 3), bc
-	ld	bc, -862
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_26:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -865
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	hl, (iy + 75)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 78)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(iy + 57), de
-	ld	bc, (ix - 3)
-	ld	(iy + 60), bc
-	ld	(iy + 63), hl
-	ld	hl, (iy + 81)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_28
-	ld	a, 0
-BB23_28:
-	ld	hl, (iy + 99)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_30
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_30:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_32
-	ld	(ix - 3), bc
-	ld	bc, -862
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_32:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -865
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	hl, (iy + 102)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 105)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(iy + 84), de
-	ld	bc, (ix - 3)
-	ld	(iy + 87), bc
-	ld	(iy + 90), hl
-	ld	hl, (iy + 108)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_34
-	ld	a, 0
-BB23_34:
-	ld	hl, (iy + 126)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_36
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_36:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_38
-	ld	(ix - 3), bc
-	ld	bc, -862
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_38:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
+	add	hl, de
 	push	ix
 	ld	bc, -895
 	add	ix, bc
-	ld	iy, (ix)
+	ld	(ix), hl
 	pop	ix
+	ld	(_playerPos), hl
+	ld	hl, (_playerPos+3)
+	push	ix
+	ld	bc, -898
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	add	hl, de
+BB29_8:
+	push	ix
+	ld	bc, -898
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	(_playerPos+3), hl
+	jr	BB29_10
+BB29_9:
+	ld	hl, (_playerPos)
+	ld	bc, -895
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), hl
+	ld	hl, (_playerPos+3)
+	push	ix
+	ld	bc, -898
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+BB29_10:
+	ld	iy, 24
+BB29_11:
+	lea	hl, iy
+	ld	de, 294
+	or	a, a
+	sbc	hl, de
+	jp	z, BB29_19
+	ld	bc, -901
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	lea	de, iy
+	ld	bc, -913
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	add	iy, de
+	ld	hl, (iy - 24)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	ld	a, -1
+	jr	z, BB29_14
+	ld	a, 0
+BB29_14:
+	bit	0, a
+	ld	de, -898
+	lea	hl, ix
+	push	af
+	add	hl, de
+	pop	af
+	ld	bc, (hl)
+	jr	nz, BB29_16
+	ld	de, -895
+	lea	hl, ix
+	add	hl, de
+	ld	bc, (hl)
+BB29_16:
+	ld	hl, (iy - 6)
+	bit	0, a
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -895
+	push	af
+	add	ix, bc
+	pop	af
+	ld	de, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+	jr	nz, BB29_18
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -898
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
+BB29_18:
+	or	a, a
+	sbc	hl, bc
+	push	ix
+	ld	bc, -904
+	add	ix, bc
+	ld	(ix), hl
+	pop	ix
+	ld	hl, (iy - 3)
+	or	a, a
+	sbc	hl, de
+	push	hl
+	pop	bc
 	ld	hl, (iy)
 	or	a, a
 	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 3)
-	or	a, a
-	sbc	hl, de
 	ld	(ix - 3), bc
 	push	ix
-	ld	bc, -871
+	ld	bc, -904
 	add	ix, bc
 	ld	de, (ix)
 	pop	ix
-	ld	(iy - 18), de
+	ld	(iy - 21), de
 	ld	bc, (ix - 3)
-	ld	(iy - 15), bc
-	ld	(iy - 12), hl
-	ld	hl, (iy + 6)
+	ld	(iy - 18), bc
+	ld	(iy - 15), hl
+	ld	de, 27
+	ld	bc, -901
+	lea	hl, ix
 	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_40
-	ld	a, 0
-BB23_40:
-	ld	hl, (ix - 123)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
+	ld	iy, (hl)
 	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	jr	nz, BB23_42
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-BB23_42:
-	bit	0, a
-	ld	(ix - 3), bc
-	ld	bc, -859
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	jr	nz, BB23_44
-	ld	(ix - 3), bc
-	ld	bc, -862
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB23_44:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -871
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	hl, (ix - 120)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (ix - 117)
-	or	a, a
-	sbc	hl, de
 	push	ix
-	ld	de, -895
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
+	ld	bc, -892
 	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(iy + 9), de
-	ld	bc, (ix - 3)
-	ld	(iy + 12), bc
-	ld	bc, -132
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	hl, (ix - 114)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, b
-	jr	z, BB23_46
-	ld	a, 0
-BB23_46:
-	ld	hl, (ix - 96)
-	bit	0, a
-	ld	de, -862
-	lea	iy, ix
-	push	af
-	add	iy, de
-	pop	af
-	ld	bc, (iy)
-	push	ix
-	ld	de, -868
-	push	af
-	add	ix, de
-	pop	af
-	push	af
 	ld	a, (ix)
-	ld	iyl, a
-	pop	af
 	pop	ix
-	jr	nz, BB23_48
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-BB23_48:
-	bit	0, a
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -859
-	push	af
-	add	ix, bc
-	pop	af
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	jr	nz, BB23_50
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-BB23_50:
-	or	a, a
-	sbc	hl, bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (ix - 93)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (ix - 90)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(ix - 111), de
-	ld	bc, (ix - 3)
-	ld	(ix - 108), bc
-	ld	(ix - 105), hl
-	ld	hl, (ix - 87)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_52
-	ld	a, 0
-BB23_52:
-	ld	hl, (ix - 69)
-	bit	0, a
-	push	ix
-	ld	de, -862
-	push	af
-	add	ix, de
-	pop	af
-	ld	bc, (ix)
-	pop	ix
-	jr	nz, BB23_54
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-BB23_54:
-	bit	0, a
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -859
-	push	af
-	add	ix, bc
-	pop	af
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	jr	nz, BB23_56
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-BB23_56:
-	or	a, a
-	sbc	hl, bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (ix - 66)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (ix - 63)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(ix - 84), de
-	ld	bc, (ix - 3)
-	ld	(ix - 81), bc
-	ld	(ix - 78), hl
-	ld	hl, (ix - 60)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_58
-	ld	a, 0
-BB23_58:
-	ld	hl, (ix - 42)
-	bit	0, a
-	push	ix
-	ld	de, -862
-	push	af
-	add	ix, de
-	pop	af
-	ld	bc, (ix)
-	pop	ix
-	jr	nz, BB23_60
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-BB23_60:
-	bit	0, a
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -859
-	push	af
-	add	ix, bc
-	pop	af
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	jr	nz, BB23_62
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-BB23_62:
-	or	a, a
-	sbc	hl, bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (ix - 39)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (ix - 36)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -871
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(ix - 57), de
-	ld	bc, (ix - 3)
-	ld	(ix - 54), bc
-	ld	(ix - 51), hl
-	ld	hl, (ix - 33)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	a, -1
-	jr	z, BB23_64
-	ld	a, 0
-BB23_64:
-	ld	hl, (ix - 15)
-	bit	0, a
-	push	ix
-	ld	bc, -862
-	push	af
-	add	ix, bc
-	pop	af
-	ld	de, (ix)
-	pop	ix
-	jr	nz, BB23_66
-	push	ix
-	ld	bc, -859
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-BB23_66:
-	bit	0, a
-	jr	nz, BB23_68
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	ld	de, (ix - 3)
-BB23_68:
-	or	a, a
-	sbc	hl, de
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (ix - 12)
-	push	ix
-	ld	bc, -859
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (ix - 9)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -862
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	(ix - 30), de
-	ld	bc, (ix - 3)
-	ld	(ix - 27), bc
-	ld	(ix - 24), hl
-	ld	a, iyl
+	jp	BB29_11
+BB29_19:
 	cp	a, 3
 	ld	de, 1
-	jr	z, BB23_70
+	jr	z, BB29_21
 	ld	de, 0
-BB23_70:
-	ld	bc, -898
+BB29_21:
+	ld	bc, -907
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
 	add	hl, de
-	ld	a, iyl
 	cp	a, 2
 	ld	de, -1
-	jr	z, BB23_72
+	jr	z, BB29_23
 	ld	de, 0
-BB23_72:
+BB29_23:
 	add	hl, de
 	push	hl
 	pop	bc
@@ -2514,149 +1807,57 @@ BB23_72:
 	pop	iy
 	add	iy, iy
 	sbc	hl, hl
-	ld	de, -898
+	ld	de, -907
 	lea	iy, ix
 	add	iy, de
 	ld	(iy), bc
 	ld	a, l
 	call	__ltof
-	ld	hl, 5033165
-	ld	e, -67
-	call	__fmul
-	ld	hl, 4784128
-	ld	e, 68
+	ld	hl, 2149581
+	ld	e, -62
 	call	__fmul
 	call	__ftol
 	push	bc
-	pop	hl
-	push	bc
-	pop	iy
-	add	iy, iy
-	sbc	hl, hl
-	ld	a, l
-	call	__ltof
-	ld	hl, -8388608
-	ld	e, 59
-	call	__fmul
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	ld	l, a
 	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	push	hl
-	push	bc
-	ld	de, (ix - 3)
-	call	_cos
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 3), de
-	ld	de, -886
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	hl
-	ld	de, -859
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, (ix - 3)
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	or	a, a
-	sbc	hl, hl
-	sbc	hl, bc
-	ld	bc, -877
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -862
+	ld	bc, -910
 	add	ix, bc
 	ld	hl, (ix)
 	pop	ix
 	push	hl
-	ld	bc, -859
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 3), de
+	call	__Z6rotatei
+	pop	hl
+	pop	hl
+	ld	bc, 0
 	ld	de, -889
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	hl
-	ld	de, -859
 	lea	hl, ix
 	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, (ix - 3)
-	call	_cos
-	push	hl
-	pop	bc
-	ld	a, e
-	ld	hl, 6
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 3), de
-	ld	de, -874
+	ld	iy, (hl)
+	ld	(iy + 109), bc
+	ld	(iy + 112), bc
+	ld	(iy + 103), bc
+	ld	(iy + 106), bc
+	ld	(iy + 100), bc
+	ld	de, (iy + 121)
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -901
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	ld	de, (iy + 124)
+	ld	bc, -898
 	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	ld	bc, 0
-	ld	de, (ix - 3)
-BB23_73:
-	ld	de, -868
+	add	iy, bc
+	ld	(iy), de
+	ld	bc, (ix - 3)
+BB29_24:
+	push	bc
+	pop	hl
+	ld	de, 80
+	or	a, a
+	sbc	hl, de
+	jp	z, BB29_42
+	ld	de, -895
 	lea	hl, ix
 	add	hl, de
 	ld	(hl), bc
@@ -2667,3053 +1868,188 @@ BB23_73:
 	push	hl
 	pop	de
 	ld	(ix - 3), bc
-	ld	bc, -892
+	ld	bc, -923
 	lea	iy, ix
 	add	iy, bc
-	ld	iy, (iy)
-	add	iy, de
 	ld	hl, (iy)
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, (ix - 3)
-	push	ix
+	add	hl, de
+	push	hl
+	ld	de, -910
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
 	ld	de, -886
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, (iy + 3)
-	push	de
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	ld	bc, (ix - 3)
+	call	__ZN5imat2mlERK5ivec2
 	pop	hl
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
+	pop	hl
+	pop	hl
+	ld	bc, -916
+	lea	hl, ix
 	add	hl, bc
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
+	ld	de, (hl)
+	ld	bc, -886
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
+	ld	bc, 6
+	ldir
+	or	a, a
+	sbc	hl, hl
 	push	hl
 	pop	iy
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -889
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -859
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	bc, (ix - 3)
-	ld	c, a
-	call	__ishrs
-	push	hl
+	ld	de, 25600
+	push	de
 	pop	bc
 	push	ix
-	ld	de, -862
+	ld	de, -904
 	add	ix, de
 	ld	(ix), iy
 	pop	ix
+BB29_26:
 	lea	hl, iy
-	ld	de, 16
-	add	hl, de
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	push	bc
-	pop	iy
-	ld	de, (ix - 3)
-	add	iy, de
-	ld	de, 33
+	ld	de, 270
 	or	a, a
 	sbc	hl, de
-	jp	nc, BB23_102
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	ld	iy, 25600
-	jp	c, BB23_229
-	ld	bc, -865
+	ld	de, -892
 	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, 25600
-	jp	nz, BB23_82
-	ld	hl, (iy + 3)
-	push	ix
-	ld	de, -871
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	c, a
-	call	__ishl
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__idivs
-	push	hl
-	pop	bc
-	ld	de, -8388608
+	push	af
 	add	hl, de
-	inc	de
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jp	c, BB23_82
-	push	bc
-	pop	hl
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	de, (iy + 6)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -883
-	add	ix, bc
-	ld	(ix), de
-	pop	ix
-	push	ix
-	ld	bc, -911
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	de, 16
-	add	hl, de
-	ld	de, -8388608
-	ld	bc, (ix - 3)
-	lea	bc, iy
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	add	iy, de
-	lea	de, iy
-	ld	bc, (ix - 3)
-	push	bc
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jp	c, BB23_82
-	ld	bc, -911
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	de, -16
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 9)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -8388608
-	push	bc
-	pop	hl
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	add	hl, de
-	ld	bc, (ix - 3)
-	push	bc
-	pop	de
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jr	c, BB23_82
-	ld	de, -911
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -871
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	bc, -8388608
-	add	hl, bc
-	ld	bc, -8363008
-	or	a, a
-	sbc	hl, bc
-	ld	hl, 25600
-	jr	c, BB23_81
-	ex	de, hl
-BB23_81:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-BB23_82:
-	ld	hl, (iy + 27)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_87
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 30)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_86
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 33)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_86
-	push	de
-	pop	hl
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 36)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	nc, BB23_185
-BB23_86:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -865
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-BB23_87:
-	ld	hl, (iy + 54)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_92
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 57)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_91
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 60)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jr	c, BB23_91
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 63)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	nc, BB23_188
-BB23_91:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -865
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-BB23_92:
-	ld	hl, (iy + 81)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_97
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 84)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_96
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 87)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_96
-	push	de
-	pop	hl
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 90)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	nc, BB23_191
-BB23_96:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -865
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-BB23_97:
-	ld	hl, (iy + 108)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_196
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 111)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_101
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 114)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jr	c, BB23_101
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 117)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	nc, BB23_194
-BB23_101:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -908
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	jp	BB23_197
-BB23_102:
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	ld	bc, 0
-	ld	iy, 25600
-	jp	nc, BB23_116
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy)
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	ld	hl, 25600
-	ex	de, hl
-	jp	nz, BB23_110
-	ld	hl, (iy + 3)
-	push	ix
-	ld	de, -871
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	c, a
-	call	__ishl
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__idivs
-	push	hl
-	pop	bc
-	ld	de, -8388608
-	add	hl, de
-	inc	de
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jp	c, BB23_110
-	push	bc
-	pop	hl
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	de, (iy + 6)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -883
-	add	ix, bc
-	ld	(ix), de
-	pop	ix
-	push	ix
-	ld	bc, -911
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	de, 16
-	add	hl, de
-	ld	de, -8388608
-	ld	bc, (ix - 3)
-	lea	bc, iy
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	add	iy, de
-	lea	de, iy
-	ld	bc, (ix - 3)
-	push	bc
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jp	c, BB23_110
-	ld	bc, -911
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	de, -16
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	hl, (iy + 9)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -8388608
-	push	bc
-	pop	hl
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	add	hl, de
-	ld	bc, (ix - 3)
-	push	bc
-	pop	de
-	or	a, a
-	sbc	hl, de
-	ld	de, 25600
-	jr	c, BB23_110
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -911
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	bc, -8388608
-	add	hl, bc
-	ld	bc, -8363008
-	or	a, a
-	sbc	hl, bc
-	ld	hl, 25600
-	jr	c, BB23_109
-	ex	de, hl
-BB23_109:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-BB23_110:
-	ld	hl, (iy + 27)
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_130
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 30)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_115
-	ld	bc, -911
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 33)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_115
-	ld	de, -883
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ex	de, hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 36)
-	ld	bc, -8388608
-	push	de
-	pop	iy
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_115
-	ld	de, -911
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	push	de
-	pop	bc
-	jp	c, BB23_131
-BB23_115:
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	bc, (hl)
-	jp	BB23_131
-BB23_116:
-	ld	de, -883
-	lea	hl, ix
-	add	hl, de
+	pop	af
 	ld	(hl), bc
-	push	bc
-	pop	de
-	ld	(ix - 3), de
+	jp	z, BB29_35
+	ld	bc, -926
+	lea	hl, ix
+	add	hl, bc
+	ld	(hl), iy
+	lea	de, iy
+	ld	bc, -913
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
+	add	hl, de
 	push	ix
-	ld	de, -901
-	add	ix, de
-	ld	bc, (ix)
+	ld	bc, -889
+	add	ix, bc
+	ld	iy, (ix)
 	pop	ix
-	push	bc
+	pea	iy + 100
+	pea	iy + 103
+	ld	bc, -916
+	lea	iy, ix
+	add	iy, bc
+	ld	de, (iy)
+	push	de
+	push	hl
+	call	__ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi
 	pop	hl
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	hl, (hl)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_120
-	ld	de, -871
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jp	z, BB29_33
+	ld	de, -889
 	lea	hl, ix
 	add	hl, de
-	ld	(hl), iy
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	push	bc
-	pop	iy
-	add	iy, de
-	ld	iy, (iy + 3)
-	lea	hl, iy
-	ld	c, a
-	call	__ishl
+	ld	iy, (hl)
+	ld	hl, (iy + 103)
 	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__idivs
-	push	ix
-	ld	de, -911
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -8388608
-	add	hl, de
-	ld	bc, -8388607
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_125
-	ld	bc, -914
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -862
+	ld	de, -901
 	add	ix, de
 	ld	bc, (ix)
 	pop	ix
 	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	ld	de, -901
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	add	iy, bc
-	ld	iy, (iy + 6)
-	push	ix
-	ld	de, -911
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	de, (ix - 3)
-	add	iy, de
-	add	hl, de
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_125
-	ld	bc, -911
-	jp	BB23_124
-BB23_120:
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_128
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), iy
-	ld	(ix - 3), bc
-	ld	bc, -883
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-	push	bc
-	pop	iy
-	add	iy, de
-	ld	iy, (iy + 3)
-	lea	hl, iy
-	ld	c, a
-	call	__ishl
-	push	ix
-	ld	de, -862
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__idivs
-	push	ix
-	ld	de, -914
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -8388608
-	add	hl, de
-	ld	bc, -8388607
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_125
-	ld	bc, -911
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	ld	bc, -914
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
+	push	hl
+	pop	de
+	ld	hl, (iy + 106)
 	ld	(ix - 3), de
 	push	ix
-	ld	de, -859
+	ld	de, -898
 	add	ix, de
 	ld	bc, (ix)
 	pop	ix
 	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	ld	de, -901
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	add	iy, bc
-	ld	iy, (iy + 6)
-	push	ix
-	ld	de, -914
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
 	ld	de, (ix - 3)
-	add	iy, de
 	add	hl, de
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_125
-	ld	bc, -914
-BB23_124:
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -917
+	ld	c, 8
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	hl, (iy + 100)
+	ld	(ix - 3), bc
+	ld	bc, -929
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
+	push	de
+	pop	hl
+	ld	bc, (ix - 3)
 	ld	(ix - 3), de
-	ld	de, -883
-	lea	hl, ix
-	add	hl, de
-	ld	bc, (hl)
 	push	ix
-	ld	de, -901
+	ld	de, -892
 	add	ix, de
-	ld	iy, (ix)
+	ld	bc, (ix)
 	pop	ix
-	add	iy, bc
-	ld	hl, (iy + 9)
-	ld	bc, -917
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	de, (ix - 3)
-	add	iy, de
-	add	hl, de
-	lea	bc, iy
 	or	a, a
 	sbc	hl, bc
-	ld	bc, -911
+	call	pe, __setflag
+	ld	de, (ix - 3)
+	push	de
+	pop	iy
+	jp	m, BB29_30
+	push	bc
+	pop	iy
+BB29_30:
+	ex	de, hl
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	ld	bc, -929
 	lea	hl, ix
 	push	af
 	add	hl, bc
 	pop	af
 	ld	hl, (hl)
-	jr	nc, BB23_126
-BB23_125:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	push	ix
-	ld	bc, -883
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	jr	BB23_129
-BB23_126:
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -914
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -871
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	add	hl, de
-	push	hl
-	pop	bc
-	lea	hl, iy
-	add	hl, de
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_128
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-BB23_128:
-	ld	bc, -883
+	jp	m, BB29_32
+	ld	bc, -904
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
-BB23_129:
-	ld	de, 27
-	add	hl, de
-	push	hl
-	pop	bc
-	ld	de, 270
-	or	a, a
-	sbc	hl, de
-	jp	z, BB23_229
-	jp	BB23_116
-BB23_130:
-	push	de
-	pop	bc
-BB23_131:
-	ld	de, -865
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	hl, (iy + 54)
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_137
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
-	ld	bc, -865
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	de, (iy + 57)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_136
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 60)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
+BB29_32:
 	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_136
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
+	ld	de, -904
 	lea	iy, ix
-	add	iy, bc
+	add	iy, de
 	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 63)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jr	c, BB23_136
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_138
-BB23_136:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	jr	BB23_138
-BB23_137:
-	push	bc
-	pop	de
-BB23_138:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 81)
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_144
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	bc, -865
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	de, (iy + 84)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_143
-	ld	bc, -911
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 87)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_143
-	ld	de, -883
+	ld	de, -926
 	lea	hl, ix
 	add	hl, de
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ex	de, hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
 	ld	iy, (hl)
-	ld	hl, (iy + 90)
-	ld	bc, -8388608
-	push	de
-	pop	iy
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_143
-	ld	de, -911
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	push	de
-	pop	bc
-	jr	c, BB23_145
-BB23_143:
-	ld	de, -871
+	jr	BB29_34
+BB29_33:
+	ld	de, -892
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
-	jr	BB23_145
-BB23_144:
-	push	de
-	pop	bc
-BB23_145:
-	ld	de, -865
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	hl, (iy + 108)
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_150
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
-	ld	de, (iy + 111)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_149
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -865
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 114)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jr	c, BB23_149
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -16
-	add	hl, bc
-	ld	bc, -911
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 117)
-	ld	bc, -8388608
-	ld	(ix - 3), de
-	ld	de, -911
+	ld	de, -926
 	lea	iy, ix
 	add	iy, de
 	ld	iy, (iy)
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	nc, BB23_236
-BB23_149:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -908
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	jr	BB23_152
-BB23_150:
+BB29_34:
+	ld	de, 27
+	add	iy, de
+	jp	BB29_26
+BB29_35:
 	push	bc
-	pop	de
-BB23_151:
-	ld	bc, -908
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-BB23_152:
-	ld	hl, (iy)
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_158
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 3)
-	push	de
 	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_157
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -908
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 6)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_157
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	bc, -132
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_157
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	push	de
-	pop	iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_159
-BB23_157:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jr	BB23_159
-BB23_158:
-	push	de
-	pop	iy
-BB23_159:
-	ld	hl, (ix - 114)
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_165
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	ld	de, (ix - 111)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_164
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 108)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_164
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 105)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_164
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_166
-BB23_164:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	jr	BB23_166
-BB23_165:
-	lea	de, iy
-BB23_166:
-	ld	hl, (ix - 87)
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_172
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 84)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_171
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 81)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_171
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 78)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_171
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	push	de
-	pop	iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_173
-BB23_171:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jr	BB23_173
-BB23_172:
-	push	de
-	pop	iy
-BB23_173:
-	ld	hl, (ix - 60)
-	ld	de, 1
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_179
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	ld	de, (ix - 57)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_178
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 54)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_178
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 51)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_178
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_180
-BB23_178:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	jr	BB23_180
-BB23_179:
-	lea	de, iy
-BB23_180:
-	ld	hl, (ix - 33)
-	ld	bc, 1
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_228
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 30)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_227
-	ld	bc, -862
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 27)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_227
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 24)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_227
-	ld	bc, -862
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	jp	BB23_226
-BB23_185:
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_187
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_187:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jp	BB23_87
-BB23_188:
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_190
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_190:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jp	BB23_92
-BB23_191:
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_193
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_193:
-	ld	bc, -865
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jp	BB23_97
-BB23_194:
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_196
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_196:
-	ld	bc, -908
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-BB23_197:
-	ld	hl, (iy)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_203
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (iy + 3)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_202
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -908
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	iy, (iy + 6)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_202
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	bc, -132
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_202
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_203
-BB23_202:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_203:
-	ld	hl, (ix - 114)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_209
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 111)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_208
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 108)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_208
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 105)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_208
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_209
-BB23_208:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_209:
-	ld	hl, (ix - 87)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_215
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 84)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_214
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 81)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_214
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 78)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_214
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_215
-BB23_214:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_215:
-	ld	hl, (ix - 60)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_221
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 57)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_220
-	lea	hl, iy
-	ld	(ix - 3), de
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 54)
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_220
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 51)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_220
-	ld	bc, -883
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	(ix - 3), de
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	ld	de, (ix - 3)
-	ex	de, hl
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_221
-BB23_220:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-BB23_221:
-	ld	hl, (ix - 33)
-	add	hl, bc
-	or	a, a
-	sbc	hl, bc
-	jp	nz, BB23_228
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ld	de, (ix - 30)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishl
-	ld	(ix - 3), de
-	ld	de, -859
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__idivs
-	push	hl
-	pop	iy
-	ld	bc, -8388608
-	add	hl, bc
-	inc	bc
-	or	a, a
-	sbc	hl, bc
-	ld	de, (ix - 3)
-	jp	c, BB23_227
-	ld	bc, -859
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	lea	hl, iy
-	ld	de, -862
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix - 27)
-	push	hl
-	pop	de
-	ld	bc, 16
-	add	hl, bc
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_227
-	push	de
-	pop	iy
-	ld	bc, -16
-	add	iy, bc
-	ld	hl, (ix - 24)
-	ld	bc, -8388608
-	add	iy, bc
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_227
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -859
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-BB23_226:
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	bc
-	add	iy, bc
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	push	de
-	pop	iy
-	or	a, a
-	sbc	hl, bc
-	jr	c, BB23_229
-BB23_227:
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	jr	BB23_229
-BB23_228:
-	push	de
-	pop	iy
-BB23_229:
-	ld	de, -871
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), iy
-	lea	hl, iy
 	ld	bc, 25
 	call	__imulu
-	ld	c, a
+	ld	c, 8
 	call	__ishrs
 	push	hl
 	pop	bc
@@ -5726,17 +2062,20 @@ BB23_229:
 	ld	hl, 8257536
 	ld	e, 67
 	call	__fcmp
-	ld	d, 1
-	jp	m, BB23_234
-	ld	d, 0
-	bit	0, d
-	jp	z, BB23_235
-BB23_231:
-	bit	0, d
-	jr	nz, BB23_233
-BB23_232:
+	ld	e, 1
+	jp	m, BB29_37
+	ld	e, 0
+BB29_37:
+	bit	0, e
+	jr	nz, BB29_39
+	push	bc
+	pop	hl
+BB29_39:
+	bit	0, e
+	ld	e, 67
+	jr	nz, BB29_41
 	ld	e, a
-BB23_233:
+BB29_41:
 	push	hl
 	pop	bc
 	ld	a, e
@@ -5745,23 +2084,24 @@ BB23_233:
 	ld	hl, 224
 	push	hl
 	call	_gfx_Darken
-	ld	iy, 6
-	add	iy, sp
-	ld	sp, iy
+	pop	de
+	pop	de
 	push	hl
 	call	_gfx_SetColor
 	pop	hl
 	ld	hl, 65536
-	ld	de, -871
+	ld	de, -892
 	lea	iy, ix
 	add	iy, de
 	ld	bc, (iy)
 	call	__idivs
+	ld	bc, 500
+	call	__imulu
 	push	hl
 	pop	de
 	ld	(ix - 3), de
 	push	ix
-	ld	de, -868
+	ld	de, -895
 	add	ix, de
 	ld	hl, (ix)
 	pop	ix
@@ -5771,100 +2111,44 @@ BB23_233:
 	pop	iy
 	ld	de, (ix - 3)
 	ex	de, hl
-	ld	bc, 125
-	call	__imulu
-	ld	c, 6
+	ld	c, 8
 	call	__ishrs
-	ld	bc, -4
-	call	__iand
 	push	hl
 	pop	de
 	ld	hl, 240
 	or	a, a
 	sbc	hl, de
-	ld	bc, 2
-	call	__idivs
+	ld	c, b
+	call	__ishrs
 	push	de
-	ld	de, 4
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -904
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
 	push	de
 	push	hl
 	push	iy
-	call	_gfx_FillRectangle
-	ld	de, -868
+	ld	hl, 4
+	push	hl
+	ld	hl, _brick_wall_arr_data
+	push	hl
+	ld	bc, (ix - 3)
+	call	__Z12drawTexStripPKhhjiij
+	ld	de, -895
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
-	ld	hl, 12
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
 	inc	bc
-	push	bc
-	pop	hl
-	ld	de, 80
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB23_73
-	jp	BB23_238
-BB23_234:
-	bit	0, d
-	jp	nz, BB23_231
-BB23_235:
-	push	bc
-	pop	hl
-	bit	0, d
-	jp	z, BB23_232
-	jp	BB23_233
-BB23_236:
-	ex	de, hl
-	ld	de, -877
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -883
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	ix
-	ld	de, -874
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -871
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	ld	hl, -8388608
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	de, (ix - 3)
-	push	de
-	pop	hl
-	add	hl, bc
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	c, BB23_151
-	ld	bc, -871
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	jp	BB23_151
-BB23_238:
+	jp	BB29_24
+BB29_42:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -5873,12 +2157,12 @@ BB23_238:
 	ld	hl, _global_palette
 	push	hl
 	call	_gfx_SetPalette
-	ld	hl, 9
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
 	call	_clock
 	ld	(ix - 3), de
-	ld	de, -904
+	ld	de, -919
 	lea	iy, ix
 	add	iy, de
 	ld	bc, (iy)
@@ -5902,20 +2186,21 @@ BB23_238:
 	push	bc
 	ld	hl, _.str
 	push	hl
-	ld	bc, -880
+	ld	bc, -886
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
 	push	hl
 	call	_sprintf
-	ld	hl, 12
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
 	ld	hl, -2
 	push	hl
 	call	_gfx_SetTextFGColor
 	pop	hl
-	ld	bc, -880
+	ld	bc, -886
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
@@ -5934,19 +2219,19 @@ BB23_238:
 	ld	de, 4
 	push	de
 	push	hl
-	ld	de, -880
+	ld	de, -886
 	lea	hl, ix
 	add	hl, de
 	ld	hl, (hl)
 	push	hl
 	call	_gfx_PrintStringXY
-	ld	hl, 9
-	add	hl, sp
-	ld	sp, hl
+	pop	hl
+	pop	hl
+	pop	hl
 	call	_gfx_SwapDraw
 	call	_os_GetCSC
 	cp	a, 9
-	jp	nz, BB23_3
+	jp	nz, BB29_4
 	call	_gfx_End
 	or	a, a
 	sbc	hl, hl
@@ -5955,10 +2240,377 @@ BB23_238:
 	ret
 	section	.text,"ax",@progbits
 
-	section	.data,"aw",@progbits
-	public	_brick_wall_arr_data
-_brick_wall_arr_data:
-	db	"ss“s“‘’’s“”““ss‘s’W‘•‘Wr•·t‘•‘•‘r‘î“s’‘í“’»’Õ•‘“·ï“”“‘‘s“sr“ï‘‘’‘’í“s”•“ís’s••Õss’“·ý’tºWs’X•“WjØés‘’r‰¹“s“sºU”“W“s—²““Y”‘s­ØtWt–’qÖÓ“s‘“9º·Xv©tsRÖ’sq‹s’r±WW“q•tW±AX“¯”—”‹AXYˆu—“”AWW‹“•ÑXXVs»tWÏ””t†»X>ÉºW”—“qXRÙìs‚ssˆsW±ìW©Yt¬sW±–0¬sWÏuY¬•X”sÐ—•»Xr•Wr—“»•.ˆtt¨•ê×YˆZ˜±XXÏís°t“´W>É»=—x©uqYL½þT‘s‹X†”i–ýT¹t‹uˆti–ýµtrZ±[<—ý¹”±Yé—•ý’X¬uº˜Ž—ý—v‹Xq˜‹¼þ’XuŠ—‚Ùþ·W•™±ZTÙþU¹t„•²B8»—oY••’sYT9ÝÿoY“‘rUS»ýotŽs‘‘sS»ý<t‘ss’“‘T»þ", 26, "usW“–”V»ý=t‘’s”—·‘»ý,Zs“rs—¹rÙÿ+Zrs‘st“qÚþ&Xrss’s‘mîÿ@uqZ˜ºstAÙÿp•s‘¹”R(Ô—lZ“x©–rZj&Þÿi[Žv¦Z†W¯;Öÿiv„YˆYŠX¬SÕýiZ©vˆv¯X‹S»ÿv©YU1Ê—X.Õý,v²t¯ZÌ˜´r»ý,Y‹u‹YÏ™³‘»þ)\WwˆXs\³r½ÿ$[ˆZˆZˆu³oîþYˆZ‹u¯Y­jîÿ?v†[uš´XtAîÿlvŠu„uÌYR&ÖØo‘°x©“’Ws>–Ñ–ou“x©sU>¹q—Ö–o“‡Z‹sqS¹r’±–ms­[”’>¹r’±DX°ZUX¸Ww0”±Z,t´Y²s¸”—“’ŠZ,WŽ[¯sº•Ø““‹[+Zs\‹WsX×’—•[)YŽB‹sU×‘ÔÏ[&VB‘t’T—Žº¸[>s‹B“—¸TvVºÌšU•‹[‡“¸@u>”Ë˜o”¯\¦“¸UV;’ÈÙoU²v‘©vrXRR»Ð–oX˜w‘¬[SVW—Ø–oW­WŽ‹Znr²s´¯—lW³tŠw‹r‘s’±[+AµtsT[²ttY·±[", 26, "A¹s’pZÌ–”t‘‹Z,A¹•·‹v´–»–‘Š[)/rX‘l\º—¹•”‹[)0—v’i[r•¹“Ø»[&A’W‘lvŠs¹sÔÏ[&.W•‘™s“sÓ¶x?X²Ws™¯WtXºËšpYµtŽ‚™²XVA¸É˜ns·u„™²WR?´ÈÙˆ?µ“—©““stNAÖÏ—ˆA™v˜¬tW>”‰XÙÙ–ˆVµms‹srS”‹X´¯—lA¹Žt‹““o“‹Y²±˜P.¹‘ut”q•qZ²±D", 13, "/¹XrW”’˜V[²¯[*.»’”¯s”¸˜µuŠ[*.”r•s–”Øµ—’Š[)/—suŠW•s˜³u»“w(.˜sYˆssU—°•Öº[&”rY‹s“p—ªtë¸[&-¸qZ•˜ºp•ªtÔ¶yVX¹qX•»quVBÑË½oWÓrt„“»rZNA¶É™ˆWº’u¤“ºrXMA´Ç¼ˆ-·¬]¬¦˜XtKBÖÌ—ˆ-yu›©¬\S-»gZÚÚ–†.¹Z‰‹B†=Ö„Z´¯—†@Õ‚Z‹Š[ˆT»†Z²±—„-»©\ˆx¯>»„Z¯±E", 13, "»©ZW-[ÊWy-\´±[)×²XÌpBÏ”Ø‹vˆ[<»²v´o[±”Û²vŠ[(•P[¯i\ÓuÛ©v’‰w(¼s]¯h[rWÛ©vÙ—w&¼ˆB‹lw†UÛ¤uëÏ\$", 26, "”ˆB³lw¬TÙ‚të¸C$»†B˜—š±T˜„uë´›s1»†Bjš±=x>CÏË¾†.Ø†w‡‚™ÊAv70ÌÉ™†@Õ©\©„™±UtKBÉÇÜ¬=“²•—¦o˜ŠZqKV»ÊýŠ?x•˜—©pxUB‘gX½¼ý¨?—‚qt‹<—†X¶„s¹¯ýˆ?˜„qtŠ<˜ˆY²†s¹¯ý†>—©‘tˆS¼¨Zis”¯ý:—©“ZU.¼¯Z•;Xº±ý˜‰’s˜Ïw•TY”‹ñ*˜¬“•«,™Ï™¹¯•“Šñ*–‹’•ˆ<ÚÌ™º–’ˆý(vSA–ˆ(½–x¹‰——þ9š‘t–ˆ)˜rv¹©•Ù»þ&˜†rtˆ=˜ˆu»†“ÖÏý&tˆru‹=Ø¬Z¹‚‘ÖÑñ&", 26, "—ˆUZ“XÙ±Y“h“ÖÏþW0˜ˆr[“WÜ±Yu>YÖÎþ‹@—¬st‚OÜ´Bt7VºÉýˆ@»±st„;Ü²ZR7VºÇ½¬SW²y©‰–‹[mKZºÉýŠS[˜—{©‹vY?\ŽNv¾½ý¨SYŽ\©oY†B±it·±ýˆTu­D‹nY†[¯lu·¯ý†Su°†\‹n—·†[‹iuµ¯þO<Y°¬]sUwÑˆCOu·±þZ­²1q<Z¸é\u-[·¯ý'u²´YÊoZ¸ì\²‹—‘ˆý*-Z´²[´Qu¸é]·°˜‘¨ý(-YqS\¯PuÖ»yµ˜’ˆý(,[uWy¯PZ–”yµ‹˜˜—þ:+[‘ˆ\¯QY‘ˆxµ©—ÔÏþ&ZˆDn—ˆ\µ‚—ÔÏò&WˆD’Su·¬[³•ÔÑó+uiD•t™¸¯Btm˜ÔÏþrWv†C“™Ò¯2W;uÓËÿ‹Tu´‹\‡h—Ó²2V7X¸ÉýˆT–¶Ž]¦h˜Ó²2;7X¸Ç½¯o.´w’¦mÙˆ‘XNKw¸Èý¬oBš˜z“©pyW0ZmMx¾¾ý¬m0‘‚u‘‰Sw†qs¬i—¶±ýˆoXµ‚YŠ;wˆqt¬l˜´¯ý†oX¹†Z‘ˆSšŠqY‹i˜²¯ýiQA¹©[sp@½¯rZ‰Ow²¯þ", 26, "X·¬Zsp™È”[W>w´¯ý", 26, "B¹°X·‹,™ÌÖvowŠý)-X»²uºˆ,¼ÊÖ˜µ™¨ý)-/·u·†<¼Ê»˜µ™ˆý',0s<B·†(¾»˜™°Žš’qþ(+B™sx·†(w‘tw°‹šØ—þ9(B•†Z’ˆ,™ˆ‘˜°‡˜ÑÏþ&/“ˆZ“ˆ=¼Š‘v­h˜ÔÏò&/’†B•Ž.¼¯’u‰g˜ÔÏô..B·lZv—ZÝ±’[sTšÑÏþqUZ¹ˆYsŽTÞ±’BR;vÑËÿpYº[‘‚OÝ´sBR7ZÏÉþˆpYÓ°[‘‚;Þ´“0M7v¶Ç½¯l-µ¯tv©‰•·ŠYVM7y¶Èý¬l0›wyš©‹v[ACth8z¿¿ý¬l/•‚v©pY’†W’‰Ow´ÉýŠlA»‚qY‹lX’†X¸ˆm™²¬ýnlA—†qZ‹nu”†X’ˆi™¯¯ýil/»©’[o—»ˆY’†Oš¯¯þ;)0»©“[r?[»¯ZuT;š±±þ", 26, 13, "»©’X=YºÐ˜vU?š¯¬ý',0×¬“t±SY»é™•°pš‹ˆý)?Õ¯“–¯Qu»Ï˜»²š‹¨ý'=•oWu¬PuØÓ™—­yˆþ(+™WY˜¬OY˜”x—¬Ž›–•þ:)0¼qtv¬PX”v»­‹šÔÓþ9&˜†‘Z‹Qu“ˆu—©„½ÑÏþ&$•ˆr[Quº¨Z•‡g™ëÏò&$.»ˆU[’Vvº¯Y“„gšÑÏþ//1»†r\˜všÕ¯Y[W.¾ÏÎþq0»ŠrZ‰j—Ö¯YWN9™ÏËÿŽn0Ö¬su‡h–Ö´ZZM$wÌÉþˆŠAÖ±tv‡h—Ö²ZA8$™ÉÇ½¯†·¬Ž_­¦m¼†ŠCTK7zÉÆý¬†wx~¬©pzX.GM8Ÿ¿¿þ¯†˜‚‚y©¥px††1´†Nx±Éý¨„/»„D‹Š;wˆ†[Ì„mš¯¬ýn„/Ù†E¬ˆ<šŠ„C°†Pš¯¯ý††×©¦F†S¾¯†D¬„P›¨¯þPO—©¬FsT.¾È†C’O:œ¯±þ×¥²1rS™±é\˜-.›¯¯ý'(Ûˆ·0Ì¨,™Ìì]µˆo›ˆˆý)=Û¯´[Ñ†,½±ë]¹²›ˆ¨ý'?—‹\´†<½ÉÐ]º¬›†ˆþ%<˜P:E²†(¿Ö—`¹ˆ²zoþ((¿uuz±†(xss_¹¦Ø™ÿ:(½†ˆD²†+™Š†]¹©‰½ÏÏþ9¼†ˆ5¯†=½†ˆ\»„h¾ÏÏþ&$–ˆŠ5¹†=½¯«D¹‚gšëÑò$ØˆhD“‘A½±¯2‘g¾ÏÏÿ0/ Ù†lEw˜vò±¯2xWA¿ÏÎÿ‹Š0Ø‹ˆC‰OÞ±¯2RK&šËËÿŽˆÚ¯‹]¦OñÌ³3t7$xÉÉþˆˆ/Ù±Ž]©‚;ò´²3R78šÇÇ¾²†-“±©\µ©¦[²‹WxMKAÙÌÉš¬†-Áw™{µ©¯DY?0½hLXÀÞ¾˜¯„.š‡‡uµ¦°2„+Û¬gXº±Ï™«„/¼„X‘ˆ‹„>Ý¨„Xº¬±½n„.Þ¤„X’ˆŠ1’ˆ>Ýˆ„Y¸±É½†„.½©„Z·†¨\¸„?Ý††Y·¯±½†i-™©©[»ˆˆ_¸«>¾†„X¹¯É{½¦¯YX@-3¸ÌUãADº¯±_Þˆ·W¶¯q¸êsá†lZ“Šlz*=ò¬¶XÓ¯q1¸étõ©¯v¹ˆ‹_)?Þ¯u¸©qC¸Êsö©Íuº†¨_&,™lQZ¸ˆiCÔÑYö†´—»ˆŠz((ÁZZ]º†i4vu[ö¦©—¾˜v:)ÞˆŠB¸ˆNC¯†Uâ©©tîË´{;$à‹Š0’†lE†Uâ©‚tïÏÏ{(™†ˆB×†l]²ˆ?ö¦‚sîÏ¸_&$™‹Š0•ˆm]¶¯?À‡‚WîÏ´`&&½Š†1zzzž¸±?Á‡¦uîÎ´žYW1½Š†0t‡‡^Ñ¯=ÂA>2ÖËËŽ†/Ü¯†[„yÑ².{M7AÓËË‹†.Û´†[³„‚xÑ±AM7/ÓÇÈœ‹†.×´ˆ[³¦‰\Ñ±@yMKAºÇÇ¾²†<s´¬.›¬†s—Š0uLK[ÖËÈš¯†=y˜˜\¿©©txV?2—gLCàÝ½˜¯†>x‡‡S›©¦tv††Õ‹N[ÐÊÑ™¬„?w¦Nwˆ‹A—††Öˆi[Ì¬±¾ˆ„?š©‚9wˆŠA˜ˆ†/»ˆi\´¯É¾ˆ„?š©„;šˆˆY™«†/»†„w²¯±¾†„=w©©Ty‹ˆY¼¯†»„i\²¯É}", 13, "x©©UF¼±¬z/`Ð±±`", 10, "š¥¬UY¯ˆ/˜Êë/¼l;\²¬‹z)*¾©²T—Ì†/™Êì0¼‹x²ˆˆ_*@½‹´U™²†0¼±é0Û¯´x·ˆ¨_(=wˆ‹>š¬†A˜ÊÐ0Ûˆ´w·†¨{()-xS(š©†A¾—˜DÛ†°x˜pS|)({—uB½ŠiAZss2Û©©wÝ™™;9›ˆ,™†0”Š†0Û©‰vîÏ¶{;›‹ˆ+xˆ†Y—†ˆ/Û¦gwîÏÏ{($[Šˆ+›Ž†X×¬¨Û„‚vìÏ·_&v¯ˆ™‹Y—±¯˜‚gvíÏ´{-+š†(|yyzÛ±¯šqpxíÎ´žsrAš¯†(x‰htÛ±¯w>;\ÑËËž†@™Ì†?š„„tÙÌ²wK7BÏËËž†@™Ðˆ-¾¦tÚÊ²vK7BÏÇÈ¿‹†@—Ì©.½©„tÛ´²uKK2ÏÇÇ¿´ˆ;A´¬q}­¦¦[µˆ[qK7]ÖÉÈš²†SD˜—v ª©¯DuUA\ŽM8_¿Ü¼™¯†QD“Žqž­¦²C’lPZ´†N]ÓÑÔ˜¯†SB­g^‹ˆ’„lZ¶†i]´¬É½Š„S\³‚hFˆ‹”ˆl[²†iyÌ¯±¾ˆ„S\³„O`¯ˆ¨Dº†m[²„i_²¯±¾†„Q[°©oz°†¨EÓˆm[Ž„hz²¯ÉT;-[°©q`W?=G»±m\t>>{´¯É{", 26, "", 13, "\°ˆ[pTºÌ¸]s<+z²¯¯z''\²‰BÌ¯qÓéÔxˆmz°ˆlz*=\²²\Ï¬q2»ÌÔy²¯z²ˆŠ`)=[²qy´ŠŽ3º±Ñy·¬²y´ˆ«z(*-Bl<y²ˆi3ÕÑºyµ‡²_·ˆŠ{)(-EvA0{²†i4˜—[œµ¥`¼–uŸ;),\’U›±ˆ94‘‹pyµ©‹]î¸“;&E•†S]°ˆlE‘†oxµ©‡xîÏ¶;$D†Q`´†l]µ†px·„gyìÏ¸z($", 10, "B²ˆQGº†lE¸¯\³‚gxìÏ’`&$B¶†9y·‘r_¸±[³‚gyìÎ´}/..\´†:`w˜v{Ó±\uVTzìÎÉÀ‘qU\·†PE^Ó±pCR89_ÏËËŸ‘†S[Ó†Sœ‡„yÔ²rDV7$EÏËÉžŽ†S[ÔŠSž¦‚‚]Ô±‘DR77EÏÇÈ‹†pZÑ¯T¦¦¦\Ô±2RK$]ÌÇÇ¿´ˆP·¯‹[—©†s—ˆŠWxgK7bÔÉÈ›²†l1™•–y—©©t™sV1šjM8cÞÛ¼™±ˆi2™“w—©©t[oi-¼¬h9aÖÕÖ˜¯ˆi1“eX•ˆ‹AZ†„,¼¯†P_´¬É½Œ„i2»‚‚W”†‹@vŠ†?½«„maÌ¬±¾ˆ†i2»„‚X–†ŠW™Œ†?½ˆ†P{²¯É¾†„i1»©‡Z—†ˆt™È†>¾†„O}¯¯É¿ˆiO1¹©©[˜‹ˆZ¼±¨>¾‰iO}²¯É}D¹¥°YBA-™±Ê@ÃA-´¯±z2»†¶W“²ˆ/˜ÉêsánlP}°©n{**+2Õ¬·W»Ì†/˜Êêtâˆ¬q|ˆ‹z*=,1»²²u»¯l0™±ÏsâŠ²{²ˆ¨`),=¹‹‹Y»¬†A˜ÊÌsã¨°{²ˆ¨{))?•P(1—ˆiAš»—[ã¥©c•po}+(+3œ[wyÖˆiA3XYBâ©¦Ž{¾šš ;:)2—ˆŠB»ŠiAt¨†Uá©©‹_ìË´ž;%$2Øˆˆ0•ˆ†Y—ˆ†@â©†iìÏ¸ž;$$“†ˆBÙˆlY˜ˆˆ@â©„gzëÏ¸z($”ˆŠ/˜‹lX˜±¯?À¦‚gzìÏ’b&$1»ˆl0™——xÙ±¯?›ª‚g{ìÎ² B0/D»†l0xttwÜ±¯= BA/~ëÎËÁ°‹p3»ˆl/t‚es¼±¯-›MM&aÏËËÁ’†n2ÖŠl[•„‚tÙÌ².zR7$_ÏËÉžŽ†n1í¯l[»¦tÚÊ²AzN7$`ÌÇÉ†p1Ó±‰[•©‡tÛÊ±@yMK$aÌÇÇ¿¶Ši·±©.­¤¦\¸ˆ0vMK$zÓÉÈ¾´†l™••Bž©©¯D˜WW2˜gL8{ÝÚÙx²ˆi›t•Xž©©²CumPÙ‰g9zÙØÚv¯ˆi—„Oy©ˆ“„†Ù«„;x´¬Ë½¬„iØ†‚9]‰Š‹”ˆ†/Û¨„SyÊ¬¯¿Š†iÛ¤‚:_ˆŠ2»ˆ„Ùˆ„Py²¯É¿ˆ„iØ©„Szˆ«D»¨†Ù†„O›¯¯É¿ˆ„h˜©©T{°ˆˆ_Ö¯„¼†„9z²¯É 5˜¦©UG6ÖÈ© 0´±É{Ù†°UZ¯ŠT»Ìë¿S:<z¯¯{))Û‰´TZÌ¨qÕÏì0Þˆ‹S›Šl{*<,Û¬´T™ÌŠq!ÖÊë0¿©²r›°ˆ¨z*<,Ù¯T¾±ˆŽ3Õ±é0ß©´qzˆ«z))?—†l<›¯†i3ÖÏÓ0ß†°z²ˆ¨})(,›V./œ¯†i4™—v4ß¥©z˜”s ;()¾’’0¿¯†N4srr1¿©©ŽzÙ»–Ÿ;9(¾‹ˆ,y¯ˆPE’ˆ†0¿©¦‹yìÌ¶ž;$½‰ˆy‹†nG“†ˆ/ß¦‚h¿ëÏÐž;$—ˆˆ,œµ†QF¹ŠŠß¤‚gyëÏ¸b&$—‹ˆy²ˆmEº±¯½‡‚MšëÏ´c&$ÙŠ†|xšx}Õ±¯½‡¤hœëÎ²¡DB15Ùˆ†({sq_Ö±¯Ÿ10êÎËÁ²‰p Ù¬†+x‡^Ö±¯xMK(yÏËËÂ“†lÚ±†-¿‡„]ÖÊ‘yM7&^ÏÉÉžŽ†nÙ´ˆ-À¦‚‚]í²²xM7$yÌÇÉ†ŠÕ´¨.¿©¤¦\í±°wMK$yËÇÇ¿¶‹i“´¬T{³©†s—‹ˆr[sLK;yÑÈÈ›´ˆlš”“Yž°©¬t™”WX\sMK;{ÝÙØx²ˆiÂvuuŸ°©¬t\US<B¹†e>›ÛÚ¼w±ˆi™‡hy°ˆ‹WZ‹„mXºŠ‚>w´¯Ìš¯†i0½¦N\Ž†‹.Z„oZÔˆ‚U™´¬±¿nli¿¦‚hE²ˆŠAvˆlZ”ˆ„Tx²±Ê¿Š„i¾©„P_´†ŠY™´„oZ¹††Tš¯¬É¿†„i¼©©p`·†ˆY™ÌˆmZ¹„„>š¯¯Éž@++¼©©q_Y@>1š´±oDw?>/›´±É|½¦©r[’qSv´Ï·\w>+Aš±¯¯{(ò¥Y´´‰/v¶êÓ\»†lUš¬ŠP|**,ò©²r[Ñ²ˆ/v´éÔx»¬¯sš‹Š‹{+<=ò‹²rxÐ¯n0˜´Êºx×¬¶“šˆ¨z))=Ûˆ‹Sx¶‹lA˜ÌÌ¸x×ˆ·sxˆ«})(=½Q:+]·ˆiAxÖ»—y×†²“y’po};(*Âw[[Ì†iADZZZz×¦¦“{½šxÃ;:)ÞˆˆSy¶Šh/t¬†ox×©©‘šêËŸ;(&Á†<]²ˆlYv‹†px×©„r½ëÏ¸Ÿ;$¾‹†<^·†lY˜‹†p\×¤q¾ëÏ¸}+$™ŠˆQ]ÕˆlX˜¯¬p[×„„m¼ëÏ·b&$™¯ˆ(\µ‹‰Y˜²±B»‚j½ëÏ²|&&Ý†:_z{{}Ý´±[˜‡¦q¾êÎ±¡[B04½¬†:]tq‹Z½´±pC]0.1¾ÑÎËÁ²ˆn0¼²†;]Ž‚t¼Ì±q1tMK>™ÏËËÂ“†lÜÌ†S›ª„‚t¼Ð²‘CuK7+™ÌÉÉŸŽ†nÛÏŠ=œ­¤t¼Ì±‘CtKJ+xÉÇÉž†n×Ì¬>›ª©¤t¼Ì±r1VKK+xÉÆÇÀ¶©is¶¬‹[™¬¤¦\ºˆŠWwmKKAšÏÈÈœ¶ˆl-v”’“]™©©¯D˜ssBxoLKAœÛØØš´ˆi.|wvwy¼©©²D[T;šŽiMWœ½½Ýw±Ši.wª‚X˜©‰°1•†„,˜´ˆhW˜´¯Ïš¯ˆi/w­gWuˆ‹‹–ˆ†>¼±†iX˜±«±¿Š†i/½°‚„WvˆŠ‹—ˆ†?šˆiX˜²¯É¿¨†„/š°„gX™ˆˆ¬4—¨†?™¯i„X˜¯¬É¿†„i.w­©‰Z™Šˆ¨EÖ¯†>š‰„iW™¯¯ÉÀpPOw¬©‹ZxroS_Ø±ˆ>šlPX™±±É", 13, "š©¥­X[A-""ØÉÊ@ŸY-3š²¯±|)", 10, "š¬†´W”²ŠTÖÌêWÀlPX™¯¬nž))*¾¬‹´W–ÌˆqØÌëYÀ‹‹‹u˜‹Šn{+<=¾¬²´Y—Êˆq!ØÊésÁ¯²u™ˆ¨{;*=š‹²uØ¯ˆŽ3Ö±Ìsá°¬¶u™‹ˆ«{)(=vˆ†mX˜¬†i2ÖÏÑWÁ¬†´u™ˆ¨Ÿ+',yW>-B™¬†P3½—˜[Â­ˆ¬uy•’V ;()œ—Yu\Ú¬†N4YssYÁ­©©u¾ÙÙ˜Ã;:(›†nX˜¬ˆO6’ˆ†UÀ°©¦t¼êË´ ;&$œ‘†n0˜Š†lG¹††@À°¦‚t½êÎ¸ ;$w‹…nBš†lGºˆˆ@Á°„‚s¼êÏ¸})$[°ˆŠ/™†QE»¯¯?œ­‚‚V¼ëÏ’b&$˜´†P/˜ŽqGÓ±¯=x­‚V¼êÎ²}.++š±…l0{yyx}Ø±¯?œsm‹u½ÑÎ±¡ZXW2š²†iAw‡‡GÙ±¯,{0/.2¼ÏÎËÂµˆn0™Ð†lX—„‚€^í´°-yRK8A˜ÏËË¡¹†l/™ê†l[Ø‡‚]íÊ²/`R77.˜ËÉÉŸŽ†l.™Ñl[™¦‚EîÊ²AyO77A˜ÉÆÉžˆˆ/—Ð¯oB˜©¤©Eî±±@]OKL/˜ÉÆÇÀ¸¬l-W¶¯©.Ÿ­¦†s—†Œ0™gK7B™ÏÈÈœ·ˆ†>B•‘’X ©©¬tw•ss3™jLKB¿ÚÖÖy´ˆl?_›w™\Ã­©¬t\W>+½‰gMZ¿Þ¾¾w±¨i-C“‚„O}¬¥¬XZ„†¼¯†OZ—É±Ïš¯ˆ„@[µ‚N_‹ˆ‹AB„†Ü®†iZ—±¨É¿Œ†i@w¹‚„9_ˆ‹A[ˆ„½Š†i[—±¯É¿Š†„@w¹†‚;{¯†ŠWw¶††¼ˆ†i[—¯¯É¿ˆ„i?[·©¤S|¯†Štw¸ˆ†½†„i[—¯¯ÉÀˆ„i>[µ©©T~µˆˆuš¸¬„½†„h[—¯±É¡0xµ¦©UHx¸É©Ä1G™²±É}", 26, "\·†²T[²‹p/Z¸Ïìáo;;[—¯¯¯ž)'x¹ˆ¶TZÌ±‰/Z¸éì/àˆˆov—‹ŠP}**=x¹¬¶TwÏ¯oAv¸Ïì0ôˆ¯w—ŠŠ‹{;*?w¹¯²U›Ì¬o0w¸Êê0õ¨°²w˜‹ˆ«{+(=[’‹‹>œ²ŠlAvÐÊé0õ¨´v˜‹ˆ«}+%,[sP:,z²ˆiAxÖ»—2õ¥‰²w™po;()^šZZ1À²†iADvuv3õ¦¦wœ™™vÃ;))]•.¿±ˆh/Z‹‹0á©©‹v¼Ó¸“ ;9(]—ˆˆ+z°ˆlXv††0á©©‰uÚêË¶ ;&", 26, "]»ˆŠz†lYwŽ†ˆ.á©„gvÜÑÎÑ ;%", 26, "[‘†ˆ,|Ò†lY™²ˆŠõ¦„huÚêÏ¸}($", 13, "B·ˆ¨`¹ˆlX˜¶¯¬ß¦‚gYÚëÏ‘c$[¸ˆ†z•””\™¶±¯›¦‚uÚÏÎ² 0.-w¹ˆ†}xwwy½Ð±¯ÁWTT\ÛÏÎ´¡tsW0xºˆ†(`‡jt¼Ð±¬ž>>-DÙÏËËÂ“ˆnAwÔŠ†-›‡‚t¼Ñ²›N78B—ÏËËÃ¹†l@wÖ†-Á¦„‚t¼Ñ²’œR771—ËÉÉŸŽ††@vÖ¯†-Á¦„t¼Ñ±²yM77B—ÉÆÉÁˆˆ@ZÒ±¨.À¦©¦t¼Ñ±°yMK8B—ÉÆÇÀ¸¬l</·±¬Tz»¬„¦\»†ˆqBuMK7CØÌÈÇœÐˆ†=0–²W{¹¬©¯CÙ“sY\ugK8\¿ÙÖÕy¶Š†=5žxxx »©©°D\?+B—‡g8]¿¿¿¿w±¨i=2—‡„jy”©¦²2–†„Q0Ö¬„N\»É±Ïx±¨„TB•„N\“ˆ‹–†„SXÖ«†j\º¯ŠÉ¿¬ˆ„T[×†‚OD’ˆ¨‹—Š†SZÖŠ„l\»±¬±ÀŠl„SD×¤‚O]”ˆˆŠ!ÙŠ†SB»ˆ†i]º±¯É¿ˆ„„SB—©†m^”ˆˆ«5Ù¯„oB»†„Pxº¯¯ÉÀˆ„i<1»©©p_–ŠˆˆGÙ±ˆSB—†„O]•¯±É W,+D»©©q][A-FÚ±¯oCyA>-_»±±É~", 13, "C»¥¬q[srS?ØÈÏ’D›?+-_»¯¯±})", 26, "D×ˆ°rY·´ˆqØÊêº[¼llQx•©©lŸ*)*DØ©´qZºÌˆqÙÊê»\ÛŠ¬px•ˆ¨Š|+*?-2Ø¬´rwÔ²†q!Ù±ÏºwÛ¬²x»ˆˆ¨{<)?B»¯qxº¯†Ž3Ö±Ê¸wÝ©²x–ˆˆ«|+%,-0¹†l<xº©†i2ØÏÐ¹\Ý†­²x—Šˆ¨ +%*- ˜=+]»Š†P2¾——[`Ý¥©x™’rT ;((5¿vv[œÔŠ†O4[XXYyÛ©¦x¾¼š™Ä;:)3×ˆˆ=xº†95’¨†pwÛ©©‹wÙÏË´¡;9&", 26, "D¼‹ˆ<\”Š†lF”ˆ†p\Û©¤‡wÚÏË¸ <&2˜ˆˆ<]»ˆ†lG»††p\Ý¦‚gxÚÏÏ¸ ;&$1•ˆˆ<]Ø‹†QF»¬Šp[Û¤‚gvîêÏ·|($1»‹ˆ)D–‹ˆmFÕ±¯pBØ‡‚gvÙêÏ²}&$B»Š†(Ex˜˜v|Ö±±qB™‡„‚xÚÏÎ²¡1//0\—Š†:]xu—tbÚ±¯q2›XA._ÚÏÎÉ¡“rrA\—¬†:Dt‡h‚^Ú±¯p1w>;+]ÖÏËË ¹ˆ†U[Ø¯†Sx“„„€_îÌ²U1vM78C»ÏËËÃ•†l?[Ù²†=›¹‡‚‚]îÌ²s3wM7$C»ÉÉÈ q††UBØ´ˆ>z¹¦‚EïÊ±rBuL7$D»ÈÆÉÁˆˆUB»´¬>y“©¤©Eï´±r1uMK$DºÉÆÇÀ¸¯†P·´¬p[¾­¦†s˜²†ŠA\qLK$]ÖËÇÆ¿Ðˆ†Q–Ž‘\½©©¬tw—“”[wMK8_¾ÖÕÓy·Š†Q ¢_yy{¾¬©¬t\B>+x’iM9`ÀßÀÀw´¬„P™‡‚‡Xš©¦¬Y[‘††+v¸©h9]ÑÉ±Ñ™±¨„S—¤eWw‹ˆ‹AB‘„„,˜¸Š„P]¸¯ŠÉœ¯ˆ‚o2Ù¦hA[‰ˆ‹.B’ˆ†?™¸ˆ„m_Ò¯¬±ÀŠn„Q2Û¦‚hWwˆŠW[“ˆ†?™’ˆ„P_·±¯ÊÀ¨„„m1¼©†hYš†ŠYwºˆ†?™µ††Pz·¯¬ÉÀˆ„„PØ©©‰ZšˆˆYwº«†>™µ„„Nz·¯±ÉÁqPO<˜©©‹ZyspSBšº±ˆ-y•oS;{¹¯±É¡3¼¦¦ŽXDA.-\ºÉÊ@\.|º±±±}", 10, 13, " Û¥‹²WY²¬p/BºÌëWœ”nP;z·¬¬ŠŸ)')", 26, "2Ý©´W–Ì¯p/ZºÏìXœ¹ˆ‹oz·ˆŠlž**=Ý©²²X˜Ï¬oA[ºÌêY¿¹¬²z¹ˆ¨‹|<)?-Û‹²Y™´ŠoXvºÊésÀº¬´zºˆˆ«|;%=-Øˆ‹pY¼±ˆlAvÒÊÐWÀ»ˆ´`ºˆˆ«~+%*-˜lP;X™¯†iA\ØÔ»ZÁº†°`—‹‰o ;%(-¿Y00D½¯†iA\vuv3Áº¥©`½——u¢;((,¾’’s[¼¯ˆh/[’rrA¹©©ŽyÛ»»–Ã;:(+¾†o0™¯ˆi0[ˆ†@¿º©¦‹xîÏË¶¡<($¾Ž†n0™†lYw†ˆ@¿»©„i›îÏË¸¡>&™ˆ†nXš²†lYw²ˆˆ@»¤‚gyîÏÏ¸ +&$—‹ˆn0šµ†lXw·¯¬?›¹„‚exîêÏ’|($—¯ˆP/™°‹oYw·±¯=x¹„eyîÏÏ²}+&&&Ù†P0{ššyz¾Ñ±¯?y•‡¤hzîÏÎ²¢C1005¼©†P0›uss[½Ó±¯,z]0//{íÏÎË¡’ŽU3Ù¯†P/wŽtšÓ±¯,]VN8+_ÓÌËË¡•ˆ†S2Ú´†mZ™‡„‚t¼ÓÊ².]tM7&EÑÌËË¢»††S1ÚÏ†mZ½¦„t™ÓÊ²A_tM7$EÑÉÈÈ ††p1ÚÏ‹o[½¦„t™Ó±²A]RKJ$GÓÇÆÉÂˆ†p»Ì¯oBš©¦¦t™Ó±°-\RMK$GÑÉÆÇÀ¸¯†O’Ì¯¨.¡°©„¦DÕ††¨/yjKK$bÕÉÆÆ¿Ñˆ†l—°‹¬A¢ª¬©¯CÚ”s•4xjLK$cÞÖÓÓz·Š†lå``z`Å­©©¯DF.-¾‰hL9|áÁÁÁw´¬†h›‡¦;¢­¦¦´3—¥„†½¯ˆg9`ÏÉÉêw±«†i˜¦€Nc¬ˆ‹—†„†¼±ˆ„;_´¯ŠËœ¯ˆ‚l½©‚9I‹†¬‹˜Š††Þ®†hSaÑ¯Š±ÀŠn„Oß©‚„9a°†ŠŠ¼nˆƒÞnˆ„Pc´±±ÊÀ«†„iÞ©†g;}²†ˆ¬4¼¯„†½«i†P|²¯«ÉÀ†„„i½©¬¤T}°†ˆ«5ÙÉ††Þ†„†9}²¯±ÉÀ¨„ih¼©©©T¹ˆˆ†`¼±«‚¾¥„„9}²¯±É¢1", 13, "5½©¦©UI5¼±É©åB¡Ð±±É~", 26, "¾¦†ÊT[²ˆTÙ±ÏìãoS(<}²¯¯¯Ÿ)ò¨lÐTBÊÌˆqÙÉêíâ††ˆP}²ˆŠO *)<+ò©¬Ð>\éÊ…qÚ±éì0öˆ¯¯q}²†©‹},:@,òˆ´´UyÑ¯†q!Û±Êì0öˆ¯´{·†ˆ¨|<'@,Þ†²¬T´¬†Ž3Ø±±é/ø©‹Ðq{·†ˆ«};,?¼††o<{´Š†i!ØÌÏé/÷¥i·c¹†ˆ«¡+%)?œS:&{Ìˆ†P!¿——˜3÷¥†°c˜qpS¡;(&+Ãx[xDÂÊ††O4DYZZ2ö©¦¥{¿š›yÅ;::)Þˆˆ¨-´Š†84’«††/ã©©©‹_îËË¢;:9(Á’†ˆ+z²ˆˆl6”Š††0ã©©¤‹`îÏË¶¢<(àŽ†Š{¬††nG—††Šö©¦€hžîÏËÑ¢>&$™†…ˆ,~Õ††QG—ˆˆˆ÷©„‚gzìÏÏ¹~+&$™¬ˆ«`»ˆ†Q6Ö±¯¬â¦‚„M`ìêÏ‘d$¼²††", 10, "z°‹‹oGÕ±±¯", 26, "›¦‚ezîÏÎ²&&$Ý¯…†~z{z¢Ú±±¯Á‚©j}îÎÎ±¢D3115¾¬…†}tqŽqGð±±¬Å21~ìËÎË¡²‹‹p ¼´††(GŽeFÚ±±¬MMM+aÏÌËË¡—††nÝÏ††?Á‡„‡€_îÏ²‘{R77&_ÏÌËË¢»††lÜêˆ†-Ã©‡‚EïÌ±µžR77$`ÏÉÇÈ p††nÛÑ¬†.Ã©¦€‚EïÊ±²œM7J$bÐÇÆÉÂˆ†p—Ï¯ˆÂ¦©¤©EïÊ±°zNKL$bÏÈÆÇÀ¸¯†l–ÏÌ¥sG×©¦‚SÁŠ†ˆ‹4YhKK¢ÐÉÆÆ¿Ñˆ†l™‹“G»©©¦TÀ¹’‘t`sjJKÅÚÔÑÑz¸Š†lç{|z}¢×©©©S~B.", 13, "6»‰ML+ÅââÃÃx´¯†iã‚©‚H×©¥¬?}†„iÒ¯„g(ÃÏÉÌêw±¬„iÀ¦eK3—¥†¯+`‹i„i Ñ±h„ž´¬«Ëy±¨h‰Â©e„e •†ˆ(H¯ˆ„l3Ô®hh<¡Ì¬Š±Ànn„iä©¦„e!»ˆˆ¯a±nˆi4ÕO¥‚(¡±±±ÊÀ«l„„ã©¦eGÙ†ˆ«,¡´¨h†4Ð«†ƒ;Å¯¬ÉÀˆhhiÂ©¬¦¬G—††¨<¡´¯„i5·i‚„Å‹¯¯ÉÀˆ†„†Á¦©©°GÙ†…¥U¡¶È„h4¸¥„†%å‹¯±ÉÃA&&4ž¦¦©²5G/Ÿ¶É¯j3Â)(&ÅÌ±±É~â¦†©´•plra´±Ñ·!ÁA", 26, 13, "-Å¯¯¯±~)ù¥h´·°ÏŠµ`²ËìÔ""Û…†m(Å¬¬lŸ)'*)ú©l·´ÑÑŒ‹a´ÌìÔ4Ý…¯Š<Å†Šn ,)?=ùˆ¬ÍŽ!ÓÏˆˆ", 13, "ž´±êÔ5ò…ÊTÅ¯†ŠŠc<(@,ø†¯²µFÓÐ†ˆÂ´¯ÊÓ5òˆ°·TÅ²†ˆ«|;%,@â†ˆŠ°G·´††Ÿ²ÌÌÒ6Þ©i¸pÅ†ˆ«}+%)@ÁˆˆPmGÕ¬†ˆ", 10, "ŸÑëÓÖ6Þ¥h·SÄ²†ˆ¬¢;%%=æ[0}ÖŠ†ˆy342}ò¨¥°TÅyvv0¢;)()ørr‘?aÒ††|qr!Þ©©¦TÂÖ¹–•ä;::(ãƒ„Q`Ó²†iœ«Š…ˆ""Ý©©©SëÎË´¡<(&ú•„†PIsˆ†¯", 26, "Â†ˆ†ˆ5Þ©©‚SÂîÏË¸¢>(ãk†‹HÖˆ†Š", 26, "ãˆ††‹4ò©‚€NãìÏËÑ¡>9%n…†ŒFñŽ…Š", 13, "âŠˆl4ò¬¦MÂìÏÑ“}(&&œ´¬†$#˜‹†«À¯±¯Š ×©‚MŸëÏË’d&¿Ï††8""Ø¯°²Á¯±±Šu©eeeÂìÏË²/&(&â´…†l#¢¢£¢Äã´±±‹ßŽ¤¬TåìËÎ±¢[BB0!â²††l6™jh‰>ãÏ±±mž0ÅÑËËË¡²ˆˆŠÁ´††nFt‡ee;âÐ¯±Q!˜JK7¡ÌËËË¡—ˆ†ŠâÏˆ†·`‘¦‚;õÑÌ²>4yj77", 10, "ŸÏËËÉ¢»††Šáêˆ†sE»©e„;âÑ±²q5›877	¡ÌÇÇÈ q††ŠáêÊ†”6»©€+âê¯±r""uK7J	ÄÌÆÆÉÂˆ†¯½ÑÏˆt6¹©¦†>âé±±q!XK7M	¢ÉÈÆÇÀ¸¯†ˆv´´ˆŽæ¬¬„‰[Ø†…¨<{qMKK", 10, "çÉÉÆÆœÑŠ††w°‰å©¬©¯BÚ‘·.{qgJKüÔÑÐ¸z¸Š††", 13, "¢¢}c}å©©©¯2H1ŸmLLüãäååx´¯†„ tj¦‰æ©¦¦²2w¥ƒ„z´¯hg", 26, "úËÌÌë\±¯„„m„LKAãˆ¦¨²w„„„$z¶¯„„Ã±¬¬Ëy±¬h‰ž©„„e- ˆ†p™«i†&Ì®h†ä²ŠŠ±Àpn„„¡³¦€‚Ÿ‰ˆ¬ˆšŠŠƒ&Ÿ²l†„", 26, "Å¯¯¯ÉÀ«l††¡²©e. ‹†Š©!¾«†‚)|²n†„,úˆ±¯ÊÀ¨„hˆŸ°©†„ ††ˆ«3½±††&¡¯„‚†û†¯«ÉÀ…††ˆ|­©©©ˆ†ˆ©5½È¨„Ã¬†„†üˆ¯±ÉÂŽONN{­©©¬æWqp;b¾±Éi}”iOOû¬±±É!!}°¥¥²|--", 26, "½±±Ê+¡|33û¯±¯±~)+¢­¤‰Ð—ÌŒˆ>¼±Ïì?£·nlq+üŠ¯¯Œ}))æ°†Ž¸˜ÑÌ†q½±èì@¢µ†ˆˆ>üˆˆˆ9 ,'?,Å²ˆ¶².½ê±…qÝ±ÏìUÄÒˆÌ>üˆ†¬Š|=)@=Ä°©Ì´.ÞêŠ†TÞ±±éU¢»ˆÊ´?ü†Š«{<'=@Âˆ²°òÏŠ† ¼±±ÌTå»©°·>üŠ…ˆ«|;%)@ˆ†lo¾Ìˆ†P¼ÊÏÌ?Å¹ˆm¸=üŠ†ˆ«;%%@~ro&;›¯††O¿ÖÖÙ0æ¹¥†Í?ü‘‹‹o<'%;¢ŸzEz`àÊ††O!FB2BDÅ»¥¥¬@üœžzÄ;)))Ã±ˆˆŠÞÌ††8!”¬††r¢¹©©©?ãÑ±¶rÃ<::(Ã»††‹y²ˆˆ95•¬ˆ†U¢¹¬©‰?âëÎË´¡>($Ä—††Š]ˆ††n6Ø†††<¢»©„>øìÏË¸¡>(%ž††ˆž²k†l6Û……ˆ)Ä»©€„;øëÏÏÑ >(%zpˆ†±Ã•††P5Ù¯¬ˆ'¢»©e„9ãìêÑ’}&&&`¶¬†iœ°††P6Ø±±¯' ¤„:ãëÏË}&", 13, "{Ïˆ†lõ“““VHÛ±±±'d‘¤ejùëÎË²¡1.--Ÿ·…†lü| žŸ¢ñ±±±'~ys‘Ž0üêËÎ±¡ZXYWŸ´ˆ††›je†‚5Þ±±²}\.úÏËËË¡²††Œž´¬††C‡e€EÜ±±¯", 10, "}R77LäÉËËË¢˜ˆ†ŒÂÏ²†‹ô©f„€EïÑÊ¹cvM7KãÏËËÉ¢»††«ÀÑ´†‹ú©„‚‚DïÌ±´,}u87KæÈÇÇÈ q††ŠÀÑÌ†ù©¤€„DðÌ±¯", 26, "~R77KúÈÆÆÉÂˆ†ÉyÌÌˆŽ÷©©¤©CðÊ±¯}RM7MúÈÈÆÇÀº¯†ˆ3¬±ˆ¨.°©¤‚Sá††¨/œjKKK", 13, "äÇÉ®ÆœÑŠ††3°¬ˆ¬A~ª©©¦TÀ·¸1›jLJLç¸ÏÌ¶yºŠ††", 26, "açc~¢å­©©©S5""ÀjjLLüæúúú]¶¯†„", 26, "`vqª°>°©¦©?~†‚„¿¬¬egöÌÌÏÔ\±±„„", 26, "G>¦eeOc°¥†±<a„„†¾±¯„„À±¬¯Ëx±¯‚ˆ-_‰¦„€9G°†ˆp(H¯ˆh†¿±«‚©á²Š¨±Š„„-a¹©e†9G†ˆ¯I²Qˆ„áŠˆƒ†â¯¯¯ÈÀ«Pˆ†a¹©e„:a¸††«+~´ˆƒ„¿¬P††ãˆ±¯ÊÀ«„h¥", 26, "Hµ©„g<}´††¨<¡´±i‡À«i‚ˆö†¯ŠÉ…††ˆH³©©¤Td¸††¨=¡¶É„„â†„„†ö†¯±Éž¨„h„G³©©©T~Ùˆ¨†AÅ¶É«hÁ¥ƒi„öˆ±±É¡2_µ©¦¬UG|·±É‰ÅC/4ã±±±É~`³¥„ÊT3²ˆµ`´ÉéëæTS</ãŠ¯¯¯~)%}³¥†ÐT1¯Ìˆµ_´Éêíä†††i.ö†¬ˆiŸ+'<*·©¯ÐT3èÑˆˆa´Éêí/÷ˆˆ¯¯.ö…†©‹~>'@=", 13, "b¹‰Ì¶TFÏÌ…‹", 13, "}¶±éì0÷¨Š¶´.äˆˆŠˆc>'=@a·†Í²?zÊÏ†ˆ¡Ê¯²ê/ù¨¨Ì².øˆ…Š«|<'*@_¬†‹‹>¬±††Ÿ´ÌÊê/ù¨©²¸.ø†…ˆ«}<%%@G‹ˆlo+cÌ©†ˆ", 10, "ŸÏëêí0ùˆˆ©¸.øˆ†ˆ¬¢>%%=I\.", 13, "}Òˆ†ˆ¡À35!Gú¥¥†Ì.çvtW¡<)9)a—WX”Ÿ±ˆ†ˆ}U‘’’ù¦©¦¬Aö¸–˜˜å<::(", 13, "`·…†¨´²†h«Š†…/ä©¬©¬/àÏÎË¢>(9%", 13, "c™ˆ†¨", 26, "b‘¨†¯", 26, " ˆ‹††/ä©©¦¦AáëÎË·¡>)a—††«{²††«", 26, "ãˆ††©å©©WõëÎËÑ¡?9%G††ˆ,}í††«", 13, "ãˆˆˆŠù©¦€„-ôëÏÏ¸+($Eqˆ†È", 26, "aØ‹†«ž±±¯«ä¦¦-áëëÏr}&$F¶²††_²††¬ÀŠ±±¯", 26, "Á¦‚‚€?áÏÎÎ}$$GÏˆ††avZvu Â±±±¯Ÿ‰f@öêÎË°¢E10/2`¸†…†~yx›wEäÌ±±¬å\ZXW3øÏËÎ±¡–sssI·¬††`te‚;ãÑ±±ÃA>>>öËËËË ’††Š-`´Ê††+zŽ‡e;ãÑ±±žM77NàÉËËË¢˜ˆ†Š`¶é††-Ÿ„¦‚f;ãêÑ±r}V77MàÌËËÉ¢º††¨", 26, "_Ïê†† ‹©e†+âê±¯² 77MâÆÇÇÉ q††Š_ÏÏŠ†.Ÿ‰©€€+ãê¯±²ž877MöÆÆÆÉÂˆ†±", 26, "E´´ŠŠž‡©¦†>âê±±°žjM7NâÇÇÆÇžº¯ˆˆ&""¯´¯¥sEÞ©¬‚‰BÛ†…ˆp""vjKKLâ±É®ÆÑ††(""²¬Š¨tE½©¬©°1Ú‹s6ujKJMäÏÏÊ´_ºŠ††;#ç }}¢ÅÞ©©©¯Ba3H˜mgLMüçúûú]·¯†„;#›V’qG¾©¥¦²1^ˆhhNØ¬‰egó¸¸¸Õ\±É„„)#W¤eKD½¥¥©´x†„†iÕ±Š„j½±¯¯Ë]±¯„†;#‘¦‚K ¼††‹px«„„P Ö±ˆ„²Ý±Š¬Éœ¯¬‚‚>5×©‚e™††¯ˆš«n„i3Ú®„h†ò±¬¯±À«Pˆ„)5×©‚‚€3š††¨Š¿ŠˆƒP""Øˆn„ˆßŠ±±ÌÀ«†„†;#×©¤f„E½†…ˆ¬ ¿±ˆ‚m""Ö¨i„†ò†±ŠÉÀˆ„„†(#»©©¦°E½††ˆ«2¾É¨†O3Ö†„„iò†±¯Éžˆ†„„(""»©©©°E¾†…ˆ¨E¿±±„O!×¥„„„ßˆ±±É¢B(&5»©¦©²3I06À±É©j!Ä-(&4ó±±±É~4»¦†¬´˜UoS-¾¯±Ñ²ãA.-2ß«±¯±~)%6—¥„Ê··Ï¬ˆ>¾¯ÌìÒÞ†lloàˆ¯¬ˆ~*%)'", 13, "a×¨lÐµºÑÊ…q¾±ÏìÓ!Þ†ˆˆ0à†ˆˆP ='?,", 13, "6Ø‰¯ÐPØÑ¬„Tß±ÌìÓ3ô†¯´´0ßˆ†¬Šc>(=?", 26, "#Ùˆ²²·5ÙÑˆ†Tß±¯ÐÑ""ôˆ¯Í´0ôˆ†Š«c>',@""»†¯µE×Ï††½±±ÊÑ4ô©‹Í´/á†…ˆ«{<%@", 26, """µ††loF—´††O½ÊÏÌ¸#ó¥„´¸õ††ˆ«>%?", 26, """—‰l)<FÙ††O¿ÖíÙ˜6ô¥†©¸â‹ˆ‰‹>'%)", 26, "#Å GIb¢Û¯††NHD34FHô©¥†´æŸž {¢<)))", 26, "4ÙpSIØ´l†8u¯‹‰pà¦©©°0óÏ¶¸“Å>::(", 26, "5˜‹ƒ†QGØ±††8""—¬ˆ…n ß©©©­0òÏÎË´¡>(&$5¿††PGYˆ†ˆn5™†††n""à©©¤¤1óëËË¸¡>:", 10, "#Ùˆk†‹FÙˆk†Q5Ý†††o!ô©¦e€[òëÎËÑ¡?:%", 10, """s†…ˆ6ò‘k†95ÝŠŠˆl""ô©‡€ñëÏÑ¹}+($$	""•¬ˆˆ9""šµ††O#Û±±¯nÞ¦‚„e/ñëèÏ‘}(#º±ˆ†!Ú‰ŠˆS6Û¯±±nw¦‚L0òÏÎÎ}$&", 10, "#ÖŒ…†P ž\]xCdñ±±±‹›‰e„0ôÏÎË¢I64F6—©…†l4ÁZ™sWGò±±±læE40B6ôÏËÎ±¡–r‘.5»²††l4v„e„4ñ´±±P›;;;RòËËËË “††ˆ,5ºÌ††ŽGu¦€Dð²±±< xM77iÝËËËË¢˜‹†ˆ+5Ôé††¹E×©f‚€DðêÌ·>""V77hÞËËÉÉ¢º††ˆ+4Óêˆ†‘4Ý©‚„‚3ðÏ±¯r3›N77gòÆÆÇÉ q††ˆ<4ÓÑ±†•5Û©¤€„2ñÏ¯¯q w877góÆÆÆÉ¡‘ˆ†«+4·Ì±¥t4Û©©‡­2ñÌ±±TCMMJNòÇÇÆÇžº±ˆˆ&“ÌÌˆå­©„‚<Â¯†…¨<`WhKK8à±É®ÆÑ¯††O“¯ŠˆÅ©©©¦TÁ´Šn²-`VgJJ8âÌËÈ±_º††Qæž{zžæ©©©©S F2~smLK8üæùùù]¸¯ˆ„PÁtt““å­©©©?’ifh", 10, "`¹¯„MNñº¸º»\ÉÉ†„9x¤eeAÅ©¥„²=|†††_Ð±„hOØ±¯¯Î\±±„†O ˜‰‚L- ‹†ˆS)H²†hƒ_Ï®„„ŽÙ±Š¬Éœ±¬‚‚j!Þ©„‚}‹†©¯H´Šl„(|Ó®‚hoð±¬¬±ŸPˆ„9 ß©†‚}¬††¯c·nˆƒ&{¸PŠ„lÛ«±±ÌÀ«ˆ„†O Þ©©eg- ²†ˆ«,¢¸¯„„)a¶Š„„l!Ûˆ¯ŒÉ¨hhi9½©¬¦¦††¨<¢¶È†¦Ÿ´i‚„OÛˆ±¯Éˆ†„†N½©©©©°††¥T¢¸É¨‚}´ˆ„†O4Ûˆ±±É ‘ONN!½©©©¯¢ZUU=0¢¸±±„cØPOO(""Ý¯±±É""#½¦¥¥²c-a¸±ÉÊ+}¢4FÝ¯±¯É~+Þ¥†¬·—²¯ˆ·H¶Èèì>×ln;TÛ¨¯¯«})%#ß¨h²¸", 26, "—ÌÌ…µH¶Éêì?»…†ˆmÛ†©ˆO~,=*", 26, "#à©ˆ¶´šéÌkˆ`·Èéì@ Ø…²¬Û…ˆ¬‹}?'=,,àˆ¬Í´.½Ñ´…‹", 13, "}Ð±ÌìU~Û†²²´ÝˆˆŠˆa?'=@ò†¯²´ßÏ²†ˆ¡Ì±±ÏT¡ÛŠ¯Ðqñˆ†Š«{>'(@,½†ˆŠß±¬††¡´ÊÊÌ=¢Ù©l·´ñ†…ˆ«c>%@,¼††imœÌŠ†ˆ", 10, "¡¸êêÒ@¢Ø¥h´´òˆ†ˆ¬¢>%%<,	zÊˆ†ˆ¢á\D2çÙ¥†¬´¡Y‘?>(((,ÂvZ[v3ÁÊ††ˆWstt0 Ù©¦¦°õ˜™š™Å>):))¿ˆˆ†Š¿´†iŸ¨¨†…r~Ø©©©ñÏ¶Ìr¢>::&+Àº„†Šy´¬†Š", 13, " ˆ¬††UØ¬©¦ŽñêÎË´¡>)&$â“††ˆ_‹††¯", 26, "Ä‰††ˆ<Ù©¦‚EñêÎË¸¡?:	¾Šk†‹}·k†«", 26, "ä‹††ˆ)Û¬‚g3ðêËÏº >:%wˆ††®ÃÕˆ†«", 13, "Ã¯¬Šˆ%Û©‚gðëÏÑ’}&($$¼´¬†l`¹††¯ž¯±±¯'|¹©†L ðêÏË‘}(¼´ˆ†Oà²¬­²Á¯±±¯'`t©eee2ñèÎË~&$( Þ±…†låz{cÄ¶±±±:a½‡‚©‚""òÏËË¯¢G5436¾°…†lÅuW“q/äê±±°c 3216ñÏËÎÉ¡Ó¯°Ž=""½Ì††lEŽLg;ÅÔ±±¯", 10, "auMNM;ÜËËËË •ˆ†ˆ:2½´ˆ†‹›‰„¤e;øÑ²±²", 10, "auK77:ÚËËËË¢Ø†ˆ(!ÝÑ‰†Žö‰†;ãêÑ²¹`yR779ÚËËÉÈ¡º‰†ˆ: ÜêŠ†‹ù©¦e„+ãë±±²,d˜8778ÜÆÆÇÉ p††ˆQ ÜéÏ†ø©©€€,ãìÊ±±cVK7J8ÝÆÆÆÉ¡‘Š†Š9 —ÐÏˆö¦©¦†>ãë±±¯cWMJK%ÛÇÇÆÇžº±©ˆ9–Ì´ˆŠ.}¹©©‚‰1Ýˆ…†¨/žTMKK$4Þ±É®Æº¯††O•±Šˆ¨A|³©©¦°0ÛŒ††¶œqMJJ$4àÉÉ®È_º¯††lÅ›yœ{Å³©©©¯1{D25ÁojKK&6üä÷øä]¸¯ˆ„PÅZut•0¹©©¦²1_nfgNáŽ¬gM96Üºº–—\´É†„NÁ‰e‚O}¹¥ˆ©´_ˆ†††", 13, "À´¯hg&""Ò±¯±Î\±±„†O¿‰„‚eNFµ†ˆ‹yŠ„‚†ÀÉ®‚ƒ;4Ñ±Š¬Ëy±¯‚‚jâ¬†‚96’†ˆ¬‰z®n„†â´«hhS5í±Š¬±ŸPŠ‚Nä°©e„9F·ˆˆ¬lnˆƒâ‹lˆ‚:5Ö¯±±ÌÀ«ˆ†„hã­©eg:cÖ††Š‹Á±Šh†ž¯n†„PGÕŠ¯¬Ìž¨„h†OÂ­©†‚=dº††ˆ«ÀÉ«h‰ã¬„‚†9EÖˆ¯ŒÉ…†„†OÁ¬©©¦TdÕ††ˆ©2ÀÉ¯„„÷ˆ††ˆ9GÕˆ±±ÉŸ¨„hhN©©©¬T~Þ‰¨ˆO`Á²ÉŠhÃ¬…h„96Ø«±±É¡45ž¬¦¦¬UG!!Á²±É‰æ]0cØ±±±É~", 13, "â©¥†ÍT3´ˆŠ>¿±ÉéëçsT(,G»«±¯±~)%", 10, "ù©„‹Ð?¨Ï¯¨<¿²ËëíúŽ††m9EÖ†¯ˆl~+))ù¬ˆ°ÐT2ÌÑ±…VÀ²Ììí/ù°†¬ŠoEÕ…ˆˆn~?'=*,ù¬©ÌÍ>5ÑÏŠ„Tá²Éêì0ù²ˆÍqE—†ˆ¬Ša?'=@,ø‹©Í´U`ÑÑ††Tá±¯Ìì/æ²ˆÊ´rEðˆ†Š«b?'*U,ö‹ˆ²¬>{¬Ì††‘¾±±Êê/üµ©ÐqDÚ†…ˆ«c>'@,à†††o<{²²††O¾´èÌì/ü²ˆi·r4Û†…ˆ«}>%=,Á‹‹Po+cÓŠ††O¿ììîð0û°¥„¶r4Þˆ†¥¬¡>'%(,æ{]!EE¢Ó¨††NaE345Fü³¥¥©r6Ãœ›zE¢>)((*ä‘qr’}Ê¯††8[ŽŽ/ú°©©¦ŽEñ¸º»•æ>:::)ã‹ƒ†«}¶²††$ —¬ˆ……Aç³¬©©p4ðÏÎË¡>(9%(ù—††«", 26, "c‘©†ŠQ#šˆˆ†ˆ/æ³©©„oEðÏËË¸¡?:&ø”††«d·†††Q4¿†††©.ç³©„€h`ïêÎËÑ¡.9$ÁŠ…†ˆ,}î‹k†P4òˆ†ˆ¨úµ©e¤NEîêÎÏº>:$›‹ˆ†É+aÛ‘††:""Þ¯¯¬Šù³©e„M5îëÏÑr}($$œ´¬†ŠG»‰††:4Ý¯±±¯", 26, "äª¤‚‚MEïÏÏË}", 13, "&¿Ïˆ†ˆ_Õ‘’‘T6ñ¯±±¯", 26, "¢¤eeFðÏÎË0(&:â¶…††c ¡£¢¢Äó±±±¯Ä˜ª¤¬mGðÏËÎ¯¡E33015â´†††c™TŽp4óÊ±±‹", 13, "åE1IïÎËËË¡Ó‹S Á¶‹††It¤e3òÌ±±¢RMMM+6ÖËËËË —Š††Qâ´¯††-Ÿ‡¤„„€DÝ´²± VJ77&4ÔÌËËË¢ÙŽ††:õÑ²††-ž‰©f‚2ÝéÌ²ruM77""ÖËËÉÇ¡º‰††QáÑ´††}Ž©„‚2ñÐ±¯²¢s777$#ÖÆÆÇÉŸp†††nóéÏˆ†.}Ž©„€„2òÑ¯±²¡;K7K$4îÇÆÆÉ¡’ŠˆˆPšÐÌˆ‹|ª©©†­òÏ±±¡TM7M4ÖÈÇÆÇžÔ±©†Ov±±¨ˆt5á¬©„‚<Âµ†…Šp!xjKKK`ÛÉÉ®Æº±††iu¯Šˆ¥t4ß©¬©¦TŸ¶ˆk«r!wjLJKbÝÉÈ®Æ_º¯††l¡¿šxš›à©©©©S yC1cšjhKK&búãööâ]º¯ˆ„i¢x[uvvGá©©©©?YOfg&½‹‹eM(cÛ»•—v\¶É†„OŸT‚e¤LEÁ¦¥†²=’†††OÙ±¯hg&GÐ±±±Ï\±±„†im¦€K1¿ˆˆˆ)H“†‚„OÚ±¯„„GÌ±Š¯Ëy±¯„hmÂ­©‚L›††‹‹(G”Œi„P Ü±¨h„<`ë¯ˆ¬±¯Pˆ‚OÄÍ©€„e›‰ˆˆ±IºˆŠƒO!Ýlˆ„‚(`Ó¯¯¯ÊŸ¯nˆ„i¢µ©€3¿ˆ†ˆ«+»Š†‚P!¼«i†„)|¸¬±¯Ìž¯ˆh†i¡³©†‚ˆ5œ†††«<¢º±†‚m!¼¨k‚¥({ÑŠ¯ˆÉžŠ„„ƒiŸ°©©¦°5œ†††¨=¢ºÉˆ†N!Ü†„„†%}ÐŠ±±ÉžŠ†„ih}°©©©°5Á‰†ˆˆA£Õ±±„N½¥„„†%}Ò«±±É¢C&&6ž°©©©´2c dÖ±ÉˆOÅ.(&Õ±±±É~ °¥†°´™USQWIº±±ÐäYA~¸®±¯±},%", 10, "Å°¥„Ìµ¹Ï¯ˆ¹Hº±Ïì¸á†nlo;{ºŠ¯¬Š},ù°¥lÐ·»ÑÌ…³HºÉèìºà††ˆˆ<{¹†Šl:~?'=*+æµ¦°ÐoÙêÊ…ŠI»±èìº!õˆˆ´<{¹†ˆ¬Š|A'==,ä²‹Ê´µ2Úê¯…‹", 13, "~Õ±±êº!õŠ¨Ì²U{Õˆ†¨ˆa.'*@,ä²†Ì¯µ4ÛÑ¬†ˆ¡Ó±¯Ê¸!ö¨Š´·SbØ††Š«c?'@=Â‹†‹Š²D¼¶Š††¡ºÊÊÌ¸!ö¨©Ž¸pbÖ†…ˆ«c?%??ž‰††mi5¼Ìˆ†ˆ", 10, "¡ºÏêÐº""õˆˆ‰¸SbÙ††ˆ«¢?%%*?¡X+", 10, 10, "Fš¬††Š¢Àw[[1cö¥¥†ÌTcœsrT+?(%%+ÅœyD]\}ÝÊ††Š¡BYZZ[#õ¦¥¥©Ucá½›œyÅ>(:()ã´ˆˆˆSGÛÌˆ†i «††‹õ¦©©©p_ïÌ±¶rÅ>::()Ä”††ˆQF™±Š†l", 13, "¡¬†…oá©¬©¦T_ïÏÎË¡?(9$å™ˆ†ˆO6[‹††±", 26, "Å†††o õ©©¤‚QzïÏËË¸¡A:$Ã”†lˆp6šˆk†«", 26, "å‘†††n õ©©eOžîÏÎËÑ A:$$p†…ˆ4à¹††®", 13, "ÅµŠˆˆQ ö©¦e¦M`ìêÏÑ¹~>)$zˆ†«P!¹ˆ†¯Ÿ¸±¯¬lá¦¤‚M_îëÏÏr}($$z¶²††	 ½‰††¯Ÿ²¯±±n›¦‚„M`îÏÎÎ}&$ž¸ˆ††9àtt••¡¸±±±n›‰e„g{ïÏÎË2.>,+¡¸†…†læ}Ã¡  æÔ±±±nÃuVŽV}ïÏËÎ¯¡\BBB0!¡·ˆ††l!›mh‡‡>Åí±±±PÃ1/}îËËËË ºŠ‹‹pŸ¶²††l3[‡ee;ÅÖ±±±P›MMMM`ÑËËËË —††nÂ´Ì††’G™©‚¦e;ùÔ´±²< zR77K", 10, "HÑÌËËË¢Ú††PâÑé††•4ß©„e‚;äÖÑÊÒ>!žV77K	HÓËÉÈÇ¡º‹††nÁÏÐ††s3ô©†e„+äíÊ±±q!œj77K	IÔÆÆÇÉŸqˆ††nÀÐÏ¬†—""ó©¦€€<äíÊ±¯Uy877K	`ÔÇÆÆÉÃ’Œˆ…nyÌ´¬¨X!ò©©¦¤>ãíÊ±±SyjM7M	`ÑÉÇÆÇžÖ±¬†l[¬´²ˆÅ°©¦‚‰0ÞŠ†…¨<_YjKKK", 10, " ÙÉÈ®ÆÓ´††iB¬¬ˆ¥¢ª©©¦°0ÝŒ……±-GXhKJK", 10, "¡ÚËÈ®Æ_»±††la¿™™™šGåª©©©°0|\C10ŸtmgKL¢ùâõõá^»¯ˆ†id{[wvw Å°©©¦²0aUfNN", 10, "_»‹‡MM+¢¼—–—[\¶±ˆ„haV‡e¦.Ä°¦ˆ©´zŠˆ††EÑ±©fgžÏ±±ÉÏ\É±††i_R¦€eK.~­¥†¬`‹i„†FÑ±Š†‰|Ì±Š¯Ë^´¯„h‰`ª©e†e-dŽ†ˆ‹z¯ˆh†&_Ó®ˆh‰+ŸÑ¯ˆ¬±´n†‚i|»©‚‚cŽ†ˆ¯lœ¯lˆƒ&aÕn†ƒ„+~Ó¯¯¯ÉŸ²nŠ„i|Ò©‚‚}¶††¨ŠŸn„ƒ(IÒŠl††¢·¯±¯Ìž±ˆi††c¹©¦f‚~´††Š¬Ÿ´¯„„(a¸¨i‚ˆ+¢¶‹¯ŠÉž¬„ƒƒia³©©¦©-~´††ˆ«ÀÉ±„†|·†„„„Ã¶Š±¯Éžˆ„„†`³©©©¬~·†…¥©2Á´Éˆ‚a¸ˆ„„†Ä´«±±É •:99&`µ©©©¯¡\AU?GÂ´É±„`¾S:99£Ò¯±±É5!`¹¦¥¦²`/", 26, 13, "´±É²+aÅE24Å¹¯±¯É~-", 10, "|µ¥†°·", 26, "v±²ˆ©>¿±Ééì=cÝnn9S+Ä·«±¯¯},%¡µ¥i´·", 26, "Z±Ì¬¨>¿²Ëêì?dÙ†††l+¢·†¬†i~?***¢·©ˆ·µwèÑ¬†sÀ²Êêì@|Ý†Š¬>Äµ…ˆ‹‹}W'==,}Ò‰¯Í.šÏÌˆ†Tá´±éìU|òˆ¬¶²>¢·††¬ˆ`A'<@,}Òˆ²²´¿ÏÐ††Uá´¯Êé>dòˆ¬Ð´?¢Õ††Š«aA''@?{²†¯²À¯´††‘¿´±ÊÐ=~ñ©‹Ì¶S¢º†…ˆ«cA'", 10, "=?_‹††l‹œ±¯††O¿´èÌÐ=~Þ¥†²¸=¢Õ†…ˆ«}A%,@`²Šˆ;o{ÌŠ††NÀÔìíïA~Þ¥†©¸=¢×††¥¬¢A(%'=dD11EžÐˆ††N|^3434£ò¦¥†²?¢žxwwBA)((*|—UWsWÀÉŠ††8]q‘‘@cÞ©©¦¬T ï¸–——æA:::){¹……†ˆ¿´±††$˜«Š†…qcÝ©©©¬T{îËËÌr¢A::&(}v„†ˆ`·¬†Š9!šˆ©††TdÞ©©©¦TïÏËË¶ V:9$}ÛŽ††l`††ˆQ!¿†††ˆ;|Þ©©‚‚SÂïÏËË¸¡W:$a”ˆk†‹|Ð†k†P!àˆ…†ˆ)|ò©†e;ÂìÏËÏº W:$$$_T†…†Œ Ø‹…†&!ß¬ˆˆdò©¤e„9ŸìëÏÓ’}>(&F·¬Š†l`»‹††9""Þ¯±¯¬'aØ¦‚‡g9ìêÏÏr}(G¶²ˆ†8²ˆˆˆ;4Þ¬±±¯'Gu©‚€OŸîÏËÎ}$&`ÐŒ…†i wZvv0Ió±±±¯'G˜¤e„OÃïÏËË¡E00./3c¹Š…†lÅzz¿šy{ôÊ±±¯%HÃZXsW1ÅîÎËÎ± \XYXAc¸¬††lz¹e©¤ôÌ±±¯", 10, "G{..¢ìËËËË »ˆˆˆŠa´´††lE¤ee2òÏ¯±¯", 10, "HvMKKNŸÏËËËÉ ˜††Š{´Ï††ŽÁ†‡„„€3ñÏÌ±²Hxj77M|ÑÌËËË¢Û‘††nzÏêˆ†ö‡©e‚1ñêÌ±•IœR77M	}ÑËÉÈÇ »p††ˆz¶ÑŠ†Žä‰©€‚‚1òÑ¯±²,awM77L ÑÆÆÇÉŸrˆ††ŠzÌÑÊ†‘ã‰©‚€†óé¯±²IXL77M¡ÓÇÆÆÉÃ”ˆ…]²¶´¥‘â¦©©†­òÑ±±°IXMM7M	 ÏÉÇÆÇžÖ±¬†ˆ3°ÌÌˆŠ.dØ©¬‚‚<Ãº†…ˆ¨/ VhKKL", 13, "æÕÉÈ®ÆÕ´††l2²±Šˆ¨.b×©¬©¤T ºˆkˆ´qgJJL", 13, "çÖËÇ®Æ_Õ´†††6¿˜˜—™]¢×©©©©T¡y\[106ÃqmLKLçøáôóà^Õ¯ˆ†„", 26, "6 Dy\x3~Ø©Š©©T¡[:NN8ãµhMMç¼˜—v[\¸±ˆ„i", 26, "6v‡‡‡;}Ø¦¥¥²?•ˆ†„†", 13, "Â¶¯†fgäÏÈ±Ìé\¶±††„6W¦eKOF˜ˆ¥ˆ±+I•„„„†Á¶±††‰", 13, "¡´¯Š¯Ë]¶¯„‚‰-6“©e„e95—††‹o(G–¨„„†ÂÏ®†‚¬ãÌ¯ˆ¬±œ¶‹„‚i-FØ©†e‰95—††¬¯G—Œn††ä·Œ„h†.ÅÑ¯¬¯±Ÿ´lŠ††FÙ©†€†:GØ††ˆ¯)cØˆˆƒƒ¡´lˆ„ˆæ´±±±Ìž´Š„„†FØ©©fe;dÙ†…ˆ«,¢Ø±ˆh‰¡´Ši„†-ç²¬¯ŒÌž²„ƒh†", 13, "6—©©¦„=dØ†††«<¢—ÈŠ„‡ú°„h‚iç²¨¯¯Ëž¯†„„ˆ6»©©©¦TcÙ†…†¨?¢Ø±«„„ù¯††„†ú°«±±ÉŸ´†hhh6»©©©¬?dáo¨¨l/æÙ±ÉŠhÄµ†ihiç·¯±±ÉE F—©¥¦¯U65cÙ±±È‰Å{03çÐ¯±±É~0", 13, "F×¦†‰Í?!¹‰ˆ¹H»±Ééêç˜T+", 10, "+ç²¯±¯±}-%I×¥i¬Ð?²Ð±ˆ¹GÖ±Ïìíü¹…†lmç²ˆ¯ˆˆ}.')}Ø¨i°Ð? ÐÑÌ…²", 13, "HÖ±èìí/ç¹…ˆˆ‹.ú²†ŠlP~W'<=,IÙ©Š¶Ð<""ÔÑ±…ŠIØ±Ììí/úÕ…²²².ú²†ˆ¯ŠcX'<?=FÛˆ¬Ì´UGÔêŠ…", 13, "~Ù±±éì/æÕˆ²¶´.ç·††¨Š`X')@=FÙ†¯´²>cÓÑŠ†ˆ¢Ö±¯²ì/üÕŠ¬Ð.ç¸†ˆŠ«cW'=@5»†ˆŠ‹>|¹¶ˆ††¡»±ÊÌì/ü»©l··?ç¸†…ˆ«bA%,@5“††lT+cÕ´††Š", 10, "¡ÖÌêÐì/ü»¥h²¸-çº††ˆ«¡W%%)@6™=<", 10, "dØ¬††Š¢¿™—v[3ü»¥†©Ð.ç™rqT;W(%%;FÅž_F{_ÄÖ¯††¨¢5B22\5üÕ©¥¥².çÁžz¢V()()GÚ‹‹¯}Ó´†††¢’¬‹‰‹/ü»©©©¬AÃî¶¶¸sæV:::(G™‹ƒ†¬}Õ±ˆ†h¢’¬ˆ……Aç»©©©©.ÁîÏÎÌ¡W):&%G¿“††«", 26, "|s©††É", 26, "Å“ˆ††ˆ/ç»©©¤¦.ãîÏËÌ¸ X:(FÝ††®d»l††¯", 26, "æ¹†††©.çÕ©¤€AøîÏËËÑ X:$%6—ˆ…††+}Û°k†±", 26, "æº……ˆ©ü×¬‚‚>äìÏËÏºW:$$5sˆˆ†È", 26, "aÞ“††¯¢»¯¬ŠŠû»©‚,ãìëÏÑ‘}R(&5—²¬†®F˜°††±Ÿº±±¯¯", 26, "ç“©¦e>ÂìÏÏÏr}(5»´ˆ†ˆGØ‹²¡º¯±±¯", 26, "Å‘¦ee>ãîÏËÎ}&&$", 13, "6Ö±…††G]]yxEÄÖ±±±¯£u‡†‚?çîÎËË¡`44EGØ¯…††c\š˜u2æÙ±±±", 26, "æD[0X4çíËËÎ± ™Wsss6×±†††I˜‚€‚;ÅÚ±±±‹Å[->>>æêËËËË »†††Œ.F»Ê††„bt‡ee;ÅÙ²±±£VJ77OãÏÌËËÉ ™’††ŒFÕÏˆ††-Ÿ“©g¤e;úíÌ´²qvN77gÃÏÌËËÉ¢Ý‘††ŒFÖê©††|»¬„e‚;ÅíÑÊÍr™;77NÄÏËÉÇÇ »p††ŠEÕÑ††|»©„e‚+ÅîÌ±±²Åt777gæÏÇÆÇÉŸsˆ††ŒEÕÑÐ††c»¬¦€€<äïÌ±±²£RK7JgæÐÇÆÆÉÃ•¯¥…±5·ÏÏˆ‹b»©©¤¤>ÄîÊ±±£VMKKMæÌÉÇÆÇžÖ´¬†Š!“Ï´ˆˆs4ä­©¤‚‰0ÞŠ†…¨o!yjMKKLæÑÉÈ®ÆÖÌˆ††&!’´«†¨s3ã©©©¦°/ÞŒ……¬r!xjMJJLçÓËÇ®Æ_Ö´†††* À——•—wbã©©©©²0xw[B1~›jjKKMüãàòß¿^Ö¯ˆ†„+!ÄEy\x]Iä¬©©©²aW;99¿‰‹eLMú½¼™š]\º±Š†„+!œ‚„©gDã¬¦¥©´z†„„NÝ¯¯‚gg÷ÏÉÉÏê\¶Éˆ†„""™‰„LeLBâ©¥†¯²`‹i„„O½±¯h„‡Â´¯Š±Ë]Ï±†‚‰,""™©„„LŸ‹†ˆ‹p`¯ˆh„O¾±®h„°âÊ¯ˆ¬ÉzÑ¬„‚„>""Þ©¦e„L‰†ˆ¯ˆz±nl„P ò¯¨fh‰/ãÐ¯Š¯±Ÿ·PŠ††+""ß¬¦e„e1ž¬††¬†²lˆƒO Þ‹l¨„ˆä±±±±ÌŸ¶¨†„„<""¿¬©eegCŸ²†ˆ¨‹ ´®„‚l!½«ˆ†„l0ù¬¯¬Ìž´†hiˆ)!¾©©†„‹Dž‹††ˆ«Ÿ´±††P ¿¨„‚„iù¬¬¯«Éž²†„†ˆ(!½©©©¦°4ž¬††¥©Ÿ¶É†„9 ß††††iù¬¬±±ÉŸ´†„i„!š¦©©©°DÅµˆˆˆlEÂ¶É¯„9¿¥†i„iù¯¯±±É¡y&", 10, "5½©©©©² }!5Á·ÈÉ†OÅ0+4æÍ±±±É~3""¾¦¥„°´yUTSS´±ÊÐqåZ0.2ù²¯±¯É}A%""¿¦†„Ì´»´²ˆ¬+œ´Éèì¸ö†nnmp/ù¯«¯¬Œ}AGà©†‰Ð´—ÌÌŠ‹>œ´Ééì¸âˆ†ˆˆl/ù†©iP~W*<*", 13, "6ó©ˆ²Ðq¼éÏŠ†s´Ééìº öŠ†²²/ú…Š©‹}Y'<==", 13, "!óˆ©ÌÌq1½Ñ´††>Á´±Ììº!ö¨ˆÊ²·/ú°††¬ˆ`X':@?", 13, "!óˆ©Ð²µ3ÞÑÌ††Uá´¯±Ð· ÷Šˆ²·²/çµ††Š«aX''?@ Þˆˆ´µ3ñ´²††‘¿´±ÈÊ·2ø¬©‹Ð´.ç²†…ˆ«bX'+@", 13, " ¼†††opD¾´¬††O¿´èÌÌ·!÷Š¥O··.ú´†…ˆ«}X%)@", 13, "½ˆŠPSQ4›´ˆ††9ÀÑììî—""÷¦¥i²·.úµ††¥¬¢X(%%>", 13, " ¡B0IœÊˆ††9~z333!cø¦¥†©·/üyvvZ/X)((:", 26, "!ÁuYYu/GßÊˆ††8_Ws“sW÷¦©¦¦²0ùÙ—˜™™ÅX(:))", 13, """òˆˆˆŠ<EÝÊ†i$™«Š†…pã¦©©©¬/âìË¶¶rÄX::9(", 26, """À»††ˆQ6š¶¯†ˆ%šŠ¬††oã©¬©¦­/áìÏËÏ X::%$!â•††¨:5\‹††¨Q!¿†ˆ††o ã©©¦‚‡0ãîÏËË¸ Z:&!ßl†ˆo4y¬…†ˆP!áˆ†††nö©©„eeBøìÏËËÑ Z:$%", 10, "!šˆ…†ˆ3ÂÒ†…ˆ9!àŠˆˆˆQ÷ª©f„.öìÏÏÑ¹X)$$", 10, "!wˆ†®n Â—‹†ˆ9 ¿±±¯ŠQã‰©e‚g.âìëÏÑq}.($&", 10, "!¼´¬†ˆ›²††ˆ9""Þ¬±±¯nÁ‡¤‚„e/âìÏÏÏr}(", 10, "!¼Ïˆ††$ó´°°°T#ò¯±±±lœ‰¤eeLAøìÏËÌ~1&$&&""Þ¶…††Pæzzô´±±±nÂ‘‡‚©‚0úìÎËÎ¢{G6! G6¾²†…†Pæ[X•qV4õÏ±±²PæG5D26ùÔËËÎ± ™r’‘‘.#¾´ˆ††PxŽe„‚áÑ±±±:ÂR;;;>øÑËËËË—†††Œ-4½´¬††o2C‰‡€e óÐ±±±*M777PãÌÌËËÉ ™“††Š,3ÝÏ²††“5ß¦†„‚€2òÑÏ²·+ }VM77hâÏÌËËÉ¡Ý‘††«""Ýê´††t!÷©©e‚òêÌ±»> Ÿs877NãÏÉÉÇÇ —p††Š,""ÜÑ±††s!÷©¦e‚‚óê±±¯U žm777NæÌÇÆÇÉ~sˆ††«,""ÛêÏˆ†—!ö©©‚‡ôê±±¯T›8K7KNùÌÇÆÆÉÃ–¯ˆ†±""—ÑÌˆ¨Xõ¦©¦‡°óé±±±SzmM7L8æËÉÆÆÇžØ´¯†Š&–´±¬ˆ‘¢³©¬‚‚<ÃÕ†…†¨<GvjKKK$ã¶ÉÇ®Æ|ÖÌˆ††&•±¬ˆ¥‘¡ª©¬¦¤T »ˆ……¯,FujLJJ8äÏÉÇ®Æ_ÖÌ†††PÁ–•””˜2Åª©¬©©T›™wZB¡umgKK8üáòòñÞ^×¯ˆ††Pæ`_]yy6Å°©‹©©T¢\?;;(", 13, "HØ‰‰ML9æ¾¾šœy\Ó¯Š†„:Ãsj‡¬„¢³©¥¦¯?—¥†„„5Õ¯¯heNõÏÉÊÏêD¸É¨„„(Ào¤e€L@~°¥¥ˆ²<c—„„„†5Ô±¯‚‚O¿´¯Š±Ë\Ð±ˆ„‰;¿‰¤‚‚L-a°††‹S)G—¨„h†FÖ±®‚„pà²¯ˆ¯É`Ñ¯†‚„S â­©‚e`††¬G˜«n„†(_Ù®¥hhoáÊ¯Š¯±Ÿ¸:Š†„( ã³©„fa²ˆˆŠ±I™ŠnŠƒ_Øln†‚Pá¯±±±ÌŸ¸Šl†„;ã°©‚}Ó†…ˆ®+¼®ˆ‚„)GÕ«l†„lâ‹¯¯¯Ìž¸Š„i¥:Â°©†‚„~¶†iˆ«<¢¼±«h†&`»¨i‚¥PõŠ¬¯ŠÉž´„„„†9Á­©©¦©}Ñ†††¨=¢ÚÉ«„†a»†„„†Oõˆ¬±±Ëžµ¥„„†9À¬©©©¬~Ó†…ˆ¥U£¼±È†‚_Õˆ†„†OöŠ¬±±É ™;99%""­©©©°~]AW@-¼±É±„GÀT:99""ã²±±±ÉG#Á°¥¥¦´H/I¼¯±Ë°HæG3 Fã²¯±¯É~0ã­¥„²·", 26, "[¯²ˆˆ¹HÙ¯Éêì=IßoS:;<1ãŒ¯±¯¯}A'", 10, "ù­¥†Ì·B¨Ï±ˆº6Ù¯Ëêì?`Ý†††mOö‹ˆ¬†l~W'*)", 13, "#ù°¨‰Ðµ", 26, "[ÊÑÌ…°GÙ±Ïëì?aÞˆ†¬Šp0ö‹†Šnl~Y%*?,", 26, "ø²ˆ²Ðp-]èÏ¯†ŠIÛ±Êêì@bóˆˆÍö‹†ˆ¯ˆbZ'*@=", 26, "ø°‹´´´yÏÑ††~Û±±Ðë?`ôˆ¨Ê²0ã¯††¨Š`Z('@@ö†Ê¯´¯Ð††ˆ¢ÙÉ¯±é=cô¨ˆ²Ðpã¯†ˆŠ«aY',@", 26, "á‹†‹ŠŠ´†††¢Ø±ÊÌé={ó¨©‹¸²ä†…ˆ«bX')@", 26, "Àˆ††lmzÌ²††Š¡ÙÌèÏÑ?dßˆ†‡·÷°††¥«Z'%%?", 26, "ÂrQ(){éŠ††Š¡¿Ù–˜˜0ó¥¥†´´æ”qpoSZ)%%)", 26, "çÄŸGI{{ÃÐ¨††¨¢FD345Fô©¥¥¦çÂžž z¢X((()", 26, "ã’qrrUÀÈ¯††ˆ¢sŽŽ@Iß¦©©¦Ž1õÔ¸ºº•æX:::(ãƒ…†n´²††N¢“¬ˆ……qIò©¬©¬‹àêÎÎÌr¢X::9&å—ˆ„†n`·¬†ˆ¯", 13, "£”Šˆ††Taß©©©„‹0áìÏËÏ· Z:9$ù—ˆ††l`†††±", 26, "æ—†††ˆ;aà©©„hCõìÏËË¸ Z:&", 10, "â†…†‹|êˆk†®", 26, "æ—†…†Š)aô©¦g2ôìÏËÏºZ:&%	o†…ˆŒ ïk†¯", 13, "Å×Šˆˆaô©©€¦góìÏÏÓ“~W)$$$	›‹†ˆŠbØ††±Ö±±¯«%HÞ¦¤‚e0óëëÏÑq}.($$œ´²ˆ†8zµ†…†¯ Õ¯±±¯'6˜¦‚„‚e1àëÎËÏ}&ÀÏˆ††O»’““”¢Ø¯±±¯'6w¦‚e‚e1õìÏËÏŽ~C+&(9â¶†…†l¢¡¢¢¢¢æÚ±±±¯'6Á‘ª¦¬‡2øëÎËÎ¡{552136â´ˆ…†l wV“‘q.æð±±±¬6Å4215öÑËËÎÉ Û?!Á¶¬††lGt„ee;ÅÛÊ±±¬", 10, "6›;NN8;õÏËËËËØŠ††Š,!Á´Ê††‰`Ž¤e;æÚ²±±¯", 10, "FxM7779àËÌËËË š•††Š+ âÌÐ††‘Á„¦f„e;çÙÑÌ±‘G›VJ779àÏÌËËÉ¡Ý’††¨(ôÑÑ††‘ã‡©‚„;ÅïÑÊ¯“", 13, "GR7778áÌÉÇÇÇ ˜o††ˆ<óÑÌˆ†ã‰©‚e+ÅïÏ¯±²", 26, "HxN7778âÉÇÆÇÉ~tˆ††Œ<ßÑÏ¯†“Ã‰©¦€<ÅðÏ¯±²Gv877K8õÉÆÆÇÉÃ—±ˆ†®(šÌ´¬¥sÂ‡©©¤¤>ÄïÌ±±°F[jM7M$âÉÉÆÆÇžÙ´¯†ˆ9—¯´´ˆ‹.cÞ¬©„‚‹/ß†…ˆ¨/žWjKKK$â±ÉÇ®Æ|ØÌŠ††9u¯¯¨ˆ.`½¬©©¦°/¾†kˆ´{WhKJK$ãÉÉÇ®Æ_ØÏˆ††lŸ•““’»B½©©¬©²/žš™w[[G¡soMKK&ü¿ññÝ½^Ø±ˆ††PÅ `z_z_¡Þ©©©©²dB?++ ¹‰jML9 ø¿¿¿À{\Õ¯«†„OÃum‡¬©<d¾©¦¦¦´|¥ƒ„†", 13, "ž¸¯©ge9 òËËÌÑÔDÑÉ¨„„9ÁT¤e€eOI½¥¥†¯´a†„†ˆ", 13, "Ï±¬‚h(½±¯Œ±ÎDÑ±¨‚ˆOÀ‡¦‚e:#¼ˆ†ˆpp`¯†hƒ†Ï±¨„†;Ý²¯ˆ¯Ë_Ó¯ˆh„jÃ­©‚9#™††Š‰`±Šl„†ÂÑ®†h„S ò²¯ˆ¯±Ÿº:n„‚9Å¹©„„:5™‹ˆˆ¯iz²nŠ…„Ã¹Pˆ„‚:Þ¯±¯±ÌŸÒŠlˆ„NÄÍ©„‚:H½ˆ†ˆ«‹Ÿ¶Š†‚†~ÍŠl†„P""ßˆ±¯¯Ìžº«„hˆO¢µ©¦hg;cš†††Š¬ ´±†‚‰¡¶¨i‚¥:!ò†¬¯ŠËž·„ƒi„N¡³©¬¦¤>c½†††Š«Ÿ¶È††‡å´„„‚†%!ò†¬¯¯Ëž·ˆ„„†NŸ°©©©©Tc½ˆ†…¥¬ŸÌÉ«„„Ä´ˆ†„†94ß†¯±±ÉŸ»†hhh%ž³©©©¬?aâq‹n:GÂ¶±Éˆi¡»†ihh(!óŠ¯±±É_5ž³©¥¦°@6Fž·±±±‰¢ 1/Hà±±±±É~1", 13, "Ã³¥†©Í?!—‹ˆ>z´±ÊêêÅš?>", 10, ",4ßŠ¯±¯±}X'", 10, "æ°¥„¯Ð>·Ð±ˆ¯+œ´±Ïìíæ×†llo;2àˆ¨¯ŠŠ}X'ú³¨i²¸?¹éÌˆ‹Tœ´Éèìí/æÕ††ˆˆS!à††ŠOO~Z)=*", 26, "úµ©‹¶·>!ÖêÌˆ†V´±èìí/æÙ†Š²p2ßˆ†Š¬‹}[%*@=,æµ‰¯Í´T6Øê±…ˆ>ÁÌ±±êí0Åðˆ¬¶¯ràŠ††¬ˆIZ':@@", 26, "åµˆ²´´?aØê±††VÁ´±¯Ìì/æÛˆ¬Ì´qô‹†ˆ¨«aZ''=@,ã°l¬¯¬>c×Ï¯††‘À´±ÈÊì/çÛ©‹²¸qáˆ†…Š«aZ')@,Á‹††l‰<d—¶‹††OÀ´ÌÌÌì/çÙ¨†Ž¸qôˆ†…ˆ«dZ%%@, ŽˆˆPo+dÙ±ˆ††9ÀÑëìíï0çÙ¥†‰¸rõŠ††¥¬¢Z'%%<,¢\.", 13, "~¼¬ˆ††9¡À\34 6üÛ¥¥†ÊrÅvYtAZ:(&(,Å›w[[w2¡ÙÊ†††8aXXYYu1çÛ©¥¦©q!ö¼™šššÅZ(:)))ä·ˆˆˆŒ.~ÖÌˆ†i$š¨¨†††AæØ¦©©©p óÏ´¶´rÅZ:::(+ä“ˆƒ†¬}Ø±¬†l$šŠ¬†……AæØ©¬©¦pòêÎÎÏ Z:99%(æ¼Ž„†«}Y©††«P¿†ˆ††ˆ/åÙ©©¦„o2óëÏËÏ¸[:(äÖ‹††«", 13, "}—n††ˆPÁˆ†††¬.æÛ©©€OFóëÏËËº[:&$	Â†…†ˆ", 26, "|Ý³l†ˆ:áˆ……ˆ©æÛ¬†€†N2òëÏËÏº[:&%o†††¯", 26, "aß•ˆ†ˆ&à¬ŠˆˆæÛ©¤e¦M ñìêÏÓ‘~A)$%$z·¬‹†«6š·ˆ†ˆ&!¿¯±±¯¯", 26, "Å»©‚‡‚M2ñëèÏÏr}/($$z¶²ˆ†iFÙ‰ˆˆŠ:""¿Š±±±¯", 26, "¢t©‚M3òêÎËÏ}0&$Ÿ¸Š…†l6¿uY—u/Gà±±±±¯", 26, "u¤ee†e3ôêÎËÏŽE.-++Ã¸Š…†lHÅ~¢¢¡Ã¢õÌ±±±¯", 26, "¢¿s­­q5ôêÎËÎ z33B115Ã·Š…††I›qqŽ‹‹õÑ±±±‹", 13, "¢{1006óÏËËËÉÛ¬¯°¯S  ·²k††Iv‡L1áÑ±±±‹¡uMMMM+!òËËËËË™††ˆ:Â´Ì†††+}u¦„‚1óÑ±±±quM77KÝËÌËËË ½»ˆ†ˆ:ã¶é††‰-}×©„‚‚€1óêÑÊµT}xR77JÞÌÌËËÉ¡Ý“††ˆ'âÏêˆ†ˆbÛ¬¤e„àêÌ±µrš;77KÞÉÉÇÇÇ Øo††ˆQáÏÏŠ†ˆcÝ©¤ef‚óêÊ±¯²¢u877KàÈÇÆÇÉ~tŠ††ŠQÀÏÏÌ†‹aÛ¬©‰ôêÊ±¯²¡VL77L$óÇÆÆÇÉÃ—±ˆ†«(y´¶Ê¥aÙ©©¦‡°óê±±±¡XMM7Mò±ÉÆÆÇžÙ¶¯ˆˆN[¨ÌÌˆˆX3ù°©©‚‚<ÂØˆ†…¨o œTgKKK4àÇÉÆ®Æ|ÙÏŠ††NZ¬±¬ˆ¨W2æª©©¦¦TžÖˆ……¬U yqgJJK4áÇÉÆ®Æ_ÙÏˆ††l`t‘µ·uGåª©¬©©T}¿™™vv2 œqoLKK&6ü¾ÝÝÜ¼^Ù±Š††i~Äa{_z{}æ­©©©¬T^0.-""ÀŽ‰gLL+6äÀÁÀÂžEÖ¬¬†„P}wŽ­°m4æ°©¦¦¯?~wŠ„‚‚9¿²¯†eg+EñÌÌÌÑÔDºÉ¬„„Nz>¤€eL[å­¥ˆ¦´=cw†††„9¾´±ˆhh3Ù±¯¬ÉÎDÑ±¨„†Ozm¦‚€L0¢­†ˆ‹p)6wŠ„‚„9¾É±†„¥4Ù±¬ˆ¯Ë^Ô®ˆh„m{­©f‚L ††p(6™®ˆi†Pà¶®†h†<5Ü±¬ˆ¯±|ÕQˆ„‚O}Õ©¦e„e~Ž†ˆ¬¯6™lˆƒ:ál†ƒ„)5Ü¯¯¯¯ÉŸÓŠlŠ„O}Ò©†e„e1´††Š¯+b½l„‚O ¿²nˆ††(GÜˆ±±±ÌŸÓ«†„†i|¹©©gei3 ´††ˆ«,½±«„‚P ¿±Ši„†:FÜ†¯¯ŒÌžº†ƒh„N|µ©©¦„3²††ˆ«<½É¯„¥:á¬„hh„%FÜ†¯¯¯Ëž¸††††Oa³©©©¦3´††ˆ¨?¡½É±†„9á‹††„†%HÜ†¯±±ÉŸº¥„hiN`µ©©©©Ž3æ»ˆ¥ˆlAÅ½±É«h9Á°†ƒi„%GÝˆ¯±±É¡z6z¹©¦©¬~!a¾²ÉÉ†;Å\,dÞ±±±±É~E{¹¦¥†²‘œU?S<VG¼±±ÌÐqæx0//`Ý«¯±¯É}YŸµ¥†ˆÍ‘—±´ˆˆ¹6¼±Ééì·ø‘lnPq;FÝŠ¯±¬«}X'", 10, "¢µ¥h‹Ð’—±Ï±ˆ¹6¼²Ëêì”ä²…††l:FÝ†ˆ¬ii~Z'*)Å¹©†²Ð¼èÑ²…­6½±Ìêì”äµ…¬<FÝ…†¨ˆ‹}v%*@,,¡Ò‰©ÌÍS½éÌŠ†‹HÝ²Èéì” ø·…²¶¯SEÝˆ†ˆ¯ˆa[%:@?, Óˆ¬Í´’2ÞÑÑ††}Ý±¯Êé· ä¸ˆ¯Ð´UEòˆ††«¨`[('=@Ÿ¸†¯´¯‘2ßÊÏ††‰¼É¯±Ì· ú¹¨¬Ð´SEÞˆ…ˆŠ«a['%*@,{°†ˆ‹‹3ß¯²†††Ù²ÌÊÌ’ ù·©†´¸p5ò††…ˆ«I['&@,z‹†††mP2œÌ¯††ˆ~¼ÌèèÍ’!ùµ¥i°¸S5ßˆ††¥«['%%=-c•oo&)+4zÌŠ††ˆ", 10, "~¿ÙÖÖÙZ6ùµ¥†‰ÍS5árppoo[)%%),~¢{E4GF}ÁÌˆ††ˆID343EHù¹¨¥†°U6Å››z][:(9(+~—rrs’-6àÉŠ††ˆZq‘Uùµ©©¦©TEó¸º––—æv(::))žº……†¨<6Þ´±††N”¬ˆ†…pøµ©©©¬S4ñÏËË¶rÄv:::&) u·„†‹Q4yÐ¯†ˆn", 13, "¡•Š¬††oäµ¬©©¦T4ñëÏËÏ’v:9&$ ½’††«:4]‹††ˆ±", 26, "£˜††††oø¹©©„‚QGñëÏËÌ¸v:(}»‹l†¨S3z²…k†«", 26, "ÅÙ††††lå¹©†e€OzñëÏËËºw:&%a‘ˆ…†ˆp2 Õ‰k†®", 13, "ÅÙˆˆˆˆQù¹©‚€†NEðëÏËÑ¹[)&$_T‹ˆ†¯nÃ×Ž††¯Ù¯¯¬ˆPøµ©‚€‚M5ðëëÎÑq}A)$&$_º²¬†¨z¹‰††¯}Ø¯±±¯QÃ©‚¦gMEðêÏÎÏr}0($_¸²ˆ††á²‹‹‹²Ù¯±±±Qž¦e€eFñêÎËÏ}1&({Ð¯…††:ä\[[w[2¢Û±±±±nŸ‘„e‚†gGòÏÎËÏŽ`0//..!|º¬…††Pû{zžœœzåÝ±±±±QÅštt‘rWIòÏËËÎ¯zBBBB/!|¹¯†††Pžtjh‰„>Åñ´±±²:ÄD/HñÎËËËËÜS{·´†††PE¤ege;£ÜÌ±±¯:ÂMMMN", 13, "6ÜËËËËÉ¼¯††ˆQ|´Êˆ††r4›‡‡‚„e;åÚ´±±²*žVK77M5ÚËËËËË ¾—ˆ†ˆP¶Ñ‹††“2õ†¦f‚e;åïêÑ²¹", 26, "}uR77L	4ÛÌËËËÉ¡Þ“††ˆO¶ê¬††sú‰©„;ÄïÑÉ±¹>  u877L	4ÜÈÈÇÈÇ Øn†††lz¶Ñ¯††Wù‰©‚e+ÄðÏ¯±¯T q777L	4ÝÆÆÆÇË~uŠ††ˆnzÌÑÐˆ†uù‰©¤<ÃÝÑ¯±¯Tž;K77M", 10, "4ÝÆÆÆÇÉÃ˜±ˆ†ŠP]¯ÏÏˆ©A÷¦©©¤¦>ÃðÌ±±±<žqMK7M	4ÜÇÉÆÆÇžÚ¶¯ˆˆP3²Ï´ˆˆ‘¡»©¬‚‹/à¬†…†¨<FwjMKKL`¿ÇÉÆ®Æ|ÙÏ††O2´¯ˆ¨‘ ¹©©©¤°.¿¯†…†¯,6vjMJJK`ßÈÉÆ®Æ_Ùéˆ††lE—Ž°Ž°•¢¹©¬¬©².ž½™™vw¢˜jjKKLbûÝÜðÛÙFÙ´Š††lHæ{{`z|cÅ¹©©©©²}D/.", 13, "H¼m‡MLM+bøââÂãÂEÖ¯¬†„iH›VµŽ¢»©¦©©´|…hhh", 10, "4Ù¬¬„egaïÏ¸¸ÓÔDÓÉ¯†„OFZ¤L„e? »¥¥„¯´{††††3Ø±¯„hhGÕ±¯¬ÉÎDÓ±¬„†iFt¦„€K?a¹ˆˆ†`†„„†5Ù±®„„©GÔ±¬ˆ±Ë]Ô®¨‚„mG»©„„‚e,H“††‹‹‹_²«†‚†&EÚ±®‚h©+`î±«†¯±{Öoˆ„‚h_Û©¦e‚fH“††Š¯l`´Šn†„(GÜŒˆ„h†+`ï¯¯«¯ÈŸÕnlˆ„OIÛ©¦e„a»ˆ††«ˆ|·nˆƒƒ&FÙŠl¨„†bØŠ±±±ÌŸÓ«l„„iHÙ©©eg}Öˆ…ˆ¨‹ ·¯†h†)FØ«ˆ„„†+{Øˆ¯¯¬Ìž»ˆƒh†iGØ©©‰„‰}»†††¨« ¶±ˆh‡GÙ¨„h„†{Ù†¯¯«Ëž¹„„††iG—©©©¦­dÖ†††¥©Ÿ¶É¨„„", 10, "_Ù†††††}Ø†¯±±ËŸ»¥„„„hF—¦©©©¬~Ú††ˆˆ‰2¡¸±±†‚F¼¥†„„„}Øˆ¯±±É š;99%G˜¦©©©°d_0A.-6 ¸±É¯„FÂU:99&~Û¯±±±É~I!""G×©¥¤©´G1-|Ð±±Ì°FæH44Ù¯¯±¯É~BHØ¥¥„²·", 26, "[´²‹ˆ°+z´±Éêì,FápS;&<,|ØŠ¯±¯±}Z'", 10, "cÙ¥„†Ì·B¬Ñ´ˆ²+z´±Ïìì>Gß†††lj({Ø†©¯†n}Z')'~Û©†‰Ð·", 26, "[ÌÑÌ…‹Uz¶±èìí?Gßˆ†‹ˆ‹>{Ø†ˆŠPP~v')=*+dÛ©ˆ²ÐŽ-\Ñé´…†V·±Ììì@Hôˆˆ´²²<{Ø††ˆ¬Šdw')@,=`Û†©ÌÌµ.]ÑÑ¬…ˆ>ÁÍ±±éì@Hõ¨ˆÊ´´TbÚˆˆ†¬ˆI\')=@,`Û†©Í²´œÐÑ¬…ˆVÁÌ±¯Êê=HõŠˆ°Ð²?bÝˆ†ˆ¨«`v'',@,G×†ˆ²²°Ì¨††‘À´±ÈÊé=`õ©©‰Í¶S`Û†……Š«a['%(@?F»†††n‹{´´ˆ††OÀ´ÊÌÌê=`õˆ¥O´¸S`Ý††…¥«c['%??F»ˆˆlSm{Ó¯ˆ†ˆ9ŸÑëëìî@aõ¥¥i°¸=`Þˆ††¨¬¢[(%%+-G›		dÖ©††ˆ9¡á\35 £õ¥¥†©Í=c YWV>", 13, "[:'%&+IÃ›xD]]FÂÒ±††ˆ8cBBBZ[3bõ¦¦¦¥°Tbâ¾››œy¢v())()`Û‹ppÏ´ˆ††$y‹‹‰ˆrFô¦©©©¬T_ñÏ¶¸·sæv::::)`™Šƒ†ˆn¸±Š†i›««ˆ……qGà©¬©©©T]ðÏÎÎÏr¢v::9&(`¿»††ˆna“¬ˆ†«9ˆŠˆ††THô©©©¦¦S_ñëÏËÏ·w:($$Iß“††ˆPa’l††¨PÂˆ†††Š;Hô©©¤‚<|ðëÏËËºw:(G¼l††‹|Õ‹k†Š:âŠ†…†Š(Hõ©©‚€;ïëÏËÏºw:&%Fun††ˆ~ð‘††Š%á‹Šˆˆˆ'Hõ©©„9`ïëÏÎÓ“[)&$6tˆ†¨Œc½“ˆ†Š&À²±¯¬¨Fà‰¦9_ïëëÎÑq}0)&$$6—²¬††8_»‹††Š&!¿¬±±±¯'5½‡¤‚„eN_ïêÏËÏq}09&EÖ¶ˆ††8zÕ¬¯°°<!à¯¯±±¯%4x‰¤eeeNzðêÏËÏ}C&($GÙ´…††i}z]y›yDcâ´±±±¯'4‚¤„P|ñÏÎËÏ}2210EIÙ²……†l¡zxyšvwGöÑ±±±¯%5ä\[ZWWB~ðÏËËÎ±›XXYX/HÙ±ˆ††l`×eeˆ¤âê±±±", 10, "4 0..cïÎËËËË~ÜŠ‹‹‹pG—Ì‹††lGt‡eeáÓ²±±", 10, "5›MMMMO`ÖËËËËÉ~š´†††n_Ö´¯††Ž¦‚¤1ôÑ²±±6yRJ77NHÖËËËËË ¿—ˆ††Q_ØÑ²††’ÂŽ©‚‚€ôêÑÊ²‘6VM77g	GÖËËËÉÇ¡Þ“†††l_Öê´††‘Ãµ¬„e„áÓÌ±²³", 26, "G877M	HÙÈÇÇÈÈ ™n†††nGÖÑ±††‘¡³©†ef„áëÊ±±²", 26, "FyO777M`ÚÆÆÆÇË~u‹††ˆŠFÕêÏŠ†“ ³¬©‰õìÊ±±²6w8K7Jg`ÚÆÆÆÇÉÃ˜´ˆ†ˆn5¹ÐÌˆ¨sŸ³©©¦‡°áëÊ±±°6xmMJKM	IÖÇÉÆÆÇ}Ú¶¯ˆˆl""“Ì±¯ˆ.aá­©¦‚‚<žÚˆ†…ŠŠ/|XjLKKL~½±ÉÆ®Æ|ÚÏ¬††i""’´¯Š¥.Iß¬©©¦¦TÙŠ……Š²zXjLJJLÞÉÉÆ®Æ_ÚÑˆ††l""™°Žµ/}ß©©¬©©T|¿™™˜—\EÂsmgKKM¢ùÜïïÙÙFÛ´Š††l", 26, "#ç}{{}}£ß©©©©¬S}`10Ÿ•mmLLM¢øãããäÄEØ¯¬†„i", 26, "5ÂuV““’/dà¬©¦¦¬?}xpƒhhh", 13, "»¬¬geg Ù¸¸¸Ô»DÔÉ¯†„h#y‰L†Obà©¦†©´={xˆ¥††ˆ", 13, "zÐ±¯hgg{Ð±¯¯ÉÏDÓ±¯„ˆi4™‰¦€€K;5¿‹¥ˆ‹+6xŠ„„„†zÑ±¯‚„¬", 13, "zÏ±¬ˆ±ËFÕ±«‚‚‰.5½©¦„e9""›‰†ˆo(5x®ˆi„†Ó±«h‚°|ê±¨ˆ¯±zÖ‹‚‚i.5¿­©g†9""š‰†ˆ¬¯5š¯nl„† Õ®ˆhh†.}í±¯Š¯±ŸÖQQˆ‚h5ß°©‚‚:5›¬†ˆ¨®G¾¯lˆƒiŸÓll¥„ˆ~Ó«±±±ÌŸÕ«l†„i5¿°©‚eg;`¿¯††Š¬,d¿±«„‚†.|Ð«l†„†-¡Òˆ¯¯¯ÌŸÕ¨„h††", 26, "#¾­©¥‚‚<cœ‹††ˆ«<~¾É±†„‰ ·¨ƒh†† Ó†¯¯ŒËž»„„„ƒi", 13, "#½­©©¦¦>aœ††ˆ¨=~¾ÉÈ††iÃ·†„„†„", 26, "¢Òˆ¯¯±ËŸ»ˆ†„„i#½©©©©©?aœ¬†…ˆ¨U¾´É«„i ·ˆ†„†„¢Òˆ¯±±ÉŸÙohON95š©©©©¬?IÃtqqp<0¢¿´É±†i~ÙoiOOO¢Õ«±±±Ëb!5½­¦¥¥°?5`H¿´±È¯‰Å203ÅÕ¯±±±É~D", 13, 13, "5¾©¥†©Í?!˜‹ˆˆ“6½±ÉÊêÑ¢À@?+¢¸«¯±¯±}Z'", 10, "6ß©¥„²Ð>¹´´Šˆ“5½±ÉèììÅÛ†nlmo-¡Óˆ¬¯ŠŠ}Z'Ià¬¥l¶¸>»ÏÌ¯ˆµ5¾²Ëéìí.ÄÙ††ˆˆˆ-Ãº†ŠŠOP~v'',**Ió¬©‹··>ØéÐ¯ƒ‹6¾²Ééìí/ÄÝˆˆ²²-Ãº…†¨‹‹}w')?*,6ó¬‰²Í´>#Ùé´ˆ†‹G¿´±Ììí/ÄñˆˆÌ¯¶?¡»ˆ†ˆ¯nIw')=@,5ó‹Š´´´?HÛÑÏ††d¿´¯±éì/¢òˆ¨Ê´´@¡Ùˆ†ˆ«¨Iw)'=U,#ò‹ˆ´¯²>aÛÏÌ††‹}ÝÊ±±Êì.åñ¨Š°Ð? Ù†…ˆ¨«aw)%)@?""½ˆ†ŠŠ>c¼²±††ˆ}¼²ÌÊÌì/åÞ¨©o··? Ù†……¨«Iw(%@?""¼†††lm+c¼Ì¬††ˆd½´èèÌì/ÅÞ¥ˆi´¸? Ûˆ††¥«~w(%=?""¾‹oP(<+cš²ˆ††ˆ", 10, "d¿ÖÖÖÙÛ1æÞ¥¥†²¸- Ý‹ˆ‰‰‹w)%%(=#Åy\1CD¢½Êˆ††ˆ}a]33346çñ¦¥¥©¶@¡¡yxx]3w:((&*5ÁYWWYs}ÜÊˆ††ˆ}[r‘“’sÄÞ¦©©¦°AŸñº–˜˜˜Åw(::))5òˆˆ†Œ-}ÚÊ††O~•¬Š†††A¢Ý¦©©©¬@{ðÏ¶¶´rÅw;::((6À¹†„†‹}™´¯†ˆi", 13, "~–¨¬†…†A¢Ý©¬©¦­@zïÏÎËÏw;(9%%5ã˜ˆ††Œ}Z‹ˆ†ˆ±", 26, "¢™†ˆ††ˆ.¢Þ©©©„¦@ðëÏËÏ¸x:)$#á”†††Œ", 13, "d™‹†††«", 26, "¢¼††††¬-ÄÞ©©„€@ÂïëÏËËºx:($#¾†…†ˆ", 26, "d¾µlk†®", 26, "¢Ýˆ……ˆ©Åò©‰‚>ÁîëÏËÏºx:9$$#™o†…†«", 26, "Iá»‰k†Š", 13, "¡Û¬ŠˆˆÄò©©€„;ìëÏÏÓ‘~[)&$%""™²‹ˆ†¯", 13, "6›»‹††¯dÛ¯±¯¬«", 26, "¢Ù¦†„e;|îëêÏÑq~1(&$$#¼´²ˆ†h6½‹†††}Ù¬±±±¬", 26, "u¦‚„‚e<ïÏÎËÏq}1&&", 13, "#¼Ïˆ††i6ò·‘’’’~Ü¯±±±¬", 26, "}v¦„eeeTŸïèÎËÏ}E(&$)%#Þ¶†…†l6Åzž{Åñ±±±±¯", 26, "}¿‡„©‚.¢ïÏÎËÏ G642_6¿´†…†lHã[B˜ss0ÄòÊ±±²‹", 13, " ÅE4C015£ïÏËËÎ±œWWXWA5¾´Š†††HxŽe†;¢ñÌ±±±o", 13, "~›.-.-- íËËËËË~ÝŠˆˆˆp5½¶¯†††a[‰‡eee;¢ÝÌ±±±p}vMKKKj}ÑËËËËÉ½·†††n5Ý´Ì††‰- ˜¦„„¤e;ÅÛÌ´±²q|wj777i|ÑËËËËË ¿—ˆ††n5ÞÑÐ††‹cÞ¦¦f‚€;ÃðêÑ²¹Tc›V777h{ÓËËËÉÇ Þ“†††n5ÝÑÑ††‹", 26, "`ó©©€‚„+¡ðÑ±±´~yR777g}ÔÇÇÇÈÉ¼n†††ˆ5ÝÑÌŠ†‹Iß©©e+ÃðÑ¯±¯²vM777g~ÖÆÆÆÈË~v‹†††Œ4ÛéÏ¯†ŽIò©©¤‚< ñé¯±¯‘}X877Kg ìÆÆÆÇÉÃ™´ˆ†…Œ4—Ï´¯¥ŽHÞ¦©©¤¦> ÝÏ±±±~ZjM7LM~ÑÉÉÆÆÇ}Û¶¯©ˆˆ–±±ÊˆˆW2å³©¬‚‹.à´†…†¨o VjKKKLÅ¼±ÉÆ®Æ|ÚÏ¬††i•±±¬ˆ¬W2Åª©¬¦¤°.¿´ˆ……¬T œVgKJJLÅÛÉÉÆ®Æ_ÚÑˆ†††)¾‘°°²t5Åª©¬©©².ž¼˜˜u—B}qmMKK8æäÛÚÚÙØGÛ¶Š†††+ çÄ}}c} ¢æ­©©©©²~E15Á‘mhLLMåùäååùåEÙ¯¯ˆ†„+ ÄwXt“•W5å°©¥©©´}skhgg&Áµ¬‹eMNåÙººº»—DÕÉ±†„h Áq‡e‚„e[Å°¥¥†¯´|’†††„9À¶±¬hgN¡Ð±±±ËÏDÓ±±„†i", 26, "!¿m©€eKL1¡°¥ˆ†¯°`’„„„†9¿¶±«„„oŸÌ±¬ˆ±ËEÖ±¬„„‰-!ß‰©e„€L~°††‹p‹_’¨†h†:ÁÏ®Š‚‚ÂÑ±Šˆ¯É`Ù¯©‚‚„>!â°©‚€†L}Ž††©¯l`·Œn†„OâÐ®†f‚o/¢ì±¬Š¯±ŸØPQˆ‚i+!ãÍ©†„e}²ˆˆˆ¯i{ºŠnŠƒ9âµPˆ†‚l¢Ò¯±±±ÌŸÖ«lˆ„„,!ã³©†e‚g1~Ð††ˆ«‹Ÿ»Œˆ„‚PÀ´Ši†„lå¸Š±¯¯ÌŸÖ«†h†ˆ+ â³©¦‚fl2´†iˆ¨¬¡º±¨h„PÂ´¨i‚¥låÐˆ¯¬ŠËžÕ†hiii Á°©¬¦¤Ž2~·†††¨« ºÉ«„¥9÷°„i‚„hæÐˆ¯¯¯Ëž»††„„†À­©©©¦2Ð†…†¥¬ Ó±¯†„9ã°††„†iæ·ˆ¯±±ÉŸ×¥„hhh °©©©¬Ž2ÅÛ‰¥¨†OEÃº±É«h9Âµ†ƒh„håÒ«±±±Ë 5°©¦¦¬}""""žÕ±ÉÉ‡;Åz-+", 13, "!æÕ±±±±É~G""Á°¥¥¥²‘zW?T;?zº±±ÌÍTæœB02æ¹«¯±¯É}[ ã°¥†‹Í‘v¯´Šˆ²+zº±Êêì’ú»lnPST/æ¸¨¯±¬®}['#ø°¥h¯Ð‘u«Ï´ˆ²+z¹±Ëêì’ù¹†††lO.æ¹†¬¬il}['')()6ø²¨l²Ð™ÌÑÌ…‹Vzº±Ïêì’æº†ˆ‹Š/æ¹…ˆŠll~w''=,,""ø²¦©¶Ð<šèÏ±…ˆU|º±Ìêì”ùÕ…‹¶².æ¹††Š¯ˆcx()===", 13, "ø²‰¯Í´‘1¾ÏÑŠ…ˆ>ŸÓ±±éê“ åØˆ¬Ì±´/æ»ˆ†ˆ¬ˆHx)'=@=÷²†±´²‘1¿ÌÑŠ†ˆVÂÒ±¯Êé’ú×ˆ©´·.æÖˆ†ˆ¨«`x)'*@?âl¯‘1àŠÌˆ††‘À¸±ÉÊÌ’1ü×©‹°Ð².åÕ†……¨«aw(%?@ß‰††l‰p2¿¯´ˆ††OÀ¸ÊÌÌÐ’ûÕ¨†‹·´.æØ††…¥«cw(%=@À‹ˆˆPoP2zÏ¯††ˆ9ŸÔêëëí” û»¥†‰·¶.åÙˆ††¨¬¢w(%%)@ÃX+	", 10, 13, "4zéŠ††ˆ9¡à™[\3aüÕ¥¥†²¶.æœsrr>x:'%%;", 13, " çÂžGG{`~áÌ¬††ˆ8d4B223\6ú×©¥¥¥²/æâžz¢w))(()", 13, "!ã“qrr-5ßÉ¯†††$zrŽqúÕ©©©¦°/Âð¸¸º”•æw::::(", 13, "!â……†«;4¿´²ˆ†iœ¯¬ˆ†…pæ»©¬©©‹/ïÏÎËÌr¢w;::&(", 13, "!ä—‹„†©Q4yÐ¯ˆ†Š%‹Š††pæ»©©©†­/ÁïÏÎËÏ’x;(&$$ ùØ‹††«(!]Žˆ††«PÂŽ†††ˆoæ×©©¤‚†AÃïêÏËÌ¸x;)$ ã¹ˆk†«S!zÊlk†Š:â†††ˆQù×©©egXäîêÏËËºx;($% À†…†ˆp! íŽk†Š9â²ˆ†ˆˆQú×¬‡e¤g.ãìêÏÏÏ¹x+9$$ ›pˆ††¯S¡Ù‘††Š&Áµ¯¬ŠˆPù×©¤e†g-ÂìëêÏÓr~[)&$&œ·¬‹†®&`Õ††¨%À´±±¯¯Qä¹©‚„„e.ÁîêÏÎÑq}1(&$ œ¶²ˆ††	À²†ˆˆ¬9!À²¯±±¯QÃ‘©‚‚e.¡îÏÎËÏ}2&&$ ÀÏŠ…†ˆ&Â—ss•”.6Á·±±±¯Q¡t¦e„eAäïÏÎËÏ~_+&&)&", 13, "!á¸ˆ…††:æ~ ¢¢¢¢¢ãÒ±±±±QÄ½ª¦¬‡0æïÏËËÎ F652F6âµŠƒ††PävXu“qV!ãì±±±°:æ}53215æîÏËËÎ±¿ssssr""Á·¯†††P_t‚€e„‚âÖ±±±¯9Äv>>>;-ÅìËËËËË~ÝŠˆ††Š-3Á´Ê††„Q\‡eeâÖ²±±¯)¡VK777PÃÑËËËËÉ›¹†††Š3á´Ï†††‘4¿„¦h¦‚€õÓ´´±²+žuM777O ÑÌËËËË ß—ˆ††Š", 26, "!ôÐêˆ††sö†©‚‚áìÑÌ±¹+wR777N¡ÓËËÉÉÇ Þ“†††Š", 26, "!óÑêˆ††Vù‰©‚e„áìÌ±¯´? ¢˜8777N¢ÓÇÇÇÈÉ¼p†††ˆ,!àÏÏ¬††Wø‰©„ef„âìÌ¯±±T¢WK777MÅÔÆÆÆÈË~v‹†††®,!¿ÐÏÌ††uø‰©©©âíÌ¯±¯= R877LNÅÓÆÆÆÈÉÃ™´ˆˆ…¯!™Ì´Ìˆ©Aã¤©¬¦¤°áìÊ±±°< VMM7L8ÅÑÉÉÆÆÇ}Û¶¯©ˆŠ&˜¬´ÌˆˆsÙ¬©¤‚<ÛŠ†…ˆ¨<6xmgKKK$çÙ±ÉÆ®Æ|ÛÏ¯†††&u¯²¯†¨‘}×¬©©¦¦T{ÛŠ……ˆ¯,5wmN7JJ$çÙÉÉÆ®Æ`ÛÑŠ†††:œ‘°‹°“¡×©©¬©©Tz¿Ø˜—uv ™mmLKK8üâÚÙÙØÖFÛ¶Š†††;æçc~ ¢åØ¦©©©¬S{a4I½mmgLL8üúçúçûçEÙ²¯ˆ†„;ÅyZut•u¡Ø©©©¦¯?{_rhfgN", 10, "4½Ž¬†eM9ûÙ»º”——DÖÉ±†„„+ÃV‡¦e-Ø¦¦†¦´=a^‹ˆ„††!¼²¯ˆfg9äÏ±±±ÏÏDÔ±±††„)ÁR¦LLK?a×ˆ¥†¬²;6y‹i„„†3Ú±±ˆ†„Oã¶±¬Š±ËEÖ±¯„„‹;Á‰¦„L-G˜††ˆo)#y¬ˆhƒ†5ÜÉ®ˆ„„päÌ±Šˆ¯É_Ù¯¬‚‚†> ã³©‚‚eG—††ˆ¬#y¯Šl„†(EÞ±®„h‚oåÓ±¬Š¯±~ÙPQˆ‚„+äÒ©¦e„eG—‹ˆˆ¬«4œ¯n‹ˆƒEÞpPˆ„‚PÅÐ¯±±±ÌŸØ«Pˆ„†+Å¹©¥e‚aÙˆ††¨¬+IÀ²ˆ†‚„(6¼¯ˆ††„Qû¶¬±¯¯ÌŸÖ«†„„ˆ;Ä¹©©f‚}Ùˆ††ˆ«,dÀ´¯†h†(6¼¯ˆi„†Pû¶Š¯¬«ÌžÖ†hƒi†(Ã³©©¦†©dÙ†††ˆ«<|¿´È†„‰GÝ©„hh†Nü¶ˆ¯¯¯Ë}»††„†¥( °©¬©¦°d¼†††ˆ¨>}¿´É¨„„", 10, "FÞˆ††„ˆOü´Š¯±±ËŸ×¥„„i†(Ÿ°©©©©­~Þˆˆˆˆ†AÀ´É±†‚6¾©†ƒi†Nü·¨±±±É ¿>(&&$3ž³©©©©²c`0//.dÀ¶±É¬„6ÃX:(9&!üÒ¯±±±É~b!# µ¦¥¤©´F3", 26, "F¿´±±Ê°6æa5!!Fü¹¯±±±É~\ã³¥††²·", 26, "3¹ˆŠ’5¾²±Êêë,6ãrS<+<ü¶«¯±¯±}['ù³¥„ˆÌ·1²Ñ´Š¨’#¾²ÉÏìí>6á‹††loPü·ˆ¯¬ˆˆ}['%)""ûµ¨i‹Ð·", 26, "B·éÌ«†‘", 13, "#¿²Éèìí?Fá†††ˆo0üµ†Šˆ9P~w)',**", 13, " û·©ˆ²ÐDÔêÌŠƒ5¿´Èèìí?Fõ°…¬²‹q0üµ…†¨¬‹}x)'===", 26, "ù¹ˆ¬ÌÍ-EÕê´ˆ†‹", 13, "Fà´±Êêì@Gö°†¯¶/ü·ˆˆˆ¯lIx)(=@=", 26, "ù¹ˆ¬Í²·zÖêÊ††Žbà´¯±Ðì>Fö°ˆ¯Ì´/üÕˆ†ˆ««Ix*'*@@øµ†¬Ì¯´", 13, "»Ñ²††‹c¾Ê±±²ê=G÷²¨©¶·p/ü»†…ˆ¨«`x:'?@", 26, "â¬†ˆ‹Š°¹¶¯††ˆc½²ÊÊÌê=Gö°©‡²¸/üº†……¨«Ix)%=@", 13, "Á‹†††mm{»Ì©†††c¾´èèÌê=Hö­¥i­¸üÕ†††¥«}x(%+@", 26, "¡‘ˆ‹:;ScÖ¬ˆ††ˆ", 10, "b¿ÖíîîïAIö­¥†‰·üØˆˆˆ‹©¡x)%%(?", 26, "Åz[003 Ø¯ˆ†††c|yD3433÷°¥¥†°üwvw[0x;((&:", 26, "åšvZZvZ! ÕÌ††††c\Wsttt0Fö­©¦¦¦0úÞ˜™™™™Åx)):))", 26, "ø¸ˆˆˆŠnÓÌŠ††Od–«Š†††r5õ­©©©©0ãïÌ±¶´ræx;:::(", 26, "ä“Šƒ†ˆlÕ±¯††N}—¨«†……q6â°©©©©‹0ÂîÏÎÎÏr¡x;(:&%ç™’††ˆnb•¬ˆ†ˆ", 26, "~™ˆŠ†††TFâ°©©¦„‰0ãïÏÎËÏ·y;)&$æÚ††ŠOc”l†††", 26, "¡½††††¨;Fö°©¦‚hBæïêÎËËºy;:$", 10, "Ä¹ˆk†ˆ‹|Ø‹……†Œ", 26, "¡Þˆ†††©(Fö°©†egBùîêÎËÏºy;9$'", 10, "Ÿq†…†ˆ}Ý¹†…†Š", 13, " ÞŠˆˆˆˆ'Fö³©„e¦g/øìëÏÏÑ“x+9$", 10, "{T‹ˆ†«ŒaÞ•‹††dÝ¯¯¯¬¨6â­©‚€„e/ãìëëÏºq~[(($&	{¸²¬†ˆ8G˜´†††cÜ¯±±¯¯%4ß‰¦‚¤L/ãìÏÏÎÏq}2(&¶±ˆ††$`Ø‹Š‹‹¯|Ü¬±±±¯%!›Ž¦‚ee0äîÏÎËÏ}C&$$$", 10, "ÂÏ¯…††Oa›uZvvY ñ±±±±¯'""œ¤efˆe0úîÏÎËÏ~`.+++; Ãº¬…††l}£Ä£¢¢¢åò´±±±¯'""Ã˜­¬q1üîÏËËÎ 54D1136Ã·¬…††l}›sV‘qq.¡óÌ±±±""ÅE220#ûíÎËËÎÉ~¿’r‘‘.!¡·²†††lHv„e„;òÏ±±±", 10, "!žV;;;9+ùêËËËËË~¾Š†††Œ=!Â´Êˆ††n`t‡„eee; ñÏ±±±", 10, "#œN7777(äÏËËËËÉ¿º†††«,ã´ÏŠ††‘ž“©„„†e;ÃÜÐÌ±²5{VM777&ãÑÌËËËÉ à—ˆ††«ãÏê©††“ »©¦e‚; ðêÏÊµs6žtN77J&äÑËËÉÉÇ ¿“†††«+âÏê¬††‘ ×¬¦e„„+ ðÑÉ±±²", 26, "6ž“877K8æÑÆÇÇÈÉ½p†††Š<áÏÑ±††’ —©¦f+ŸñÑ±±±²", 26, "6›S777K8ûÑÇÆÆÈË~˜p†††±<ÀÌÏÏˆ†•Ÿ—¬©„‚<Ÿòê±±¯²5y;K77M&ûÑÇÆÆÈÉÄ¼¶ˆˆ…Éy²ÌÏˆ¨sž»©©©‡¦>žñÑ±±±°5yqMM7M$çÏÉÈÆÆ®}Ü¶¯¬ˆŠ&[¬Ì´¨ˆŽ.Iã°©¬‚‹Á¸††…¨‹/zZjMKKK$æÖ±ÉÆ®Æ|ÛÏ¯ˆ††&Z´¯ˆ¥.Gâ­©¬¦¤°À¸ˆ……¨`ZjM7JK$æÖÉÉÆ®Æ`ÛÑŠ†††P^’°‹¬µ/câª©¬©©².ž¼——••v4ŸtjhKKK$üàÙîØÖÖFÝÐŠ†††Qç¡d~ ¢Åãª©©©©±G!#~—jjMLL9üûûûüüûEÛ²¯ˆ†„P{Zvu—v1cã­©ˆ©©´}ZPfgg9z×‹hMM9ùÙ»•–—u5Ö±±ˆ„„:}Z‰©„;`â­¦¥¥¬´}”ˆ†„„l", 13, "`Ó¯¯†fg(ãÏÈÉ±ÏÑ3Õ±É††„({>¦„eeL;6Â­¥¦†¯²a”„„„„†", 13, "_Ó±¯„†„&Á¶±¬ŠÉË5Ö±±„„‰:zŽ‰„„‚e:""À††‹ppH”¨„hƒl", 26, "zÔ±®„„¥;áÌ±Šˆ¯Ë_Ù¯¯„h†Sž³©„„e9!‹††©‰H•«ni„†|Ö®«„h†SãÑ¯ŠŠ¯±|Úlnˆ‚„: ×©¦€‚‚:""†ˆŠ¯i`»ŒnŠƒižØnn†h„;âÐ¯¯¯±ÉŸÙ«PŠ††9 Õ©¦€‚‚:6²††ˆ«ˆ}—ˆl†ƒicÕ¬lŠ†„:÷²¯±±±ÌŸØ«l„„†PŸ»©©‚eg;`À´†…ˆ«‹¡»±«„‚‰.cÓ«ˆ„„†Pø²Š±¬¬ÌŸØˆ„h„ˆ9}¹©©¦„„<I†††¨¬¡»±¯„†‡Ÿº¨„h‚†9ø²Š±¯¬Ë}Ö†„„†ˆ9|¹©©©¦©?I²†††¨¬¡»É¯††h º†„„„†9 ø²Š±±±Ë~×ˆ†„„†9{µ©©©©©?IŸ´†…ˆ¥©¡Ö±É¨‚h}»ˆ†„„†9!ø²Š±±±É ½oONNN{¹©©©©¬?GÃvUqqS+6¢Ø±É±†h|ÝpPOOO(!æÍ¯±±±Ë}5{¹©¦¦¦²?#c|Ø¯±É¬‰}æD1GæÐ¯±±±É~F}¹¦¥„¬·? ™rp‰l-a»¯ÈÌêÐÂA@+2ø´«±±¯É}\'¡¹¥†„´¸>»±´Šˆ²(`»¯Ééìì¡Þ†lnPo;ø´¨¯¯ŠŒ}\'%", 10, "Å¹¨††Ì¸>»ÊÏ´ˆ²;`»±Ëêìì.¡Ý††††l;ø²†¬‹Oi}w)**)Å»©ˆ‹Ð·>ÙèÑÌ…‹Va»¯Ìêìì/¡Þˆ†¬Sù²…ˆ¨no~y)'==<", 26, "ÃÕ©‹²Ð²<!¼éÌ¯…ˆT{Ö±Êéìì/¡óˆˆ´¶¯pù²††Š¯nby)'===,ÃÕˆ©Ì´´T6ÛÏÑ†…Š>ŸÖ±±Ìêì/ óŠˆ²¶²rù·††ˆ¬ˆHy*'<@?¡Õ†‹Ì¯´>HÝÏÐ††ˆVÂÕ±¯±Ìì.¢ó¨Š¯Ð´pù¹†…ˆ¨«Iy*')?@", 26, "Ÿ·†ˆ²°>`Þ¯´†††‘Ÿ»±ÉÊÊì/Äó©©‰Í·qæ·†……¨«ax)'=@,{°†††l‹<a½²²†††OŸ»²ÏÌÌÓ.Äß¥¥h´¸qù¹†……¨«bx)%+@,{‘ˆˆlPo+IšÌ¬††ˆ9ŸÖÑëëÓí/¢ß¥ˆi­¸qùºˆ††¨¬¡y)%%)@,}˜>+", 10, "cyÌŠ††ˆ8¡¿™uv[[4æó¥¥†ˆÍrç™rqqS+y;'%%;,¢æÃ}GI}{Å¿ÌŠ††ˆ8}64343]FÅó¦¥¥†¬rüÃŸž  zx;)(()", 26, " ˜rrssrdÞÉŒ††ˆ$|sŽr/ ò¦©©¦©qöÚ¸º––—æx::::) »ˆ…††ŠdÝ´±††iœ²¯ˆ†…†Aò¦©©©¬páîÌËË¶rÅx;::9(+ u¸†††‹cšÍ±ˆ†ˆ$¬©†††A¡ò©¬©©¦páîÏÎËÏy;(9&$¢¾”†††Š", 13, "c[‹ˆ††±PÂ‘†ˆ††ˆ. ß©©©¤„m1ãîÏËËÏ¸y;)& Û‘†††Š", 13, "cx†††«:Ã“††††‹-¡ß©©¤€ODöîÏÎËËºy;:$$|ºŠ†††‹", 26, "a¿Ðˆk†«:ã·†…†ˆ‹¡ô©©‚€‚N2öìÏËÌÏº›;:$%	zql†††Œ", 26, "Hâ×Žk†Š$â¹Šˆˆl¡ô©©‚€¤NõìëÏÏÓ’~x+:$$	_r¬ˆ†ˆ¯6ž—††«&Àº±±¯«Š", 26, " Þ¦¦‚MáìëêÏºT~C(($&_º²¬††i5›µˆ††«& À·¯±±¯Œ", 26, "}˜¤¤‚‡M1áìÏÏËÏq}2((`Ñ´ˆ††O5ò´¬¬²;!Á¸¯±±±Œ", 26, "cv‰¤eeee1ãîÏÎËÏ}E&$&%|Ñ´…††l#Ã\[[xw1IâÕ±±±±¬", 26, "cyŽ‚e„†g1øîÏÎËÏ~}0/.--!}»±……†l6ç{Â}ãÖ±±±±‹", 26, "|Ãvt“‘rV4ùíÏËËÎŸC231114~º¯†…††GÁtmŽŽ‰‹ãî±±±²o", 13, "dÃ21/#øìÎËËËÉ~ò´? |¹´Š††lG\„LeãîÊ±±±ocšjNNNNöÑËËËËË~¾†††Š<·´¬†††`vª‡eeâÖ²±±±pcwM777MâÏËËËËÉ¿»ˆ††Š*Ÿ¸Ì±††‹|½‡¦f¤€öÖÌÌ±´TbyVM77LáÏÌËËËÉà—ˆ††«(ŸÑê²††ŽIõ‰©e‚âíÑÌ±»?bV877LâÑËËÉÈÇ¿“†††«:¸ê´††‹", 26, "Gö©©‚€†‚âíÏ±¯±‘}›q777LãÏÆÆÇÈÉ½p†††ˆQÐÑ´ˆ†Hõ‰©„ef„âîÏ¯±¯}wN777KøÑÇÆÆÈË~wp†††®QœÍÑÏ¬†Gõ¦©¦©ãîÏ¯±¯dZ8K77M$øÏÇÆÆÈÉÄ½¶ˆˆ…±&]²ÏÌ¨¥Gô¦©¬¦¤°âîÊ±±±qd[jMK7M	äÌÉÈÆÆ®}Ý¸¯¬†Š9[²Ï±¯ˆˆW2Åµ©©„„<{Ý‹†…†¨S1ŸsjLKKLãÓ±ÉÆ®Æ|Ü¶±ˆ††8B²´±«ˆ¬V1Ä³¬©©¤¦TzÝŒ†……¬SWjK7JKäÓÉÈÆ®Æ`ÜÑŒ†††iE–¬‹²X3Ä­©©©©¬T`¾—–•s–B`žsmNJKK$çÞÙíÖÕÕGÝÐŒ†††laæ }{{ž ¢æ³©©©©¬Sac62FÂ“mjLLL(!üçúúúúùEÛ´¯ˆ†„Pa [[vv˜[6Å³©©©¦¯?a_rONgNâ¹‹‹gLM+!ãØ—––˜[5Ø±±ˆ†„O`xj¦¦g2Äµ¦¦¥¦²?``ˆ„„„9Á¸¯¯‚eg( ôÏÉÉÉÏêDÖÉÉ††„9_Z‰¤eeeMB¡³¥¥†¬²<6_„„††9ÁÏ±¯h„„¿´¯¬«ÉË5Ö±±„„‰O_•‰‡‚‚eM0}³††ˆo)""zˆ‚h†9ÁÏ±¯h„©( ¿´±Šˆ±ËFÙ®¯„h†j`×©¦„€Lc³††ˆp(!z¯Šl‚†OãÑ®¨hh‰<!óÌ¯ŠŠ¯±|ÚpŠ†‚„OaÛ¬©†Mc³††ˆ¯¬""œ±nnˆ„:ãÒŠˆ„h†;!áÌ¯¯¯¯É~ÚŠPŠ†„9aÛ¬©‚†N0|¹ˆ††««(6À²nˆ†ƒ:ÂÐˆl¨„†(3á²¯±±±Ì~Ù«n†„„OaÛ¬©„eegB~Ôˆ†ˆŠ¬,aÁ´®†h„PŸÍ«l†„†;4â¯¬±¯¯ÌŸØ¨†h„ˆO`¼­©¦„o1~¸†††ˆ«<bÀ´±ˆh†OÅ´¨ƒh„ˆ(3õ¯Š±«ŒË}Ø†„„„†NH˜¬©©¦¤Ž1~Ò†††ˆ¨=cÀ¶È¨„†9ù´†„„„†%4õ¬Š±¯±Ë~Øˆ†„„†NH˜©©©©¦Ž2~Ó†……¥¨UdÀ¶É¯„‚9å´ˆ†„„†%6õ¬¨±±±ÉŸÙ¥„hhh9G˜©©©©¬Ž2ÅÞ‰¥¨ˆiA¢Á´±É«h9Ãº¥ƒhii!õ²¯±±±ËŸ/5`˜©©¦¦¬d""HÁ·±ÉÉ‡:Åž/", 26, "", 13, "IâÐ±±±±É~``Ø©¥†¦²_W??<<.5À´±±ÏÌTçžB00Fâ´¯±±¯É}]a¼¦¥†¬Ðv¯´ˆŠ‘""¿´±Ìêì‘üÙnnQ:S+4â±«¯¯¬¯}w'%", 10, "~Û©¤i²Ð‘Z¨Ñ´Š¨‘!¿²±Ïëì’ûÕ†††li(3õ°†¬¬il}x)%')¡Û©¥l´ÐvÊÑÌŠ†‘", 13, """À´Éèìì’ç×††‹ˆ‹<3õ†ˆˆ:Q~y)'<=*", 26, "~Ý¬¨¶ÐSxèéÊˆƒŽ#Á´±Ïìì’úÙ†ˆ´¯¯<2õ††¨¬Šd›*'===,{Ýˆ©²Í¶q0šÏÑ¯††p", 13, "6á´±±êì“ æðˆŠÊ´´T2ã²†ˆˆ¯lGy*(<@?,cÝˆŠ´´´‘1¿Ðê±††ŽIá´¯¯Ìé’çÛˆ¨ÊÍ´U2ö·††ˆ««Hy;')@@aÚˆˆ²²¯r1À¯Ñ¯††‹`¿Ê±±±Ð’1üÛ¨Š¬Ð´Sã´†…ˆ¨«`y*'=@,_—ˆ†ŠŠ‹q1¿Š¶¬††ˆ`¾´ÊÊÌÐ‘üÛ©©m·¸pã´†……¨«Iy)%+@,G»†††loS1œ¶´ˆ††lI¾´ÏèÌÐ’ üÙ¥ˆh´¸Sö·†††¨«dy)%)@,H˜ŠŠn;p<2{Ñˆ†††", 10, "I¿Ôììîï– üÛ¥¥„¬¸S÷·ˆ†ˆ¨¬¢y+'%%=,IžB/G|ì¬†††l`~œ\352!aüÛ¥¥†©ÊT!æyvuZXy;('&),cÂšw[\xC`áÌ±†††l`FYXYYZZ!üÛ¦¥¦¥¯T!ø¾¼š›yš¢y;))()*bÜp‹‹¯>4¿É´ˆ††Obv‹‰‰ˆqûÙ¦©©©¬p2ôí¶¶¸·sçy;:::()b¼ˆƒ…†¯;3¿´±††8c—««ˆ……pçØ©¬©©©S àìÎÎÎÏr¢y;):9&){›—†„†¬<!_¹¯Š†ˆn", 13, "d™ˆ©ˆ††pçÙ©©©¦¦S2óîÏÎËÏ’›;(9$$cà–ˆ††®(!_ˆ††ˆ¯", 26, "~¾††††ˆoçÛ©©¦‚„PEôîÏËËÏº›;:&aÝ†l†«< zÐn…††Š", 26, "ßˆ†††ˆQçÛ©©„e€O_ôìÏÎËËº›<9%	_˜Š†…††S~í°l…†Œ", 26, "ßˆ……ˆŠPüÛ©‰e„N2óìÏËÏÏº›;:$%Guo†††®S ï“ˆ††Š", 13, "dò¬«Šˆ:ûÛ©©g„M!óìëÏÏÓ‘~w)($F—²©ˆ†È(bØµˆ††ŠaÞ¯±±¯¬Pç×¦†„gM2óìëÏÏÑq~C(($$F—±°ˆ†ˆ	œ·ˆ†††‹cÝ¨±±±¯QÅt¦„„‚€M3óìÏÏËÏq}C&(GØÏˆ††ˆ$ÀÓ°²|ñ¯±±±¯P¢t¦¤eeeeDõíÏÎËÏ}G&&&`Ù¶†…††:¢zyy›y^G¢ó´±±±±QÄ™ª‚¥„O5öìÏÎËÏ 211//05a¼´†…††:Åzy››™x]¢ôÌ±±±¯PåÁ[ZuWWBGöìÏËËÎ¯žBBBBX!aÙ²ˆ†††P{˜jhh‡>}óÐ±±±¯9Åz006õëËËËËË~ò´°Ž¯SIØÌ¯†††:Et‡L‚€;~òÑ±±±¯(ÄuNMMMj", 13, """ôÏËËËËÉ~¿†††Š:`—´²†††Sy¦‚e; ñÐ±±±¯)¢uM777N!àÏÌËËËÉÀ»‹††Š:zÙÌÌ†††s2Á„©„„„e; ÝÑÏÊ±’wRJ77M", 10, "àÏÌËËËÉá—‹††Š%aÙêÐ†††sö‡©†e‚‚;žÝêÏÊ±•+yR777M	àÏËÉÉÈÇß“ˆ††ŠP_ØêÐˆ††UøŽ©†e„„+}ñêÊ±¯²T£™O777M	áÌ®ÆÇÈÉ½p†††ˆQ_ØêÌ¬††Wä‰©¦€f+}òêÊ±±±>£tM777M	õÏÇÆÆÈÉ~™p†††®n^ÖéÌ±††Xã‰¬©„‚„>}óêÊ±±°=¢A877Kg", 10, "õÌÇÆÆÈÉÄ½¶Š¥†®(E¹Ð´±¥¬Aâ¦©©©‡©>{òé±±±°;¢tNM7KM	áËÉÈÆÆ®}Ý¸¯¯†ŠO3¹Ê±Ìˆˆs~Þ­©©‚‹á»ˆ†…ˆ¨<5›TjKKKL6â¸±ÉÆ®Æ|Ý¸±ˆ††93’²±¯ˆ©s}½¬©©¦¤²Àºˆ……ˆ¯,5yqgKJJK4âÑÉÈÆ®Æ`ÝÑ†††i3˜¬‹°“½©©¬©©²ž¼»•””–|šqmMJKL6æÜÖÖÕÕ»GÝÐ†††l6æ {`{ž}åÞ©©©©©²_42aœqmhKKMEüæùùùùåF½´¯ˆ†„i6Ã]\x[ww Þ©©‹©©´~[QNNNM#¿‰eLMFâ˜—–—v[5Ù²±ˆ†„O6sj‚¤©‚-¾©©¥¦¬´~–¨†„„† ¾´¯¬heg6òÏÉÊÌêê3ÖÉÉ†„„N6xo¤eeL?c½©¥ˆˆ²´c–††„†† ½´±¬hh„4½´¯¬¬ÉÎ5Ö±±†„ˆO6™‰¦€K-G¼‹ˆˆŠpH–Š„‚„†""½Ë±«‚„¬4Ý´±ŠŠ±ËFÙ®¯„h†m6½©©e„L,6™‰††‹p‹H—«Ši„†&4Þ¶®Šhh¬+EñÊ¯ˆˆ¯±zÛ‹„‚‚iFß°©„e„e6™‰†ˆ¬¯iI—®Qn†„(5à´«†ƒh†,6òÌ¯¬¬¯±~ÚnPŠ†„NFà³©†€„eG™¬†ˆŠ¯icØlˆƒƒ5¿²Pnˆ„ˆE¿¯±±±±Ì~Ú«n††„OFß°©†ec½¬††ˆ«‹Ù¯Š„‚†)5¾²Ši†„†+Gß¯±¯¯Ì~Ù«†i„ˆi6¿°©©‚f†dš‹††ˆ¨¬¡Ù±¯†‚‰(6¾±¨i‚†ˆ(Fò‹‹¯ŒŒË}Ù†hƒiƒN6¾°©¬©¤¬d¼‹†††¨¬¡ØÉÈ††‡Eà¬„h‚„iGò‹¨±¯±Ë~Ø††„††h5½­©¬©¦°d½¬†…†¨¬¡ÙÉÉ¥„„", 10, "6ß¬††„††`ß‹«±±±Ë~Ù¥†hi„N5š­©©©©°}à‘ˆˆˆ†l4ÄÙ±É±†‚", 10, "4¿°†ƒi„„Gà¬¬±±±ËÁ.(&&%!F½­©¦©©²Ia1004~Ú±ÉÉ©„4Ãv+((&có´±±±±É~d""#6¾°¥¥¥¬´6E", 13, "cÙ²±±Ê­4æ}625dà´¯±±±É~^", 26, 13, "6¿­¥††´µ", 26, "3»ˆˆµ+`Ö±ÉÌêë,4äuSS&<,Gß¯«±¯¯±}x(%", 10, "Hß­¥„‹Í·1·ÌÌ«ˆµ&`×±Éèìí=4öµ†llmo)Gàˆ¯¬ˆŠ}x(%dó­¥iÐ· ¹ÏÌ±…²>`×±Ëéìí-5âµ…†ˆˆˆ;Gà†©ˆ9P}y)*,*", 26, "dô°©†²Ð²", 26, "3ÖéÑÊ…ˆsaØ±Ééìí?6ö·†ˆ°¯<Gß‹…ˆ©‹‹}›*'=?,,Gó°‰¬ÌÐo-5Øê´«…ˆ?{Ù²±Ïìì@E÷Ò…‹Í¯´<Eà††¨¯na›+'<@=,Fó°ˆ¯Í´µ_ØÑÐ†…‹> Ù±±´éì?6öÒˆ¬Ê´´TEá°††ˆ«ˆH›+'*@@", 26, "6ó¬†±´²µzØÑÐ††ˆW¡ØÉ¯±Êë=6øÒˆ©´Í=Eá²††ˆ««I›;''=@,6Þ‹l²´", 13, "|Ö´´†††sŸ»±ÉÊÊê=Gøº¬©Ð¶SEá†…ˆ¨«`›:'", 10, "+@=5¼ˆ†††ˆ‹|—´¯†††OŸÖ²èÌÌê,Fø¹¨†m·¸SEô°†……¨«by+%)@,5½‰ˆˆiSmcØ´©††ˆ8ŸÙÑëëÓí?Gø¹¥††´¸=6õ²††ˆ¨¬›+%'?-6V<;", 10, "d¼²ˆ††ˆ8¡¿¼——vv0}ø¹¥¥†°Ð=6ã–rqqS<›;'%%),6æŸ{E4GG`ÃÛÊˆ††ˆ8~HD334EEcøÒ©¥¥¦´TFæž›{{]›;)(((+6ÁsUWs”@ŸÙÌˆ††ˆ&}Yq‘’‘‘-4÷¹©©©¦°TEõÖ¸–——˜Å›;):)))Fß¯ˆˆˆŠnžÖÊ††i’¬ˆ†††r""ö¹©©©©¬T5òëÌ¶¶´ræy;:::()Gß’ˆƒ†¨l|Ø´²††l$’¬¨†……U5ã¹©¬©©©TDòìÏÎËÏr¡›;(:9%(Gâ˜‹„†Šlcu¬Š††¯9 “ˆŠ††ˆT6ã¹©©©†¦SEóìÏËËÏ·›;)9$Fâ—‹††«Od–‰†††«:Ã•††††©*6ä¹©©„‚;`óìÏÎËËº›;:&6ß’†k†ˆ‹|Ù¯…k†«:ã»††††©(6÷»©¦€€:zòìÏÎËÏº›<:$%5š‹†…†ˆ}Þ¹ˆk†«%ã»ˆˆˆˆŠ'6ø»¬‡e„‚9EñìÏÏÏÑ¹›;:$$5wpˆˆ†®Œa¿»‹††«&Á»¯¯¬ŠŠ5ö¹©¦e‚8EñìëÏÏºq~w((&$4š·¬‹†«9Gš¹‰††«$À»¯±±¯¯3â³©‚‚„e8EñëÏÏÎÑq~C(($5¼´²ˆ††_Ù‹†††¬( Àº¯±±±¯% ©‚‚‚eNEòëÎÎËÏq}D&&5½ÏŠ…††9_Þ”’“““?#ÂÕ¯±±±¯' ‘¦eeNGóìÏÎËÏ}`&$&(6Þ¶ˆ…††ib¢{žž{ãÙ±±±±¯'!Â˜ª‡¤©„SHôìÎËËÏ¢E4412GG¿µˆƒ††l}Âw[š˜uZ4äï±±±±¬!å{DCZ0B3côëËËËÎ±~žBXYYX.6¾´Š†††l`šŽge„†¤ãï´±±±‹", 10, " ¢C.GóÑËËËËË~à´S6½¶²†††lHu‰¤eeeãÚÌ±±±", 10, "!žMMMMj6ñÏËËËËÉ~¿‘ˆ††ˆQF½´Ì†††{u¦‡‚eãÙ´±±±", 10, "#{VK777h5ÝÌÌËËËÉÀ—††ˆQFÞÌé†††µŸ˜¦¦f„€öíÑÐ²´r5}uR777g4ÞÏÌËËËÉá—‹††ˆ:FÞÑêˆ††“žÛ©©e‚âîÑÌÈ¹s5 vR777N	4ÞÌËÉÈÈÇß“‰††ˆQ6ÝÑêˆ††‘žÝ©©„‚âîÏ±±¯²", 26, "5žt8777g	4òÉ®ÆÇÈÉ¾pl††ˆlEÝÑÏ±††“}Û©©„e€†ãïÐ¯±¯²5RK77JM	5àÊÇÆÆÈÉ~™pˆ††«n5ÛÑÌÌˆ†•}Û©©¦‚‚©ãïÐ¯±¯²""z>K77Kg	5òÉÇÆÆÈÈÄ½¶Š©†«:4—Ì´Ìˆ©W|Ù©©©¦¤°âïÌ±±±""{VMM7LL	5òÉÉÈÆÆ®}Ý¸±¯†ˆP", 13, """–¯´Ìˆˆ.Gæ°©¬„„<zÞ†…†¨‹/`vjgKKKM`à´ÉÉÆ®Æ|Ý¸±ˆ††N!”¯´±†¨.Få­©©¦¤¦SyÝ†……¨._vjN7JJLIáÌÉÈÆ®Æ`ÝÑ¯†††i!™‹¬’/Iäª©¬©©¬T_¾»””s”u2|vjjLJKM`äÙÖÖÔÓºGÞ¸†††l", 13, "!ÅÂœ›yz{£å­©©©©¬S`{E314~˜jmgKKMbüäøøøøäF½¶¯ˆ†„i", 26, """å`\y[wx3cå°©©¬©¯T`aW:NNN&a¼‰‹„MLMbá˜™˜˜™D5Ù²±ˆ†„i""Ãt‡‡¤¬‡<Iå°©¦¦¦²?_z¥„„„i", 13, "_Ø¯¯‰geg`ÝÌÉÌÌêÔ3ÖÉÉˆ„„O""ÀT¤€L‚e;Fä°¥¥†¬´=E`†††„i", 13, "^Ö±±ˆhhi", 13, "FÙ±¯¯¯ËÎ5Ö±±†„†i""¿m¦€L;3Ã°ˆˆ†)!`†„„„i", 26, "_Ö±±ˆ„„­", 13, "GÙ²¯ŠŠ±ËEÚ±¯†h„m""ßª©f„‚e:  Ž††Šp(!z¯¨†h†laÙ±®ˆ‚‚°_Ü²¯ˆŠ¯±`ð¯¬„‚‚i.""â³©†e‚‚9 žŽ††¨¯!z±Šl†„i-{Û¯«ƒf‚‡-`ñÊ¯¬¬¯±~ÛlPŠ†‚N""ã¹©¦e„‚:""Ÿ²ˆˆ†¯Œ""´ˆnŠƒi{ÚnPˆ†‚ˆ", 26, "`Ü¯±±±±Ï~Ú«lˆ†„h""ãµ©¥e;E ·††ˆ¨¬+GŸ¶Šˆ„‚l`Ø¬ˆl†„ˆ{ÝŠ¯±¯¯Ï~Ú«ˆ„„†i""âµ©©‚f‚;H ´†…ˆŠ«,`Á¶±Ši‚‰-aÖ«ˆi„††bÝˆ¬¯Œ«Ì~Ùˆƒƒh„h", 13, """Á³©©¦†¦=HŸ´†††ˆ«<`À¶È¨i¥m}ØŠ„h‚„ibÝˆ¬±¯¯Ë~Ù…†„††i!À°©¬©¦©?G~·†††ˆ¨=aÀ¶É«„†OžØ††††ˆ„", 26, "}Ýˆ«±±±Ë~Úˆ†„„„h""°©©©©¬?H¢º††ˆ¥¥UdÁ¶±ÈŠ‚h{Ø¥ˆ„„†i", 26, "}Ýˆ«±±±Ë¿qONN9&#°©©©©¯?FÅwUrU?,}Â·±É±„hb¿qPON99dÞ¯¯±±±Ë~ !4À³©¥¦©²?""}6ÁÍ±±É¬ocæE13Þ²¯±±±É~`""Á³¦¥„­´>šrpolpV#œ´±±Ïé·}ãWA-", 13, "-}ÝŒ¯±±¯É}x)""ã°¥†iÊ·>—¯¶ˆ¨‘!¿´±ÌêìÔ~ß†lnloq-{ÝŒ«¯¯‹«}x(%", 10, "6ø°¥iˆÌ¸>—¯Ñ´ˆ¨‘ ¿´±ÏêìÔ~Þˆ…††li,{Ýˆ†¬‹Ol}y)))))Hø³¨†‹Ð·>ÙÌÑÌˆ†!À´±ÏêìÔ/~òˆ†ˆ‹Š?{Ýˆ†ˆŠPl}›*',=*+6øµ©ˆ´Ð>½èÏ´††Ž""Á´±ÌêìÔ/~ôˆ…¬´´>{ÝŠ†ˆ©¯ˆdœ,'<@,,""øµˆ¬ÍÌ´T""ÝÏÑ¬…†p", 13, "6âÌ±±éêÔ/}ô¨ˆ¯Ì¯·@bÞ‹††ˆ¯lG›+':@@,!÷µˆ¬Ð²´?GÞÏÑ¬…†ŽHá´±¯ÊéÓ.}ôŠˆ¬Ì¶²@bò¯††ˆ««H›<''?@,!ö²†¬Ì¯²>Gò±Ï©††‹H¿Ê±±±ÌÓ. õ¬¨‹´Ð?`ò†…ˆ¨«`›;',@=!á†ˆ¬Š>_¿¬´Š††‰H¾´ÉÊÊÌÓ. ô¨©‰°¸·?`ò‹†……¨«I›+%", 10, ")@?!ß‰†††lo+H›´²ˆ††lG¿´ÌèÏÌÓ.¡áˆ¥„‹··>`à†††¨«d›+%%??!À°Š‹P;o+HœÌ†††l", 10, "GÀÔììíïï0¡ô¥¥†ˆ´¸?`ó¬††ˆ¨¬¢›;'%%<-!Ä[.", 13, "d›Ð¨†††lH À\3536æõ¦¥¥†°¸@b¢wYtW.›;(%%(,""æž›]D]yE¡àÌ¬†††lIHBBBBB[3¡ô¦©¥¥¥´@bã¿››œœy¢›;)(((*""ã”qqrrrcÞÉ±†††OIw‹‹q/}ô¦©©©¦°@_óÓ¶¸º”•æ›;:::))#â²……†ˆŠaÞ´²Š††8`˜«¬ˆ†…ˆA}ß©©©©©¬@]ñÑËËË¶rÄ›;::9()#ä•²„††ŠayÒ±Š†ˆP", 13, "b™ˆ¬Š††lA~ß©¬©©‡­@]ñëÏÎËÏ‘›;(:&$&""ù™‘††ˆŠ", 13, "a\Žˆ††Š¯", 26, "d¾†††††ˆ.~ô©©©¦‚¦?`òìÏËËÏ¸œ<:(""ø»††ˆŠ", 13, "Iy°l†††Š", 26, "}ßˆ††††‹-~ô©©¦‚€?žñìÏÎËËº<:$!Â’ˆk††‹", 26, "IÒ‹k††Š", 26, "}àˆ†…†ˆ‹~õ©©„€‚>{ñëÏËÏÏº>:$%""œp†…†ˆŒ", 26, "GÃí†††n", 13, "}ßŠŠŠˆˆl~õ©©‡e¦;_ðëêÏÏÓ’y+)$$""›q‹ˆ†¨±", 26, "5ÂØ’ˆ††ŠIÞ±±¯¯Šˆ", 26, "}ß‰©„e‚g;_ðìëêÏºT~\((&$!œ¸²¬†ˆi#›º†††p`Þ¬±±±¯Œ", 26, "c½‡¦‚‡‚e;_ðëÏÏÎÑq}D(", 13, "!œ¶±Š††N4à²‰Š‹‹bÞŠ¯±±±Š", 26, "`x‰¦‚LS`ñëÎÎËÏ}E&$", 13, "!À¸¯…††i""ã—tt–•X}ò±±±±±", 26, "IyŽ¤ee†eS{òëÏÎËÏ~{.(&&)&""á¸Œ…††l#ç~ ¢¢¢¢¢Åô´±±±±", 26, "`Átª¤¦¬‡.}óëÎËËÏ‹ÅG6634`6Â·©……†l6ù\Yu—UV0~ôÐ±±±²o", 13, "aæG65225òÑËËËÎ±~ÁYWXXW.#Á·¯††††6zt€e©‚;|ôÑ±±±²m", 13, "`žA..+-cñÏËËËËË~à²‹‹‹‹p#À¶´ˆ††lGD‡e€;|àÑ²±±±SIyNMMMMm`ÜËËËËËÉ~¿µˆ††ˆn4Á´Ìˆ††‹", 26, "ay‡¦‚„‚e;ŸñÑ±±±²S`yRK777iHÚÌÌËËËËÁ˜††ˆQ4á¶Ñ‹††Ž`ô„©‚‚„€;žñêÑÌ²¸>I{Vj777hGÛÏÌËËËÉâ—Ž††ˆP#ôÑê¬††ŽGù‡¬„e‚‚;{ñêÏÊ±ÕTažs9777gGÜÌÉÉÇÈÇß·‰††ˆl""àÏê¬††‹Gù‰©„e„„+{ñêÌ±¯±c›8777gHÝÈ®ÆÇÈÉ¾pl††ˆn""àÏÑ´ˆ†Gù‰©¤€€+{óêÊ¯±¯cxNK77JNIÞÈÇÆÆÈÉ~špˆ††ŠŒ""ÞÏÏÏˆ†‘Fø‰©©‚‚„>{óêÌ¯±¯aC&K77Lh`ÝÈÇÆÆÈÈÄ¾¶Œ©†ŠQ""™´ÌÌˆ¨6ö¤©©©‡©>zòêÊ±±±qawqMM7L8IÜÉÉÇÆÆ®}Þ¸±¯†ˆl˜¬Ì´¬ˆˆW1Ä—©©¦‚‹ÂÕˆ†…ˆ¨S1ŸXjMKKK8", 13, "}¿±ÉÉÆ®Æ}Ý¸²‹††O–¬´±Š¥¯A1¢»¬©©¦¤²ÁÕˆ†…†¬SXjM7JJ7", 13, "}ßÈÉÈÆ®ÆaÝÑ±†††lš¬‹‹°X2¢¹©©¬©¦´ž¼¹“’’”AFžsjgKJK8ãÖÔÔÓÒºGÞ¸¯†††lÅÁ›yxx›{}å»©©©©©² `\C1HÃ•jjMKK8üãööööãFÝ·¯ˆ†„i", 26, "æžEy]]x]GÅ»©©©©©´\@;999Â»‰‹gMLMÁ¼¼™™š]5Ú´¯Š†„i", 26, "ävj¤­©j2Ä»©©¦¦¬´~˜¨†ƒ„„%ÂÒ¯¯†eeNŸïËËÌÌëÔ3ØÉÉˆ„„h", 26, "Â>¤e„MB¢»¥¥ˆˆ²´}—ˆ††††9ÁÐ±¯†hhNaÖ±¯¯¯ËÎ5Ö±±ˆ„†i", 26, " Ám¦„€KM0|»ˆˆˆŠ¯I—ˆ„„„†9ŸÑ±®†„„oaÖ±¯ŠŠ±ËEÚ±¯†h„m- ÂŽ©„‚„eM/c•†††‹p‹H˜«ˆi‚†9ÂÓ±®„‚„Ž{î²¯ˆŠ¯É_ð¯¬„‚‚i-!ã³©¤€†Ma”††ˆ¬¯lH˜¯nl„„:ãÕ®¨ƒf‚o.|ï±¯Š¬¯±~ÜlPŠ„‚h!æÕ©©€‚„Na•‹†ˆ¨±O`™¯l‹ˆƒ9ãÓPlˆ„‚ldÙ«±±±²Ì~Û«lˆˆ„i äÒ©¦„g0dÖˆ††ˆ«ˆ}¼n†ƒƒ: Ò«lˆ†„l Ùˆ±±¯±Ï~Û«ˆ„„†i, Å¹©©„egh1~Öˆ††ˆ«©¢¼±¯†h„P ¸«ˆ„„†l. Ù†¬¯«¬Ì~ÚŠ†hh†iÃµ©©¦„‚o1~»†††ˆ¨¬¡¼É±†„‡:Å·ˆ„h‚†i Ú†¬¯¬¯Ë~Ù†„„††i¡³©©©¦¤Ž1}Ö†††ˆ¨¬¡¼ÉÈˆ„†&ù·†„„„†O¡Ù†¬±±±Ë~Úˆˆ„„„i ³©©©©©Ž1~Ø††…ˆ¥¬¢¼ÉÉ¯„‚(ä·ˆ†„„†h¢Ù…«±±±É~Ý‹„hhhNŸ³©©©©¬q1¢àp‹©Šl:6Å¼´ÈÉŠh&¢ÕˆƒhhiOÛŠ¯±±±ËÃ05Ÿµ©¦¦¦¯rc5!|½´ÈÉÈ‡:ÅÃ0-", 26, "!£Û±±±±±É~c""Ãµ¦¥†¦´_Y-?=;@", 13, "a¼²±±ÏÌSæÃ[12¢Ù«¯±¯¯É}_", 26, "", 10, " äµ¥¥„¯Ð[´´¯ˆˆµ`Ù±ÉÌêìrçÝooQ&;S. ÙŠ¬±¯¬¯}y(%", 10, "!ú³¥††´ÐZ¯Ñ¶¬ˆ·&_Ù²ÉÏìì’ûÙ†††lmP. Ùˆˆ¯¬lˆ}y)6ûµ¨†l¶Ð[´êÌ¯…°RIÙ²Éèìì’çÙ††ˆ†ˆo. Ù††Šˆ%P}›**=*+#üÍ©ˆ··q\ÑêÏ¯…ˆWa¼²Éèìì’çÝˆ†¯°Š. Ù†…ˆ©‹}œ,'<@,,úÒˆ©²Í·S0xÓê´Š†ˆ?|Û´±Ìêì’1çñˆˆ²¶². Ùˆ†ˆ¨¯lIœ,':@=,", 13, "úÒˆ©Ê´´‘0›ÓêÌ††‹> Û²±±éê’1æñˆˆ²Ì²²A ÝŠ††ˆ«ŠHœ<')@@,ù·†‹Ê²²r1¿ÐêÊ††ˆs¡ÚÉ±¯Êé‘üñ¨Š¬Í·q. ÝŠ††ˆ««Iœ<'%=@?ä²†ˆ¯¬1À²Ì±†††sŸØ±ÉÊÊÐ‘1üÞ©©‰´¸².~Ý††…ˆ¨«`œ;')@?Â¬†††l‹p1œµ¶¬†††:ŸØ²èÊÌérüÞ¥¥i²¸´-~Þˆ†…ˆ¨«I›+%&@?Â‹ˆˆ†Po;1zÓ´¨††ˆ% ÚÏêëéÔ’ üÞ¥ˆi­¸´-~ñˆ††ˆ¨¬›+%%%=?Ã•SS()+2{Ö¬ˆ††ˆ8¡¿Ú—–˜˜BEüÞ¥¥†ˆÍ´.À‘pppoSœ;'%%(=æŸy\1!DDb Ö¯ˆ††ˆ8a]33444Hüñ¦¥¥†¬´.Äœyyy]Dœ;)(((+æ™YYYZ–06ÁÑÌˆ††ˆ&~ZWs“““WûÞ¦©¦¦¦°Ažó»—˜™˜™Åœ;(:))) øÑˆˆˆ†«>4¿ÑÌŠl†iž’¬Š†††qçÝ¦©©©©AzñÏ¶±¶²ræ›;:::9)", 13, " ä“Šƒ…„¬<2º±±††hž“¬¨†……pçÛ©¬©©©‹/`ðÏÎÎËÏr¢›;):9&(", 13, "ú˜¹†„†¬<!`•¯©†ˆŒ% ”ˆ©†††p0çÝ©©©©„‹AzñëÏËËÏ’<(9$$ç¼’†††®(`’ˆ†††¯:Ã–††††ˆSçÞ©©¦„„AžñëÏËËÏº>:&å»†††«<zÓn…††«:Å—††††ˆQçÞ©©†€egWÂðëÏÎËÌº>9$$$Ã’ˆ……†ˆS}ï³lk†«9ä×†……ˆŠPçò©©‚€¤g-žïëÏËÏÏº>:%%$žTl†††®S Ý•ˆk†«$Ã×¬Šˆˆ:çò©©‚e¦g-|ïëêÏÑ»‘~y+)$${r¬Š††É:{¼¹‹††®&Ÿ×±±¯¯«PæÛ¦¦‚‚e>{ïëëÏÏºT~\(($&${¸²¬ˆ†Š`»¬†††¬&žÕ¯±±±¯Påu¦¤‚‡‚e>{ïêÏÏËÏq}E(¸´Š†††Õ‹¬±;ÁÖ¯±±±¯P¢u¦¤ee?ðëÏÎËÏp}G$&ÂÏ±……†ˆ(}y[Zvvu0GÂÙ±±±±¯Q¢˜‰‚e©e@ ñêÎÎËÏ‹~}/++++(!ãº¯……†l:£¢ÅÅ£ÄÅÃäÛ²±±±¯QÄßtªª¬‰0¢ñêÎËÎÎÄF6532E6Ä·¯†…††:¡ytV•‘qUäðÊ±±±¯9ÅÄE3311#¢ñÏËËËÎÉ~ÁtWsssV""Ã·²ˆ†††:`˜‚e‚‚¤ÅÜÌ±±±¬(Ä›?->>++ŸïËËËËËË~à²ˆ‰ˆ‰p.""Â´´¬†††:Gt‡„eeeãïÌ±±±¯'¢˜MKKK8;|ÙÉÌËËËÉ~À¹Š†††n-2ã´´¯†††U2©„‚‡eäÙÌ²±±°) wjJ777:{ÖËÌËËËËÂ˜‘†††n!ã¶Ñ²†††sÂ©†f‚e€ãÙêÑÊ²’›VM77J9aÙÌÌËËËÉâ—Ž†††l!ãÏê´†††Wã¹¬©f‚ãïÑÌ±²“,›V877J8{ÙÉÉÉÇÈÇà’‰†††n â¶Ñ´†††@ã¹¬¦„‚ãïÑ±±¯²?¢™j777J8}ÚÆÆÆÇÈÉ¿pl†††ˆ âÌÑÌŠ†ˆWã¹©©‚e€‡ãïÑ±±±²>¢u8777K8}ÛÇÇÆÆÈÉšoˆ††Š ßÌÑÏ¬†ˆXÃ¹¬©¤‚‚¬ãðÑ±±±²<¢A8K77MN}ïÇÇÆÆÈÈÄ¾¶Œ¨†ˆp y²ÏÌ¬¥/Â³©©©¦¤²âïÏ±±±°+¢ujMK7M$}ÙÇÉÇÆ®®}Þ¸±¯ˆˆˆv¬Ï±±ˆˆs}à°©¬‚„<yÞ¬†……Š«<4œVjLKKK$¢¾®ÉÉÆ®Æ}Þ¸²©††iZÌ±¬ˆ¬sdß­©¬¦¤¦SyÞ†……ˆ,4›VjK7JK$¢ÞÇÉÈÆ®ÆaÞÑ±†††l(w’¬‹‹¬“}ß©©¬©©¬T]¾º’’‘’•`›qjMJJK$ÅâÔÔÓÑÑÑGÞÑ¯††††*~Áššx™š›_Åßª©©©©¬S_|]D210d‘mhKKK8ÅüãöõööâFÞ·¯ˆ††i+¢ÃE_y]yy5¡ß­©©¬©¯T_aZ=;;:&5À’‰‰eLL9Åà½½ššœy5Û´¯Š†„i+ ™qª­°‡~ß­©¥¦¦°?Gzˆ„‚‚„", 10, "¿·¯¬„eg9ÄîÌÌÌÏÔÔ3ØÉÉŠ„„hA¦L„e?}ß­¥¥„¬´=Ez††††ˆ¾Ì±¯‚hg9ŸÑ±¯¯¯ËÏ3Ö±±ˆ„ˆi+V¦¦€eLK?G¿¬¥ˆl¬+!`„i„„† ¾Ì±¯h††;žÑ±¯Š«ÉË5Ú±¯ˆ‚„‰,©‡„€L-6¾‹††Š‹o)`¨†h„†""¿Ï±«h„†oŸÓ²¯ˆŠ±É_ð¯¯†‚‚†>Ÿ¹©¦‚e,6š‹††©¬‹z²Œnl„†(4àÐ®¨hh„o¡í±¯Š«¯±|ÝpQˆ„‚i+¡×©©‚„e6š†ˆˆ¯Š!{´ŠnŠ…„4á·lˆ†h„P Ö¯±¯¯±Ë~Ü«lnˆ‚i+¡×©©‚„€H¾°†††««)4ž·nl†ƒƒ5¿·ˆi¨†„PÄÕˆ±±±±Ï~Û«Šl„„„< Õ©©†ee", 26, "d¿´†…ˆ¨¬,HŸ¶¯¨„‚†)4œ´«l†„ƒP0ÅÕ†¬¯¬¯Ï~Û«†ƒh††+Ÿ»©©¦„‚ˆd›†††ˆ«<HŸ¶±«„„‰&5À²ˆƒh„ˆOÄÖ†¬¯Œ«Ë~Û†„ƒ„ƒi(}¹©©©¦¤­d¾°†††ˆ¨=_Ÿ¶É¯†††", 10, "5â°†„„„†9ÅÕ†¬±¯±Ë~Ûˆ†„†„†(|¹©©©©¦°dœ²†……¥¨T`Ÿ¶±±ˆ„„", 10, "4á°††„„†OåÓ…¬±±±Ë~Ü¨†„hhh{¹¦©©©©°}âºˆˆ¨ˆlA~Â¶±É¯†h", 10, "3Áµ¥ƒii„9ÅÖˆ¯±±±ËÃA&&%4{»¦©¦©¬²Hd30IÁÐ±ÉÉ¥‡3Äx>)(&", 13, "!ÅØ±±±±±É~}""#|»©¥¥¤¬´6G", 13, "5Ð¯±ÉÊ¬""æ¡F4!6æ×¯¯±¯±É~`", 13, "Ÿ»¦¥†¦Êµ", 26, "2—ˆ†s!œ´±ÉÌêê,!æ™TT)", 10, ",Å»Š¯±¯¯±}y)%Ã»¥¤„¬Í·¹´Ì¬ˆ¬rœ´±Ëéìí,""ø»†nnioS/ÅÕˆ¨¯¬ˆŠ}y)%å»¨¥i°Ð·ºÌÏÊ…Š‘¿´±Ëêìí-#äº††††nP/ÅÕ†ˆ¬ˆ9l}›))*))", 13, " æÕ©¨ˆ´Ð´", 26, "!ÖèÑÌk†!´±Ìêìí?4ä»††¯‹p/ÅÕ…†ˆŠlo}œ*'*?*,", 13, "Å×©ˆ¬¶ÐS-4ÙéÌ±…†q!Á¶±Êéìí@5ø×†ˆÌ´q/Å»ˆ†ˆ¬¯nc<'*@,=", 26, "Ä×†©²Í¶µ-EÙÑÑŠ…†p", 13, "5áÌ±±Ìêì@5äØˆŠÊ¶±/ÅØˆ††ˆ¯lG,':@@,", 13, "Ã×†Š²´²·aÛÑÑŠ…†qGá¶±¯²Ïì=5øØˆ¨²Ð´r/ÅÛˆ††ˆ««H<''=U=Â»†ˆ²²¯µ", 13, "{Û´Ìˆ††ŽGÀÊ±±±Êì=6úØ¨ŠÐ¶q/ÅÚˆ††ˆ¨«I;'*@@", 13, "ž·††ŠŠ‹°|Ù¯´ˆ††oG¿´±ÌÊÌì<6ù×©©i¶¸.ÅÚ††…ˆ¨«I;%(@@", 13, "‘†††lomc™Ê¯†††lF¿´ÊèÏÌì=6ù—¥ˆh²¸.ÄÛˆ††ˆ¨«c+%?@", 13, "}¹ˆŠˆPSmc¼´‹†††l", 10, "FÀÓìììîï.6ù×¥¥„¬¸.ÅÝˆ††ˆ¨¬¢;'%%*@", 13, "x		dšÍŠ†††lG¡áx334¡ú×¥¥†¥ÊÅžZWWU,", 13, "{<(%%%+", 26, "¢Åž{GGz``ÄÝÊ¨†††iGI32222\DHù×©¥¥†¬0Åãžžz;)(9()", 26, "¡˜rqrs’?}ÛÊ†††hGxp@!ø×¦©©¦©Ž0Âñ¸¸º–•—æœ;)::))", 26, "ÂÕˆ†ˆ†¨Q}Ù´±ˆ†l8H™¨¬ˆ††…r!øÕ©©©©©‹/ðÏËËË´rÅœ;:::((", 26, "Ãv·†„†¨l}™¶±ˆ†ˆO", 13, "I™Š¬Š†…†U4äÕ©¬©©¦‹/ðÏÏÎËÏr¡<):9%%", 13, "Ä¾–ˆ„†¨l|ZŽ¨††¨Œ", 26, "b›ˆˆˆ††ˆ=4ä×©©©¦„‰/ŸðëÏËËÏ¸>:9$$¢Þ”ˆ††«9dv‹†††ˆŠ", 26, "dÀˆ††††©*4ø×©©¤hBãðëÏÎËËºž>:& ˜†k†Š‹|¼²ˆk††Š", 26, "dàˆ††††©'4å×©©‚e€gBãïëÏËËÌºž>:$$%", 10, "|“ˆ†…†ˆ}¿Ó‹k†ˆn", 13, "càŠˆˆˆˆŠ'5ùØ©¦€¤g/ÂîëÏÏÏÑ¹>:%$$", 10, "zV‹†††®Œaà×††ˆn", 13, "`ß¯¯¬ŒˆŠ3ø×©©€†e.ÂîëëÏÑ»q~y+($$%", 10, "`”²©ˆ†®OG›»Ž††ˆnIÞ¯±±¯¯¬!ã¹¦†„M/ŸîëêÏÏÑT~]($$$", 10, "`º±°ˆ†ˆG½†††ˆo`ÞŠ¯±±±¯%Â‘¦„‚„eAŸïêÎÎÎÏq}E(", 10, "zÓÏˆ††ˆ8HÞ´¯¯°°Žaò¬¯±±±¯%žs¦¤eeeeAÂðêÏÎËÏ‹}`$)$žÓ¶†…††PHÂ]\\xw[4ó´±±±±¯' u‡e„¦gAÅðÏÎÎËÏ‹~ 1..---!Ÿ»´†…††lcæ|žÂŸžžÄõÌ±±±±¯%Å›ts‘V2åðÏÎËÎÎ~ÄE4D31136 »²ˆ…††lcÀuT‘qq.|õé±±±±‹", 10, "Å{220""ÅïÏËËËÎÉ~á”r‘’‘r.!}»´†††lIw‚€e„;cáÑ²±±±‹", 10, "Ãv>;;;;+ÃîËËËËËË~à²ˆˆˆˆŠ- ž¹´¯†††n`vª‡ee€;{óÑ²¯±±", 10, "!ŸsK7KKM(¡ÔÉÌËËËÉ~À”†††Š,Ÿ¹´Ê†††‘Ÿ˜‡¤h¦„€;žòÑ±²±²""}uNJ77L&ŸÔËÌËËÎËÂ˜‘†††Š,ÁºÑÐ†††¹žÛ‰¦f‚‚€;|òêêÏ²·U4}wVK77K&ŸÔÌËËËËÇâ—Ž†††ŠÁÓêÐˆ††“}ò¦©„e‚‚;zñêÏÊ±¹‘", 13, "5 ™R777K$ ÖÉÉÉÇÈÇà’‹†††Š,ÀÑêÏˆ††‘}ß©©„e‚‚+bòëÌ¯±±²", 26, "4 uN777K$¢ÖÆÆÆÆÈÉ¿ql†††Š,ÀÒêÏ¯††”}ò©©¤e€‚+bóëÌ¯±¯²""žV8777K$ÄîÆÇÆÆÈÉyoˆ††ˆ¯,œÐêÌ²††•|ò¦©©‚‚†>`ôëÌ¯±¯²!}>877Jg&ÄíÆÇÆÆÈÈÅ¾·«¨†ˆ]²Ñ´²ˆ©W{Þ¦©¬©‡©>`òêÊ±±±!žsNgJJM¢ÔÇÉÇÆ®®}Þ¸±¯ˆˆŠ&[²Ì±Ìˆˆ.Gæ³©©¤‹âØŠ†…†¨‹._xTjKKKLæÜ®ÉÈÆ®Æ}ñ¸´¬††l$B´±±†©.Eæ­¬©©¦¤²ÁØŠ†…†¨p.Gwqg77JKæÜÈÉÈÆ®ÆañÑ´ˆ†††:D”°¬‰©‘/Gåª©©©©¦´ŸÚ·’‘r·”1awqjLJJK$çáÓÓÑÐÐ¸GÞÑ±ˆ†††;aÁš™™˜™š_æ­©©©©©² z\DB105Ÿ™oogKKL&çûâõõõõáFÞ¸¯ˆ†††;dÄ`_z]yzG~æ°©©©©©´^A>;++a½Ž‹‡MLL9çà¾¿¾œz5Û´¯¨†„„;cœtq³Ž-Hæ³©©¦¦¬´w†hhhO", 13, "FÛ°¯¬heg9ùíÏÏ¸¸ÔÔ4Ù´É¨†„h)`[‰‚ee¤e;Gå³¥¥†¦²¶", 13, "~vŠˆ††„i", 13, "EÙ´±¬hfg&ÃÐ±¯¯±ÎÏ3Ø±±¨„ˆ„)`u‡©eLK;3Ã°ˆ¥†Š¯°Iw‰i„„„i", 13, "FÙÉ±¬‚„†&ÂÌ±¯Š¬ÉË5Ú±±¥„„‰;_u‰¦„L: ¡°††ˆ‹o‹Hw¬ˆ„h†i", 26, "_ÚÉ®«‚„©;ãÏ²¯ˆŠ±ÉGÜ±¯ˆ‚h†<z×¬©f‚‚e9 ~††ˆ¬‰H™¯Šl„„l`ÜÉ®ˆhh†Säì±¯Š¨¯±|Ýnˆ„‚i;|Ý°©†e„: ~°††ˆ¬¯hH™¯nnˆƒiaÝnˆ„h„;Åì¯¯¯¯±É~ÝŠQnˆ‚†)|Ý°©†e„:3~·ˆ††Š¯lc½¯nˆ†ƒi`Û¯ll¨„†:æÒŠ±±±±Ï~Ü«Šl†„„;{Û°©¦ee;F Óˆ††Š«‹¡½´«†h‚l.HÙ¯Ši†„†PçÑˆ¯¯¯¯Ï~Û«ˆ„h†¥:a¼­©©‚g„<G¶†††ˆ«¬¢½´±ˆh„ma¼¯Šk‚†ˆ:çÑ†¬¯Š«Ë~Ûˆiƒhh…(a¼­©¬©¤¦=F¸†††ˆ¨¬¢¼ÉÈˆi¦i|Û„h‚„„%úÑ†¬±¯±Ë~Û…†„†„ˆ9`˜¬©¬©¦¬?FÒ†††ˆ¨¬¢¼´É«„„O{ÛŠ†††††9ûÐ†¬±±±Ë~Üˆ†„„i†(_˜©©©©©¬?G¢Öˆ†ˆˆˆ‰¢½´È±ˆhO`½¬ˆ„„„„%çÒˆ¯±±±Ëàr:999%`˜©©©©©¯?6¢xAVU@-", 26, "5¡¾´±É±„h`ÁsP:999!çÕ¯±±±±Ë~ 25`¼­¦¥¦©²?!}c½´±±É¬maæ_106çÕ¯¯±±±É~{a¼©¥††°´>y‘Upon‘`¼²±±Ïé´cã[AA-2ç¸«¯±¯¯É}z)", 10, 26, "|¼©¥††Ê·>—¯¶¯ˆˆ·H¼±±ÌêìÓcôlnlPq<0çºŠ¬±¯‹®}›)%", 10, 10, " Û©¦h‹Ì·>—¨ÑÌ«ˆ¹&H¼²ÉÏêìÓdà…††li9çº†ˆ¬‹il}›)'))¢Ý¬¨iÐ·>˜ÉÑÌ¬…°RI¼²ÉèëìÔ.|à°…†‹ˆ‹S0úº††Šˆ9l}œ*'*=**", 13, "¡Ý°©ˆ´Ð²>¼èéÌ¬ƒˆW`½´±ÏêìÔ/|õ²…ˆ´¯¯S0ú¹††ˆ©¬‹}<'*@,=", 26, "}Ý¬‰¬ÌÍ>!½ÏÑ±ˆ†Š>|Ý´±ÉêìÔ/|õµ…ŠÌ²²q0ç»ˆ††¨¯lI<':?@=", 26, "}Ý‹ˆ¯Í´´?5¾Ïê²††‹> Ý´±±ÏéÓ/cõµ†©Ê¶´q0çØˆ††ˆ«ŠG=')=U=|Ü‹†±Ì¯´>Eß±Ñ²††ˆs¡ÛÊ±¯±ÏÑ.}ö·ŠŠ²Ð²SçØˆ††ˆ««H<'%,@@", 26, "zÙ‹l‹²°>GàˆÌ¯†††s¡Ù²±ÊÊÌÒ/ öµ¬©‹Í·qçÖl†…ˆ¨«`;'(@@", 26, "_—ˆ†††ˆ‹,G¿¬¶¬†††:¡Ù²ÌÌÏÌÑ.}õ³¨ˆj¶¸qçÙ††…ˆ¨«I+%?@", 26, "`—ˆˆ†lmm+GœÏ²ˆ††ˆ%¡¼ÏéëéÒÔ/~õ³¥†i²¸qçÚˆ††ˆ¨¬~;%%%<@", 26, "a™qSS&(;Hzéˆ††ˆ8¡¿ÚÖÖÙÙ˜1¢ö³¥¥†¬Íqç½rpppoo<(%%(=", 26, "d¡]C112~é¬†††ˆ8¡{^D34346£ö³©¥¥¦²qç yxwwD1<)((&;", 26, "|Á™vZ[v[2}àÊ±†††Š&[WsYttY1}õ³©¦¦¥¬q0æó˜™™ššš¢;())()", 26, "|Ýp‹‹pa¿É´ˆ†††Ÿ”‰‰ˆpAcõ³©©©©¬p0ÃðÏ¶¶¸’sç;::::({¼Š……†ˆˆ`¿´±¯††OŸ”«¨ˆ……ˆAcá³©¬©©¬pÁïÏÎÎËÏq¢<:::&(", 26, "}›»ˆ„†ˆˆIyÒ±¬†ˆŠ$ •Š¬ˆ††nAdá³¬¬©¦¦p0ÂïêÏËËÏ‘>)9&$$}á—‹„†ˆn", 13, "IEŽ‹††ˆ±:Ä—†ˆ†††ˆ.|õµ©©¦„„m1ãðëÏËËÏºž>:($|ß”‰††ˆˆ", 13, "Hy²l†††«:ÅØ††††ˆ‹-|õµ©©„€OCøïëÏËËËºž>:&$", 10, "a¼†k††‹", 26, "G|ê‹kk†«9äÙˆ†…†ˆ‰|õµ¬¦€N1øîëÏËÏÏºž>:&$%	_—o†…†ˆŒ", 26, "F¢ï‘†k†«$ÄÙŠŠˆˆˆl|öµ¬¦€„NãìëÏÏÑÓ“{,)%$$	Gu‹ˆˆ†«¯", 26, "5¡Ù“ˆ††¯& Ù¯¯¯¬Šn", 26, "cô³©¦e‚MãìëëÏÏºT~y(($&&	F˜¶¬†Ši""`Õ²†††¯$ŸÙ¯±±±¯Š", 26, "aßŽ©‚‚‡eL0ÂîêÏÏÎÑq~E($$$G—´²ˆ††8""À²††††¯&Ÿ×¬±±±±Š", 26, "GyŽ©‚‚‚e0ÃïÏÎËÎÏp}G&_ØÏŠ†††O""âº‘‘’’·>!ÂÙ¯±±±±Š", 26, "Gy¦‚ee€e1äïêÏËËÏ‹}b&)%", 10, "aÚ¶ˆ…††l!åz_yzzyEcÄÜ±±±±±", 26, "Gt‡‚¦†h1úïÏÎËËÏ‹~¢C00/..04c¼´ˆ…††l4çzyœ¿yyy`äÝÊ±±±±o", 26, "HäxZXtWWX4ûïÏËËÎÎ¯~ÃD22B1114c¼´Š…††l5Â˜qm‰Žo‰äñÌ±±±°m", 13, "HÄE0""çîÏËËËËÉ~áº‘- aÙ¶¯k††l5]t„egÅÝÏ±±±¯QGV;;;9;æìËËËËËÉ~á²††††Œ=zØ´Ê†††lFD‡„eee‚äÜÏ±±±¯QH›jJ777MãÑÉÌËËËÉ~Á•†††Œ,{Ù´Ð†††Ža¿„©„„¤eøÚÌ´±±²THzWM777MÃÑËÌËËÎËâ˜’†††Š+{ÙÑêˆ††Gõ„©†‚f€äïêÑÊ±¹>HžuR777MÃÓËËËËÉÇâ»†††«(zÙÑêˆ††6ù‡¬¦e„ãïÑÌ±¯¹TIžu9777MÅÓÉÉÈÇÈÇÁ’p†††Š*zÙÑÑŠ††Ž6ù‰©¤€‚‚ãïÑ²±±±raœV8777LæÔÆÆÆÆÈÉ~¿ql†††Š<zÙÑÏÊˆ†‘6ù‰©¦‚€€‡ãðÑÊ±±¯rIy;K77JMçÖÆÆÆÆÈÉyoŠ†††±<_ÖÑÌÏˆ†‘6ø‡¬©¤‚‚­ãÝé´±±¯qHx;K77KgæÔÆÇÆÆÈÈÅ¿¸¯Š†…±E¹Ï´Ìˆ¨5ö†©©©¦¦²âðÏ±±±±pIyqMg7KL	æÑÉÉÇÆ®®}Þº±¯ˆˆŠ&3¹²´Ìˆˆ‹W1¢Û­©¬‚„<yò²††…ˆ¨S1žZjgKKKLçÚ±ÉÈÆ®Æ}ñ¸´¬†††$2’±´±ˆ¥¯A1¡Ø¬©¬¦¤¦S]Þ²††…ˆS{ZjM7JJKçÚÈÉÈ®®ÆañÑ´ˆ†††O3–°¬ˆ©°W1¡×©©¬©©¬T]¾º‘”A4tjhLJJLüßÑÑÑÐÐ¸Gñ¸±ˆ†††QFÁš˜˜—˜™x`Å×©©¬©©¬T]žy\\B10`¡•jmMKKL&üùáôôôôàFÞ¸¯Š†††PHå}`z^_z`cÅ¼©©©©©¯T]c[.>,+  —m‰hMLM(üá¿À¿ÀÁ5Ü¶¯«††„PGÂvVs‘“’U3¢¼©©ˆ©¦°?F{’…„fhh&ŸÕ¬¯‰geg+ùí¸¸¸¸Ö»4Ù´É¬†„ƒ9F›q‡€e¦‚NB¢¼©¦¥†¬´=Ez‘†ˆ†††%Ò±±Šhgg&ãÐ±±±±ÏÏ3Ù±É¨„†„9Fšm¦LeKM0|Ø©¥©†¯²;!`’„i„„†&Ñ±±Š„„‡Â¶±¯Š¬ÉË5Ú±±¨„„‰:F™‰¦‚„‚eM/a˜‰††ˆ‹o)`’¨„hƒ†9Ô±±Š„„¯(âÌ±¬ˆ¨±ËFÝ±¯ˆ‚hˆSG½­©f‚„eMI—ˆ†l‹‹(`·«ˆi„†:ÂÖ±®†hh‹<äê±¬ˆ¨¯±añ‹ˆ„‚„OHß³©¤e†MI—‰††¨¯‹z·ŒQn†„:ÃíŒŠ†‚h†;äì±¯¬¯±É~ÝŠPnˆ„†9Hàµ©¥e„„Na˜‹†ˆˆ¬Š!ºŠlŠ…ƒ9 ÕˆPˆˆ„†(äÐ«±±±±Ï~Ý«Šl†„†OHß³©¦e‚N0|¼¬†…ˆ¨¬+6Ÿº«Š†‚„P}Ó«ˆl†„†:!ú¸ˆ¯¯¯¯Ï~Ü«Š„i†ˆOG¿³©©‚fgi1}Ù‹†kˆŠ«,GŸº±¯„h†; º«ˆi„††)ù¸ˆ¯¯Š¬Ì~Ýˆ„hhi†9G¾°©©¦†„p1}ÙŠ†††Š«<GŸ¸È¯†„‰9Åºˆ„h‚„„%úÐ†¬¯¯¯Ë~Û…†„††ˆ9F½°©¬©¦¦q1}¼‹†††¥¨=GŸºÉÈ†„„&ä¹†††„††%!ú·ˆ¯±±±Ë~Üˆˆ†„„†N6½­©©©©©q1~¼¬†…†¥¨U`Ÿº±É¬„‚(Ãºˆˆ„„†„%""ú·ˆ¯±±±Ë~¿ihhhh&F½°©©©©¬q1¡Ásp‹nP/~Âº±ÉÉŠi& Ù‹ihhhhçÓ«¯±±±ËÄ15G½°©¦¦¦¯rIFGŸ»¯ÈÉ¯‡:¢Å1.", 26, "GçÕ±±±±±É~} G¾°¦¥†©´rF[@@>+>-""º¯±±ÌÊSÅÅDB006ú¹«¯±¯¯É}z", 26, "G¿°¥¥„°Ír[¹²¯ˆˆ¬rœ¸¯ÉÌêìræßoSS((<+ ú¸Š¯±¯¬±}z)%", 10, "aà­¥„†ÊÐrB²ÌÌ¯ˆ¬qœ¸¯ÉèììræÝ†††lmm(ú¸ˆ¨¯¬lŠ}›)}ó°¨i‰Í¸rB·ÏÌÊ…‹œ¸±Ëéìì’æÛ†††ˆˆˆ;ú¸†ˆ¨ˆ%P}*)***}ô²©†Ð·q[ÓéÑÌk†¹¯Êéìì’åñˆ†Š¯¯<ú·…†ˆ©‹‹}ž,%*?<=", 26, "aô²‰©´Ð´;/\Öê´¯…†p!Áº±ÊÏìì’1åóˆ†¯Í¯²<ú·ˆ†ˆ¬¯lbž='*===,Hó°ˆ¬ÍÌ´‘0yÕÑÐ……†p", 13, "4ÂÒ±±´éì’1Åó¨ˆ¬Ê²´Uû»ˆ††Š¯lG=':=@?", 26, "Hó²ˆ¬Í²´‘0œÖÑÐˆ…†q6áÑ±¯±Ìê‘ÅóŠˆ¬Ê·²TûÖˆ††ˆ««H>''<@@GòlÊ¯¯r0»ÌÌ†††Ž6ÀÐ±±±Êér1çó¨¨‹²Ð²SûÕ†††ˆ¨«Iž<'%)@@,FÝ‹†ˆ‹Š‹q1º´²†††o6¿¸±ÌÊÌér1çß¨©‰·¸pûÕ††…ˆ¨«I;'&?@,E¼ˆ†††loS1{»Ì¯†††i6¿¸ÊèÏÌérçßˆ¥†‰·¸Sû×ˆ††ˆ¨«cž+%%=@,6½ˆŠl;o;1{Ö²Š†††i", 10, "6ÀÔëììíï” çß¥¥††²¸SûØˆ††ˆ¨¬¢ž<'%%)@,FžX++		", 10, "2{Ø²ˆ†††i6¡àš[[D2`üó¥¥¥†°ÍTü›YrrU,ž>(%%%;,HçÄÃbGI}c ÃÙÊˆ†††i6a54334EFFçó¦¨¥¥¥²UüÃŸžž  až<)(((:,HÁtUWss’.3ÀÕÌŠ†††iF_rq‘‘‘Uæò¦©©©¦¬Tøð¸º–—–˜Å;(::))Hà²ˆˆˆ†Œ=3ÕÊl†i9Gx¯ˆ†††qåò¦©©©©¬SâïÏ¶¶¶´ræ;:::9(+Hß’ˆƒ††¬<!Õ²²††l9Gš¬¨†……pÅÞ©©¬©©©SáïÏÎÎËÏr¢ž<):9&%)`Â˜†††;z•°¬††Šn", 13, "I›‹ˆ‹†††p0Åò©©©©†¦SâïêÏËËÏ’ž>:9&$IãØ†††«(`t‰†††¨Š", 26, "bÀŽ††††ˆSåß©©©¤‚„P4øïëÏËËÏºž>:($Gáº‹l††«<{»‹…k†ˆn", 26, "bá††††ŠQåß©©¦‚e€OEøîëÏËËÌºž>:&%	F¾†…††ˆS}Ûµ†k†ˆŠ", 26, "cá………ˆŠPæô©©„€‚‚N øìëÏËÏÏºž>:&$'	6™o†…††«S ñ»‹k†ˆl", 13, "aà²Šˆˆˆ:æó©©¤€„„MöìëÏÏÑ»‘~{+)%$$6wq‹ˆ†ˆÉ<c¾»††ˆnG¿¶±±¯¬¨:ÅÞ‰©„€‚MãìëëÏÏºT~y&($$&5š¸°¬††Š", 10, "_˜µ‰††ˆnH¿²±±±¯¯PÄ˜‡¦‚„„eM1âîêÏÏËÑq~G($$6¼¶±Š††izØ‹ˆˆˆ‹p`¿°¯±±±¯P¡v¦¦‚eM2ãîÏÎËËÏp}`&$E½Ï†††l&{½•““•”scà¶¯±±±¯Pw‰¤€e‚€g2ùïÏÏËËÏ‹}}.&&$(&GÞ¸Œ…††l:¡{žžž||¢ôÑ±±±±¯Q¡¿‘‡‡¤©‡j!ûïÏÎËËÏ‹~ÅE22102FH¿·‹……†l:¢žx\¾™vvDõÓ±±±±¯:¢ä][[ZAXB6ûîÏËËÎÎ±~Ã[BBBBX!H¿´¬††††:{šh‚j‹‡>`õì±±±±(¢ 1/""ùíÎËËËËÉ~õº°°Ž¯>G¾·²ˆ†††:Gu‰¤Le‚;aáÔÊ±±±% ½jMNNMj", 13, "øêËËËËËÉ~á²††††Œ:G½´Êˆ†††<_t‰‡ee€;aóÔ²¯±±¬wMJ777NãÏËÌËËËÉ~Á•†††Œ*_Þ´Ï‹††‰r1ž“¦‡g¦„€;|òÓ´Ê±²}yRM777g", 10, "ãÑËÌËËËÉâ˜“†††«)_ÞÏê¬††‰WÂ»©¦f‚€;zòìêÏÊ´’}VR777g	ãÑËËËÉÉÇâ»†††«'GÞÑê¬††ˆAÃ×©©‚e„‚;`òìÏ´±´µ,œV8777M	äÑÈÉÇÇÈÇÁ’p†††¨PFÝÏÑ¯††ˆ@Ã×©©‚e‚‚+`óìÏ¯±±²?¡xm7777M	æÓÆÆÆÆÈÉ~¿qn†††ŠQFÝÑÑÌˆ†‰WÃ×©©¤e€‚+`ôìÏ¯±±²=¡v8K77JM	ùÔÆÆÆÆÈÉ›SŠ†††ÉQEÛÐÏÏŠ†‹XÂ×©©©‚‚‡>_ôíÏ¯±¯²<X8K77Lh", 10, "ùÓÆÆÆÆÈÈÅ¿¸¯ˆ†…±&5—Ì¶Ìˆ¨Ž.Á»©©¬¦‡©>_àìÊ±±±°+¡voMM7LL	æÐÉÉÇÆ®®}ñº´¯©ˆŠ9""–¯Ì´¬ˆˆtdâ°©¬†‹âÙŠ†……¨«<4sjMKKKM	!äØ±ÉÈ®®Æ}ñ¸´¬†††8""”¯Ì±¨ˆ¬Vcâ­©©©¤„²", 26, "ÂÙŠ†……Š+#œsjM7JJK	åÙÉÉÈ®®ÆañÑ¶ˆ†††O""—°¯‹Š‹¬“cÂª©¬©©¦´", 26, "ŸÚ´²ºFœWjNKJJM!çÝÑÑÏÌÌ¶GòÑ´ˆ†††l#Â™˜˜——˜š4¢âª©©©©©²", 26, " œx\[BB1~ÀsmjMKKM&!üæáóóóàßFÞ¸±Š†††i#æ¢a{``z{`¢â­©©©©©´¡_B.-", 26, "5Á”m‰gLLM""úâÁÁÀÁÂž5Ý·¯¬ˆ†„P5Äwtss““s~â°©©©¦¬´]rkhhhh", 10, "Á¹¬¬†eMg""øÖ¸º¸ºÖ–4Ú´±¬†„„O4ÁV‡e‡†e-}â°¦¥†¦²¶", 13, "w‹ˆ††„†ÀÐ¯¯†fgg!âÏ±±±±ÏÏ3Ù±É¬††„94¿T¦‚eeeK?HÁ­¥¥†©²²aw‹„„„„†¿Ï±¯†„‚‡", 10, "À¶±¯Š¯ÉË5Ú±±¨„„‰O5¿‡¦„‚‚€K>6À­††ˆ‹o‹Hxˆ„h„†", 10, " ÀÏ±®†„„² àÌ±¬ˆ¬±ËEÝ±®¨‚hˆj5ßª©„†€L,5œŽ††ˆp‹Gx¯«†i„ˆ&!áÑ±®†hh°+2âÑ±¬ˆ¨¯±añ¯ˆ‚‚„i5âµ©¦e‡e", 26, "5œ††ˆ¬¯iGš¯Šn†„†(4âÓ®¨ƒƒ‚†>!âÔ±¯Œ¬±±~ñpPnˆ„„95ãÒ©©‚„e", 26, "6œ°ˆˆˆ«¯hI½±nnŠƒƒ4á¹llˆ†‚ˆ""â¸¯±±±±Ï~Ý«Šlˆ„†N5âÍ©¦‚€I¶†††Š«‰~¾²Šˆ„‚†(#ÀÐ«lˆ†„ˆ(5ö´Š±±¯¯Ï~Ý«Š†„„†O5âµ©©„fe‚", 26, "d´†…†ˆ«©¢¾´¯ˆ„‚‰)#À¶«ˆi„††)4÷´ˆ¯¯Œ¯Ì~Ý¨†ƒh„†N5Á³©©¦†‚©", 26, "d²†††ˆ¨¬¢¾´±¨„†‰4â´ˆ„h‚††4÷¶ˆ¯¯«¯Ë~Ýˆ„„„„†N#À³©©©¦¤°c´†††ˆ¨¬¢½¶É«„†„", 10, "4ö´†„„„†„5÷´ˆ¯±¯±Ë~Ýˆ††„„†O#À°©©©©¦°c·†……ˆ¥¬¢¾¶É±ˆ„„", 10, """â´ˆ†„„†„6ø´ˆ¯±±±Ë~Þ¨†„hh„N#°©©©©¬°dã×‰ˆ¨ˆ†O4Å¾´±É«„h", 10, "!Â¹¥…ih„i#øÐ¨¯±±±ËäB&&&46³©©©©¬²Gd3#}¿¶±ÉÉ†‡!Åœ-)(&&IäÓ±±±±±É~##5Àµ¦¥¥¤¯´5`", 26, 13, "a¾´±±ÉÊ¬!æ£G4!5Iø¹¯¯±¯±É~{", 13, 13, "5á³¦¥„©Ê´", 26, "!˜‹ˆˆ·+I½²±ÉÏêê, æ½TT+", 10, ",", 26, "5ä´«¯±¯¯±}z)%6ã³¥†„¯Ð·•±Ì¯ˆˆ¹H½²±Ìêìí, ù×†lnlop+4ø·Š¬¯¯ˆŒ}œ)%", 10, "Hø³¥†l²Ð·•±ÑÊ¨ˆ·+H½²±Ïêìí,!ù—††††ni)4÷µ†ˆ¬ˆOl}œ*')')aøµ©ˆ‰´Ð´", 26, " ×ÌÑÌŠ…­VH½´±Ïêìí-""æ×††Š‹Š<4øµ††ŠˆOn}ž,')=<,", 26, "Hø·©ˆ¯¶Ðp,""ÚèÑÊŠƒˆVI¾´±Ìêìí?4ùÙˆˆ¯´´;3øµ††ˆ¬¬ˆdÁ=')===,6ø·ˆ©²Í¶Ž-5ÛÏÑ¯ˆ†‹>dÞ´±±éêí@4æðˆˆ²¶¯¶=2ø·ˆ††¨¯lHž>':=@=,5÷Íˆ©´´´·IÛÏÑ¯††‹? Þ´±¯Ìéì>3æÛˆˆ¯Ì´´T2æÓˆ††Š«¨Gž>''=@@#öµ†‹Ê²²µ", 13, "aÝÊÑ¯††ˆs¡ÝÊ±¯±Ìì<4úÛ¨Š¬¶Ð=2æÓˆ†ˆŠ««Hž=''*@@,#á°†ˆ¯¯‹µ", 13, "|Ý¬¶¬†††s¡¼²±ÉÊÊì=5úÛ©©‰²¸·S2æº†……ˆ¨«Iž<'&=@,""ß‹†††l‰", 26, "|¼¯´Š††ˆ:¡¼´ÊÌÌÌì,4úÛ¨¥iŽ·¸S æ»††…ˆ¨«Iž<%=@,""¿‹†††loj", 13, "cšÌ²ˆ††ˆ%¡½¶ÏêéÐí?5úÛ¥ˆi‹·¸< æÕˆ††ˆ¨¬}ž<%%*@,#Á’ooP(;;dšÌ‹ˆ††Š&¡¿ÙÖÖÖÙ¼/GûÛ¥¥†ˆ´¸=!ùØ‹‰‰‰p¢ž>(%%(=,#ÅyB02¾Ð©†††Š8¢|yD34322}ûÛ¦¥¥†¬·=""çwvv[B0ž>)(%%:,5æœywD\x\5¢ÞÊ¯†††Š&¡EYYYZZvB5úÛ¦©¦¥¥²T3ùàšš›››y¢ž<()(()*5öºqqqr?~ÝÉ±ˆ††† u‹‹UùÙ¦©©©¦°T3âï¸¸¸º“”æž;):::))6âµ……††«Q}Û´²Š††h •««ˆ†……r æØ©©©©©¬S2áîÏËËË¶rÅž<:::9(+6ã•´†„†©l}šÐ±‹†ˆl$ •Š¬Š†††U""æØ©¬©©‰­T2áîÏÏÎËÏrž>)99&%(6æ™“†††«Q|[Ž©††ˆÉ9¢˜†ˆˆ††ˆ=3æÙ©©©¦„¦S3âïêÏËËÏ”Â>:(&$5øÙ‘†††®9dwl†††¯:Å¼†††††©*""æÛ©©¦‚‚PGöïêÏËËËºÂ>:($#â¹‹ll†Š‹}šÊˆk††«9å¼ˆ††††¬'""ùÛ©©†e€€:_öîêÏËËÌºÂ>:&%	#Àˆ……†ˆ|ÀÕŽl…†®%ÅÛˆˆ†ˆˆ©'""úÝ©©‚€¤93õìëÏÎÏÏ¹ž>:&$%#›oˆ†††®ŒaÂØ‘ˆ††®ÃÛ¬¬Šˆˆ""ùÛ©©‚e†82ôìëêÏÑ»r~{+)&$""›‘¬Šˆ†ÈPG×‘ˆ††¯$ŸÛ¯±±¯¬« å×¦¦‚‚e83áìëëÏÏºT~y&($$&#œ¸²¬ˆ†ŠG›µ‹†††¯&ŸÙ¬±±±¯¯ã•¦¤‚„‚eM4áîÏÏÏËÑq}G($#œÏ²Š††ˆ$Gò´‹‹‹±; Ú¬¯±±±¯%Ât¦¤eLNDâîÏÎËËÏp}`&$$#À¸±†…†ˆNGÂvuuuu–/6ÃÜ±±±±±¯' u‰‚ee†eN5øîÏÎËËÏ‹}}/(&&((5á¸¯……††lIç~ ¢¢¢¡¢¢åñ´±±±±¯'Ä½‘ª¤¦¬¤T6ùîÏÎËÎÏ‹~æG6644`6Â·¬……††lcä\Zv˜tsX!äñÌ±±±²‹æÃE4DB014IøîÏËËÎÎ±~ÃB0YYYX6á·¯ˆ†††lI›¹geeˆ„¤ÅñÏ±±±±‹", 10, "Åz/.5öìÎËËËËË~õ¸¬­¯S5À·´Š†††lI\‡LeÅÝÑ²±±±‹", 10, "Ã—NMMMMj""õÑËËËËËÉ~á’ˆ†††ŠP5À´Ê¬†††pcvŽ¤‚eeäðÏ±±±±", 10, "  uM7777i!áÏËËËËËÉ~Â—²†††ŠP5á´Ì¯†††µ ½†¦‚„‡eæÛÐÌ´±´q""žwRM777h!áÑÌËËËËÉã˜“ˆ††Š:5áÏê²†††¹}ß‡©„‚äïêÑÌ±¹U""yVM777g	 áÑËËËÉÉÇã»‘†††«:5óÏê´†††s{õ‰©†e‚„ãðêÌ±±·‘", 13, "4 šR8777g	âÑÈÈÇÇÈÇÁ’p†††ŠQ5àÏÑ´ˆ††‘|õ‰©‡€‚‚äðÑÊ¯±¯²", 26, "3¡vN7777g	ãÑÆÆÆÆÈË~Àqn†††ŠQ5àÏÑÏ¬††•cõ‰©¦€€‰äñêÊ¯±¯²", 13, "! X8777Jg	 ÷ÑÆÆÆÆÉÉ›SŠ†††±n4ÞÌÑÏ¯††—cô‰©©¤‚‚­äñêÊ±±¯²  A8K77Mh	 öÑÆÆÆÆÈÈÅ¿¸±ˆˆ…±(4™²ÌÌ¯¥¬Waó¤©©©¤¦²Ãðé±±±±  tjMK7L8	 ãÏÉÉÇÆ®®}ñº´¯©ˆŠO ˜¨Ï±²ˆˆ‘.Få¹©©©‚„<]ß·ˆ†…†¨‹.GyUjLKKKL6ãÖ±ÉÈ®®Æ}ò¸´¯ˆ††8 •ŒÌ´¯ˆ¬‘-EÅµ¬©©¦¤©S]¿·ˆ†…†¨p.GxqgK7JJK4ãÖÉÉÈ®®ÆañÑÌˆ†††P ˜¯°‹Šˆ©‘.EÅ³©©¬©¦¬T\¿º‹´s0_xqjMJJKM6æÛÑÏÌÌÊ¶GòºÊˆ†††l", 13, " Â™——–•—˜C}å³©©¬©©¯TEžšww[BB16 šqmhKKKM6üäààòòò¿F¿º±Š†††l", 13, " æÅ{{{`{{c¡æ¹¦©©©©¯SEdE0/", 13, "a¾o‡MLLMGúâââÂâãÂ5Ý·¯¬ˆ†„i!åyXttt•t/Hå¹©©¥©©°?E|tnhfgg9", 13, "F¾³¬¬hMMNFöÖººº–»–4Ú´±¯†„„O!ãXª‚„¦‚;GÅ¹¥¦¥¥¬´?E{“ˆˆ„†„h", 13, "E½´¯¯„fgN5àÏÉÈ±ÉÏÑ3Ù±É¯††„N!â>¦¤ee€e;DÃ¹¥¥ˆ†¯²<2a“†„„††i", 13, "E¼¶±¯„„hj", 13, "4¿¶±¯Š¯ËÎ5Ú±±¬„„ˆO!Ám¦¤€L;  ·†ˆˆˆp)`”Š„‚‚†P", 26, "F¼¶±¯„„„­", 13, "5Þ´±¬ˆ¬±ËEÝ±®¨„‚†m""âª©¤f„e:}µ†††‹‹p(`”«Ših†iGÝÌ®«„‚‚°EàÏ±¬ˆ¨±±`ñ±¬ˆ‚‚„i.""ä¹©©‚e„g9|’†††¬¯‹`º®nl†„i`ÞÌ®¥‚f‚‰-Eáê±¯Š¬±±~ñp:nˆ„„N""æÕ©©„€„f) }·‹†ˆˆ¯Š{ºlŠƒO`ÞOnˆƒ‚n6À¶¯±±±²Ï~ñ«ŠlŠ††O""æÒ©©‚€„;4~Õ†††ˆ«¬+#ž»ŠnˆƒƒiH½´Ši¨†‚ˆ", 26, "Gá²«±±±±Ï~Ý«¨l„„„i!ä¹©©¤eeg;E Öˆ††ˆ¨¬,F »±®„h„l.G½²«l„„„l-Gá²Š¯¯«¯Ï~Ý«ˆ„h„ˆh!Ä¹©©¦„‚†<Fº††††Š«<FŸ»±±†h„m`¾²ˆih‚¥lGô²ˆ¯¯Š¬Ë~Ýˆ„„„„†O!Ãµ©©©©¤©>E~»††††¨¨<FŸ»ÉÈˆ„¥ObÞ¯†„„„†iGõ²ˆ¯±¯±Ë~Ýˆ††„††h Â³©©©©¦¬?F~Õ††…†¥¨?GŸ»ÉÉ¨„„O`Þ¬†††„ˆi`õ²ˆ¯±±±Ë~ÞŠˆ„„i„N  ³©©©©©¬?F¢Ûˆˆˆˆˆ†AcÂ»±É±ˆhOH¾²ˆ†ƒi†hGõ´Š¯±±±Ëâs;999%""Ÿµ¦©©©©°?5¢_AAW@-aÂÖ±ÉÉ¯„OHÂ—S:999(IâÐ¯±±±±Ë~¢3""4Â¹©¦¥¦©²?!d 5Ö±±±É¬mIæ{213dâÐ¯±±±±É~}""Ã¹¦¥†¤°´>ysUpoQq@ z»±±±ÏÑ²IäxAA-`â´«¯±¯¯É}{+!æµ¥¥†‰Ê·>v¯¶²ˆˆ¯qzÓ±ÉÌêìÑ`ã”lnl:ST-Gâ´¨¯±¯‹®}œ)%", 10, "#ûµ¥†i¬Ì·>u«ÑÌ¯ˆ°qzº±ÉÏëìÓaâµ††††mO+Gâ²†©¯Šiˆ}œ)'Güµ¨¥iÐ·>˜²êÌÊ…‹", 13, "z»±ËèììÓ.bá·††ˆ†ˆ‰?Gõ²†ˆŠ†%P}ž,',,*", 26, "6ü¹©¨ˆ´Ð´>™ÐêÐÊ…†»±ÉéììÓ/bõ¹†ˆ²¯Š²>Gõ²…†Š©‹}Á=%)==,,""ûÒ©‰¯ÌÐŽ>šÑê´«…†q!žÕ²±ÌêìÓ/bö»†ˆÊ¶Š´>Fâ²ˆ†ˆ¬¯laÁ?')===,!úÒˆ©±Í´´?3¾ÑêÌ……ˆq", 13, "#ÂÕ±±±éêÓ/aöÕˆŠÊ¶¯¶@Eâ·ˆ††Š¯ˆGž>')=@?, úÒ†ˆ²´²´>E¿ÐêÌ†…ˆq6ÁÕ±¯¯ÊéÑ.cö»ˆ¨°Ð¶?EöÒˆ†ˆŠ««Hž>''*@@", 26, "ùµ†ˆ¯²¯²>Eß°Ñ´†††Ž6ÀÓ±±±²ÏÑ.|÷Õ©¨‹ÍÐ?Eã¸†…†ˆ¨«Hž<'%(=@,ã°††ˆ‹ŠŽ>Fß¶±†††o6Àº±ÌÊÌÏÑ.}÷»©©i´¸¶?Eã¸††…ˆ¨«Iž<'%,@=â‹†††lmo+Fœ¶Ì¬†††i5ÀºÊèÏÌÐ¸.|öº¥ˆh²¸¶>Eöº†††ˆ¨«cž<%%*@=ÃˆˆˆPSo+FzÑ±Š†††i", 10, "4ÀÖêëììíÖ/dö»¥ˆi©··>Eö»ˆ††ˆ¨¬¡ž>'%%)?-Åv>+(", 10, 10, "HzÕ¬ˆ†††i5¡À¼vZ\[14£÷»¥¥††Ê·?6æ™srrT<+Ÿ>(%%%*, ç¢žzE6G``¢ÁÓ±††††i6dFD3344EF÷Õ©¥¥†©´@FçÂ{{GŸ>)((()+!æ˜sWWY•WIà¶Ìˆ†††i6`Wr‘“’’saö»©©©¦¥°@FöÛº–˜˜˜™£Á<():)))!ùÓŠˆˆˆŠnI¿ÌÌŠl†i96š¯Š†††‰A`ö¹¦©©©©¬?EáîÌ´±¶²rçž<::::()!ä“ˆƒ…†¨nH¿¸¯²††i8Gš²¬¨†……ˆA`â¹©¬©©©©?DòîÏÎÎËÏq¢ž>:::9&)!úu»†„†ˆˆGy»¯¬††ŠP", 13, "G›Š¬†††nAaâ»©¬©©†­?DóîÏÏËËÏ‘Â>)(9&$&!û½•ˆ„†Šn", 13, "G]r‹†††«Œ", 26, "IÀ‘†ˆ†††n.aö»©©©¤‚‡?GôîêÏËËÏºÂ>:($!ùÙ’†††Šn", 13, "G`·l†††ŠŠ", 26, "`Á’††††ˆ‹-aö»©©†€?zôîêÏËËËºÂ>:( ã¹Š†k†ˆ‹", 26, "G|Õ…k†ˆn", 26, "`áµ††…†ˆocö»©©‚e‚g<`ôìêÏËÏÏºÂ?:&%!Ârˆ†…†ˆ‹", 26, "E ï¹†k†ˆl", 13, "`áµŠˆˆˆˆlc÷Õ©¦e¦g;EóìëÏÏÑÑ“ž>)&$!T‹ˆ††«®", 26, "4 Û•‹††ˆlGà¸¯¯¬Šˆl", 26, "aö»©©€†g:EóìëëÏÑ»q~›+)&$% “²©ˆ†«l""zØ·‰††ˆlG¿¸±±±¯¬n", 26, "_áµ¦†‡‚e:EòìëèÏÏºT~`(&$$!¸±°ˆ††8!¹‰†††ˆlH¿´¯±±±¯Š", 26, "G¿©„‚„‚e;EóìÏÏÎÎÏp}`(&", 13, "!Ð¶Š†††N!àÓ¬¬¯°°ŽIß·¯±±±¯n", 26, "6›‘¦¤eeLj]ôîèÏËËÏp}b$$&!âÐ´ˆ…††i Ãx[[[wvB2}áÓ±±±±±‹", 26, "F“¤e‚©eS_öîÏÎËËÏ‹~ 0++++:&""ãº±†…††l!ç¢ÅÅÅÅÅÅåõÕ±±±±±‹", 26, "FÃ½ªª¬‰AIöîÏËËÎÏ‹~æG665 4`6ä¹°†…††l4äxYW—“qV/bõí±±±±°l", 13, "Gæ|64D124döíÏËËÎÎ±~ÃZWXXXW.#Ä¸±Š†††l4z˜‚eˆ‚;_âí´±±±¯PFÂ[...+GôëËËËËËË~õ¸‹S""Ã·Ì¯†††l4Et‡¤ee€;`áÖÌ±±±¯Q6VMMMMMjEóÑËËËËËÉ~á·Š†††ŠQ3ã´´²†††‰Gy¦‡e€;aóÖ´±±±¯SG{VM7777P6àÏËËËËËÉ~Â—µ†††ŠQ3ã´ÌÌ†††_Á‰©†¤‚€;{óÕÏÌ²±µ>G{uRJ777O5¿ÏÌËËËËÉãØ“ˆ††ŠP""ö¶êÐˆ††‘EöŽ©¦f‚;`àíÑÏÊ²¹>GžvR877JN4àÑËËËÉÉÇã»‘†††ŠP""â¶êÐˆ††5ù¬©e„‚;_óíÐÉ±±µUHž˜;7777N4àÏÈÇÇÇÈÉÁ’p†††ˆl!â¶ÑÌŠ††Ž5øŽ©¦‚e‚‚+_óíÏ±±±±rIsM7777N5áÐÆÆÆÆÈË~Àqn†††ˆn!âÌêÏ²††’5øŽ¬©¤€€‚+_ôîÐ¯±±±qH›R8777KM5õÑÇÆÆÆÉÉ›SŠ†††®p!ßÊÑÌÊˆ†“5÷­¬©¦‚‚‡>GõîÐ±±±¯qGy>8777gO6ôÏÇÆÆÆÈÈÅ¿¸±ˆˆ…®:!y¯Ï´´ˆ©r", 13, "4ãª©©©¦¤¬>]óíÌ±±±°pG›sNgJ7M$6áÌÉÉÇÆ®®}òÓ´¯¬ˆŠP", 13, "v¯Ì±Ìˆˆ‹W¡Þ°©¬„‹ÃÛ‹†……ˆ¨S1|vmjKKKK8", 13, "`âÓ±ÉÇ®®Æ}ò¸´¯ˆ††NuÌ´±†¨A Þ­©©¦¤„²ÂÛŠ………ˆŠ=zvmg77JJ7", 13, "GâÔÉÉÇ®®ÆaòÑÏŠ†††iv²²¬Šˆ¨W1 ½©©¬©©¦´ŸÚ´‹p·@2zumhLJJK8", 13, "IäÙÏÏÌÊÊ´GòºÌˆ†††lž™•••“•—[E£½©©©¬©©´", 26, " œšww[ZB b¡—m‰gKKK8büãàòòòÞ¾6ßº±Š†††l", 26, "¢æ}|}`{|}~ÅÞª©©©©©²¡`30/", 13, """Ÿ™oojLLL8búãããããäÃ5Þ¸¯¬ˆ†„i", 26, "¢œZZvtuuX3¢Þ­©©©¦¬´¡^riffgNÙ¬‹gMMNaáÖ»º”–—u4Û¶±¯ˆ†„O", 26, " vj‚©†O1¡¾­¦¥¥¦°¶", 13, "xˆ†„„†%{Ö²¯¬‚egN_ñÏÉÉÉÊêê3Ù±É¯††„OžW‰¤eeeMX}½©¥¥†©²´dx„††††%zÕ±±¯h„hOF½´±¯Œ¯ËÎ4Ú±±¬„„†PV‰¦€LM/a½©ˆˆ†‹pHx†„‚„†%zÖ±±¯h„†oFÝ´±¬ˆ¬±Ë6Ý±®«„‚†m- ž“©©e„‚eM/H™‹††ˆo‹Gš¯¨†i„†9Ö±®«h‚†Ž_ÞÌ±«ˆ«±É_ñ±¬©‚‚„i. Â»©©‚€‚‚MG™‹††Š¬¯lGš±Œnl„†: Ú±®†hh„o._òÐ±¬Š¬±±}ñPnˆ„‚O ¢Ø¬©†e„„NH™ˆˆˆ¬±OH›²ŠnŠ†ƒ9 Ù‹Pˆ†‚„lHÞÌ¯±¯¯²Ë~ñ«nQŠ†„O ¢×¬©†e‚„N/aš°†††¨¯†d¿´nn†ƒƒ9}Ø¯li¨„„lbß²¬±±±±Ï~Þ«¨l†„„i- ¡×¬©¦eegO0}½²†…ˆŠ«‹¢¿´®Š„‚†P|Ö¯Ši†„„l.cß¯Š¯¯¬¯Ï~Ý«¨„h„¥i", 26, " —­©©‚h‚m0}š†i†ˆ«¬¢¿´±«„‚‡: Ö¬ˆkh„¥ibò¯ˆ¯¯Š«Ë~Ýˆ„hƒhƒO", 13, "Ÿ»¬©¬©¤¤p0}¼†††ˆ¨¬¢¾¶È¬††‰&ÄÖŠih‚h„Obò¯ˆ¯¯¯±Ë~Ý…††„††i}•¬©¬©¦¦q1d½°†††ˆ¨¬¢¾¶É®†„„&ÃÖˆ††††ˆO|ò¯Š¯±±±Ë~Þˆˆ†„„„h|»©©©©©©q1~¾²†††ˆ¥©£¿¶±È«„‚& ×¨¥„„„†O|ß¯Š¯±±±Ë~àlhONN9|»©©©©©¬q1ÂuqqpQ)5Å¿¶±É±ˆi&~½ŽihOOO9cóµ¯±±±±Ë~Å2", 26, "5|»©©¥¦©¯rIGdÀ·±ÈÉ¯‰:Å[.-!àÐ±±±±±É~~ ""ž»©¥¥†©´rF\.-?++.", 13, "a¾´±±ÉÌÊS¢Å]212~à´¯¯±¯±É}|¡»©¥†„²Ír3•²‹ˆˆ¹H¾´±ÉÏêìr£árSS:;<.{ß±«¯±¯¬±})%Å—©¥„†ÊÐrB·´Ì¯ˆˆ¹H¾´±ËéììrÅÞ‹†llloS-{à²ˆ¬¯¬lŠ})'""æ×©¥h‰Í¸rB·ÌÏÊŠˆ·+H¾´±ÌêìírÅÞ‹…†ˆ†nm.{à°†Š¬ˆ9l}ž+'*)))#æ×¬¨lŽÐ·q[ÕèÑÌˆ…¬VH¾´±Ìêìí’Äò…ˆ¬‹‹.{ß°…†ŠˆQn}Á=')==,, åØ¬¦Š´Ð´<\ÖéÏ²ˆƒŠVI¿´±Êéìì’0Äó¬…ŠÊ².{ß°††ˆ¬¯ncÂ?')===,ÅØŠ‰¬ÍÍ´q0]ØÑÏ¬††‹>dà´±±Ìêì’1¢ô¯†¨Ê´¯².aà²ˆ††¨¯lG >')=@?,ÅÙ‰ˆ¯Í²´‘0zÙÑÑ¬…†?¡ß´±¯´Ðër0¢ô¯†©ÊÍ´.`ô·ˆ††Š«¨GŸ?''*@@*ã×ˆl±Í¯²r0ØÌÐ¬††ˆt¡ÞÊ±¯±Êêr0åô°ŠŠ°Ð¶p.`á·†…ˆŠ««HÂ>'')?@=Âºˆl‹²¬r0Ö±´Š†††s¡½²±ÉÊÊér1åô°¬©‰Í¸²?`á´†……ˆ¨«IÂ<'%,@-À·††††n‹T1—²²ˆ††ˆ:¡½´ÊÌÌÌêråô¬¨ˆh´¸²?`ô·††…ˆ¨«I <%%*@=’††††lm;0{ØÌ¯†††ˆ%¡½¶ÏêéÐÓr1Åà¬¥†h²¸²-`õ·ˆ††ˆ¨¬} >%%)??Ÿ—‹ˆo:)S;1cÙ´Š†††Š%¡¿ÖÖíîÙÛY2æôª¥¥„©·´-`âº‹ˆˆ‰‹‹¢ >(%%'<=¡œB/.", 13, "6}¼ÊŠ†††Š8¢Ÿœ\334!!Içô­¥¥†¥Ê´.aÅyvuuY/ >)'%%(,£Ã›]E]y]bÃÚÊ¨†††Š&¡FBBBBB[D4åô­©¥¦¥©AaäÀœ›œœy¢ >()(((*Ã™rqrr‘r-2ØÊ¯†††ˆ$¡[pŽUÄóª©©©©©ŽA_ôí¸¸–»”–æÁ<(::)))ÃØŠ†ˆˆˆŒ<2Ø´±ˆ††h¡–¨¬ˆ††…q£ß­©©©©©‹AGòìÏ¶Ë¶´ræÁ>:::9()", 13, "Ã˜µ†ƒ††Š<!|Ø´±Š††i¡—¨¬Š†……p0£ß­©¬©©©Ž.]òìÏÎÎËÏr¢Â>:9:(%(Åy—‰„††Š;au°¬ˆ†ˆ¯%¢˜ˆˆˆ†††p0Äß­©©©¦†‹._óîÏÏËËÏ’Â>:(&$$ÅÞ–‰†††Œ(au‹†††ˆ±:Å¼†††††ˆSÄó°©©¦‚‚„A{óîêÏËËÏºÃ>:($¢¼’†k††Œ;{˜¬†…††®:å½ˆ††††ŠQÄô­©©„e€gAžóîêÏËËÌºÃ?:($Ÿ–Š†…††ˆ=}½Í‰k††®9æÝˆ………ˆ¨PÅô°¬‡€„g>zòìêÏËÏÏºÃ?:9%{sn†…†ˆŒS~òÕŽ†††®ÅÝŠŠŠˆˆˆ:Åô°¬¦€¦g>_ñìëÏÏÑ»’~ž>)&$zWˆˆ†ŠÉ=c¿—ˆ††¯$ Ý±¯¯¯«¨:Äß­©¦e€„e,_ñìëëÏÑºT~›&)&$&$`»¶¬¬†ˆŠG™¹†††±ŸÛ¯±±±¯¯P¢½‰©‚‚¦gL>_ñìêÏÏËÑT~`(&$$zº±²Š††O	`Ù‹††††¯& ÛŠ¯±±±¯P~˜ª©‚„‚e>_òìÏÎËÎÏp}`", 13, "&&{»ÏŠ†††izÝ·²²²²´>¡Ý¯¯±±±¯P}wŽ¦‚ee€eTzóîÏÏËËÏp}{&$&", 13, "ŸÖ¶ˆ…††l)cž]\\xxw2IÄñ´±±±±¯Q}›¤e„¦g?{ôíÏÎËËÏ‹~¢1..---! Ö´ˆ…††l:Å}Ÿ¡ ŸŸ }æòÌ±±±±¯P~Ã˜ss³Žq0}ôìÏËËÎÏ~æG654212E6 —²ˆƒ…††:~uVs“rqUåòÐ±±±±¬9 ÅE32201""~ôìÏËËÎÎÉ~ãuWssss@""Ÿ»´¬††††:`™€e†¤ÅòÑ±±±±%~W-->>+bòêËËËËËË~õ¸Š‹‹‹p/!ž»¶²††††:GuŽ¤eeÅÞÑ²±±±%}šjMMMMM;`ñÏËËËËËÉ~â“‹†††ˆn!Ÿº´Ì†††ˆTzu‰¤‚‚eæðÐ±±±±}xRK777L9HÝÏËËËËËÉÃ—¹ˆ††ˆQ!Â»Ìé†††‹VÁ»‰¦‚„„eùÜÑÏÌ²´‘c›Vj777K9GÞÏÌËËËËÉãØ“ˆ††ˆP ÁÔÑêˆ††‹VÂÙ‰©„e‚äðêÑÌ²·sdtR777K8GÞÏËËÉÉÉÇã»‘†††ˆlÁÓêêˆ††‰@ÃÝ©©„e‚„ÅðêÌ±±²³>~œs8777K8GÞÌÇÇÇÇÈÉÂ’o†††ˆlÀÓÑÏŒ††‹@ÂÝ©©„ef„äÝêÊ¯±¯²>yTK777K8HàÏÆÆÆÆÈË~Àqn†††ˆnÀÓêÏÌˆ†‹W Û©©¦€€‰äñêÌ¯±¯²<~w9K777K8IóÏÇÆÆÆÉÉ›S‹†††«œÒÑ¶Ïˆ†ŽX Û©©©„‚‚­äòêÌ¯±¯²,~[9K77Jg9IòÌÇÆÆÆÈÇÅÀ¸±ˆˆ†«QxµÐ´Ïˆ¨Ž.žÙ¦©¬©¤¦²ãñéÊ±±±°)~wqMg7JM$HòÌÉÉÆÆ®®}òÓ¶¯¬ˆˆl[µÊ´Ì¨ˆˆtdø³©©¦‚„<]à¹ˆ†…†¨«<""ŸXjgKKKK$}à¸±ÉÇ®®Æ}ò¸´¯ˆ††O", 10, "Z‘´´´ˆ¥¯Vaä­¬©©¦¤©S\ß¸ˆ†…†¨Š+""XjM77JK$|áÑÉÉÇ®®ÆcòÑÏŠ†††i[’±¬Šˆˆ¨taãª©©©©¦¬TD¿º¯‹ˆn±¸5{sjgKJJK$}ãÖÏÌÉÈ±ÉGòºÌˆ†††l)`š•“”““»˜ãª©©¬©©¯TDž¾™™w[Z[¢ÁsjmMKKK8üâÞññÞÞ½6ßº´Š†††l+~ç¡}}b|} }Åä­©©©©©¯SE}F106Â•mmhLLL9úääääååÅ5Þ¸¯¬ˆ†„i+}ž\Zvuu—u}ä°©©©©©°?E|ZShfggN", 10, "â»‹¬‰eMM9~à»»–•–˜Z5Û¶¯¯ˆ†„h+|yV‡‚‚©¦g-dä°©¦¥¥©²?D|•Š¥„„„†", 10, "ÁÒ¯¯©heg9|ÝÏÉÉÉÌêê3ÚÉÉ±†„„Ozvo¤€e‚K?Iã°¥¥ˆ†¯´=2a•ˆ†††„ˆÀÐ±±¨hhh9`Ú´±¯¬¯ËÎ4Ú±±¯†„†i", 26, "zu‡¦‚€LK>6Â°ˆˆˆˆ+`•ˆ„„„„†", 10, "ÀÑ±±¨‚„ˆ;`Ú´±¬ˆ¬ÉË5Ü±±¬„‚†m-z—‰©„„eK,#Ÿ°†††‹po)_•«ˆ„h„† ÁÑ±®Š‚‚‰SzÛÊ±Šˆ¬±ÉGñ±¯©‚‚„l>|¼­©‚‚‚L+#žŽ††ˆ¬¬‹`–®Šl„„†(!ãÔ®®†hh†S{ÝÌ±¬ˆ¬±±|òQn†‚‚h,}Þ°©¦e‚†e", 26, "#°ˆ†ˆ¨¯Šz—¯nnˆƒ†""ãÕˆnˆ„h„PcÝÊ¯¯¯¯±É~ñlQŠ†„h+}Þ²©¥e‚„e", 26, "6žµˆ††ˆ¬Š |—nˆ†ƒƒ""ÂÒŠln¥„†P}Ý¯¯±±±±Ï~ñ«¨l††„i,}Ý°©¦€", 26, "aŸÑˆ††ˆ«¬+5 Ø±«†„‚†)""ŸÐ«ˆl†„„P/ Ý¬¯¯¯¯Ï~Þ«¨†i„ˆl+|½°©©„gf†", 26, "cŸ¶†††ˆ¨«,6 —±¯ˆh‚‰(""Â¸«ˆi„„ˆPŸÝ¬Š¯¯Š¬Ì~Þ¨†hƒi„i{¼°©©©†„¬", 26, "cŸ¶††††¨«<E »É±ˆi¥‡""ø·ˆ„h‚„†9ŸÝ¬Š¯¯¯¯Ë~Þ…„„„††ia™­©©©¦¤°cŸÐ††††¥¨=EŸÖÉÉ¨„†i", 10, """ù·††„„††9 Ý¬Š¯±±±Ë~Þˆˆ†„„†ia˜¬©©©©©°c~Ð††…†¥¨UG ÖÉÉ¯†‚„!ä·ˆˆ†„„†9¡ÝŠ¯±±±Ë~ò¨¥‚hhhf`˜­©©©©¬°cæÛoˆ¨¨†PA}ÃØ²±É«ih", 10, " Ã»¥†ƒhii9~Þ°«¯±±ÈË~æB&&5a™­©¦©¦¬²G~#GŸÙ´ÈÉÉ†‡ ÅÂ.)(&&!¢òÍ±±±±±É~¡4!#a¼­¦¥¥¥¯´#{", 13, """|Ø²±±ÉÊ© æÅI6!""6¢Þ´¯±±¯±É~}", 13, 13, "|¼­¥¥„©Í´", 26, "!™²‹ˆˆVz»±±ÉÏêê,ç¿U?=", 10, ", Ý¯«¯±¯¯É}*%~½¬¥†„²Ð·—¯Ì±Šˆ°TzÕ±ÉÌêìí,ûÛ†lnlmpS/ Þ¯¨¯¯¯ˆ«})'", 10, "¢Ý¬¥i†´Ð·–«ÑÌ¯ˆ°qz»²ÉÏêìí, úØ††††ll: Þ†©¬ˆOl}ž*'')", 13, " ÄÝ°¨†‰¶Ðµ×ÊÑÌ±…‹", 13, "zÖ²Éèêìí-!çÙˆ†ˆŠˆ‹o/ Þ†ˆŠˆ'l}Á,',<*+¢Þ°©ˆ¯·ÐŽ+!¼èéÏ¯…†q{Ö²ÈÏêìí?!çÝˆ†‹²¯¯p/ Þ…†Š©‹}Â?%)==,,", 13, " Þ°‰©´ÐÍo-#½ÏÑ´Š…ˆqžØ²±Êêìí@""úñˆ†¬Í²¯q/ŸÞ††ˆ¬¯lIÂ?')=@=,", 13, "ŸÞ­ˆ¬ÌÊ´µGÝÏêÊ……ˆT", 13, "!ÂØ²±±Ðêì?""æñŠˆ¬Ê´´/~ò²†††Š¯ˆG ?'(<@@,", 13, "ŸÝ¬ˆ¬Ì²²·aÞÌÑÊ††ˆq4ÁÖ´±¯ÊÏì<""çñŠˆ¬´Í´q/~à´††ˆŠ««GÂ>'')?@,}Ûl´¯¬µ", 13, "cñ¬Ï²†††Ž4ÀÕÉ±±±Êì<3üñ©©‹°Ð¶q.}ò²†…ˆˆ««HÂ>'%,@?", 13, "zØ‹†ˆ‹Š‹²dÞ¨¶¯†††o4À»²ÊÊÊÌì,4üÞ¨©‰‹·¸.}ò²†……ˆ¨«HÂ>'%*@?z—ˆ†††lood¾²´©†††i4À»´èÏÏÌì=#üÞˆ¥†m´¸.}à²†††ˆ¨«bÂ>%%)@?a˜‹ˆˆlPomd›Ï¯ˆ†††i", 10, "4ŸØÑëììíï?#üÞ¥¥††²¸.}óµˆ††ˆ¨¬Â>'%%'=?", 13, "c›V<;", 10, "d›é¬ˆ††ˆi4¡¿¼——v[[büÞ¥¥††¬Í.~Â—rqqT<+ >(%%%),", 13, "~Å{yE22EEG£¿Ð¯†††ˆi4}_E334355Iüñ¦¥¥¥¥²/Å›y›z_D >:((((+", 13, "}ÀwuZZZ˜XßÉ´ˆ††ˆO4aYWsttst0!ûÞ¦©¦¦¦¬/}õÚ—˜™™™™¢Â>()))))", 13, "žÝ²‹‹‹‹¯S~ÞÉ´ˆl††96y‘¬‹ˆˆˆˆrúÝ¦©©©©¬Ž/zòì¶¶¶¸’sçÂ>::::))", 13, "ž½……††«P}Ý´²¯††i86š´¬¨ˆ†……rçÛ©©©©©¬p/`ñëÏÎËË¶qÅÂ>:::9()", 13, "Ÿ›»„††©l}šÒ±¬††ˆO", 13, "G›‘¨¬ˆ†††U!çÛ©¬©©¦¦Ž/`ñìÏÎËËÏrÂ>:(:&%&", 13, " á˜†††«P}DŽ©ˆ††¯Š", 26, "H’†ˆ†††ˆ=!çÞ©©©©¤†o/{òîÏÏËËÏ”Ã>:)&$~ó»Ž†††®9}xl†††Šn", 26, "IÂ“†††††©*!çÞ©©©„hXŸòîÏÏËËËºÃ>:)$|¾’ˆl††¨‹}›Ìˆ…k†ˆn", 26, "Iâ¹†††††¬'!çÞ©©¦e€NXÂñìÏÏËËÌºÃ?:(%$a˜†…††ˆ|Ÿí°lk†Šn", 26, "Iâ¹ˆ†…ˆˆ©(""ûò©©„e„g.ðìÏÏËÏÏºÃ?:9$%$_uo††††«ŒaÃï“ˆk†ŠP", 13, "Gáº¬Šˆˆˆ!úò©©¤€‚†e.{ðìëÏÏÑ»‘~ž+)($_uŽ‹ˆ†ˆÉlGŸØ“‹††ŠlFÀ»±±¯¯¨«çÛ¦©„‚M.zðìëëÏÏºS~{&)&$&$", 10, "GÙ¶¯¬††«$6›»°†††ŠQG¿º¯±±±¯¯å˜‡¦‚„‡eL.zðëÏÏÏËÑT~`(&$_—´²Š†††Fß´ˆˆˆˆoGß¸¯±±±±¯%Äu¦¦‚eA{ñìÏÎËÎÏp}b", 13, "&&`ÙÏ†††ˆ86ô»’’“““‘`à»¯±±±±¯%¢v‰¤efeAžòìÏÎËËÏp}}&&&(${Û¶Š…†††P6åz_zzzz_`âÖ±±±±±¯'Äy‡‚‚¦¤hA óìÏÎËËÏ‹~ÅC00/...#|¼·Š……††lIç{z{Àœ›œz öØ´±±±±¬%ÅÂvXtsrrW2¢óìÏËËÎÎ~åED3321135|¼´‹†…††lIÂvqTŽqq.`ãïÊ±±±²‹", 10, "å C111!¡òêÎËËËÎÉ~ã–sssssU/!c¼¶¯††††lIyt‚e„;_âÙÌ±±±±‹", 10, "ÄyR+>>;;}ñÏËËËËËË~ö¸ˆˆ‹‰‹p. {Ù´´ˆ†††la\‡„eee€;_áÙÌ±±±¯‹", 10, "¢˜MKKKKM(|ÜÌËËËËËÉ~Â”†††ˆn-{Ù´ÌŠ†††~™‡¦„‚„€;`áÖ´±±±²q", 10, "  vjJ777M&aÛÌËËËËËÉÃ—¹ˆ††ˆnÚÌÑ¬†††¹~ß„©„„‚€;`ôíÑÏÊ±·U""yVN777M&aÛÏÌËËËËÉäÙ“ˆ††ˆl", 26, "ÚÑê¬†††•cö‡©¦f€‚;_óíÑÏÊ±»U""›VN777L$aÜÏËËÉÈÈÇã»‘†††ˆn", 26, "zÙÑê¬†††sbø‰¬¦€„‚+GóîÑ´±¯´‘", 26, """¢š8777L$cÝÌÇÇÇÇÈÉÂ’o††††n,zÙÑÑ¯ˆ††scø‰©¦ef‚+GáîÐ±±±¯²", 26, "!¢vj7777L$|ÞÌÇÆÆÆÈË~Áqn†††ˆn,zÙÑÑÏ¨††–c÷‰¬©„€€‚,GõïÑ±±±¯²", 13, " ¢t8K77JL$}ñÌÇÆÆÆÉÉœS†††«¯,yÖÐÏÏ¨††—aö‰¬©¦‚‚‰>FõïÑ±±±¯²¢A8K77Kg&}ÞÉÇÆÆÆÈÇÅÀ¸±ˆˆ†ŠnE•Ì¶Ì¨¥¬W`õ¤©©©¦¤­>EáîÌ±±±±¢umMM7KL|ÝËÉÉÆÆ®®}òÔ¶¯¬†ˆn&3¹±¶´¯ˆˆ‘.EÅ×¬©¬‚‹", 13, "ÃÜ¬††…ˆ¨p.G›VjMKKKL¢ß¶±ÉÇ®®Æ}òº´²ˆ††h2’¯Ì´¬ˆ¬r5Ä»¬©¬¦¤„²ÃÜŒ…†…†Šo.FyVjL7JJK¡ßÏÉÉÇ®®ÆcòºÏŠ†††i(3”¯¯Šˆˆ¨‘.5Ä»©©¬©©¦´ Û±ŠˆnŠ²’FxVjMKJJL$¢áÑÌËÉÈ±ÈGò¸Ïˆ…†††;F¾”’·’‘¹—1`Å»©©¬¬©©´ š™™w[[36¢›rmjMKKL&£ûàÞÞñÝÝ½6ßº´Š†††l;IçÅ~}|d}  £æ»©©©©©¬²", 13, "¢a51!a¿‘mmgLLL(£úåæææùúæ5Þ¹¯¯ˆ†„i;IÃy[\vvvv1HÅ—©©ˆ©¦©¶", 13, "¡_sOfNgN&E¿·‹„eLM9¢¿——––—˜Z5Ü¶¯¯ˆ†„i+`ÀtŽj‡¦©„<FÅ—©©¥¥¦¯¶", 13, " _¥†ƒ„„O", 13, "4¾·¯¯ˆgeg(¡ïÏÉÊÊÌëê3ÚÉÉ±†„„h)GyT¤e‚e;E¢—©¥¥†©´´~_†††††O", 13, "4½Ì±¯ˆhhh&|ÖÉ¯¯¬¯ÎÎ3Ú±±±†„†i+G™m¦„€eeK;2Ÿ»‰¥ˆ†¬¯Iy†i„„†O", 13, "5½Ï±¯ˆ„„‰(|Ö´±¬ˆ¯ÉË5Ü±±¯„‚†‰;G½‰¦„‚„L:}»ˆ††ˆS‹Gy¯¨†h‚†P", 26, "E¾Ï±®†‚„¬;žÙ´±Šˆ¬±ÉGñ±¯¬„h‚†>_¾­©„‚‚e:c•ˆ††Š¬‰G›±«ˆl„†iGßÑ®«†hh‰S ïÊ¯«ˆ¬±±cò¯nŠ†‚‚i<`ßµ©¦€„f)c•‰††ˆ¯±hGœ²Œlˆ†„P_à¸Šˆ†ƒh†;ŸÛÊ¯¯¬¯±É~òPQŠ†‚i+`àÍ©¦„f: d—‹†ˆ†¬¯iI´ŠlŠ†ƒOG¿·llˆ†‚†: Ú¯¯±±±±Ï~ñ«¨lˆ†„i;`ßµ©¦‚€‚;4~Ø††ˆ¨®‰À¶Œˆ†‚„i-G¾Ì«l††„†:ÄÚ‹¬±¯¯¯Ï~ñ««†„„††;I¿³©©„fe‚;E~Ø‹†…ˆˆ«©¢À¶±«„h„m-G¾´«ˆi„††:ÄÚ‹‹¯¯Š¯Ï~Þ¨ˆ„hi††)H¿³©©¦†„‰<E~—ˆ†††ˆ«¬¢¿¶±¯†„†j`ß²ˆ„h‚††9ÄÚŠŠ¯¯Œ¯Ë~Þˆ„„„„„i(H¾°©©©¦¤¬>E~Ø‹†††ˆ¨¬¢¿¶É±†„†O`à²†„„„††%ÄÚŠŠ¯±¯±Ë~Þˆ††„„††(G½°©©©©¦¬?E~Ø©†……ˆ¨¬¢¿¶±È¨„„N_ß²ˆ††„††9ÅÚŠŠ¯±±±Ë~òŠ¥„hiih(G½°©©©©©¬?E¢Þˆˆ¥ˆ†i!ÅÀ¶±É±ˆhNG¿µ¥†ƒi„„%ÄÛ¬«¯±±±Ë~ãt;999%& G½°©©©©©°?4`BAAA.-4Á¸±ÉÉ¬„OGÃ™S:999&!ÅÝ²¯±±±±Ë~Ä45H¾³©¦¥¥¬²? c3aÀÍ±±±É¬mGæŸ316ÅÛ´¯±±±±É~~_¾³¦¥†¦²´>^tUToQSsI¿´±±ÉÏÐGå›XA.", 13, ".2ÅÚ¯®±±¯¯É}ž,`ß°¥¤†©Ì·>v´´²ŠˆŠ¹H¿´±ÉÏêì¸Hä—nnn:;S<0ÄÚ¬«¯±¯‹®}ž)'dà°¥†„¯Í·>Z¯ÏÌ±ˆ¨¹G¿´±ËèììºHö»†††lmm:ÄÛ‹ˆ¬¯Šiˆ}ž)'ô°¨†l²Ð·>v´ÏÌÊˆ†µ>G¿´±Ëéììº.Iã»††††ˆˆS0ÄÛ‹†ŠŠ†%l}Á,'**))", 13, "ô²©ˆ‹´Ð´>wÑéÑÌˆ…©WH¿´±ÌéììÓ.`öÕˆ†¯‹¯S0ÄÛ‹…†¨‹n‹}Â='=?*,", 13, "|ôµ©ˆ¯¶Ðq<xÓêÌ±†„ŠAIà¶±ÊèììÓ/`÷×ˆˆ¯¶¯²S/ÄÛ‹††ˆ¬¯ncÃ?%(=@,=", 26, "bô²ˆ©²Í¶²?2šÓêÏŠ…†>dáÌ±±ÊêìÓ/`÷Ùˆˆ¯Ì²´q/ÄÛ†ˆ†¨¯lGÂ?%(<@@,", 26, "aôµˆ©´´´¶?4œÔÑÑŠ…†A¡à´±¯±Ìê¸.IäØˆˆ¯Ì¶´q/¢ñ°††ˆŠ««G ?('*@@,`ó²†‹Ê²¯´,5¿¹ÑÐˆ††ˆt¢¿Ì±¯¯²Ð¸.bùÙ¨Š¬´Ð²S/¢Þ¯†…ˆŠ««HÃ>'''=@?", 13, "_Þ†ˆ¯¯‹²>EÀµ´´ˆ†††s¡½´±ÉÊÊÏ¸/{ùØ©©‰°Ð·q/¢Ý†……ˆ¨«IÃ>'%*@@", 26, "^½‹†††lˆ‹>E¿·´±ˆ††ˆ;¡½´ÊèÊÌé¸.bø×¨¥i‹·¸q¢ñ†……ˆ¨«HÂ>'%)@?", 13, "F¼‰†††lmm+Ez»Ì¬†††Š%¡¾¶ÌèéÐÐº.cø×¥ˆi‰´¸q¢ò°†††ˆ¨¬dÂ>%%(?@", 26, "G¾Š‹l:<S+E{Ö±Š†††¨%¡¿ÔíìîîïØ0dø×¥¥††²¸q¢ß²ˆˆ†ˆ‹¬¢Ã>'%%%+?", 26, "H [.", 13, "I{×²ˆ†††Š8¢ Àx335!6£ù×¥¥¥†¬Íq£¡wYtsW-Ã>)'%%(+", 26, "aæÃžzGGbz`¢ÂÕÊˆ†††¨&¢G32223C\6}ø×©¥¥¥¥°q0£äÀŸžzÃ>))((()", 26, "`Á•rUss“UHÀÑÌŠ†††Š$¢[q‘‘r.G÷×¦©©©¦¬q0 òÔ¸•–—•˜ÅÂ>():)))", 26, "`à´ˆˆˆ†ŠnH¿ÑÌ¯†††i¢–¨¬ˆ†††‹AG÷×¦©©©©¬p0ñëÌ¶¶¶²rçÂ>::::9(", 26, "`ß’ˆƒ…†¨nG¿Ó²²ˆ††O¢—¨¬Š†……nAHã×©¬©©©©p0{ðëÏÎÎËÏq¢Â>:::9&(", 26, "bÂ—µ†„†Šn", 26, "G_»²¬ˆ†ˆŒ%£˜ˆŠ©†††nAIã×©©©©¤¦p0ñìÏÎËËÏ’Ã>:(9&$bã™‘†††¨l", 13, "F_s‹ˆ††ˆÉ9Åš††ˆ††ˆn.`ä×©©©¤„„m1ÂñìÏÎËËÏºÃ?:)&`â»†††¨l", 13, "6z¹ˆ††††¯:æ¾ˆ††††ˆo-`ä×©©¦‚€OBÃñìÏÎËËËºÃ?:($", 10, "H¿’ˆlk†ˆ‹", 26, "6|Ö°†k††®9æÞˆ††…†ˆn`÷Ø©©„€NBÃðìÏÎËÏÏºÃ.:9$%%", 10, "Gš†……†ˆ‹", 26, "6 ð¹‰k††¯%åÞŠˆˆˆˆˆlIøØ©©„€„„N/ÂïëÏÏÎÑÑ¹Ã>)9$$$", 10, "F™pˆ†††«Œ", 26, "4 Ý»†††¯¢Þ¯¬«Šˆl", 26, "H÷×©©„e„‚M/ŸïìëêÏÑ»q~ž+)($$", 10, "E™‘¬‹ˆ†®n", 13, "!{¼º†††±$ Ý¯±±¯¯¬n", 26, "Gâ»¦¦‚‚„gM/žïëëêÏÏºT~{)&&$", 10, "Eš¶²¬ˆ†ˆ8!z—°ˆ†††±$ Ý¬±±±±¯n", 26, "6Á“¦¤‚„„eM0žðëÏÏÎËÑp~`(&F¼¶±Š†††8!ÀÕ¬‹‹‹‹±+ ÝŒ¯±±±¯n", 26, "5s¦¤eee0ŸñëÏÎËËÏp}b&$$", 10, "GÝ¸±ˆ…††OÁ¼•tt•••.#¢ñ±±±±±¯Š", 26, "5t¦„ee„e0ÃñìÏÎËËÏp} &&$&)&HÞ¸¯……††l £ {žžž{}Åò´±±±±±Š", 26, "6Â™‡‡¤©¤j1ÄñëÏËËÎÏ‹~æE2110026`¿·¬……††l!Åyx›šwwx6æóÏ±±±±¯l6äž\ZZXWWB5ÅñëÏËËÎÎ¯~å\2BBB1014`¿·¬†…††l""žšmm‰m‰æóÑ±±±±¯P6Åz100!ÄðÑËËËËËÉ~ö–r‘‘‘‘r.H¾·²Š†††l3_˜‰‚€e„g‚ÅòÑ´±±±¯P6Âv>;;;9;ÃïÏËËËËËÉ~ö·ˆˆˆˆˆŠ-_½´´¬†††l4Et‰‡eee‚ÅñÑ²¯±±¯P6žtMKKKKN ÙËËËËËËÉ~Â•°††††Š,`¾´Ì¯†††G›¦‡‚¤„eçÝÑ±²±±²=F{uNJ777NŸÙÌÌËËËËËã˜»ˆ†††Š,`Þ¶Ñ²†††‘FÁ‘©¦f„„e€ùðêÑÏ²²’,F}wRM777M", 10, "}ÙÏÌËËËËÉäÙ•ˆ††ˆn_ÞÑê²†††‘4ö¹©©‚e‚‚åðêÑÌÈ´•>G ™V8777M	ŸÚÌËËÉÈÈÇã»‘†††ˆŠ+_ÝÏê´†††", 13, "4ø»©©‚e„†ÅÝêÌ±±±²qGŸ˜R8777M ÚÉÇÇÇÇÈÉÂ’n††††ˆ,_ÝÏÑ±ˆ††4ä¹©©„ef„äñêÌ¯±±²qGžtM7777M¡ÜÉÇÆÆÆÈË~Ápn†††ˆŠ<_ÝÐÑÏ¯††“4ä¹©©¦€€€‰äòëÌ¯±±±qF{V8K77JM¢ÜÉÇÆÆÆÉÉS†††Š±<]ÛÏÏÌ¯††“4ã¹©©©„‚‚°ÅòëÌ¯±±°q6z>8K77Lh¢ÛÉÇÆÆÆÈÇÅÀ¸±ˆ¥†ŠŒ5—´ÌÌ¯¥©s", 13, "3â¹©©¬©‡¦²ãñêÊ±±±°S6{tjMM7LL	¡ÚÉÉÉÆÆ®®}òÔ¶¯¯†ˆŠ&3»¬Ì±ÊˆˆŽWà°©©¦†<\à»Š†……Š«S0{wTjLKKKLÅÞ±±ËÆ®®Æ}òº±²Š††i$3”¬Ì´¯†©.~ß­©©©¤¤©S\à»ˆ†…†ˆŠ<`wqgK7JJKÅÞÉÉÉÆ®®ÆcòºÑŠ†††l93•¯¯Šˆˆ¥W0}¿ª©©©©¦¬TC¿»ˆ††´@`vqjMJJJLæà¶ËÉÈ¯±ÈGò¸ÏŠ…†††Q5¿“‘³³³¹X4¢¿ª©©¬©©¯TDŸ¾¼™™vv[2{Ã˜qohKKKL&çû¿ÝÝÝÜÛ¼6àºÊŠ††††Q6çç}d~¢¢åß­©©©©©¯SD}G35Ÿ¼qmjMLLM+æûæçúçûûç6¿º¯¯ˆ†„„P6ÅzC\w[vw[4¡ß­©©©©©°?D|[SNNNNN", 10, "|¼‹‹hMLM+æÞ——––—˜B5Ý¶¯±ˆ†„„:6Ãuj‡¦¬‰P1ß°©¦¦¦©²?C|—Œ¥„ƒ„„%zÙ²¯¯†eeg(äîËÉÌÌÏëÔ3Ú´É±†„„h(5>¤Le„€MX~ß­¥¥†ˆ¯´=2{–ˆ†††††%zØ´±¯„hhh&¡Ó±¯¯¯±ÎÏ3Ú±±±†„ˆi(6¿R¦¦€eeKN0`¾­ˆ¥ˆˆ¯°+`–ˆ„„„„†%`ØÉ±¯„„„‰ Ó±¯¬ˆ¯ÉË5Ü±±¯„‚†‰;6¿‡¦‡„eM/H¾­††ˆ‹po)_—«ˆ„hƒ†%zÙË®®„„„°(ÂÔ²±Š†¬±ËFñ±®¬„h‚‰S6à­©¦e‚‚eMGš††ˆ‹(_—¯Š†i„†:|Û¶®¨„hh¬<Ãí²¯Šˆ¬±±aò¯‹‹„‚‚i;Fâ¹©©‚e‚„NGš‹††ˆ¬¯‹`—¯nnˆ„„:ŸÜ´«ˆƒh‚†<¢ïÉ¯¯Š¯±È~ò:QŠ†‚i(FãÒ©©„e„‚NHš°ˆˆˆŠ¯ˆ{˜¯nˆŠƒƒ(}ÛPnˆ„‚ˆ(¢Ö¬¯±±±±Ï~ò««Pˆˆ„†:6â¹©©„e‚‚N0a¾´†††ˆ«©+!~¼¯ˆˆ„‚„:{Ù²Šlˆ†„ˆ)æÖˆ¯±¯¯±Ï~ñ««l„„††P6â¹©©¤fegO0}¾´†††ˆ¨¬,5¡Ù´¯ˆ„‚†;cÙ±«l„„„†;æÖˆ¬±¯Œ¯Ï~ñ«Š„hh†ˆ96Áµ©©©„‚„o0}›†††ˆ¨«<5¡ÙÉ±¨„„‡:ŸÙ¯ˆih‚ˆ†(æÖ†Š¯¯Š¯Ë~Þˆ„„ƒ„ƒ†96Á³©©¬©¤¦q0d¾²††††¨«<5 ÙÉÈ¨„††&¡Ú„i„‚„„%æÖ†Š¯¯¯±Ë~Þˆ††„††ˆ95À°©©¬©¦©q0dœ´††††¥¨?E Ù´É®†„„& Ú‹†††„ˆ†% çÖˆ¨¯±±±Ë~òŠ¥†„„„„95°©©©©©¬q0}À¹††ˆˆˆˆAI¡Ù´±±¨„‚&}¼¬¥†„„†„%çÖˆ«±±±±Ë~â‘lONNNN6¿³©©©©©¬q0}Â˜UqqpS,0c¢¼´±É±ˆ„&}¿’lPOOONæÙ¬¯±±±ÈË~åC", 13, 13, "5Fµ©©¦¦©°rHI 6ž¼´±ÈÉ¬‰:~Å]/.6çÙ²±±±±±É~  !6Àµ¦¥¥¤¬´r6x.-?,+- zÙ´±±ÊÌ´<å_3115ç×¯¯±±¯±É}Ÿ6â³¥¥††²Ír3—²‹ˆˆ²UzØ±±ÉÏêëU¡âtSS;(<+æÖŒ«¯±¯¬±}ž*'Gö³¥¤„‰Ê¸r1¹±Ì±Šˆ²TzØ²±Ìêììr¢à‘†nnloo:æØŠŠ¯¯¬†Œ}ž)'%", 10, "aø³¥¥i‹Ì¸r1¹±ÑÌ¬ˆ°qzØ²ÉÏêìír¢ß²††††nl:æ×ˆ†©¬ˆ9l}Á+%))')døµ©¥lÐ·q2ÕÌÑÌ¯…‹zØ²ÉÏêìír¢ß²††‹‹Š<æ×ˆ†ˆŠˆ:n}Â=',=*+", 26, "aøÍ©¨‹´Ð´TDØéÑÌ¬…ˆq{Ù²±Ìêìís0¢ôµ†ˆ²²²<0æ×ˆ…†Š¬¬ˆdÃ?%'=@,=", 26, "Gø¹ˆ‰¯ÌÍ²T/EÙÏÑ±ˆ…ˆTžÚ´±Ééìì’1¡õ·†ˆ´¶´TæØŠ††ˆ¬¯lIÃ@%(<@==,F÷¹ˆ©±Í´´r0_ÙÏÑ±†…ˆT!ÂÚ´±±Ìéì‘0 õ¸ˆ¨²Ì²´UæÛ†††Š¯ˆGÃ?''*@@=", 13, "6ö·†ˆ²Ì²´r0zÚÏÑ±††ˆq3ÂÙ´±¯²Ìêr0¢õ¸ˆ¨¯Ì·²TæÜ††ˆŠ««GÃ?'''=U?6õ²†ˆ¯²°qÙ±Ï¯†††Ž4ÁÖ´±±±Êêr0Äõ¹©©‹´Ð²SæÛŠ†…ˆˆ««HÃ>'',@@", 26, "5à¬††ˆ‹Šq0Ù¯´¬†††o4ÀÖ²ÊÊÊÌêr0Äõ·©©l²¸·pæÛŠ†……ˆ¨«HÃ>'%", 10, ")@@", 26, "5¿‹††††loS0{™´´Š†††i""ÀÖ´ÌèÏÌêrÅõµ¥ˆh­·¸SæÝ‹†††ˆ¨«IÃ>%%(?@", 26, "5ÀŽˆˆˆiSo;0c¼Ì¯ˆ††ˆP", 10, "!ŸÙÑëëëìîs1Åõµ¥ˆi©¶¸SæÞ‹†††¥¨¬Ã>'%%<@", 26, "5ÂtS<;(", 26, "1d¼Í‹ˆ††ˆP!¡¿¼———˜v1Eæõµ¥¥†ˆ²ÐSæÀ“qqqpS<Ã>(%%%(=", 26, "6æ]D112C`¡½Í¬†††ˆO4~a]D34344Gæõ¹¦¥¥†¬´Tç¢›šxxx\2Ã>:('&&+", 26, "6å›™w[[\w2G¡ÜÊ¯†††ˆO4{[XXYYYuB!£õµ©¦¦¥¥²Tåô¼™ššššš¢Ã>()()()", 26, "Föºpqrr-!ÚÊ±ˆ†††N4zs‹‹‹r¡ôµ¦©©©©¯p1ÃñÑ¶¸¸º“tæÃ>(:::))", 26, "Fâ·ˆ…††ˆŠ,!Ù´²††i85›’¬¨ˆ†……q/¡áµ©©©©©¬SŸðÏÌËËÌ¶qÅÃ>::::((", 26, "Gãt´†„†ˆŠ<|¼Ì±††l9", 13, "6œ’¨¬ˆ†…†p0¡áµ©¬©©¦©TžðëÏÎËËÏr¡Ã>:(:9&%Gå™•ˆ„†ˆŠ+bv°¬ˆ†ˆ«n", 26, "G“ˆˆˆ†††S0¢ôµ©©©¦„¦SÂðëÏÎËËÏ’Ã>:(9$$Fæ¼“ˆ††ˆŠ(cv‹††††«n", 26, "GÂ•†††††ˆS¢ô¹©©¦„„P2ãðìÏÎËËÏºÄ?::&", 10, "6ã»†k†ˆŠ+|™°l…††Šn", 26, "Gâ»†††††©P¢õ¹©©†e€ODäïìÏÎËËÌºÄ.:9$$$6Á’Š†…††‹=}¾Ð‹kk†Šn", 26, "Gâ»ˆ……†ˆ©P¢õ¹©¦‚€‚N1ãïëÏÎËÏÏºÄ.:9$%%	5œql†…†ˆŒ=}àÖ‘†k†ŠP", 13, "Gâ»ŠŠˆˆˆˆ:¢õ¹©©‚e¤‚MãîëêÏÎÑÓ’~Ã>)9$$$	5›T‹ˆ††¨±=cÀ×’ˆ††ŠQ6ÀÕ¯¯¯¬ŠŠ:¡ôµ©¦e„MÂîìëêÎÑ»T~ž+)(%%	4›·²¬Š†ŠŠHy»²ˆ††¨Q6ÀÕ¯±±¯¯¯: ¿©†‡„eM0ÂïëêèÎÏºT~{)&&$5›¸²¯ˆ††O", 10, "_½²ˆ†††ŠQGßº¬±±±±¯:}y©„‚„‚eM1ÂïëÏÏËÎÏp}b9(5œ¸´Š†††h", 10, "`Ý´¬¬¬¯pGÀÕ¯±±±±¯:cx¦¤eeeee1ãðëÏÎËËÏp}}&$&6ÀÏ´ˆ…††l(aÀvZZuvuX cáØ±±±±±¯Pc›‘¤efˆ€g1åðëÏÎËËÏ‹}¢0+&&&)&6áÑ±†…††l)}å~ ¢¢¢¡¡¡ÄãÙ²±±±±¯P|Á˜ª¤¦¬¤S2çðêÏËËÎÏ‹~çG644 14GGÂ·°†…††l:~Ãx[w™—tZ2cãïÊ±±±±¬9}åzDCCB/B26çðÏÎËËÎÎ±~äDBBBBBX!6á·¯ˆ††††:b›tjhh‰‰‡>GãïÌ±±±±%}ÃD0/!æïÏËËËËËÉ}ø»?6À·´¬k†††)Gw„Lg;GâÚÏ±±±±%dœVNNNN8j", 13, "äîËËËËËËÉ~ã·†††††Œ<EÀ´´¯†††l;`uª‡‚eee€;GâÚÌ±±±¯d›RK7777hÃÖËÌËËËËÉ~Â•´††††Š+Fá´´Ê†††‹Už˜‡¦„„¤€;`õíÌ²±±²cyVMJ777h", 10, "¡ÔÌÌËËËÎËä˜—ˆ†††Š+Fá¶ÑÌ†††‹WŸ¼†©„„€;_ôîêÑÌ²·rb{ZRK777g", 10, "¡ÖÏÌËËËËÉäÚ•ˆ†††ŠFóÏêÐˆ††A ò‰©¤ee‚;FáîéÏÊ±Òs", 26, "cžvR8777N	¢ÖËËÉÉÇÈÇä»’††††Œ)6àÏêÏˆ††‹? ò©©‡€†‚+EáîÑÊ±¯²²>}•N7777g	ÅÖÈÇÇÆÇÈÉâ’n††††ˆQ6àÌÑ¶Š††‹@ ò‰©‡ef‚+EáïÑÊ¯±¯²>}›q87777M	ÅÙÈÇÆÆÆÉË~Ápn††††ŠQ6àÏéÏÊˆ†ŽWŸò‰¬©‚€€„,EâïéÊ¯±¯²,dx;L777KM	åÚÈÇÆÆÆÉÉ<†††ˆÉ<5ÞÌÑÌÊˆ†ŽXŸÞ‰©©¤‚‚¦>EõïéÊ±±¯²+d\;8777Mh", 10, "åîÇÇÆÆÆÈÇÅÁ¹¶ˆ©†ˆ¯&4™²Ï´Êˆ¨.žÞ¦©©©¦¤­>EáïÏ±±±±°)dxVMgK7LL	ÅÖÉÉÉÆÆ®®}òÔ¶¯¯†ˆŒ9""˜¨Ð±Ïˆˆˆtcú³©©¬‚‹", 13, "ãÝ¬††…†¨«<!ÂZjjKKKKM	çÝ®±ËÆ®®Æ}óº±²©†††$""•ŠÏ´´†¥¯VIæ­¬©¬¦¤„²ÃÝ…†…†¨Š+""žZjg77JJK	çÝÇÉÉÆ®®ÆcóºÑŒ††††O""–¬²Šˆ†¥¨tIæª©©¬©¦¦´ Û¯ˆ…k…¯·!XjgLJJJMü¿±ËÉÆ®®ÆGó¸éŠ…†††l!Ásq°²ŽŽµuæª©©¬¬©©´À½™š™vv\ÄÂsjŽNKKKMüû¾ÜððÛÚÙ6àºÌŠ††††Q""çü¢d~¢¢ææ­¦©©©©¬²", 13, "¢c6! 6Ã—jmjLLKMüüçüüüüüû6¿º¯¯ˆ†„„P""æžC\y[ww\}æ³©©ˆ¬¦©¶", 13, "¢_Y:NNNN8ãÖ‰‹eMLMü½—˜—uvwB5Ý·¬±ˆ†„„O""åwj‡¦°©‚dæ³©©¥¦¤¬¶¡z§†ƒƒ„†", 10, "âÓ¬¯¬„eegûìËËÌÌÏìÔ3Û´ÉÉ†„„‚9""ã.¦‚LL¦‚K>cæ³¥¦¥„©´¶ _†¥†¥„ˆÁÑ±±¯hfggÅÐ±¯¯¯±ÎÏ3Ú±±É†„ˆ„9""â>¦ªLeKK?6Å³ˆ¥©i¬²²I`„h„„„†", 10, "ÁÑ±±¯h†‚‰", 10, "ãÏ±¯¬ˆ¯ÉË5Ü±±±†‚†‹O""Ám‰¦‡‚eK>""¢²†††ˆS‹Gz¯¨„hhƒ†", 10, "ÂÑ±®¯h„ƒÊãÏ²±Š†¬±Ë6ñ±®¯„hh‰j""ãª©©e„†eL,"" °††l‹p‹Gz²«Ših†ˆ& ãÔ±®¨hhh°+åë²¯Š†¬±±`ó±¬‚‚‚„j#å¹©©„eg‰L", 26, """ †††©¯¯iGœ²«Ql†„†(!äí¯®†ff‚†>æî±¯¬Š¯±±~ó(QŒ†‚„%""ùÕ©©¦e„„e", 26, "# ²‹†ˆ†¯±NH´Šl¨ƒ„!äÖl:Š¥ƒ‚ˆÅÓ«±±±±²Ï~ò¯«PŠ¨‚†9""æÒ©©†e‚†€", 26, "G Ò††††¨¯ˆdÁ·nlˆƒ‚ƒ""¡Ó¬ˆP¬†‚Š!ûÒˆ±±±±±Ï~ò««n†„„„O""å¹©©¦eee", 26, "c¡Ôˆ†…ˆŠ«‹¢Á¶±«„h‚ˆ)"" Ò««i†„ƒ†+!üÓ†¬±¯«¯Ï~ñ««†hhˆ¨N""Å¹©©©„hfˆ", 26, "c ·††i†ˆ«¬¢Á¶±±†h‚©!Å¸«ˆkh‚¨†&ûÓ„‹±¯ˆ¬Ë~ò¨„hƒhh…9""Äµ©©¬©¦¤¬", 26, "c ¸††††ˆ«¬¢À¶ÉÈ†h¦‡", 10, "!û¸ˆih‚h„i", 10, "üÓ„¨±¯¯±Ë~Þ…„†„†…¥N""Ã³©©¬©¦¤²cÓ††††ˆ¨¬¢À¶ÉÉˆ„†h", 10, "!ú¸††††„¥†3üÒ…«±±±±Ë~Þˆ¥†„„„ˆN""Â³¦©©©©©°cÓ††……¥¥¬£ÀÌ±É±†‚„ å¹ˆ¥†„„†„4üÒ…«±±±±Ë~à¬¥‚hhh‚9"" µ¦©©©©¬°aûÞo‰¨¨ˆi95æÁ¶±ÉÉ«hh", 10, " ÄÖ¥†ƒhhii", 10, "üÕˆ¯±±±ÈË~úC&&", 10, "65 ¹¦©¦©¦¬´6# ""dÂÐ¯ÉÉÉ„‡ÅÅ/(&&Gü×±±±±±±É~¢5!##Â¹©¥¥¤¥°´#}", 13, 13, "IÀÐ¯±¯Ë²‹ææI645GüÕ¯¯±±¯±É~~", 13, 13, """ã¹¦¥†„¬Í´", 26, "!š²‹‰†Š¹H¿´¯É±Ñêê+çÁU??	+", 26, """ü¸Š¯±±¯¯É}Ÿ+%", 10, "+""ùµ¥¥†i²Ðµ—«Ì´Šˆ¨¹H¿´¯ÉÌëìí,üÝ†lnnPoŽ+üÓŠ«¯±¯Š®}Ÿ)'%", 10, 10, "6üµ¥¦hˆÌÐ·—¨ÑÌ±ˆ¨»GÀ´¯ÉÏëìí,üÛ†…†††mh&ü»††¬¯ˆhl}Á*%)Iü·©¨i‰ÐÐ·˜ÈêÌÌ…†µ>GÀÊ±Ëèììí,üÛˆ…†ˆ†ˆ‹<üº††ŠŠlP}Â,*<**", 26, "Hü¹©©l°ÐÐ", 26, "¼èêÑÌkƒ©XHÀ´¯Ééììí- ûñˆ…ˆ²¯Š²;üº……†¨©‹‹}Ã?%'=U*=", 26, "5üÒ©ˆ©´ÐÐ:-!½èê´¯…„Š.Iá¶±ÈÌêìí?!üòˆ…ŠÍ¶Š¶;üºˆ††ˆ¯±lcÃ@%'<@,=,""ûÒ†‰¬ÍÍ´µ-6¾ÌêÏ……†>dâÌ±±±éêí@!æó¨†¨Ê¶¯ÐTüÕˆ†ˆ†¨¯lFÃ?%(:@@=,""ûÕ†ˆ¯Ð²´·", 26, "IÞÏêÐˆ…†A¢á¶±¯¯Ìéì< çóˆ†©ÊÐ´´TüïŠ††ˆŠ««GÃ?(')@U@!ú¹†l±Í¯²µ", 13, "aò¯êÌ†††ˆt¢¿ÌÉ¯¯±Ìì<!üó¨¨ˆ¯ÐÐ<üÙˆ†…ˆŠ««HÃ?''=U@,!ø²ˆlŠ²‹µ", 13, "cóˆÌ´††††s¢¾´±ÉÊÊÊì<3üò©¬©‰Í¸·SüØl†……ˆ¨«HÃ>''", 10, ")@@,!â¬††††l‹Ž", 26, "d¿©¶¯†††ˆ;¢¾´²èÊÐÌì,!üòˆ¨ˆO´¸¸SüÚ††……ˆ¨«HÃ>'%", 10, "(@@,!â‹††††lTi", 13, "d›ÌÌ¬†††Š%¢¿¶ÌèêÌÍì=""ü¿ˆ¥†g°¸¸<üÛˆ†††ˆ¨¬dÃ>%%=@,!Ã³ˆ¨‹P;pQdœéŠ†††¨%¢ÀÔììîîïð.""üß¥¥¥„©·¸=üÜˆ†††¥©¬¢Ã>'%%%*@,!Åw		", 10, "~zì¬ˆ†††Š8¢¡áy335""üß¥¥¥††ÊÐ=ü}ZWWW?", 26, "~¢>:'%%%;,""çæÃ `GIc{åÁÐ±††††¨&¢H543343]F6üß¦©ˆ¥†¦´TüÄ  ž ¡ a¢>:)(9&:,""ùvWVWXY”-~à±Ìˆ†††¨$¢\Uq‘’’‘’-üò¤©©©¦¥²Tùñ¸¹–———˜£Ã>():)())#ùÓŠˆŠˆ†«S~ÞÉÌŠl††i¢—¨¯ˆ††††rüò¦©©©©©¯SãðÏ¶±¶¶rûÃ>:::::()#ø”…ƒƒ†„¯P~Þ´¯´†††N	¢—«¬Š†………qçÞ©©¬©©¬©SÂïÏÎÎÎËÏq£Ã>::::&(+#úuÖˆ„††¬l~yÓ±¯ˆ†ˆˆ$£˜ˆ¬¬ˆ†††U çÞ©¬¬©©†­TâðëÏÎËËÏrÃ>:(:9%$(#ü½—‰„††®P~\q©ˆ††ŠË9Å½††ˆ†††ˆ= çò©©©©¦‚¦S äðëÏËËËÏ”Ä?:)9$$""ûÜ”‰†††Ç%}y°l††††±:æ¿ˆ†††††¬* ûß©©©¤f‚PEùïëÏÎËËËºÄ?::&""å»†k††«‹}zén…k††®9æßˆ†††††¬' ûß¦©©„ee€:]ùîëÏÎËËÌºÄ.:9$$'""Ã’ˆ†…†††| í³lk††±%æßˆ………ˆˆ©( üó©­‡e€¦9ùìëÏËËÏÏºÄ.::$%'""ÁTl†…††«ŒaÄït‰k††¯Åò‹©Šˆ†ˆ üó©¬©e©8øìëêÏÎÓ»‘~ >):$$$""Tˆˆ†ˆËn6ÃÛ•†††±$Þ±±±¯¯Š«ûÞ‰©¦e€„g8ãîìëëÎÑºS~ž&)(&&!º´¬¬††¯$6z×¶‰†††±Þ¯±±±±¯¯ç×„©‚©he8 ãîëÏÏÎËÓT~b)&$$""¸±²Š†††	6À´††…††¯& Ýˆ¯±±±±¯åu¤©‚„‚‚LN2ãïêÎÎËÎÏp}b9(""žÐÏŠ†††ˆ$6ôÑ°¯°°°Ê;¡ñ¬¯±±±±¬%£v‰©„eeeKg2æïëÏÎËËÏp}}&)$""ãÐ¶ˆ…††ˆP6äx[[[w[[G¢ó´±±±±±¯'£™Ž¤eL‚¬eN2ûðÏÎÎËËÏ‹}Ä1+(((;9#ãÓ´†…††llGü¡¡ÅæÅÅÅæÄæô¶±±±±±¯'Åà•ªª©¬¤T""üïêÎËËÎÏ‹~üIG664!E{5ä”²ˆƒ…††lIû\Z0˜—UVAæôé±±±±²‹ææG65E1256üïÏËËËÎÎ±~ä[00BYXX#ä¹±Š††††lI{×ggee¬‚¤æóê±±±±²p", 10, "Åž0/""ûîÎËËËËËË}øÔ¯¯°°Ž¯S#Ã·Ì¯k†††lIEt‡¤LL‚eÅàÑÊ±±±±p", 10, "Å½jMMNMMmùìËËËËËËÉ~ã·…††††Œ:4ã²´Ê†††„ocC‡‡eeL‚æñÑ²¯±±¯‹", 10, "£wMJ7777iäÑÉÌËËËËÉ~Ã—·††††«:4ã´´Ð††††’¡¿„©„h©‡eûÝÑ±´±±²r", 10, "  xVM7777iãÑËÌËËËÎËä˜˜ˆ†††Œ:4ø¶Ñêˆ†††º}õh©¦e‚„e€çÝêêÑÊ±¹T!›VR777Jh	äÓÌÌËËËËÇæÚtˆ†††«%#öÏêê‰†††•bú‡¬©‚e‚‚åÝêÑÌÊ¯ÕT""¢Às>7777h	äÓÉËÉÉÇÈÇäº’††††«:#â¶êêˆ†††sbû‰¬©‚e††åñêÏ±±¯²³", 26, "!£›87777h	æÔÆ®ÆÆÇÈÉÃ’n††††ˆQ#â¶êÏŒ†††“aú†©©‚eff„åòëÌ¯±±¯²", 26, " Åwj77777g	ûÖÆÇÆÆÆÉË~Âpn††††ŠQ""õÌêÏÐˆ††—aù‰¬©¦€€€‰åóëÏ¯±±¯²", 13, "£u8K777Kg	ûíÆÇÆÆÆÉÉ<¬†††ˆËQ""ßÊê¶Ïˆ††˜aù‡¬©©‚„‚°ÅóëÏ¯±±¯‘£A&K777gi	ûÔÆÇÆÆÆÈÇÅÁº¶ˆ©†…É&""y¯Ñ±Ïˆ¨¬WI÷†©©¬©‡¦²ÄòêÊ±±±±ÅvqMg77M8	çÑÇÉÉÆÆ®®"
+	section	.text,"ax",@progbits
+	weak	__ZN5imat2mlERK5ivec2
+__ZN5imat2mlERK5ivec2:
+	ld	hl, -6
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (ix + 12)
+	ld	bc, (iy)
+	ld	hl, (hl)
+	ld	(ix - 6), hl
+	call	__imulu
+	ld	(ix - 3), hl
+	ld	bc, (iy + 6)
+	ld	iy, (ix + 12)
+	ld	de, (iy + 3)
+	push	de
+	pop	hl
+	call	__imulu
+	ld	bc, (ix - 3)
+	add	hl, bc
+	ld	a, 8
+	ld	c, a
+	call	__ishrs
+	ld	(ix - 3), hl
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 3)
+	ld	bc, (ix - 6)
+	call	__imulu
+	ld	(ix - 6), hl
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 9)
+	push	de
+	pop	bc
+	call	__imulu
+	ld	de, (ix - 6)
+	add	hl, de
+	ld	c, a
+	call	__ishrs
+	ld	iy, (ix + 6)
+	ld	de, (ix - 3)
+	ld	(iy), de
+	ld	(iy + 3), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__Z12drawTexStripPKhhjiij
+__Z12drawTexStripPKhhjiij:
+	ld	hl, -22
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	a, (ix + 9)
+	ld	(ix - 16), a
+	ld	hl, (ix + 12)
+	ld	(ix - 12), hl
+	ld	hl, (ix + 15)
+	ld	(ix - 15), hl
+	ld	hl, (ix + 18)
+	ld	de, (ix + 21)
+	ld	(ix - 3), de
+	ld	bc, 256
+	ld	de, -32
+	call	__irems
+	ld	c, 2
+	call	__ishl
+	push	de
+	pop	bc
+	call	__iand
+	push	hl
+	pop	de
+	add	iy, de
+	ld	(ix - 19), iy
+	ld	hl, _malloc
+	push	hl
+	ld	hl, (ix - 3)
+	push	hl
+	ld	hl, 1
+	push	hl
+	call	_gfx_AllocSprite
+	ld	bc, (ix - 3)
+	ld	(ix - 9), hl
+	pop	hl
+	pop	hl
+	pop	hl
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	pop	iy
+	ld	(ix - 6), hl
+BB31_1:
+	push	bc
+	pop	hl
+	ld	de, (ix - 6)
+	or	a, a
+	sbc	hl, de
+	jr	z, BB31_3
+	lea	hl, iy
+	ld	(ix - 22), hl
+	call	__idivu
+	push	hl
+	pop	bc
+	ld	hl, (ix - 19)
+	add	hl, bc
+	ld	de, 341
+	add	hl, de
+	ld	a, (hl)
+	ld	iy, (ix - 9)
+	ld	de, (ix - 6)
+	add	iy, de
+	ld	(iy + 2), a
+	ld	bc, (ix - 3)
+	inc	de
+	ld	(ix - 6), de
+	ld	de, 32
+	ld	iy, (ix - 22)
+	add	iy, de
+	jr	BB31_1
+BB31_3:
+	or	a, a
+	sbc	hl, hl
+	ld	a, (ix - 16)
+	ld	l, a
+	ld	(ix - 6), hl
+	ld	de, (ix - 12)
+	add	hl, de
+	ld	de, 321
+	or	a, a
+	sbc	hl, de
+	jr	nc, BB31_7
+	ld	iy, (ix - 3)
+	ld	bc, (ix - 15)
+	add	iy, bc
+	ld	de, 0
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB31_7
+	ld	de, 240
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	jr	nc, BB31_7
+	ld	hl, 1
+	push	hl
+	ld	l, a
+	push	hl
+	ld	hl, (ix - 15)
+	push	hl
+	ld	hl, (ix - 12)
+	push	hl
+	ld	hl, (ix - 9)
+	push	hl
+	call	_gfx_ScaledSprite_NoClip
+	pop	hl
+	jr	BB31_8
+BB31_7:
+	ld	hl, 1
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	hl, (ix - 3)
+	push	hl
+	ld	hl, (ix - 6)
+	push	hl
+	ld	hl, (ix - 15)
+	push	hl
+	ld	hl, (ix - 12)
+	push	hl
+	call	_gfx_Rectangle
+BB31_8:
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix - 9)
+	ld	(ix + 6), hl
+	ld	sp, ix
+	pop	ix
+	jp	_free
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi
+__ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
+	ld	hl, -6
+	call	__frameset
+	ld	hl, (ix + 6)
+	ld	iy, (ix + 9)
+	ld	bc, 16
+	xor	a, a
+	ld	hl, (hl)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	ld	de, 1
+	jp	nz, BB32_7
+	ld	de, (iy + 3)
+	push	de
+	pop	hl
+	add	hl, bc
+	ld	bc, 33
+	or	a, a
+	sbc	hl, bc
+	jp	c, BB32_16
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 3)
+	ld	c, 8
+	ld	(ix - 3), hl
+	call	__ishl
+	push	de
+	pop	bc
+	call	__idivs
+	push	hl
+	pop	bc
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB32_16
+	ld	hl, (ix + 9)
+	ld	hl, (hl)
+	call	__imulu
+	ld	c, 8
+	call	__ishrs
+	ld	iy, (ix + 6)
+	ld	iy, (iy + 6)
+	push	hl
+	pop	de
+	ld	bc, 16
+	add	hl, bc
+	lea	bc, iy
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	jp	m, BB32_16
+	push	de
+	pop	bc
+	ex	de, hl
+	ld	de, -16
+	add	hl, de
+	ex	de, hl
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 9)
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB32_16
+	ld	hl, (ix + 12)
+	push	hl
+	pop	iy
+	ld	(iy), bc
+	ld	hl, (ix - 3)
+	ld	(iy + 3), hl
+	ld	hl, (ix + 15)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jp	z, BB32_15
+	ld	hl, (ix + 6)
+	push	hl
+	pop	iy
+	ld	de, (iy + 6)
+	push	bc
+	pop	hl
+	jp	BB32_14
+BB32_7:
+	or	a, a
+	sbc	hl, de
+	jp	nz, BB32_16
+	ld	de, (iy)
+	push	de
+	pop	hl
+	add	hl, bc
+	ld	bc, 33
+	or	a, a
+	sbc	hl, bc
+	jp	c, BB32_16
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 3)
+	ld	c, 8
+	ld	(ix - 3), hl
+	call	__ishl
+	push	de
+	pop	bc
+	call	__idivs
+	push	hl
+	pop	bc
+	ld	de, 1
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB32_16
+	ld	iy, (ix + 9)
+	ld	hl, (iy + 3)
+	call	__imulu
+	ld	c, 8
+	call	__ishrs
+	ld	iy, (ix + 6)
+	ld	de, (iy + 6)
+	ld	(ix - 6), hl
+	ld	bc, 16
+	add	hl, bc
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB32_16
+	ld	hl, (ix - 6)
+	ld	de, -16
+	add	hl, de
+	ex	de, hl
+	ld	hl, (iy + 9)
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB32_16
+	ld	hl, (ix + 12)
+	push	hl
+	pop	iy
+	ld	hl, (ix - 3)
+	ld	(iy), hl
+	ld	hl, (ix - 6)
+	ld	(iy + 3), hl
+	ld	hl, (ix + 15)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB32_15
+	ld	hl, (ix + 6)
+	push	hl
+	pop	iy
+	ld	de, (iy + 6)
+	ld	hl, (ix - 6)
+BB32_14:
+	or	a, a
+	sbc	hl, de
+	ld	c, 8
+	call	__ishl
+	ld	(ix - 3), hl
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 9)
+	or	a, a
+	sbc	hl, de
+	push	hl
+	pop	bc
+	ld	hl, (ix - 3)
+	call	__idivs
+	push	hl
+	pop	bc
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 15)
+	ld	de, (iy + 12)
+	or	a, a
+	sbc	hl, de
+	call	__imulu
+	ld	c, 8
+	call	__ishrs
+	add	hl, de
+	ld	iy, (ix + 15)
+	ld	(iy), hl
+BB32_15:
+	ld	a, 1
+BB32_16:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
 
 	section	.rodata,"a",@progbits
 	private	__ZL8cosTable
@@ -6774,6 +3426,11 @@ _playerPos:
 	rb	6
 
 	section	.data,"aw",@progbits
+	public	_brick_wall_arr_data
+_brick_wall_arr_data:
+	db	"ss“s“s‘s’W‘•‘Wr•·t‘•·Xv©tsRÖ’sq‹s’r±WW“q•tW±AX“¯”—”‹AXYˆu—“”AWW‹“•ÑXXVs»tWÏ””t†»X>É¼ˆ-·¬]¬¦˜XtKBÖÌ—ˆ-yu›©¬\S-»gZÚÚ–†.¹Z‰‹B†=Ö„Z´¯—†@Õ‚Z‹Š[ˆT»†Z²±—„-»©\ˆx¯>»„Z¯±E", 13, "»©ZW-[ÊWy-\´±[)×²XÌpBÏ”Ø‹vˆ[<»²v´o[±”Û²vŠ[(•P[¯i\ÓuÛ©v’‰w(¼s]¯h[rWÛ©vÙ—w&¼ˆB‹lw†UÛ¤uëÏ\$", 26, "”ˆB³lw¬TÙ‚të¸C$»†B˜—š±T˜„uë´›s1»†Bjš±=x>CÏË¾†.Ø†w‡‚™ÊAv70ÌÉ™†@Õ©\©„™±UtKBÉÇÀ¸¯†O’Ì¯¨.¡°©„¦DÕ††¨/yjKK$bÕÉÆÆ¿Ñˆ†l—°‹¬A¢ª¬©¯CÚ”s•4xjLK$cÞÖÓÓz·Š†lå``z`Å­©©¯DF.-¾‰hL9|áÁÁÁw´¬†h›‡¦;¢­¦¦´3—¥„†½¯ˆg9`ÏÉÉêw±«†i˜¦€Nc¬ˆ‹—†„†¼±ˆ„;_´¯ŠËœ¯ˆ‚l½©‚9I‹†¬‹˜Š††Þ®†hSaÑ¯Š±ÀŠn„Oß©‚„9a°†ŠŠ¼nˆƒÞnˆ„Pc´±±ÊÀ«†„iÞ©†g;}²†ˆ¬4¼¯„†½«i†P|²¯«ÉÀ†„„i½©¬¤T}°†ˆ«5ÙÉ††Þ†„†9}²¯±ÉÀ¨„ih¼©©©T¹ˆˆ†`¼±«‚¾¥„„9}²¯±É¢1", 13, "5½©¦©UI5¼±É©åB¡Ð±±É~", 26, "¾¦†ÊT[²ˆTÙ±ÏìãoS(<}²¯¯¯Ÿ)ò¨lÐTBÊÌˆqÙÉêíâ††ˆP}²ˆŠO *)<+ò©¬Ð>\éÊ…qÚ±éì0öˆ¯¯q}²†©‹},:@,òˆ´´UyÑ¯†q!Û±Êì0öˆ¯´{·†ˆ¨|<'@,Þ†²¬T´¬†Ž3Ø±±é/ø©‹Ðq{·†ˆ«};,?¼††o<{´Š†i!ØÌÏé/÷¥i·c¹†ˆ«¡+%)?œS:&{Ìˆ†P!¿——˜3÷¥†°c˜qpS¡;(&+Ãx[xDÂÊ††O4DYZZ2ö©¦¥{¿š›yÅ;::)Þˆˆ¨-´Š†84’«††/ã©©©‹_îËË¢;:9(Á’†ˆ+z²ˆˆl6”Š††0ã©©¤‹`îÏË¶¢<(àŽ†Š{¬††nG—††Šö©¦€hžîÏËÑ¢>&$™†…ˆ,~Õ††QG—ˆˆˆ÷©„‚gzìÏÏ¹~+&$™¬ˆ«`»ˆ†Q6Ö±¯¬â¦‚„M`ìêÏ‘d$¼²††", 10, "z°‹‹oGÕ±±¯", 26, "›¦‚ezîÏÎ²&&$Ý¯…†~z{z¢Ú±±¯Á‚©j}îÎÎ±¢D3115¾¬…†}tqŽqGð±±¬Å21~ìËÎË¡²‹‹p ¼´††(GŽeFÚ±±¬MMM+aÏÌËË¡—††nÝÏ††?Á‡„‡€_îÏ²‘{R77&_ÏÌËË¢»††lÜêˆ†-Ã©‡‚EïÌ±µžR77$`ÏÉÇÈ p††nÛÑ¬†.Ã©¦€‚EïÊ±²œM7J$bÐÇÆÉÂˆ†p—Ï¯ˆÂ¦©¤©EïÊ±°zNKL$bÏÈÆÇ}òÔ¶¯¯†ˆŒ9""˜¨Ð±Ïˆˆˆtcú³©©¬‚‹", 13, "ãÝ¬††…†¨«<!ÂZjjKKKKM	çÝ®±ËÆ®®Æ}óº±²©†††$""•ŠÏ´´†¥¯VIæ­¬©¬¦¤„²ÃÝ…†…†¨Š+""žZjg77JJK	çÝÇÉÉÆ®®ÆcóºÑŒ††††O""–¬²Šˆ†¥¨tIæª©©¬©¦¦´ Û¯ˆ…k…¯·!XjgLJJJMü¿±ËÉÆ®®ÆGó¸éŠ…†††l!Ásq°²ŽŽµuæª©©¬¬©©´À½™š™vv\ÄÂsjŽNKKKMüû¾ÜððÛÚÙ6àºÌŠ††††Q""çü¢d~¢¢ææ­¦©©©©¬²", 13, "¢c6! 6Ã—jmjLLKMüüçüüüüüû6¿º¯¯ˆ†„„P""æžC\y[ww\}æ³©©ˆ¬¦©¶", 13, "¢_Y:NNNN8ãÖ‰‹eMLMü½—˜—uvwB5Ý·¬±ˆ†„„O""åwj‡¦°©‚dæ³©©¥¦¤¬¶¡z§†ƒƒ„†", 10, "âÓ¬¯¬„eegûìËËÌÌÏìÔ3Û´ÉÉ†„„‚9""ã.¦‚LL¦‚K>cæ³¥¦¥„©´¶ _†¥†¥„ˆÁÑ±±¯hfggÅÐ±¯¯¯±ÎÏ3Ú±±É†„ˆ„9""â>¦ªLeKK?6Å³ˆ¥©i¬²²I`„h„„„†", 10, "ÁÑ±±¯h†‚‰", 10, "ãÏ±¯¬ˆ¯ÉË5Ü±±±†‚†‹O""Ám‰¦‡‚eK>""¢²†††ˆS‹Gz¯¨„hhƒ†", 10, "ÂÑ±®¯h„ƒÊãÏ²±Š†¬±Ë6ñ±®¯„hh‰j""ãª©©e„†eL,"" °††l‹p‹Gz²«Ših†ˆ& ãÔ±®¨hhh°+åë²¯Š†¬±±`ó±¬‚‚‚„j#å¹©©„eg‰L", 26, """ †††©¯¯iGœ²«Ql†„†(!äí¯®†ff‚†>æî±¯¬Š¯±±~ó(QŒ†‚„%""ùÕ©©¦e„„e", 26, "# ²‹†ˆ†¯±NH´Šl¨ƒ„!äÖl:Š¥ƒ‚ˆÅÓ«±±±±²Ï~ò¯«PŠ¨‚†9""æÒ©©†e‚†€", 26, "G Ò††††¨¯ˆdÁ·nlˆƒ‚ƒ""¡Ó¬ˆP¬†‚Š!ûÒˆ±±±±±Ï~ò««n†„„„O""å¹©©¦eee", 26, "c¡Ôˆ†…ˆŠ«‹¢Á¶±«„h‚ˆ)"" Ò««i†„ƒ†+!üÓ†¬±¯«¯Ï~ñ««†hhˆ¨N""Å¹©©©„hfˆ", 26, "c ·††i†ˆ«¬¢Á¶±±†h‚©!Å¸«ˆkh‚¨†&ûÓ„‹±¯ˆ¬Ë~ò¨„hƒhh…9""Äµ©©¬©¦¤¬", 26, "c ¸††††ˆ«¬¢À¶ÉÈ†h¦‡", 10, "!û¸ˆih‚h„i", 10, "üÓ„¨±¯¯±Ë~Þ…„†„†…¥N""Ã³©©¬©¦¤²cÓ††††ˆ¨¬¢À¶ÉÉˆ„†h", 10, "!ú¸††††„¥†3üÒ…«±±±±Ë~Þˆ¥†„„„ˆN""Â³¦©©©©©°cÓ††……¥¥¬£ÀÌ±É±†‚„ å¹ˆ¥†„„†„4üÒ…«±±±±Ë~à¬¥‚hhh‚9"" µ¦©©©©¬°aûÞo‰¨¨ˆi95æÁ¶±ÉÉ«hh", 10, " ÄÖ¥†ƒhhii", 10, "üÕˆ¯±±±ÈË~úC&&", 10, "65 ¹¦©¦©¦¬´6# ""dÂÐ¯ÉÉÉ„‡ÅÅ/(&&Gü×±±±±±±É~¢5!##Â¹©¥¥¤¥°´#}", 13, 13, "IÀÐ¯±¯Ë²‹ææI645GüÕ¯¯±±¯±É~~", 13, 13, """ã¹¦¥†„¬Í´", 26, "!š²‹‰†Š¹H¿´¯É±Ñêê+çÁU??	+", 26, """ü¸Š¯±±¯¯É}Ÿ+%", 10, "+""ùµ¥¥†i²Ðµ—«Ì´Šˆ¨¹H¿´¯ÉÌëìí,üÝ†lnnPoŽ+üÓŠ«¯±¯Š®}Ÿ)'%", 10, 10, "6üµ¥¦hˆÌÐ·—¨ÑÌ±ˆ¨»GÀ´¯ÉÏëìí,üÛ†…†††mh&ü»††¬¯ˆhl}Á*%)Iü·©¨i‰ÐÐ·˜ÈêÌÌ…†µ>GÀÊ±Ëèììí,üÛˆ…†ˆ†ˆ‹<üº††ŠŠlP}Â,*<**", 26, "Hü¹©©l°ÐÐ", 26, "¼èêÑÌkƒ©XHÀ´¯Ééììí- ûñˆ…ˆ²¯Š²;üº……†¨©‹‹}Ã?%'=U*=", 26, "5üÒ©ˆ©´ÐÐ:-!½èê´¯…„Š.Iá¶±ÈÌêìí?!üòˆ…ŠÍ¶Š¶;üºˆ††ˆ¯±lcÃ@%'<@,=,""ûÒ†‰¬ÍÍ´µ-6¾ÌêÏ……†>dâÌ±±±éêí@!æó¨†¨Ê¶¯ÐTüÕˆ†ˆ†¨¯lFÃ?%(:@@=,""ûÕ†ˆ¯Ð²´·", 26, "IÞÏêÐˆ…†A¢á¶±¯¯Ìéì< çóˆ†©ÊÐ´´TüïŠ††ˆŠ««GÃ?(')@U@!ú¹†l±Í¯²µ", 13, "aò¯êÌ†††ˆt¢¿ÌÉ¯¯±Ìì<!üó¨¨ˆ¯ÐÐ<üÙˆ†…ˆŠ««HÃ?''=U@,!ø²ˆlŠ²‹µ", 13, "cóˆÌ´††††s¢¾´±ÉÊÊÊì<3üò©¬©‰Í¸·SüØl†……ˆ¨«HÃ>''", 10, ")@@,!â¬††††l‹Ž", 26, "d¿©¶¯†††ˆ;¢¾´²èÊÐÌì,!üòˆ¨ˆO´¸¸SüÚ††……ˆ¨«HÃ>'%", 10, "(@@,!â‹††††lTi", 13, "d›ÌÌ¬†††Š%¢¿¶ÌèêÌÍì=""ü¿ˆ¥†g°¸¸<üÛˆ†††ˆ¨¬dÃ>%%=@,!Ã³ˆ¨‹P;pQdœéŠ†††¨%¢ÀÔììîîïð.""üß¥¥¥„©·¸=üÜˆ†††¥©¬¢Ã>'%%%*@,!Åw		", 10, "~zì¬ˆ†††Š8¢¡áy335""üß¥¥¥††ÊÐ=ü}ZWWW?", 26, "~¢>:'%%%;,""çæÃ `GIc{åÁÐ±††††¨&¢H543343]F6üß¦©ˆ¥†¦´TüÄ  ž ¡ a¢>:)(9&:,""ùvWVWXY”-~à±Ìˆ†††¨$¢\Uq‘’’‘’-üò¤©©©¦¥²Tùñ¸¹–———˜£Ã>():)())#ùÓŠˆŠˆ†«S~ÞÉÌŠl††i¢—¨¯ˆ††††rüò¦©©©©©¯SãðÏ¶±¶¶rûÃ>:::::()#ø”…ƒƒ†„¯P~Þ´¯´†††N	¢—«¬Š†………qçÞ©©¬©©¬©SÂïÏÎÎÎËÏq£Ã>::::&(+#úuÖˆ„††¬l~yÓ±¯ˆ†ˆˆ$£˜ˆ¬¬ˆ†††U çÞ©¬¬©©†­TâðëÏÎËËÏrÃ>:(:9%$(#ü½—‰„††®P~\q©ˆ††ŠË9Å½††ˆ†††ˆ= çò©©©©¦‚¦S äðëÏËËËÏ”Ä?:)9$$""ûÜ”‰†††Ç%}y°l††††±:æ¿ˆ†††††¬* ûß©©©¤f‚PEùïëÏÎËËËºÄ?::&""å»†k††«‹}zén…k††®9æßˆ†††††¬' ûß¦©©„ee€:]ùîëÏÎËËÌºÄ.:9$$'""Ã’ˆ†…†††| í³lk††±%æßˆ………ˆˆ©( üó©­‡e€¦9ùìëÏËËÏÏºÄ.::$%'""ÁTl†…††«ŒaÄït‰k††¯Åò‹©Šˆ†ˆ üó©¬©e©8øìëêÏÎÓ»‘~ >):$$$""Tˆˆ†ˆËn6ÃÛ•†††±$Þ±±±¯¯Š«ûÞ‰©¦e€„g8ãîìëëÎÑºS~ž&)(&&!º´¬¬††¯$6z×¶‰†††±Þ¯±±±±¯¯ç×„©‚©he8 ãîëÏÏÎËÓT~b)&$$""¸±²Š†††	6À´††…††¯& Ýˆ¯±±±±¯åu¤©‚„‚‚LN2ãïêÎÎËÎÏp}b9(""žÐÏŠ†††ˆ$6ôÑ°¯°°°Ê;¡ñ¬¯±±±±¬%£v‰©„eeeKg2æïëÏÎËËÏp}}&)$""ãÐ¶ˆ…††ˆP6äx[[[w[[G¢ó´±±±±±¯'£™Ž¤eL‚¬eN2ûðÏÎÎËËÏ‹}Ä1+(((;9#ãÓ´†…††llGü¡¡ÅæÅÅÅæÄæô¶±±±±±¯'Åà•ªª©¬¤T""üïêÎËËÎÏ‹~üIG664!E{5ä”²ˆƒ…††lIû\Z0˜—UVAæôé±±±±²‹ææG65E1256üïÏËËËÎÎ±~ä[00BYXX#ä¹±Š††††lI{×ggee¬‚¤æóê±±±±²p", 10, "Åž0/""ûîÎËËËËËË}øÔ¯¯°°Ž¯S#Ã·Ì¯k†††lIEt‡¤LL‚eÅàÑÊ±±±±p", 10, "Å½jMMNMMmùìËËËËËËÉ~ã·…††††Œ:4ã²´Ê†††„ocC‡‡eeL‚æñÑ²¯±±¯‹", 10, "£wMJ7777iäÑÉÌËËËËÉ~Ã—·††††«:4ã´´Ð††††’¡¿„©„h©‡eûÝÑ±´±±²r", 10, "  xVM7777iãÑËÌËËËÎËä˜˜ˆ†††Œ:4ø¶Ñêˆ†††º}õh©¦e‚„e€çÝêêÑÊ±¹T!›VR777Jh	äÓÌÌËËËËÇæÚtˆ†††«%#öÏêê‰†††•bú‡¬©‚e‚‚åÝêÑÌÊ¯ÕT""¢Às>7777h	äÓÉËÉÉÇÈÇäº’††††«:#â¶êêˆ†††sbû‰¬©‚e††åñêÏ±±¯²³", 26, "!£›87777h	æÔÆ®ÆÆÇÈÉÃ’n††††ˆQ#â¶êÏŒ†††“aú†©©‚eff„åòëÌ¯±±¯²", 26, " Åwj77777g	ûÖÆÇÆÆÆÉË~Âpn††††ŠQ""õÌêÏÐˆ††—aù‰¬©¦€€€‰åóëÏ¯±±¯²", 13, "£u8K777Kg	ûíÆÇÆÆÆÉÉ<¬†††ˆËQ""ßÊê¶Ïˆ††˜aù‡¬©©‚„‚°ÅóëÏ¯±±¯‘£A&K777gi	ûÔÆÇÆÆÆÈÇÅÁº¶ˆ©†…É&""y¯Ñ±Ïˆ¨¬WI÷†©©¬©‡¦²ÄòêÊ±±±±ÅvqMg77M8	çÑÇÉÉÆÆ®®", 0, 0
+
+	section	.data,"aw",@progbits
 	public	_global_palette
 _global_palette:
 	db	0, 0, "ÿÿÅ<æ<åDEÅ(ÅIÅ¤HÄHåHåÈIÉ(ÉIÉiIjÉŠI«IƒÌ¤ÌäLåÌMÍ'ÍHÍiMŠM«M«ÍÌMÌÍíMÄPäPåPäÐåÐQÑÑ&QGQHÑiQŠQ«QÌQÌÑíQíÑR¤TÅÔåÔUÕ&U&Õ'ÕGUGÕiU«ÕÍÕíUVÖ/V/ÖPV¤X¤ØÄXÅØåØYÙ%Y(Y&ÙGYGÙiYiÙŠÙªY«ÙÌÙíÙÚ.Z/ÚPZPÚQÚqZqÚä\äÜåÜ]ÝÝ$]%]&]%Ý&ÝF]GÝg]‰]ŠÝ«ÝÌÝíÝÞ/^PÞq^qÞ’^’Þ³^ä`åàaáá$a%a&a%á&áEaFaEáFáGáHágaháˆa‰á©aªáÊaËáìa", 13, "b.bPbPâqâ’b’â³b³âÔbÕâ&e%å&åDeEeFeGeEåFåGåeefegefågåhå‡eˆe‡åˆå¨e©e©åÊe-f.æOæpf‘f’æ³f´æÕæõfeieéfé†i‡i†é‡éˆé¦i§i¨i¨é©éÉiÉéÊéêiìiìéjê-j-êNjOêqê‘j²j³êÔêõjöêk7k§m¨íÈmÈíémêí", 10, "n,nMnonpî‘î²n³îÔîõnõîï7o7ïXo~±þ"
@@ -6792,28 +3449,31 @@ _.str:
 	extern	_gfx_SetTextFGColor
 	extern	_gfx_Begin
 	extern	__fadd
+	extern	_powf
 	extern	_gfx_SetPalette
 	extern	_gfx_ScaledSprite_NoClip
 	extern	_gfx_Darken
 	extern	__ftoul
-	extern	_memcpy
 	extern	__ishl
 	extern	__ftol
 	extern	__idivs
+	extern	__idivu
+	extern	__setflag
 	extern	__iand
-	extern	_gfx_FillRectangle
 	extern	_gfx_AllocSprite
 	extern	__srems
+	extern	_sinf
 	extern	__ltof
+	extern	__ineg
+	extern	_cosf
+	extern	_sqrtf
 	extern	_os_GetCSC
 	extern	_free
 	extern	__fsub
+	extern	__frameset
 	extern	_sprintf
-	extern	_sin
 	extern	__lsub
-	extern	_pow
 	extern	_gfx_GetStringWidth
-	extern	_sqrt
 	extern	__ishrs
 	extern	__ishru
 	extern	__ultof
@@ -6821,8 +3481,8 @@ _.str:
 	extern	__fmul
 	extern	_gfx_SetDraw
 	extern	__Unwind_SjLj_Unregister
-	extern	__fneg
 	extern	__irems
+	extern	__fneg
 	extern	_gfx_ZeroScreen
 	extern	__fdiv
 	extern	__imulu
@@ -6831,5 +3491,5 @@ _.str:
 	extern	_gfx_PrintStringXY
 	extern	_gfx_End
 	extern	__fcmp
-	extern	_cos
+	extern	__frameset0
 	extern	_clock
