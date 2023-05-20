@@ -1856,7 +1856,7 @@ BB29_24:
 	ld	de, 80
 	or	a, a
 	sbc	hl, de
-	jp	z, BB29_42
+	jp	z, BB29_35
 	ld	de, -895
 	lea	hl, ix
 	add	hl, de
@@ -1902,42 +1902,42 @@ BB29_24:
 	or	a, a
 	sbc	hl, hl
 	push	hl
-	pop	iy
-	ld	de, 25600
-	push	de
 	pop	bc
+	ld	de, 25600
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -892
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
 	push	ix
 	ld	de, -904
 	add	ix, de
-	ld	(ix), iy
+	ld	(ix), hl
 	pop	ix
+	push	ix
+	ld	de, -889
+	add	ix, de
+	ld	iy, (ix)
+	pop	ix
+	ld	bc, (ix - 3)
 BB29_26:
-	lea	hl, iy
+	push	hl
+	pop	bc
 	ld	de, 270
 	or	a, a
 	sbc	hl, de
-	ld	de, -892
+	jp	z, BB29_34
+	ld	de, -926
 	lea	hl, ix
-	push	af
 	add	hl, de
-	pop	af
 	ld	(hl), bc
-	jp	z, BB29_35
-	ld	bc, -926
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	lea	de, iy
-	ld	bc, -913
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	add	hl, de
 	push	ix
-	ld	bc, -889
-	add	ix, bc
-	ld	iy, (ix)
+	ld	de, -913
+	add	ix, de
+	ld	hl, (ix)
 	pop	ix
+	add	hl, bc
 	pea	iy + 100
 	pea	iy + 103
 	ld	bc, -916
@@ -2021,74 +2021,29 @@ BB29_30:
 	add	hl, bc
 	ld	hl, (hl)
 BB29_32:
-	lea	bc, iy
-	ld	de, -904
+	push	ix
+	ld	bc, -892
+	add	ix, bc
+	ld	(ix), iy
+	pop	ix
+	ld	bc, -904
 	lea	iy, ix
-	add	iy, de
+	add	iy, bc
 	ld	(iy), hl
-	ld	de, -926
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	jr	BB29_34
 BB29_33:
-	ld	de, -892
+	ld	bc, -889
 	lea	hl, ix
-	add	hl, de
-	ld	bc, (hl)
-	ld	de, -926
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-BB29_34:
+	add	hl, bc
+	ld	iy, (hl)
+	push	ix
+	ld	bc, -926
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
 	ld	de, 27
-	add	iy, de
+	add	hl, de
 	jp	BB29_26
-BB29_35:
-	push	bc
-	pop	hl
-	ld	bc, 25
-	call	__imulu
-	ld	c, 8
-	call	__ishrs
-	push	hl
-	pop	bc
-	push	bc
-	pop	iy
-	add	iy, iy
-	sbc	hl, hl
-	ld	a, l
-	call	__ltof
-	ld	hl, 8257536
-	ld	e, 67
-	call	__fcmp
-	ld	e, 1
-	jp	m, BB29_37
-	ld	e, 0
-BB29_37:
-	bit	0, e
-	jr	nz, BB29_39
-	push	bc
-	pop	hl
-BB29_39:
-	bit	0, e
-	ld	e, 67
-	jr	nz, BB29_41
-	ld	e, a
-BB29_41:
-	push	hl
-	pop	bc
-	ld	a, e
-	call	__ftoul
-	push	bc
-	ld	hl, 224
-	push	hl
-	call	_gfx_Darken
-	pop	de
-	pop	de
-	push	hl
-	call	_gfx_SetColor
-	pop	hl
+BB29_34:
 	ld	hl, 65536
 	ld	de, -892
 	lea	iy, ix
@@ -2148,7 +2103,7 @@ BB29_41:
 	pop	hl
 	inc	bc
 	jp	BB29_24
-BB29_42:
+BB29_35:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -2291,20 +2246,24 @@ __ZN5imat2mlERK5ivec2:
 	section	.text,"ax",@progbits
 	weak	__Z12drawTexStripPKhhjiij
 __Z12drawTexStripPKhhjiij:
-	ld	hl, -22
+	ld	hl, -28
 	call	__frameset
-	ld	iy, (ix + 6)
+	ld	hl, (ix + 6)
+	ld	(ix - 6), hl
 	ld	a, (ix + 9)
-	ld	(ix - 16), a
 	ld	hl, (ix + 12)
-	ld	(ix - 12), hl
-	ld	hl, (ix + 15)
 	ld	(ix - 15), hl
+	ld	hl, (ix + 15)
+	ld	(ix - 3), hl
 	ld	hl, (ix + 18)
 	ld	de, (ix + 21)
-	ld	(ix - 3), de
+	ld	(ix - 12), de
 	ld	bc, 256
 	ld	de, -32
+	ld	iy, (_img_strip)
+	ld	(iy + 1), -16
+	ld	iy, (_img_strip)
+	ld	(iy), b
 	call	__irems
 	ld	c, 2
 	call	__ishl
@@ -2313,113 +2272,140 @@ __Z12drawTexStripPKhhjiij:
 	call	__iand
 	push	hl
 	pop	de
-	add	iy, de
-	ld	(ix - 19), iy
-	ld	hl, _malloc
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	ld	hl, 1
-	push	hl
-	call	_gfx_AllocSprite
-	ld	bc, (ix - 3)
-	ld	(ix - 9), hl
-	pop	hl
-	pop	hl
-	pop	hl
-	or	a, a
-	sbc	hl, hl
-	push	hl
-	pop	iy
+	ld	hl, (ix - 6)
+	add	hl, de
 	ld	(ix - 6), hl
-BB31_1:
+	ld	bc, (ix - 12)
 	push	bc
 	pop	hl
-	ld	de, (ix - 6)
+	ld	de, (ix - 3)
+	add	hl, de
+	ld	(ix - 18), hl
+	ld	hl, 64
 	or	a, a
-	sbc	hl, de
-	jr	z, BB31_3
-	lea	hl, iy
-	ld	(ix - 22), hl
-	call	__idivu
+	sbc	hl, bc
+	ld	(ix - 21), hl
+	ld	de, (_img_strip)
+	push	de
+	pop	iy
+	lea	hl, iy + 2
+	ld	(iy + 2), 0
+	ld	iy, (ix - 18)
 	push	hl
-	pop	bc
-	ld	hl, (ix - 19)
-	add	hl, bc
+	pop	de
+	inc	de
+	ld	bc, 239
+	ldir
+	ld	hl, (ix - 12)
+	ld	bc, -2
+	call	__imulu
+	ld	(ix - 25), hl
+	or	a, a
+	sbc	hl, hl
+	ld	(ix - 9), hl
+	ld	bc, (ix - 3)
+BB31_1:
+	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
+	jr	c, BB31_7
+	ld	(ix - 22), a
+	ld	de, (ix - 9)
+	ld	hl, (ix - 6)
+	add	hl, de
 	ld	de, 341
 	add	hl, de
 	ld	a, (hl)
-	ld	iy, (ix - 9)
-	ld	de, (ix - 6)
-	add	iy, de
-	ld	(iy + 2), a
-	ld	bc, (ix - 3)
-	inc	de
-	ld	(ix - 6), de
-	ld	de, 32
-	ld	iy, (ix - 22)
-	add	iy, de
-	jr	BB31_1
-BB31_3:
-	or	a, a
-	sbc	hl, hl
-	ld	a, (ix - 16)
-	ld	l, a
-	ld	(ix - 6), hl
-	ld	de, (ix - 12)
-	add	hl, de
-	ld	de, 321
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB31_7
-	ld	iy, (ix - 3)
-	ld	bc, (ix - 15)
+	ld	iy, (_img_strip)
 	add	iy, bc
-	ld	de, 0
-	push	bc
-	pop	hl
+	ld	(iy + 2), a
+	ld	iy, (ix - 21)
+	lea	hl, iy
+	ld	de, 1
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB31_7
-	ld	de, 240
+	ld	a, -1
+	jp	p, BB31_4
+	ld	a, 0
+BB31_4:
+	bit	0, a
+	ld	hl, (ix - 25)
+	jr	nz, BB31_6
+	or	a, a
+	sbc	hl, hl
+BB31_6:
+	ld	(ix - 28), hl
+	and	a, 1
+	ld	de, 0
+	ld	e, a
+	ld	hl, (ix - 9)
+	add	hl, de
+	ld	(ix - 9), hl
+	ld	de, 64
+	add	iy, de
+	ld	de, (ix - 28)
+	add	iy, de
+	ld	(ix - 21), iy
+	inc	bc
+	ld	a, (ix - 22)
+	ld	iy, (ix - 18)
+	jr	BB31_1
+BB31_7:
+	ld	de, 0
+	push	de
+	pop	hl
+	ld	l, a
+	ld	(ix - 6), hl
+	ld	bc, (ix - 15)
+	add	hl, bc
+	ld	bc, 321
+	or	a, a
+	sbc	hl, bc
+	jr	nc, BB31_11
+	ld	bc, 0
+	ld	hl, (ix - 3)
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	jp	m, BB31_11
+	ld	bc, 240
 	lea	hl, iy
 	or	a, a
-	sbc	hl, de
-	jr	nc, BB31_7
-	ld	hl, 1
-	push	hl
-	ld	l, a
-	push	hl
-	ld	hl, (ix - 15)
-	push	hl
-	ld	hl, (ix - 12)
-	push	hl
-	ld	hl, (ix - 9)
+	sbc	hl, bc
+	jr	nc, BB31_11
+	ld	hl, (_img_strip)
+	ld	bc, 1
+	push	bc
+	ld	c, a
+	push	bc
+	push	de
+	ld	de, (ix - 15)
+	push	de
 	push	hl
 	call	_gfx_ScaledSprite_NoClip
 	pop	hl
-	jr	BB31_8
-BB31_7:
+	jr	BB31_12
+BB31_11:
 	ld	hl, 1
 	push	hl
 	call	_gfx_SetColor
 	pop	hl
-	ld	hl, (ix - 3)
+	ld	hl, (ix - 12)
 	push	hl
 	ld	hl, (ix - 6)
 	push	hl
+	ld	hl, (ix - 3)
+	push	hl
 	ld	hl, (ix - 15)
 	push	hl
-	ld	hl, (ix - 12)
-	push	hl
 	call	_gfx_Rectangle
-BB31_8:
+BB31_12:
 	pop	hl
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, (ix - 9)
+	ld	hl, (_img_strip)
 	ld	(ix + 6), hl
 	ld	sp, ix
 	pop	ix
@@ -2433,23 +2419,24 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	call	__frameset
 	ld	hl, (ix + 6)
 	ld	iy, (ix + 9)
-	ld	bc, 16
+	ld	de, 16
 	xor	a, a
 	ld	hl, (hl)
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	ld	de, 1
 	jp	nz, BB32_7
-	ld	de, (iy + 3)
-	push	de
+	ld	bc, (iy + 3)
+	push	bc
 	pop	hl
-	add	hl, bc
-	ld	bc, 33
+	add	hl, de
+	ld	de, 33
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	jp	c, BB32_16
 	ld	iy, (ix + 6)
+	push	bc
+	pop	de
 	ld	hl, (iy + 3)
 	ld	c, 8
 	ld	(ix - 3), hl
@@ -2459,7 +2446,9 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	call	__idivs
 	push	hl
 	pop	bc
-	ld	de, 1
+	ld	de, 16
+	push	bc
+	pop	hl
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
@@ -2511,18 +2500,22 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	pop	hl
 	jp	BB32_14
 BB32_7:
-	or	a, a
-	sbc	hl, de
-	jp	nz, BB32_16
-	ld	de, (iy)
-	push	de
-	pop	hl
-	add	hl, bc
-	ld	bc, 33
+	ld	bc, 1
 	or	a, a
 	sbc	hl, bc
+	jp	nz, BB32_16
+	lea	hl, iy
+	ld	bc, (hl)
+	push	bc
+	pop	hl
+	add	hl, de
+	ld	de, 33
+	or	a, a
+	sbc	hl, de
 	jp	c, BB32_16
 	ld	iy, (ix + 6)
+	push	bc
+	pop	de
 	ld	hl, (iy + 3)
 	ld	c, 8
 	ld	(ix - 3), hl
@@ -2532,7 +2525,9 @@ BB32_7:
 	call	__idivs
 	push	hl
 	pop	bc
-	ld	de, 1
+	ld	de, 16
+	push	bc
+	pop	hl
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
@@ -3421,6 +3416,16 @@ __ZL8cosTable:
 	dl	16776961
 
 	section	.bss,"aw",@nobits
+	public	_img_strip_data
+_img_strip_data:
+	rb	242
+
+	section	.data,"aw",@progbits
+	public	_img_strip
+_img_strip:
+	dl	_img_strip_data
+
+	section	.bss,"aw",@nobits
 	public	_playerPos
 _playerPos:
 	rb	6
@@ -3444,52 +3449,47 @@ _.str:
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
+	extern	_free
 	extern	__Unwind_SjLj_Register
-	extern	_malloc
+	extern	__frameset
 	extern	_gfx_SetTextFGColor
 	extern	_gfx_Begin
+	extern	_sprintf
 	extern	__fadd
+	extern	__lsub
+	extern	_gfx_GetStringWidth
 	extern	_powf
 	extern	_gfx_SetPalette
 	extern	_gfx_ScaledSprite_NoClip
-	extern	_gfx_Darken
-	extern	__ftoul
+	extern	__ishrs
+	extern	__ultof
 	extern	__ishl
+	extern	__fmul
 	extern	__ftol
+	extern	__ishru
+	extern	_gfx_SwapDraw
 	extern	__idivs
-	extern	__idivu
+	extern	_gfx_SetDraw
 	extern	__setflag
 	extern	__iand
-	extern	_gfx_AllocSprite
-	extern	__srems
-	extern	_sinf
-	extern	__ltof
-	extern	__ineg
-	extern	_cosf
-	extern	_sqrtf
-	extern	_os_GetCSC
-	extern	_free
-	extern	__fsub
-	extern	__frameset
-	extern	_sprintf
-	extern	__lsub
-	extern	_gfx_GetStringWidth
-	extern	__ishrs
-	extern	__ishru
-	extern	__ultof
-	extern	_gfx_SwapDraw
-	extern	__fmul
-	extern	_gfx_SetDraw
 	extern	__Unwind_SjLj_Unregister
-	extern	__irems
 	extern	__fneg
 	extern	_gfx_ZeroScreen
 	extern	__fdiv
+	extern	__srems
 	extern	__imulu
-	extern	_gfx_SetColor
+	extern	_sinf
+	extern	__ltof
 	extern	_gfx_Rectangle
-	extern	_gfx_PrintStringXY
+	extern	__ineg
+	extern	_gfx_SetColor
+	extern	_cosf
+	extern	_sqrtf
+	extern	_os_GetCSC
 	extern	_gfx_End
 	extern	__fcmp
 	extern	__frameset0
 	extern	_clock
+	extern	_gfx_PrintStringXY
+	extern	__fsub
+	extern	__irems
