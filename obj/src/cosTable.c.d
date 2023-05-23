@@ -1,1 +1,1 @@
-obj/src/cosTable.c.bc: src\cosTable.c
+obj/src/cosTable.c.src: src\cosTable.c

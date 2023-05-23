@@ -15,6 +15,8 @@
 #include "matrixMath.h"
 #include "vectorMath.h"
 
+#include "drawStrip.h"
+
 // #define DEBUG
 #ifdef DEBUG
 #include <debug.h>
@@ -49,9 +51,9 @@ class AA_Line {
             if ((ray.y <= DELTA) && (ray.y >= -DELTA)) {
                 return false;
             }
-            int mult = (pos << SHIFT) / ray.y;
+            fixed mult = (pos << SHIFT) / ray.y;
             if (mult >= DELTA) {
-                int xPos = (ray.x * mult) >> SHIFT;
+                fixed xPos = (ray.x * mult) >> SHIFT;
                 if (min_value <= xPos + DELTA && xPos - DELTA <= max_value) {
                     // dbg_printf("hiiii");
                     *hit = ivec2(xPos, pos);
@@ -69,9 +71,9 @@ class AA_Line {
             if ((ray.x <= DELTA) && (ray.x >= -DELTA)) {
                 return false;
             }
-            int mult = (pos << SHIFT) / ray.x;
+            fixed mult = (pos << SHIFT) / ray.x;
             if (mult >= DELTA) {
-                int yPos = (ray.y * mult) >> SHIFT;
+                fixed yPos = (ray.y * mult) >> SHIFT;
                 if (min_value <= yPos + DELTA && yPos - DELTA <= max_value) {
                     *hit = ivec2(pos, yPos);
                     if (texCoord != nullptr) {
@@ -89,11 +91,11 @@ class AA_Line {
         return false;
     }
     LineType type;
-    int pos;
-    int min_value, max_value;
-    int tex1, tex2;
-    int wPos;
-    int wMin_value, wMax_value;
+    fixed pos;
+    fixed min_value, max_value;
+    fixed tex1, tex2;
+    fixed wPos;
+    fixed wMin_value, wMax_value;
 };
 
 // void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, uint8_t yPos, fixed tex_pos,
@@ -142,8 +144,9 @@ inline void bresenhamLine(unsigned x0, unsigned y0, unsigned x1, unsigned y1) {
         D = D + 2 * dy;
     }
 }
-inline void writeTexStripToVBuffer(const unsigned char *start_arr_ptr, uint8_t *dest, uint8_t pxl_scl, unsigned xPos,
-                                   int yPos, fixed tex_pos, unsigned dest_height) {
+
+inline uint8_t *writeTexStripToBuffer(const unsigned char *start_arr_ptr, uint8_t *dest, uint8_t pxl_scl, unsigned xPos,
+                                      int yPos, fixed tex_pos, unsigned dest_height) {
     unsigned SRC_H = 32;
     unsigned SRC_H_SHIFT = 5;
     unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (SHIFT + 2)) / 3) >> SHIFT;
@@ -155,45 +158,20 @@ inline void writeTexStripToVBuffer(const unsigned char *start_arr_ptr, uint8_t *
     unsigned dx = x1 - x0;
     unsigned dy = SRC_H;
     int D = 2 * dy - dx;
-    unsigned y = 0;
 
-    for (unsigned x = x0; x <= x1; ++x) {
-        uint8_t *dest_strip_ptr = dest + xPos + x * GFX_LCD_WIDTH;
-        for (int i = 0; i < pxl_scl; ++i) {
-            *(dest_strip_ptr++) = *(strip_arr_ptr + y);
-        }
-        if (D > 0) {
-            y = y + 1;
-            D = D - 2 * dx;
-        }
-        D = D + 2 * dy;
-    }
-}
-
-inline uint8_t *writeTexStripToSpriteBuffer(const unsigned char *start_arr_ptr, uint8_t *dest, uint8_t pxl_scl,
-                                            unsigned xPos, int yPos, fixed tex_pos, unsigned dest_height) {
-    unsigned SRC_H = 32;
-    unsigned SRC_H_SHIFT = 5;
-    unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (SHIFT + 2)) / 3) >> SHIFT;
-    const uint8_t *strip_arr_ptr =
-        start_arr_ptr + img_offset + ((((tex_pos % (1 << SHIFT)) << SRC_H_SHIFT) >> SHIFT) << SRC_H_SHIFT);
-
-    unsigned x0 = yPos;
-    unsigned x1 = x0 + dest_height;
-    unsigned dx = x1 - x0;
-    unsigned dy = SRC_H;
-    int D = 2 * dy - dx;
-    unsigned y = 0;
+    dest += xPos + yPos * GFX_LCD_WIDTH;
 
     for (unsigned x = x0; x <= x1; ++x) {
         for (int i = 0; i < pxl_scl; ++i) {
-            *(dest++) = *(strip_arr_ptr + y);
+            *(dest) = *(strip_arr_ptr);
+            memset(dest, *(strip_arr_ptr), 4);
         }
         if (D > 0) {
-            y = y + 1;
+            ++strip_arr_ptr;
             D = D - 2 * dx;
         }
         D = D + 2 * dy;
+        dest += GFX_LCD_WIDTH;
     }
     return dest;
 }
@@ -202,8 +180,13 @@ gfx_UninitedSprite(img_strip, 1, GFX_LCD_HEIGHT);
 
 inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos, fixed tex_pos,
                          unsigned dest_height) {
-    img_strip->height = GFX_LCD_HEIGHT;
-    img_strip->width = 1;
+    // code to set background to black
+    // memset(img_strip->data, 0, GFX_LCD_HEIGHT);
+    // img_strip->height = GFX_LCD_HEIGHT;
+    // img_strip->width = 1;
+
+    // copy in floor texture
+    memcpy(img_strip, ceiling_floor_tex, GFX_LCD_HEIGHT + 2);
     unsigned SRC_H = 32;
     unsigned SRC_H_SHIFT = 5;
     unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (SHIFT + 2)) / 3) >> SHIFT;
@@ -220,7 +203,6 @@ inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, un
     int D = 2 * dy - dx;
     unsigned y = 0;
 
-    memset(img_strip->data, 0, GFX_LCD_HEIGHT);
     for (unsigned x = x0; x <= x1; ++x) {
         img_strip->data[x] = *(strip_arr_ptr + y);
         if (D > 0) {
@@ -229,41 +211,16 @@ inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, un
         }
         D = D + 2 * dy;
     }
-    // memmove(img_strip->data, strip_arr_ptr, height);
 
-    if ((xPos + pxl_scl) <= GFX_LCD_WIDTH && (yPos + dest_height) < GFX_LCD_HEIGHT && xPos >= 0 && yPos >= 0) {
-        gfx_ScaledSprite_NoClip(img_strip, xPos, 0, pxl_scl, 1);
-    } else {
-        gfx_SetColor(1);
-        gfx_Rectangle(xPos, yPos, pxl_scl, dest_height);
-        // continue;
-    }
-    free(img_strip);
+    // if ((xPos + pxl_scl) <= GFX_LCD_WIDTH && (yPos + dest_height) < GFX_LCD_HEIGHT && xPos >= 0 && yPos >= 0) {
+    gfx_ScaledSprite_NoClip(img_strip, xPos, 0, pxl_scl, 1);
+    // } else {
+    //     gfx_SetColor(1);
+    //     gfx_Rectangle(xPos, yPos, pxl_scl, dest_height);
+    //     // continue;
+    // }
 }
 
-inline void drawTexStrip_scl_h(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos,
-                               fixed tex_pos, unsigned height) {
-    unsigned SRC_H = 32;
-    unsigned SRC_H_SHIFT = 5;
-    unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (SHIFT + 2)) / 3) >> SHIFT;
-    const uint8_t *strip_arr_ptr =
-        start_arr_ptr + img_offset + ((((tex_pos % (1 << SHIFT)) << SRC_H_SHIFT) >> SHIFT) << SRC_H_SHIFT);
-    gfx_sprite_t *img_strip = gfx_MallocSprite(1, height);
-    for (unsigned i = 0; i < height; ++i) {
-        uint8_t color = *(strip_arr_ptr + (((i << SRC_H_SHIFT) / height)));
-        img_strip->data[i] = color;
-    }
-    // memmove(img_strip->data, strip_arr_ptr, height);
-
-    if ((xPos + pxl_scl) <= GFX_LCD_WIDTH && (yPos + height * pxl_scl) < GFX_LCD_HEIGHT && xPos >= 0 && yPos >= 0) {
-        gfx_ScaledSprite_NoClip(img_strip, xPos, yPos, pxl_scl, pxl_scl);
-    } else {
-        gfx_SetColor(1);
-        gfx_Rectangle(xPos, yPos, pxl_scl, height * pxl_scl);
-        // continue;
-    }
-    free(img_strip);
-}
 // void drawTexStrip__NoClip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, unsigned yPos,
 //                           fixed tex_pos, unsigned dest_height) {}
 
@@ -278,8 +235,6 @@ ivec2 playerPos = ivec2(0);
 //     Player() : pos(0) {}
 //     ivec2 pos;
 // };
-
-// gfx_UninitedSprite(scrBuff, GFX_LCD_HEIGHT, GFX_LCD_WIDTH / 2);
 
 int main(void) {
     gfx_Begin();
@@ -306,17 +261,17 @@ int main(void) {
 
     const uint8_t SKIP = 4;
     const uint8_t NUM_RAYS = GFX_LCD_WIDTH / SKIP;
+    // ivec2 temp_rayOffsets[NUM_RAYS];
     ivec2 rayOffsets[NUM_RAYS];
     for (uint8_t i = 0; i < NUM_RAYS; ++i) {
         rayOffsets[i] =
             (ivec2((((double(i * SKIP) / double(GFX_LCD_WIDTH - 1.0)) * 2.0) - 1.0) * (1 << SHIFT), (1 << SHIFT)));
     }
+    // const ivec2 rayOffsets[NUM_RAYS] = temp_rayOffsets;
 
     imat2 rot = rotate(0);
     ivec2 cam_forward = rot * ivec2(0, 1 << SHIFT);
 
-    // uint8_t *colorBuffer = new uint8_t[GFX_LCD_HEIGHT * GFX_LCD_WIDTH * sizeof(uint8_t)];
-    // printf("%d", int(colorBuffer));
     do {
         start_t = clock();
         gfx_ZeroScreen();
@@ -347,7 +302,7 @@ int main(void) {
         if (key == sk_Left) {
             --counter;
         }
-        rot = rotate(int(-0.05 * counter * PI));
+        rot = f_rotate(int(-0.05 * counter * PI));
         ivec2 ray;
 
         ivec2 current_hit = ivec2();
@@ -357,15 +312,14 @@ int main(void) {
         cam_forward = rot * ivec2(0, 1 << SHIFT);
 
         // dist, texCoord, maybe add a texture index
-        fixed rayCastBuff[NUM_RAYS * 2];
-        fixed *rayCastBuffPtr = &(rayCastBuff[0]);
+        // fixed rayCastBuff[NUM_RAYS * 2];
+        // fixed *rayCastBuffPtr = &(rayCastBuff[0]);
         // gfx_sprite_t *scrBuff;
         // scrBuff->width = GFX_LCD_HEIGHT;
         // scrBuff->height = GFX_LCD_WIDTH / 2;
         // uint8_t *scrBuffPtr = &(scrBuff->data[0]);
 
         for (uint8_t a = 0; a < NUM_RAYS; ++a) {
-
             ray = rot * rayOffsets[a];
 
             ivec2 hit = ivec2();
@@ -398,22 +352,10 @@ int main(void) {
                                (GFX_LCD_HEIGHT - (((stripLen >> 2) >> SHIFT) << 2)) >> 1, texCoord,
                                ((stripLen >> 2) >> SHIFT));
 #else
-            // writeTexStripToVBuffer(brick_wall_arr_data, &(gfx_vbuffer[0][0]), SKIP, a * SKIP,
-            //                        (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT));
+            // writeTexStripToBuffer(brick_wall_arr_data, &(gfx_vbuffer[0][0]), SKIP, a * SKIP,
+            //                       (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT));
             drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
                          (stripLen >> SHIFT));
-            // scrBuffPtr = writeTexStripToSpriteBuffer(brick_wall_arr_data, scrBuffPtr, SKIP, a * SKIP,
-            //                                          (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
-            //                                          (stripLen >> SHIFT));
-            // scrBuffPtr = writeTexStripToSpriteBuffer(brick_wall_arr_data, scrBuffPtr, SKIP, a * SKIP,
-            //                                          (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
-            //                                          (stripLen >> SHIFT));
-            // scrBuffPtr = writeTexStripToSpriteBuffer(brick_wall_arr_data, scrBuffPtr, SKIP, a * SKIP,
-            //                                          (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
-            //                                          (stripLen >> SHIFT));
-            // scrBuffPtr = writeTexStripToSpriteBuffer(brick_wall_arr_data, scrBuffPtr, SKIP, a * SKIP,
-            //                                          (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
-            //                                          (stripLen >> SHIFT));
 
 #endif
         }
@@ -424,10 +366,15 @@ int main(void) {
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
+        // sprintf(str, "REV 0.1.6 render time: %f, asm_test: %d", total_t,
+        //         draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[0]), 0, 0, 64));
         sprintf(str, "REV 0.1.6 render time: %f", total_t);
         gfx_SetTextFGColor(254);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
         gfx_PrintStringXY(str, offsetX, 4);
+        sprintf(str, "Created by Eugene Choi");
+        offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
+        gfx_PrintStringXY(str, offsetX, 20);
 
         gfx_SwapDraw();
         add = (add + 1) % (254 - count);

@@ -1,109 +1,6 @@
 	section	.text,"ax",@progbits
 	assume	adl = 1
 	section	.text,"ax",@progbits
-	public	__Z5f_cosi
-__Z5f_cosi:
-	call	__frameset0
-	ld	hl, (ix + 6)
-	ld	bc, 804
-	ld	iy, __ZL8cosTable
-	call	__idivs
-	push	hl
-	pop	de
-	ld.sis	bc, 2
-	call	__srems
-	add.sis	hl, bc
-	or	a, a
-	sbc.sis	hl, bc
-	jr	nz, BB0_2
-	ex	de, hl
-	ld	bc, 804
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, (ix + 6)
-	or	a, a
-	sbc	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	ld	hl, (iy)
-	jr	BB0_3
-BB0_2:
-	ld	bc, -804
-	ex	de, hl
-	call	__imulu
-	ld	de, (ix + 6)
-	add	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	ld	hl, (iy)
-	call	__ineg
-BB0_3:
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z5f_sini
-__Z5f_sini:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 6)
-	ld	de, 402
-	ld	bc, 804
-	ld	iy, __ZL8cosTable
-	add	hl, de
-	ld	(ix - 3), hl
-	call	__idivs
-	push	hl
-	pop	de
-	ld.sis	bc, 2
-	call	__srems
-	add.sis	hl, bc
-	or	a, a
-	sbc.sis	hl, bc
-	jr	nz, BB1_2
-	ex	de, hl
-	ld	bc, 804
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, (ix - 3)
-	or	a, a
-	sbc	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	ld	hl, (iy)
-	call	__ineg
-	jr	BB1_3
-BB1_2:
-	ld	bc, -804
-	ex	de, hl
-	call	__imulu
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	ld	hl, (iy)
-BB1_3:
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
 	public	__Zmld4vec2
 __Zmld4vec2:
 	ld	hl, -4
@@ -798,21 +695,21 @@ __Z3mindd:
 	ld	hl, (ix + 12)
 	ld	e, (ix + 15)
 	call	__fcmp
-	jp	m, BB18_2
+	jp	m, BB16_2
 	ld	d, 0
-	jr	BB18_3
-BB18_2:
+	jr	BB16_3
+BB16_2:
 	ld	d, 1
-BB18_3:
+BB16_3:
 	bit	0, d
-	jr	nz, BB18_5
+	jr	nz, BB16_5
 	push	bc
 	pop	hl
-BB18_5:
+BB16_5:
 	bit	0, d
-	jr	nz, BB18_7
+	jr	nz, BB16_7
 	ld	e, a
-BB18_7:
+BB16_7:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -826,21 +723,21 @@ __Z3maxdd:
 	ld	bc, (ix + 12)
 	ld	a, (ix + 15)
 	call	__fcmp
-	jp	m, BB19_2
+	jp	m, BB17_2
 	ld	d, 0
-	jr	BB19_3
-BB19_2:
+	jr	BB17_3
+BB17_2:
 	ld	d, 1
-BB19_3:
+BB17_3:
 	bit	0, d
-	jr	nz, BB19_5
+	jr	nz, BB17_5
 	push	hl
 	pop	bc
-BB19_5:
+BB17_5:
 	bit	0, d
-	jr	nz, BB19_7
+	jr	nz, BB17_7
 	ld	a, e
-BB19_7:
+BB17_7:
 	push	bc
 	pop	hl
 	ld	e, a
@@ -1120,38 +1017,38 @@ __Z5clampddd:
 	ld	d, 1
 	ld	l, 0
 	ld	a, d
-	jp	m, BB26_2
+	jp	m, BB24_2
 	ld	a, l
-BB26_2:
+BB24_2:
 	ld	(ix - 5), a
 	ld	hl, (ix + 18)
 	ld	e, (ix + 21)
 	ld	bc, (ix + 6)
 	ld	a, (ix + 9)
 	call	__fcmp
-	jp	m, BB26_4
+	jp	m, BB24_4
 	ld	d, 0
-BB26_4:
+BB24_4:
 	bit	0, d
 	ld	e, (ix + 15)
-	jr	nz, BB26_6
+	jr	nz, BB24_6
 	ld	hl, (ix + 6)
 	ld	(ix - 4), hl
-BB26_6:
+BB24_6:
 	bit	0, d
-	jr	nz, BB26_8
+	jr	nz, BB24_8
 	ld	a, (ix + 9)
 	ld	(ix - 1), a
-BB26_8:
+BB24_8:
 	ld	a, (ix - 5)
 	bit	0, a
-	jr	nz, BB26_10
+	jr	nz, BB24_10
 	ld	iy, (ix - 4)
-BB26_10:
+BB24_10:
 	bit	0, a
-	jr	nz, BB26_12
+	jr	nz, BB24_12
 	ld	e, (ix - 1)
-BB26_12:
+BB24_12:
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -1265,6 +1162,220 @@ __Z6rotatei:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
+	public	__Z8f_rotatei
+__Z8f_rotatei:
+	ld	hl, -9
+	call	__frameset
+	ld	hl, (ix + 9)
+	push	hl
+	call	__Z5f_cosi
+	ld	(ix - 3), hl
+	pop	hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	__Z5f_sini
+	pop	de
+	call	__ineg
+	ld	(ix - 6), hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	__Z5f_sini
+	ld	(ix - 9), hl
+	pop	hl
+	ld	hl, (ix + 9)
+	push	hl
+	call	__Z5f_cosi
+	pop	de
+	ld	iy, (ix + 6)
+	ld	de, (ix - 3)
+	ld	(iy), de
+	ld	de, (ix - 6)
+	ld	(iy + 6), de
+	ld	de, (ix - 9)
+	ld	(iy + 3), de
+	ld	(iy + 9), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__Z5f_cosi
+__Z5f_cosi:
+	ld	hl, -3
+	call	__frameset
+	ld	hl, (ix + 6)
+	ld	iy, __ZL8cosTable
+	ld	bc, 0
+	push	hl
+	pop	de
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	ex	de, hl
+	jp	m, BB28_3
+	ld	bc, 804
+	call	__idivu
+	push	hl
+	pop	de
+	ld	bc, 1
+	call	__iand
+	ld	(ix - 3), hl
+	ex	de, hl
+	ld	bc, -804
+	call	__imulu
+	ld	de, (ix + 6)
+	add	hl, de
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	add	iy, de
+	ld	bc, (iy)
+	push	bc
+	pop	hl
+	call	__ineg
+	ld	de, (ix - 3)
+	bit	0, e
+	jr	z, BB28_6
+	push	hl
+	jr	BB28_5
+BB28_3:
+	call	__ineg
+	ld	de, 804
+	push	de
+	pop	bc
+	call	__idivu
+	push	hl
+	pop	iy
+	ld	bc, 1
+	call	__iand
+	ld	(ix - 3), hl
+	lea	hl, iy
+	push	de
+	pop	bc
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	hl, (ix + 6)
+	add	hl, de
+	add	hl, bc
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	ld	hl, __ZL8cosTable
+	add	hl, de
+	ld	de, (hl)
+	push	de
+	pop	hl
+	call	__ineg
+	push	hl
+	pop	bc
+	ld	hl, (ix - 3)
+	bit	0, l
+	jr	z, BB28_6
+	push	de
+BB28_5:
+	pop	bc
+BB28_6:
+	push	bc
+	pop	hl
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__Z5f_sini
+__Z5f_sini:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	bc, 804
+	ld	de, -402
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	m, BB29_3
+	ld	de, 402
+	add	iy, de
+	lea	hl, iy
+	call	__idivu
+	push	hl
+	pop	de
+	ld	bc, 1
+	call	__iand
+	ld	(ix - 3), hl
+	ex	de, hl
+	ld	bc, -804
+	call	__imulu
+	lea	de, iy
+	add	hl, de
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	ld	hl, __ZL8cosTable
+	add	hl, de
+	ld	de, (hl)
+	push	de
+	pop	hl
+	call	__ineg
+	push	hl
+	pop	bc
+	ld	hl, (ix - 3)
+	bit	0, l
+	jr	z, BB29_6
+	push	de
+	jr	BB29_5
+BB29_3:
+	ld	hl, -402
+	lea	de, iy
+	or	a, a
+	sbc	hl, de
+	call	__idivu
+	push	hl
+	pop	de
+	ld	bc, 1
+	call	__iand
+	ld	(ix - 3), hl
+	ex	de, hl
+	ld	bc, 804
+	call	__imulu
+	push	hl
+	pop	de
+	ld	bc, 1206
+	add	iy, bc
+	add	iy, de
+	ld	bc, 3
+	lea	hl, iy
+	call	__imulu
+	push	hl
+	pop	de
+	ld	hl, __ZL8cosTable
+	add	hl, de
+	ld	bc, (hl)
+	push	bc
+	pop	hl
+	call	__ineg
+	ld	de, (ix - 3)
+	bit	0, e
+	jr	z, BB29_6
+	push	hl
+BB29_5:
+	pop	bc
+BB29_6:
+	push	bc
+	pop	hl
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
 	public	_main
 _main:
 	ld	hl, -929
@@ -1318,14 +1429,14 @@ _main:
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	lea	hl, iy + 109
+	lea	hl, iy
 	push	ix
-	ld	bc, -916
+	ld	bc, -886
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-	lea	hl, iy
-	ld	bc, -886
+	lea	hl, iy + 109
+	ld	bc, -916
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
@@ -1513,12 +1624,12 @@ _main:
 	add	hl, bc
 	ld	(hl), iy
 	ld	bc, 0
-BB29_1:
+BB30_1:
 	push	bc
 	pop	hl
 	or	a, a
 	sbc	hl, de
-	jp	z, BB29_3
+	jp	z, BB30_3
 	push	bc
 	pop	hl
 	ld	de, -895
@@ -1575,8 +1686,8 @@ BB29_1:
 	add	iy, de
 	ld	bc, (iy)
 	ld	de, (ix - 3)
-	jp	BB29_1
-BB29_3:
+	jp	BB30_1
+BB30_3:
 	ld	hl, 256
 	ex	de, hl
 	ld	bc, -889
@@ -1602,7 +1713,7 @@ BB29_3:
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
-BB29_4:
+BB30_4:
 	ld	bc, -892
 	lea	hl, ix
 	add	hl, bc
@@ -1623,7 +1734,7 @@ BB29_4:
 	add	hl, bc
 	ld	a, (hl)
 	cp	a, 1
-	jr	nz, BB29_6
+	jr	nz, BB30_6
 	ld	hl, (_playerPos)
 	ld	bc, -901
 	lea	iy, ix
@@ -1645,10 +1756,10 @@ BB29_4:
 	pop	ix
 	or	a, a
 	sbc	hl, de
-	jr	BB29_8
-BB29_6:
+	jr	BB30_8
+BB30_6:
 	cp	a, 4
-	jr	nz, BB29_9
+	jr	nz, BB30_9
 	ld	hl, (_playerPos)
 	ld	bc, -901
 	lea	iy, ix
@@ -1668,15 +1779,15 @@ BB29_6:
 	ld	de, (ix)
 	pop	ix
 	add	hl, de
-BB29_8:
+BB30_8:
 	push	ix
 	ld	bc, -898
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
 	ld	(_playerPos+3), hl
-	jr	BB29_10
-BB29_9:
+	jr	BB30_10
+BB30_9:
 	ld	hl, (_playerPos)
 	ld	bc, -895
 	lea	iy, ix
@@ -1688,14 +1799,14 @@ BB29_9:
 	add	ix, bc
 	ld	(ix), hl
 	pop	ix
-BB29_10:
+BB30_10:
 	ld	iy, 24
-BB29_11:
+BB30_11:
 	lea	hl, iy
 	ld	de, 294
 	or	a, a
 	sbc	hl, de
-	jp	z, BB29_19
+	jp	z, BB30_19
 	ld	bc, -901
 	lea	hl, ix
 	add	hl, bc
@@ -1711,9 +1822,9 @@ BB29_11:
 	or	a, a
 	sbc	hl, bc
 	ld	a, -1
-	jr	z, BB29_14
+	jr	z, BB30_14
 	ld	a, 0
-BB29_14:
+BB30_14:
 	bit	0, a
 	ld	de, -898
 	lea	hl, ix
@@ -1721,12 +1832,12 @@ BB29_14:
 	add	hl, de
 	pop	af
 	ld	bc, (hl)
-	jr	nz, BB29_16
+	jr	nz, BB30_16
 	ld	de, -895
 	lea	hl, ix
 	add	hl, de
 	ld	bc, (hl)
-BB29_16:
+BB30_16:
 	ld	hl, (iy - 6)
 	bit	0, a
 	ld	(ix - 3), bc
@@ -1738,7 +1849,7 @@ BB29_16:
 	ld	de, (ix)
 	pop	ix
 	ld	bc, (ix - 3)
-	jr	nz, BB29_18
+	jr	nz, BB30_18
 	ld	(ix - 3), bc
 	push	ix
 	ld	bc, -898
@@ -1746,7 +1857,7 @@ BB29_16:
 	ld	de, (ix)
 	pop	ix
 	ld	bc, (ix - 3)
-BB29_18:
+BB30_18:
 	or	a, a
 	sbc	hl, bc
 	push	ix
@@ -1783,13 +1894,13 @@ BB29_18:
 	add	ix, bc
 	ld	a, (ix)
 	pop	ix
-	jp	BB29_11
-BB29_19:
+	jp	BB30_11
+BB30_19:
 	cp	a, 3
 	ld	de, 1
-	jr	z, BB29_21
+	jr	z, BB30_21
 	ld	de, 0
-BB29_21:
+BB30_21:
 	ld	bc, -907
 	lea	hl, ix
 	add	hl, bc
@@ -1797,9 +1908,9 @@ BB29_21:
 	add	hl, de
 	cp	a, 2
 	ld	de, -1
-	jr	z, BB29_23
+	jr	z, BB30_23
 	ld	de, 0
-BB29_23:
+BB30_23:
 	add	hl, de
 	push	hl
 	pop	bc
@@ -1819,14 +1930,24 @@ BB29_23:
 	call	__ftol
 	push	bc
 	push	ix
-	ld	bc, -910
+	ld	bc, -886
 	add	ix, bc
 	ld	hl, (ix)
 	pop	ix
 	push	hl
-	call	__Z6rotatei
+	call	__Z8f_rotatei
 	pop	hl
 	pop	hl
+	ld	bc, -910
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	ld	bc, -886
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
+	ld	bc, 12
+	ldir
 	ld	bc, 0
 	ld	de, -889
 	lea	hl, ix
@@ -1850,13 +1971,13 @@ BB29_23:
 	add	iy, bc
 	ld	(iy), de
 	ld	bc, (ix - 3)
-BB29_24:
+BB30_24:
 	push	bc
 	pop	hl
 	ld	de, 80
 	or	a, a
 	sbc	hl, de
-	jp	z, BB29_35
+	jp	z, BB30_35
 	ld	de, -895
 	lea	hl, ix
 	add	hl, de
@@ -1921,13 +2042,13 @@ BB29_24:
 	ld	iy, (ix)
 	pop	ix
 	ld	bc, (ix - 3)
-BB29_26:
+BB30_26:
 	push	hl
 	pop	bc
 	ld	de, 270
 	or	a, a
 	sbc	hl, de
-	jp	z, BB29_34
+	jp	z, BB30_34
 	ld	de, -926
 	lea	hl, ix
 	add	hl, de
@@ -1952,7 +2073,7 @@ BB29_26:
 	pop	hl
 	pop	hl
 	bit	0, a
-	jp	z, BB29_33
+	jp	z, BB30_33
 	ld	de, -889
 	lea	hl, ix
 	add	hl, de
@@ -2001,10 +2122,10 @@ BB29_26:
 	ld	de, (ix - 3)
 	push	de
 	pop	iy
-	jp	m, BB29_30
+	jp	m, BB30_30
 	push	bc
 	pop	iy
-BB29_30:
+BB30_30:
 	ex	de, hl
 	or	a, a
 	sbc	hl, bc
@@ -2015,12 +2136,12 @@ BB29_30:
 	add	hl, bc
 	pop	af
 	ld	hl, (hl)
-	jp	m, BB29_32
+	jp	m, BB30_32
 	ld	bc, -904
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
-BB29_32:
+BB30_32:
 	push	ix
 	ld	bc, -892
 	add	ix, bc
@@ -2030,7 +2151,7 @@ BB29_32:
 	lea	iy, ix
 	add	iy, bc
 	ld	(iy), hl
-BB29_33:
+BB30_33:
 	ld	bc, -889
 	lea	hl, ix
 	add	hl, bc
@@ -2042,8 +2163,8 @@ BB29_33:
 	pop	ix
 	ld	de, 27
 	add	hl, de
-	jp	BB29_26
-BB29_34:
+	jp	BB30_26
+BB30_34:
 	ld	hl, 65536
 	ld	de, -892
 	lea	iy, ix
@@ -2102,8 +2223,8 @@ BB29_34:
 	pop	hl
 	pop	hl
 	inc	bc
-	jp	BB29_24
-BB29_35:
+	jp	BB30_24
+BB30_35:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -2167,11 +2288,52 @@ BB29_35:
 	ld	hl, 320
 	or	a, a
 	sbc	hl, de
+	ld	a, 1
+	ld	c, a
+	call	__ishru
+	ld	de, 255
+	push	de
+	pop	bc
+	call	__iand
+	ld	de, 4
+	push	de
+	push	hl
+	ld	de, -886
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	hl
+	call	_gfx_PrintStringXY
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, _.str.1
+	push	hl
+	ld	bc, -886
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	_sprintf
+	pop	hl
+	pop	hl
+	ld	bc, -886
+	lea	hl, ix
+	add	hl, bc
+	ld	hl, (hl)
+	push	hl
+	call	_gfx_GetStringWidth
+	push	hl
+	pop	de
+	pop	hl
+	ld	hl, 320
+	or	a, a
+	sbc	hl, de
 	ld	c, 1
 	call	__ishru
 	ld	bc, 255
 	call	__iand
-	ld	de, 4
+	ld	de, 20
 	push	de
 	push	hl
 	ld	de, -886
@@ -2186,7 +2348,7 @@ BB29_35:
 	call	_gfx_SwapDraw
 	call	_os_GetCSC
 	cp	a, 9
-	jp	nz, BB29_4
+	jp	nz, BB30_4
 	call	_gfx_End
 	or	a, a
 	sbc	hl, hl
@@ -2246,72 +2408,61 @@ __ZN5imat2mlERK5ivec2:
 	section	.text,"ax",@progbits
 	weak	__Z12drawTexStripPKhhjiij
 __Z12drawTexStripPKhhjiij:
-	ld	hl, -28
+	ld	hl, -22
 	call	__frameset
-	ld	hl, (ix + 6)
-	ld	(ix - 6), hl
+	ld	iy, (ix + 6)
 	ld	a, (ix + 9)
+	ld	(ix - 10), a
 	ld	hl, (ix + 12)
-	ld	(ix - 15), hl
+	ld	(ix - 13), hl
 	ld	hl, (ix + 15)
-	ld	(ix - 3), hl
+	ld	(ix - 6), hl
 	ld	hl, (ix + 18)
-	ld	de, (ix + 21)
-	ld	(ix - 12), de
+	ld	(ix - 9), hl
+	ld	hl, (ix + 21)
+	ld	(ix - 3), hl
+	ld	hl, _ceiling_floor_tex_data
+	ld	bc, 242
+	ld	de, (_img_strip)
+	ldir
+	ld	hl, (ix - 9)
 	ld	bc, 256
-	ld	de, -32
-	ld	iy, (_img_strip)
-	ld	(iy + 1), -16
-	ld	iy, (_img_strip)
-	ld	(iy), b
 	call	__irems
 	ld	c, 2
 	call	__ishl
-	push	de
-	pop	bc
+	ld	bc, -32
 	call	__iand
 	push	hl
 	pop	de
-	ld	hl, (ix - 6)
-	add	hl, de
-	ld	(ix - 6), hl
-	ld	bc, (ix - 12)
+	add	iy, de
+	ld	(ix - 16), iy
+	ld	bc, (ix - 3)
 	push	bc
-	pop	hl
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	(ix - 18), hl
+	pop	iy
+	ld	de, (ix - 6)
+	add	iy, de
 	ld	hl, 64
 	or	a, a
 	sbc	hl, bc
-	ld	(ix - 21), hl
-	ld	de, (_img_strip)
-	push	de
-	pop	iy
-	lea	hl, iy + 2
-	ld	(iy + 2), 0
-	ld	iy, (ix - 18)
-	push	hl
-	pop	de
-	inc	de
-	ld	bc, 239
-	ldir
-	ld	hl, (ix - 12)
+	ld	(ix - 9), hl
+	push	bc
+	pop	hl
 	ld	bc, -2
 	call	__imulu
-	ld	(ix - 25), hl
+	push	de
+	pop	bc
+	ld	(ix - 22), hl
 	or	a, a
 	sbc	hl, hl
-	ld	(ix - 9), hl
-	ld	bc, (ix - 3)
-BB31_1:
+	ld	(ix - 3), hl
+BB32_1:
 	lea	hl, iy
 	or	a, a
 	sbc	hl, bc
-	jr	c, BB31_7
-	ld	(ix - 22), a
-	ld	de, (ix - 9)
-	ld	hl, (ix - 6)
+	jr	c, BB32_7
+	ld	(ix - 19), iy
+	ld	de, (ix - 3)
+	ld	hl, (ix - 16)
 	add	hl, de
 	ld	de, 341
 	add	hl, de
@@ -2319,97 +2470,48 @@ BB31_1:
 	ld	iy, (_img_strip)
 	add	iy, bc
 	ld	(iy + 2), a
-	ld	iy, (ix - 21)
+	ld	iy, (ix - 9)
 	lea	hl, iy
 	ld	de, 1
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
 	ld	a, -1
-	jp	p, BB31_4
+	jp	p, BB32_4
 	ld	a, 0
-BB31_4:
+BB32_4:
+	ld	(ix - 6), bc
 	bit	0, a
-	ld	hl, (ix - 25)
-	jr	nz, BB31_6
-	or	a, a
-	sbc	hl, hl
-BB31_6:
-	ld	(ix - 28), hl
+	ld	de, (ix - 22)
+	jr	nz, BB32_6
+	ld	de, 0
+BB32_6:
 	and	a, 1
-	ld	de, 0
-	ld	e, a
-	ld	hl, (ix - 9)
-	add	hl, de
-	ld	(ix - 9), hl
-	ld	de, 64
-	add	iy, de
-	ld	de, (ix - 28)
-	add	iy, de
-	ld	(ix - 21), iy
-	inc	bc
-	ld	a, (ix - 22)
-	ld	iy, (ix - 18)
-	jr	BB31_1
-BB31_7:
-	ld	de, 0
-	push	de
-	pop	hl
-	ld	l, a
-	ld	(ix - 6), hl
-	ld	bc, (ix - 15)
-	add	hl, bc
-	ld	bc, 321
-	or	a, a
-	sbc	hl, bc
-	jr	nc, BB31_11
 	ld	bc, 0
-	ld	hl, (ix - 3)
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	jp	m, BB31_11
-	ld	bc, 240
-	lea	hl, iy
-	or	a, a
-	sbc	hl, bc
-	jr	nc, BB31_11
-	ld	hl, (_img_strip)
-	ld	bc, 1
-	push	bc
 	ld	c, a
-	push	bc
-	push	de
-	ld	de, (ix - 15)
-	push	de
-	push	hl
-	call	_gfx_ScaledSprite_NoClip
-	pop	hl
-	jr	BB31_12
-BB31_11:
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetColor
-	pop	hl
-	ld	hl, (ix - 12)
-	push	hl
-	ld	hl, (ix - 6)
-	push	hl
 	ld	hl, (ix - 3)
-	push	hl
-	ld	hl, (ix - 15)
-	push	hl
-	call	_gfx_Rectangle
-BB31_12:
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
+	add	hl, bc
+	ld	(ix - 3), hl
+	ld	bc, 64
+	add	iy, bc
+	add	iy, de
+	ld	(ix - 9), iy
+	ld	bc, (ix - 6)
+	inc	bc
+	ld	iy, (ix - 19)
+	jr	BB32_1
+BB32_7:
 	ld	hl, (_img_strip)
 	ld	(ix + 6), hl
+	ld	hl, (ix - 13)
+	ld	(ix + 9), hl
+	ld	(ix + 12), 0
+	ld	a, (ix - 10)
+	ld	(ix + 15), a
+	ld	(ix + 18), 1
 	ld	sp, ix
 	pop	ix
-	jp	_free
+	jp	_gfx_ScaledSprite_NoClip
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
@@ -2425,7 +2527,7 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jp	nz, BB32_7
+	jp	nz, BB33_7
 	ld	bc, (iy + 3)
 	push	bc
 	pop	hl
@@ -2433,7 +2535,7 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	ld	de, 33
 	or	a, a
 	sbc	hl, de
-	jp	c, BB32_16
+	jp	c, BB33_16
 	ld	iy, (ix + 6)
 	push	bc
 	pop	de
@@ -2452,7 +2554,7 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	ld	hl, (ix + 9)
 	ld	hl, (hl)
 	call	__imulu
@@ -2468,7 +2570,7 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	push	de
 	pop	bc
 	ex	de, hl
@@ -2480,7 +2582,7 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	ld	hl, (ix + 12)
 	push	hl
 	pop	iy
@@ -2491,19 +2593,19 @@ __ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jp	z, BB32_15
+	jp	z, BB33_15
 	ld	hl, (ix + 6)
 	push	hl
 	pop	iy
 	ld	de, (iy + 6)
 	push	bc
 	pop	hl
-	jp	BB32_14
-BB32_7:
+	jp	BB33_14
+BB33_7:
 	ld	bc, 1
 	or	a, a
 	sbc	hl, bc
-	jp	nz, BB32_16
+	jp	nz, BB33_16
 	lea	hl, iy
 	ld	bc, (hl)
 	push	bc
@@ -2512,7 +2614,7 @@ BB32_7:
 	ld	de, 33
 	or	a, a
 	sbc	hl, de
-	jp	c, BB32_16
+	jp	c, BB33_16
 	ld	iy, (ix + 6)
 	push	bc
 	pop	de
@@ -2531,7 +2633,7 @@ BB32_7:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	ld	iy, (ix + 9)
 	ld	hl, (iy + 3)
 	call	__imulu
@@ -2545,7 +2647,7 @@ BB32_7:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	ld	hl, (ix - 6)
 	ld	de, -16
 	add	hl, de
@@ -2554,7 +2656,7 @@ BB32_7:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB32_16
+	jp	m, BB33_16
 	ld	hl, (ix + 12)
 	push	hl
 	pop	iy
@@ -2566,13 +2668,13 @@ BB32_7:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB32_15
+	jr	z, BB33_15
 	ld	hl, (ix + 6)
 	push	hl
 	pop	iy
 	ld	de, (iy + 6)
 	ld	hl, (ix - 6)
-BB32_14:
+BB33_14:
 	or	a, a
 	sbc	hl, de
 	ld	c, 8
@@ -2599,13 +2701,48 @@ BB32_14:
 	add	hl, de
 	ld	iy, (ix + 15)
 	ld	(iy), hl
-BB32_15:
+BB33_15:
 	ld	a, 1
-BB32_16:
+BB33_16:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
+
+	section	.bss,"aw",@nobits
+	public	_img_strip_data
+_img_strip_data:
+	rb	242
+
+	section	.data,"aw",@progbits
+	public	_img_strip
+_img_strip:
+	dl	_img_strip_data
+
+	section	.bss,"aw",@nobits
+	public	_playerPos
+_playerPos:
+	rb	6
+
+	section	.rodata,"a",@progbits
+	public	_brick_wall_arr_data
+_brick_wall_arr_data:
+	db	"{z|z™{˜{˜_z›˜My›»|z›—»_­|{\Ü˜{y‘z˜z´__{y›}_´M_|²™¿™‘MN`a™™M_z‘™›zÙ`|z{¾|^Ö™™|Œ¾_IĞÀ<»¯O¯ª—_}SNÛÓœJŸ›€­¯c[<¾p`ÀÀ¾ŒL¼†`‘`Œ[Û‰`¸²¿ŒL¿‡a‘c\¾Œaµ´¿‰<¾­d”²I¾‰a²´O¾­`z<cÑzŸ<d¸´b9*Üµ_ÓxaÖ™À‘”aH*¾µ¸xc´™İµ–b8*›Xa²reÚaİ­˜~8*Á|e²qaz_İ­œÀ¿~8)Àa‘u~Œ]İŒœíÖc5™a¶u~¯\İ‡}í»=4)¾Œ`œŸ´\‰}í¸Ÿ_N¿Œ`’Š´I~IbØÒŸŒLÜŒ~‡ÑLbDNÓĞŒLÛ­d­‰´]}SNĞÎÃ»²ŒX", 26, "˜Ó²¬L¦³­‰ªcÛŒŒ¬,ŸsSS4iÛĞÍÍ ÙŒu", 26, "œ³‘¯M¦­¯­²bÀ™{›>sTS4jàÛÚÚ€»ŒuÊgg€gÉ°­­²cOL<(ÂqTE‚äÄÄÄ¸¯ŒqŸ†ªY¦°ªª¸>œ©‰Œß²pEgÖĞ·ì´®Œrª†nVj¯‘”œŒ‰ŒÁ´‰YQ¸²Ò ²‡u.Ş­†‡Eg‘Œ¯‘ŒŒ*á±Œq[hÙ²´Ãw‰q-â­‡‰Eh³Œ-Àwˆ+àw‰Xj¸´´ÑÃ®Œ‰rà­ŒpY‚µŒ¯?À²‰Œ+ß®rŒX‚µ²®ĞÃŒ‰‰rÁ­¯ª\‚³Œ®?ÀĞŒŒ*âŒ‰ŒE‚µ²´ĞÃ¬‰rqÁ­­­\„¼ŒgÀ´®‡*à©‰‰E‚µ²´Ğ§.?Á­ª­]g-,?Á´Ğ­*Ê=+*,¦×´´Ğƒ(àªŒÑ\bµ”\À´Öî*åx[8H‚µ²²²£9%%%ó¬u×\aÑÓyÀ·ìş,øŒŒY‚µX¤99H;õ­¯×IdëÑ‹yİ´ëşNå²²y‚µŒ­‘‚;FK<õ¸¸]fÙ²Œy0Ş´Ñî,å²¸—»Œ¬H7K;àŒµ¯\¢¸¯Œ•>Ü´´ë,ù­‘×y»Œ®‚G$;JÀŒŒvH¸Œr0¿ÓÖë,ù©r»—j¼Œ®¦:69J [F&)ÓŒX0á¿œ>ù©Œ³—jyx[¥H88;Çc>ÅÑŒŒX>c``a=ù­ª©—âŸŸŸÉHFF9â¬<¢¸Œ5?˜®ŒŒMå­­­‘fğÒÒ—ÇHFE8Ä˜Œ;€µu@™ŒŒNå­­ª‘gğÖÒº¦H8##ã•Œ(¯ŒŒwP¿ŒŒ*å­ª†q£ğÖÒÙ¦I8##Œ‹;ƒÛŒŒXP¿*ù­‰‡p€ïØÖ¼ƒ:54""¯®&g¾ŒX@Ü´²¯äª‡‰UgïìÖ˜k&54""ÀµŒŒ€³‘‘xPÛ´´² ª‡†n€ğÖÕµ„)484ß²‹Œ&ƒ€¢€¦À´´²)Ä’Š­s‚ğÕÕ´Çd=/.?à¯‹Œ&‚}y•yPŞ´´¯É=.,ƒïÒÕÒ¥µ‘‘x/Á¸ŒŒ8P’†n†Oñ´´¯¢UUU:hÖÓÒÒ¦œŒŒw.ßÖŒŒJÄ‰†fğÖµ˜\DD8fØÓÒÒÇ¾ŒŒuŞìŒ<Æ­†‡OñÓ´¹,£\DD4gÖĞÎÎ¤xŒŒwŞÙ¯Œ*Æ­ªo‡OñÑ´µ+ UDS4i×ÍÍĞÅ—Œx¿Ö²*Åª­­OñÑ´³€VTT#iÖÎÍÎ‚õÛº²²Œ“E", 13, "1¬×´Ö}jç¶­­¯‡††‘Çß¯ŒŒ‹Œ¬®H0Å`ssDTTTUçß±·ÒÍ±±Í‚ö½·µ­ŒŒŒ41œÖ¸¸Œ©²^gæ°¯­¯ª‰µ(Çß”‹Œ‹Œ¬;1£`spDDSSTçßÎĞĞÍ±±Íjö½Ù“ŒŒŒŒF1›¯µŒ©¬|)gæ°­­¯­ªª¸(¤Ş²‹t‹²»<0¢|spTSSSU#éâ´ÒĞÍ±±ÍPö½ë‹ŒŒŒu", 13, "0Ä{y³µ••¹}", 26, "„æ°­­¯¯­­¸(„ÃÁe.ÈÅ|s•VSSSU#ıûàßòòŞİÀ@ã½ÓŒŒŒŒu1çé¦„„kƒ„¦§Ëæ°ª­­­­¯µ§j@0.", 13, "/@ÇœsvsTTTU:-üüçüüüüüû?â½²²Œ‰‰X1æ¡>dŸb~~e‚æ¶­­¯ª­º§f_FWVVVUåÜ”‘oUTV:üßœœa~=?ß»¯´Œ‰‰X1æ~’sŠª³­‡)kæ¶­­©ª©¯º¥€–«Œˆˆ‰Œ#ÅÚ¯²¯‰oVp:ûïÒÒÓÓÖïî=İ·ĞĞŒ‰‰‡E1ÇLª‡nTª‡TIjæ¶©ª©‰­¸º¤f”Œ©Œ©‰ÄÙ´´²qppp&É×´²²²´ÕÖ=À´´ĞŒ‰‰E1ÅIª­†nnnnJ@É¶©­r¯µµgf–‰q‰‰‰Œ#ÄÙ´´²qŒ‡ÇÖ´²¯²ĞÒ?Ş´´´Œ‡Œ‘F1ãvª†Š‡nn<1ÇµŒŒŒ”[‘A€–¬‰qqˆŒ#ÅÙ´±²q‰ˆÑåÖµ´Œ¯´Ò@á´±²‰qqY+1å°­­n‰Œnn;1¤³ŒŒu‘”x‘A€µ®rqŒ&/åî´±¬qqq³:.æîµ²Œ¯´´gö´”¯‡‡‡‰s+2æ¼­­‰npn)1¤—ŒŒŒ­²²r	A µ®ZuŒ‰Œ80ùÜ²±Œqq‡ŒI.æğ´²¯²´´ƒö”8X“Œ‡‰6", 26, "1úÜ­­ªn‰‰n)2¤µ‘ŒŒ²´VQ¢¸u”¬ˆ‰$0ÉÛuF©ˆ‡%ÉÚ®´´´´µÖƒó²®X¬‡ŒE", 26, "1æÛ­­Œn‡Œn)A¤½ŒŒŒŒ¬²", 13, "kÄ»wuˆ‡ˆ&1¥Ú¯X¯Œ‡&0ûÚ´´´´´Öƒô®®wŒ‰‰‰X+1æ¼­­ªono†(j¥ÚŒ‹®‘§Äº´®‰q‡91¤Ù®®rŒ‰ˆŒ:0üÚŒ¯´²®²Öƒó®®Œqq¬W1É¼­­­‰qp(j¤»ŒŒrŒ®¯§Äº´´Œq‡­&0É×®tq‡¬Œ8.ûÚ‰‘´²¯Òƒó¬‰qˆqq‹W1Ç¹­­¯­ª‰¯)j¤×ŒŒŒŒ®¯§¢ºĞÎŒqª0û»rq‡q‰r#.üÚ‰¬´²²´Òƒà‹‰Œ‰Œ‹©W", 13, "1Ç¶­­¯­ªªµ)j„ÚŒŒŒŒ¬¯§¢ºĞĞ‰Œq0û»ŒŒŒŒ‰©Œ$>üÙ‹®´´´´Òƒâ©Œ‰‰‰W", 13, "1Å¶ª­­­­­³)j„ÚŒŒ‹‹©©¯", 26, "¨ÃÓ´Ğ´Œ‡‰/æ¼©Œ‰‰Œ‰$>ü¼‹®´´´´Òƒö¯©‡qqq‡E", 13, "1¤¹ª­­­­¯³)hèâx¬¬rE?ËÄº´ĞĞ®qq/ÈÜ©Œˆqqrr#éÜ²´´´ÎÒƒçb(&&8$", 13, "@?¤¼ª­ª­ª¯¸)@„2/-", 26, "1kÅ×²ĞĞĞ‰&.ÉÉM:888&", 26, "AéÜ´´´´´´Ğƒ§?022Å¼­©©©©³¸)2‚,**", 13, "hÄ×²´²ÒÏ‘(ËËg@>--.?PüÛ²²´´²´Ğlƒ*", 13, "1å¼ª©Œ‰¯Ô¸(0Ÿµ”‘Œ¼)	QÂ¸²Ğ´Øìì;èã]JJ&;)1ü¼²´´²²·‚£;6%&;%1ú¹©©Œrµ×¹(¿®Ó¸¬¼$AÃ¸²ĞÓîîş;üßŒuwwXy•:.üÚ®²´²±‚£976%%%@ü¹©ªqÓ×»(œ¬ÙÓ´¬¾$AÃ¸²ĞÖîîğ<üİŒ‹ŒŒŒvq8.ü¾ŒŒ¯²qu‚Ä9%6%%%9&gü»­¬r××»(ÎìÓÓ‹Œ¹IAÃÑ´ÒØîîğ<.éİ‹ŒŒ‘H.ü½ŒŒu$X‚Å;%%9H99(Qü¼­­u³××—( ÁêìÙÓtˆ­N	AÃ¸²ĞëîîğJ/èò‹µ²µH.ü½‹‹Œ¬­‘‘‚ÇJ67H]GH(", 13, "?üÚ­­¸××F<0ßêì¸²‹‰L	gäº´ÎÓîîğJ0üõ‹ÔººH-ü½ŒŒ²´ujÇL67H];I<", 13, "1ûÚŒ¯ÔÔ¸¹<@àÓìÖ‹‹Œ”<	køÓ´´´ëîşJ0æö¬Œ¬Ñº–×\-üÛŒŒ¬²u@ÆJ68GK];;", 13, "1ûÛŒ²×µ¸»)gâÖì×‹Œ”L	§äº´²²ÓëşH/çöŒ­Ï×¸¸\-éñŒŒ®®PÆJ879K]K", 13, "0û¼Œu´Ô²µ¹hõ²ìÓŒŒŒ{	§ÃÓĞ²²´ÓşH0ıö¬¬²××”HéÜŒ‹®®QÇJ77%;]J;	0ùµuµ”‘¹jöÓ¸ŒŒŒŒ{	§à¸´ĞÑÑÑşH>ıõ­¯­Ô×»[éÜuŒ‹‹¬®QÇI77#9KJ;	0ø¯ŒŒŒŒu‘•)kÂ­º²ŒŒŒF	§à¸µêÑ×Óï;0ıâ¬X¸××[éñŒŒ‹‹¬®QÆI76#8K];	0Å‘ŒŒŒŒu\rk ÓÓ¯ŒŒŒ5	§ÂºÓêìÓÔïI1ıâ©Œp³××HüŞŒŒŒ¬¯kÆI66$$J];	0Ç¶¬‘XGx[)k ë”ŒŒŒ¬5	§ÃÚïïşğñòL1ıó©©©‰­»×[üßŒŒŒ©­¯§ÆI76559];", 13, "0É~<((", 26, "l€î¯ŒŒŒ5	§¥äŸ==?1-„ıõ©©©ŒŒÑ×[ı‚a_zzJ(lÇIF7666H;1èËÇ¦gAg„jÊÄ×´ŒŒŒŒ¬5§Q?>=>>>OOAıõª­©Œª¸\éÇ¤¤¡¤¦¤h„ÇIF98E8F;1úz^_||™Jƒö´ÓŒŒŒ¬4	§e]yz˜˜˜˜<üóª­­­ª©µ\.úô»¼œœœ¨ÇI89F98992úÚŒ®[", 26, "ƒàĞÓuŒŒr#", 13, "§œ¬²ŒŒŒŒzüóª­­­­­²[.åÿÖº··º—zèÆIFFFFF892ù™‹ˆˆŒ‰²Xƒá¸²¸ŒŒŒV§œ®¯Œ‹‹‹yèà­­¯­­¯­[-ÅÿÖÕÕÕÒÖy¨ÆIFFFF88:2û}Ü‰ŒŒ¯uƒŸÚ´²Œ4¨¯¯ŒŒŒ]/èó­¯¯­­Œ°\-ÆÿíÖÕÒÒØz„ÇIF8FE5582üßœ‰ŒŒ±Xƒdy­ŒŒÒEÊŸŒŒŒŒŒH/çó­­­­ª‡ª[/åÿíÖÒÒÒÖ™„ÈLF9E44#$1ûŞ™ŒŒŒ±6", 13, "lP³uŒŒŒŒ´FËÂŒŒŒŒŒ¯G/èõ­­­©††‡XOúÿíØÕÒÒÒ½„ÈLF:8""""""#1æ¿–ŒtŒŒ®‘", 13, "l€ëw‹tŒŒ±EËâŒŒŒŒŒ¯7/èõª­­‰nnoFOúğíÖÕÒÒÓ½„ÈLFE4""47""1Æ˜Œ‹ŒŒŒ”", 13, "k¤ğ¶utŒŒ´6Ëõ‹‹‹­8/üö­°onª†V.úïíÖÒÒÖÖ½„ÈLFF5""57""1Ä\uŒ‹ŒŒ®“", 13, "hÈÿ›tŒŒ²#Éâ‘”­Œ%/üö­¯­†n­†U.ùïíØØÕÚ¾zƒ¤<9F4""4#""1¢\”ŒÒwAÆİ›”ŒŒŒ´#„à´´´²²®$èà­ªno‰pU.åğïííÕÙ½[l¡:98#88""""0¢½¸¯¯ŒŒ²4@€¿ºŒŒŒ´#„à²´´´´²²%çÁ‰­‡†­qnU/åğíØØÕÒÚ\li98454""""1¢Ö´µŒŒŒ", 13, "@Ã¸ŒŒ‹ŒŒ²8¤ò²´´´´²%Ê}ª­‡‰‡‡nV=åÿØÕÕÒÕÖx‚iE8""""""""""1¢×ÖŒŒŒ4", 13, "@÷Ù³²³³³ÑH¥ô¯²´´´´¯6¨}­‰nnonp=æÿíÖÕÒÒÖx‚‚4#"""":5""1å×º‹ŒŒX@Éecab~caA§ö¸´´´´´²7¨Ÿ•Šnn‡¯np=ûÿØÕÕÒÒÖ‘lÈ-:::8:E$2åÚ¸Œ‹ŒŒuuAé¦¥ÊËÉÉÉËÈË÷º´´´´´²7Éã}’’ÌÌ¯ª\1üÿØÕÒÒÕÖ‘ƒügA@@?-0O?É™Ïˆ‹ŒŒugûcaNœ]zMË÷ë´´´´µ‘#ææP@?O.,=?@üñÖÒÒÒÕÕ´ƒÉaNN``NN*2È¼´ŒŒŒŒug¿ppno¯‡ªË÷ì´´´´µxÊ£N**+**)1ûğÕÒÒÒÒÒÒlùÛ²²³³•²[2Æ»Ó²tŒŒŒugd›ŠŠnn‡n†ËöÙÑ´´´´xÉÁsVVVVUv úîÒÒÒÒÒÒĞlå»‹ŒŒŒŒ“G?Çµ¸ÑŒŒŒ‰wjb’†nnn‡ËôÙµ²´´²‘¨~USDDDDrùÙĞÓÒÒÒÒĞƒÆœ»ŒŒŒŒ®G", 26, "?å¸·×ŒŒŒŒ˜¥Â‰­‰q­n†ûòÙ´¸´´µy/¦~^UDDDDråÙÒÓÒÒÒÕÒ„ÉŒŒŒ“F", 26, "2ùºÙìŒŒŒ½", 13, "‚øq­ªo‡‰o†çòììÙÑ´¼\0„ ^’DDDSqÉÚÓÓÒÒÒÒÎ„æñ›ŒŒŒ®52åÖììŒŒŒ›iú¯­‡n‡‡†ÊòìÙÓÏ²¿\1¦Ã{IDDDDqæÚĞÒĞ·ÎÎÍ„É½˜ŒŒŒŒ®F2øºììŒŒŒ{	iû¯­‡nŒŒ†ÊòìÖ´´²µ¶)0¨Ÿ’EDDDDqæÚÍ±ÍÍÎÎĞ„Æ˜wŒŒŒŒX2øºìÖ“ŒŒŒ™	hûŒ­­‡nooŠÊôíÓ²´´²µ(/É~YDDDDDpûÛÍÍÍÍÍĞÒƒÅxwŒŒŒŒZ1øÓìÖ×ŒŒ¿	hú¯­ªoooÊöíÖ²´´²µ¨}ETDDDSpûğÍÍÍÍÍĞĞ„¡H¯ŒŒŒÒZ1ÃÑìºÖŒŒhú¯­­‡‰‡³ÉöîÖ²´´²µ¨N8DDDDprûîÍÍÍÍÍÎÎÉÄ½º­Œ‹·51Ÿ²Ù·Ö¬¯NgùŒ­­¯­ªµ", 13, "ÈóìÑ´´´´—É}yUpDDU5çÙ´ĞĞÍÍ±±", 0, 0
+
+	section	.data,"aw",@progbits
+	public	_global_palette
+_global_palette:
+	db	0, 0, "ÿÿ)¥J)K­l±­5¤8Î9Å¼ï=„ÀÅ@æÀAÂÅ(ÅIÅ¤HÄÈåÈI'I'ÉHIIÉiIjÉŠIŠÉ«I¬ÉRJƒÌÄLÄÌäLåÌåÌM'MHMIÍiÍ‹Í«M«ÍÌMÌÍíMsÎÄPÄĞäPäĞåĞQQ&Q'ÑÌQÍÑíÑÒ/R”R”Ò¤TåÔUÕ&U'ÕGUFÕHÕiUŠUÖ/V/ÖµÖ¤XÄXÅØåXäØÙÙ%Ù&ÙGYGÙiY‰Y«YËYÍÙíYíÙ", 13, "ZOZPZPÚQÚqZqÚ’ÚÖÚÄÜä\åÜ]İİ$]%]&]%İF]Gİhİ‰]‰İ«]íİ", 13, "ŞPŞq^’^’Ş³^÷^åàaááá$a%a&a%á&áEaFaHaEáFáGáfagaˆa©a©aªáËaìa", 13, "â/bPârbqâ’â³b³â´âÔbÕâ%å&åDeEeFeEåFåGåeefegefågåhå†e‡eˆe‡åˆå©e©åÊeËåæ-fPæqæ’æ³f´æÔfÕæõföægGieifégé†i‡i†é‡éˆé¦i§i¨i§é¨éÉiÊéëi", 13, "ê-jNjOêojpj’ê²jÔêk7k7ëXk§m¨íÈmÈíÉíém", 10, "n,nNnpnoîqî‘n²n³îõîï7ïXoYïéq,ò"
+
+	section	.rodata,"a",@progbits
+	private	_.str
+_.str:
+	db	"REV 0.1.6 render time: %f", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.1
+_.str.1:
+	db	"Created by Eugene Choi", 0
 
 	section	.rodata,"a",@progbits
 	private	__ZL8cosTable
@@ -3415,46 +3552,21 @@ __ZL8cosTable:
 	dl	16776961
 	dl	16776961
 
-	section	.bss,"aw",@nobits
-	public	_img_strip_data
-_img_strip_data:
-	rb	242
-
 	section	.data,"aw",@progbits
-	public	_img_strip
-_img_strip:
-	dl	_img_strip_data
-
-	section	.bss,"aw",@nobits
-	public	_playerPos
-_playerPos:
-	rb	6
-
-	section	.data,"aw",@progbits
-	public	_brick_wall_arr_data
-_brick_wall_arr_data:
-	db	"ss“s“s‘s’W‘•‘Wr•·t‘•·Xv©tsRÖ’sq‹s’r±WW“q•tW±AX“¯”—”‹AXYˆu—“”AWW‹“•ÑXXVs»tWÏ””t†»X>É¼ˆ-·¬]¬¦˜XtKBÖÌ—ˆ-yu›©¬\S-»gZÚÚ–†.¹Z‰‹B†=Ö„Z´¯—†@Õ‚Z‹Š[ˆT»†Z²±—„-»©\ˆx¯>»„Z¯±E", 13, "»©ZW-[ÊWy-\´±[)×²XÌpBÏ”Ø‹vˆ[<»²v´o[±”Û²vŠ[(•P[¯i\ÓuÛ©v’‰w(¼s]¯h[rWÛ©vÙ—w&¼ˆB‹lw†UÛ¤uëÏ\$", 26, "”ˆB³lw¬TÙ‚të¸C$»†B˜—š±T˜„uë´›s1»†Bjš±=x>CÏË¾†.Ø†w‡‚™ÊAv70ÌÉ™†@Õ©\©„™±UtKBÉÇÀ¸¯†O’Ì¯¨.¡°©„¦DÕ††¨/yjKK$bÕÉÆÆ¿Ñˆ†l—°‹¬A¢ª¬©¯CÚ”s•4xjLK$cŞÖÓÓz·Š†lå``z`Å­©©¯DF.-¾‰hL9|áÁÁÁw´¬†h›‡¦;¢­¦¦´3—¥„†½¯ˆg9`ÏÉÉêw±«†i˜¦€Nc¬ˆ‹—†„†¼±ˆ„;_´¯ŠËœ¯ˆ‚l½©‚9I‹†¬‹˜Š††Ş®†hSaÑ¯Š±ÀŠn„Oß©‚„9a°†ŠŠ¼nˆƒŞnˆ„Pc´±±ÊÀ«†„iŞ©†g;}²†ˆ¬4¼¯„†½«i†P|²¯«ÉÀ†„„i½©¬¤T}°†ˆ«5ÙÉ††Ş†„†9}²¯±ÉÀ¨„ih¼©©©T¹ˆˆ†`¼±«‚¾¥„„9}²¯±É¢1", 13, "5½©¦©UI5¼±É©åB¡Ğ±±É~", 26, "¾¦†ÊT[²ˆTÙ±ÏìãoS(<}²¯¯¯Ÿ)ò¨lĞTBÊÌˆqÙÉêíâ††ˆP}²ˆŠO *)<+ò©¬Ğ>\éÊ…qÚ±éì0öˆ¯¯q}²†©‹},:@,òˆ´´UyÑ¯†q!Û±Êì0öˆ¯´{·†ˆ¨|<'@,Ş†²¬T´¬†3Ø±±é/ø©‹Ğq{·†ˆ«};,?¼††o<{´Š†i!ØÌÏé/÷¥i·c¹†ˆ«¡+%)?œS:&{Ìˆ†P!¿——˜3÷¥†°c˜qpS¡;(&+Ãx[xDÂÊ††O4DYZZ2ö©¦¥{¿š›yÅ;::)Şˆˆ¨-´Š†84’«††/ã©©©‹_îËË¢;:9(Á’†ˆ+z²ˆˆl6”Š††0ã©©¤‹`îÏË¶¢<(à†Š{¬††nG—††Šö©¦€hîÏËÑ¢>&$™†…ˆ,~Õ††QG—ˆˆˆ÷©„‚gzìÏÏ¹~+&$™¬ˆ«`»ˆ†Q6Ö±¯¬â¦‚„M`ìêÏ‘d$¼²††", 10, "z°‹‹oGÕ±±¯", 26, "›¦‚ezîÏÎ²&&$İ¯…†~z{z¢Ú±±¯Á‚©j}îÎÎ±¢D3115¾¬…†}tqqGğ±±¬Å21~ìËÎË¡²‹‹p ¼´††(GeFÚ±±¬MMM+aÏÌËË¡—††nİÏ††?Á‡„‡€_îÏ²‘{R77&_ÏÌËË¢»††lÜêˆ†-Ã©‡‚EïÌ±µR77$`ÏÉÇÈ p††nÛÑ¬†.Ã©¦€‚EïÊ±²œM7J$bĞÇÆÉÂˆ†p—Ï¯ˆÂ¦©¤©EïÊ±°zNKL$bÏÈÆÇ}òÔ¶¯¯†ˆŒ9""˜¨Ğ±Ïˆˆˆtcú³©©¬‚‹", 13, "ãİ¬††…†¨«<!ÂZjjKKKKM	çİ®±ËÆ®®Æ}óº±²©†††$""•ŠÏ´´†¥¯VIæ­¬©¬¦¤„²Ãİ…†…†¨Š+""Zjg77JJK	çİÇÉÉÆ®®ÆcóºÑŒ††††O""–¬²Šˆ†¥¨tIæª©©¬©¦¦´ Û¯ˆ…k…¯·!XjgLJJJMü¿±ËÉÆ®®ÆGó¸éŠ…†††l!Ásq°²µuæª©©¬¬©©´À½™š™vv\ÄÂsjNKKKMüû¾ÜğğÛÚÙ6àºÌŠ††††Q""çü¢d~¢¢ææ­¦©©©©¬²", 13, "¢c6! 6Ã—jmjLLKMüüçüüüüüû6¿º¯¯ˆ†„„P""æC\y[ww\}æ³©©ˆ¬¦©¶", 13, "¢_Y:NNNN8ãÖ‰‹eMLMü½—˜—uvwB5İ·¬±ˆ†„„O""åwj‡¦°©‚dæ³©©¥¦¤¬¶¡z§†ƒƒ„†", 10, "âÓ¬¯¬„eegûìËËÌÌÏìÔ3Û´ÉÉ†„„‚9""ã.¦‚LL¦‚K>cæ³¥¦¥„©´¶ _†¥†¥„ˆÁÑ±±¯hfggÅĞ±¯¯¯±ÎÏ3Ú±±É†„ˆ„9""â>¦ªLeKK?6Å³ˆ¥©i¬²²I`„h„„„†", 10, "ÁÑ±±¯h†‚‰", 10, "ãÏ±¯¬ˆ¯ÉË5Ü±±±†‚†‹O""Ám‰¦‡‚eK>""¢²†††ˆS‹Gz¯¨„hhƒ†", 10, "ÂÑ±®¯h„ƒÊãÏ²±Š†¬±Ë6ñ±®¯„hh‰j""ãª©©e„†eL,"" °††l‹p‹Gz²«Ših†ˆ& ãÔ±®¨hhh°+åë²¯Š†¬±±`ó±¬‚‚‚„j#å¹©©„eg‰L", 26, """ †††©¯¯iGœ²«Ql†„†(!äí¯®†ff‚†>æî±¯¬Š¯±±~ó(QŒ†‚„%""ùÕ©©¦e„„e", 26, "# ²‹†ˆ†¯±NH´Šl¨ƒ„!äÖl:Š¥ƒ‚ˆÅÓ«±±±±²Ï~ò¯«PŠ¨‚†9""æÒ©©†e‚†€", 26, "G Ò††††¨¯ˆdÁ·nlˆƒ‚ƒ""¡Ó¬ˆP¬†‚Š!ûÒˆ±±±±±Ï~ò««n†„„„O""å¹©©¦eee", 26, "c¡Ôˆ†…ˆŠ«‹¢Á¶±«„h‚ˆ)"" Ò««i†„ƒ†+!üÓ†¬±¯«¯Ï~ñ««†hhˆ¨N""Å¹©©©„hfˆ", 26, "c ·††i†ˆ«¬¢Á¶±±†h‚©!Å¸«ˆkh‚¨†&ûÓ„‹±¯ˆ¬Ë~ò¨„hƒhh…9""Äµ©©¬©¦¤¬", 26, "c ¸††††ˆ«¬¢À¶ÉÈ†h¦‡", 10, "!û¸ˆih‚h„i", 10, "üÓ„¨±¯¯±Ë~Ş…„†„†…¥N""Ã³©©¬©¦¤²cÓ††††ˆ¨¬¢À¶ÉÉˆ„†h", 10, "!ú¸††††„¥†3üÒ…«±±±±Ë~Şˆ¥†„„„ˆN""Â³¦©©©©©°cÓ††……¥¥¬£ÀÌ±É±†‚„ å¹ˆ¥†„„†„4üÒ…«±±±±Ë~à¬¥‚hhh‚9"" µ¦©©©©¬°aûŞo‰¨¨ˆi95æÁ¶±ÉÉ«hh", 10, " ÄÖ¥†ƒhhii", 10, "üÕˆ¯±±±ÈË~úC&&", 10, "65 ¹¦©¦©¦¬´6# ""dÂĞ¯ÉÉÉ„‡ÅÅ/(&&Gü×±±±±±±É~¢5!##Â¹©¥¥¤¥°´#}", 13, 13, "IÀĞ¯±¯Ë²‹ææI645GüÕ¯¯±±¯±É~~", 13, 13, """ã¹¦¥†„¬Í´", 26, "!š²‹‰†Š¹H¿´¯É±Ñêê+çÁU??	+", 26, """ü¸Š¯±±¯¯É}Ÿ+%", 10, "+""ùµ¥¥†i²Ğµ—«Ì´Šˆ¨¹H¿´¯ÉÌëìí,üİ†lnnPo+üÓŠ«¯±¯Š®}Ÿ)'%", 10, 10, "6üµ¥¦hˆÌĞ·—¨ÑÌ±ˆ¨»GÀ´¯ÉÏëìí,üÛ†…†††mh&ü»††¬¯ˆhl}Á*%)Iü·©¨i‰ĞĞ·˜ÈêÌÌ…†µ>GÀÊ±Ëèììí,üÛˆ…†ˆ†ˆ‹<üº††ŠŠlP}Â,*<**", 26, "Hü¹©©l°ĞĞ", 26, "¼èêÑÌkƒ©XHÀ´¯Ééììí- ûñˆ…ˆ²¯Š²;üº……†¨©‹‹}Ã?%'=U*=", 26, "5üÒ©ˆ©´ĞĞ:-!½èê´¯…„Š.Iá¶±ÈÌêìí?!üòˆ…ŠÍ¶Š¶;üºˆ††ˆ¯±lcÃ@%'<@,=,""ûÒ†‰¬ÍÍ´µ-6¾ÌêÏ……†>dâÌ±±±éêí@!æó¨†¨Ê¶¯ĞTüÕˆ†ˆ†¨¯lFÃ?%(:@@=,""ûÕ†ˆ¯Ğ²´·", 26, "IŞÏêĞˆ…†A¢á¶±¯¯Ìéì< çóˆ†©ÊĞ´´TüïŠ††ˆŠ««GÃ?(')@U@!ú¹†l±Í¯²µ", 13, "aò¯êÌ†††ˆt¢¿ÌÉ¯¯±Ìì<!üó¨¨ˆ¯ĞĞ<üÙˆ†…ˆŠ««HÃ?''=U@,!ø²ˆlŠ²‹µ", 13, "cóˆÌ´††††s¢¾´±ÉÊÊÊì<3üò©¬©‰Í¸·SüØl†……ˆ¨«HÃ>''", 10, ")@@,!â¬††††l‹", 26, "d¿©¶¯†††ˆ;¢¾´²èÊĞÌì,!üòˆ¨ˆO´¸¸SüÚ††……ˆ¨«HÃ>'%", 10, "(@@,!â‹††††lTi", 13, "d›ÌÌ¬†††Š%¢¿¶ÌèêÌÍì=""ü¿ˆ¥†g°¸¸<üÛˆ†††ˆ¨¬dÃ>%%=@,!Ã³ˆ¨‹P;pQdœéŠ†††¨%¢ÀÔììîîïğ.""üß¥¥¥„©·¸=üÜˆ†††¥©¬¢Ã>'%%%*@,!Åw		", 10, "~zì¬ˆ†††Š8¢¡áy335""üß¥¥¥††ÊĞ=ü}ZWWW?", 26, "~¢>:'%%%;,""çæÃ `GIc{åÁĞ±††††¨&¢H543343]F6üß¦©ˆ¥†¦´TüÄ   ¡ a¢>:)(9&:,""ùvWVWXY”-~à±Ìˆ†††¨$¢\Uq‘’’‘’-üò¤©©©¦¥²Tùñ¸¹–———˜£Ã>():)())#ùÓŠˆŠˆ†«S~ŞÉÌŠl††i¢—¨¯ˆ††††rüò¦©©©©©¯SãğÏ¶±¶¶rûÃ>:::::()#ø”…ƒƒ†„¯P~Ş´¯´†††N	¢—«¬Š†………qçŞ©©¬©©¬©SÂïÏÎÎÎËÏq£Ã>::::&(+#úuÖˆ„††¬l~yÓ±¯ˆ†ˆˆ$£˜ˆ¬¬ˆ†††U çŞ©¬¬©©†­TâğëÏÎËËÏrÃ>:(:9%$(#ü½—‰„††®P~\q©ˆ††ŠË9Å½††ˆ†††ˆ= çò©©©©¦‚¦S äğëÏËËËÏ”Ä?:)9$$""ûÜ”‰†††Ç%}y°l††††±:æ¿ˆ†††††¬* ûß©©©¤f‚PEùïëÏÎËËËºÄ?::&""å»†k††«‹}zén…k††®9æßˆ†††††¬' ûß¦©©„ee€:]ùîëÏÎËËÌºÄ.:9$$'""Ã’ˆ†…†††| í³lk††±%æßˆ………ˆˆ©( üó©­‡e€¦9ùìëÏËËÏÏºÄ.::$%'""ÁTl†…††«ŒaÄït‰k††¯Åò‹©Šˆ†ˆ üó©¬©e©8øìëêÏÎÓ»‘~ >):$$$""Tˆˆ†ˆËn6ÃÛ•†††±$Ş±±±¯¯Š«ûŞ‰©¦e€„g8ãîìëëÎÑºS~&)(&&!º´¬¬††¯$6z×¶‰†††±Ş¯±±±±¯¯ç×„©‚©he8 ãîëÏÏÎËÓT~b)&$$""¸±²Š†††	6À´††…††¯& İˆ¯±±±±¯åu¤©‚„‚‚LN2ãïêÎÎËÎÏp}b9(""ĞÏŠ†††ˆ$6ôÑ°¯°°°Ê;¡ñ¬¯±±±±¬%£v‰©„eeeKg2æïëÏÎËËÏp}}&)$""ãĞ¶ˆ…††ˆP6äx[[[w[[G¢ó´±±±±±¯'£™¤eL‚¬eN2ûğÏÎÎËËÏ‹}Ä1+(((;9#ãÓ´†…††llGü¡¡ÅæÅÅÅæÄæô¶±±±±±¯'Åà•ªª©¬¤T""üïêÎËËÎÏ‹~üIG664!E{5ä”²ˆƒ…††lIû\Z0˜—UVAæôé±±±±²‹ææG65E1256üïÏËËËÎÎ±~ä[00BYXX#ä¹±Š††††lI{×ggee¬‚¤æóê±±±±²p", 10, "Å0/""ûîÎËËËËËË}øÔ¯¯°°¯S#Ã·Ì¯k†††lIEt‡¤LL‚eÅàÑÊ±±±±p", 10, "Å½jMMNMMmùìËËËËËËÉ~ã·…††††Œ:4ã²´Ê†††„ocC‡‡eeL‚æñÑ²¯±±¯‹", 10, "£wMJ7777iäÑÉÌËËËËÉ~Ã—·††††«:4ã´´Ğ††††’¡¿„©„h©‡eûİÑ±´±±²r", 10, "  xVM7777iãÑËÌËËËÎËä˜˜ˆ†††Œ:4ø¶Ñêˆ†††º}õh©¦e‚„e€çİêêÑÊ±¹T!›VR777Jh	äÓÌÌËËËËÇæÚtˆ†††«%#öÏêê‰†††•bú‡¬©‚e‚‚åİêÑÌÊ¯ÕT""¢Às>7777h	äÓÉËÉÉÇÈÇäº’††††«:#â¶êêˆ†††sbû‰¬©‚e††åñêÏ±±¯²³", 26, "!£›87777h	æÔÆ®ÆÆÇÈÉÃ’n††††ˆQ#â¶êÏŒ†††“aú†©©‚eff„åòëÌ¯±±¯²", 26, " Åwj77777g	ûÖÆÇÆÆÆÉË~Âpn††††ŠQ""õÌêÏĞˆ††—aù‰¬©¦€€€‰åóëÏ¯±±¯²", 13, "£u8K777Kg	ûíÆÇÆÆÆÉÉ<¬†††ˆËQ""ßÊê¶Ïˆ††˜aù‡¬©©‚„‚°ÅóëÏ¯±±¯‘£A&K777gi	ûÔÆÇÆÆÆÈÇÅÁº¶ˆ©†…É&""y¯Ñ±Ïˆ¨¬WI÷†©©¬©‡¦²ÄòêÊ±±±±ÅvqMg77M8	çÑÇÉÉÆÆ®®", 0, 0
-
-	section	.data,"aw",@progbits
-	public	_global_palette
-_global_palette:
-	db	0, 0, "ÿÿÅ<æ<åDEÅ(ÅIÅ¤HÄHåHåÈIÉ(ÉIÉiIjÉŠI«IƒÌ¤ÌäLåÌMÍ'ÍHÍiMŠM«M«ÍÌMÌÍíMÄPäPåPäĞåĞQÑÑ&QGQHÑiQŠQ«QÌQÌÑíQíÑR¤TÅÔåÔUÕ&U&Õ'ÕGUGÕiU«ÕÍÕíUVÖ/V/ÖPV¤X¤ØÄXÅØåØYÙ%Y(Y&ÙGYGÙiYiÙŠÙªY«ÙÌÙíÙÚ.Z/ÚPZPÚQÚqZqÚä\äÜåÜ]İİ$]%]&]%İ&İF]Gİg]‰]Šİ«İÌİíİŞ/^PŞq^qŞ’^’Ş³^ä`åàaáá$a%a&a%á&áEaFaEáFáGáHágaháˆa‰á©aªáÊaËáìa", 13, "b.bPbPâqâ’b’â³b³âÔbÕâ&e%å&åDeEeFeGeEåFåGåeefegefågåhå‡eˆe‡åˆå¨e©e©åÊe-f.æOæpf‘f’æ³f´æÕæõfeieéfé†i‡i†é‡éˆé¦i§i¨i¨é©éÉiÉéÊéêiìiìéjê-j-êNjOêqê‘j²j³êÔêõjöêk7k§m¨íÈmÈíémêí", 10, "n,nMnonpî‘î²n³îÔîõnõîï7o7ïXo~±ş"
-
-	section	.rodata,"a",@progbits
-	private	_.str
-_.str:
-	db	"REV 0.1.6 render time: %f", 0
+	public	_ceiling_floor_tex_data
+_ceiling_floor_tex_data:
+	db	"ğ", 10, 10, 10, 10, 10, "!!!!!!!333333BBBCCCCCRRRRRRRRmmmmmmmmm…………………………"
 
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	extern	_free
-	extern	__Unwind_SjLj_Register
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	extern	__frameset
+	extern	__Unwind_SjLj_Register
 	extern	_gfx_SetTextFGColor
-	extern	_gfx_Begin
 	extern	_sprintf
+	extern	_gfx_Begin
 	extern	__fadd
 	extern	__lsub
 	extern	_gfx_GetStringWidth
@@ -3468,28 +3580,26 @@ _.str:
 	extern	__ftol
 	extern	__ishru
 	extern	_gfx_SwapDraw
-	extern	__idivs
+	extern	__idivu
 	extern	_gfx_SetDraw
 	extern	__setflag
-	extern	__iand
+	extern	__idivs
 	extern	__Unwind_SjLj_Unregister
+	extern	__iand
 	extern	__fneg
+	extern	__irems
 	extern	_gfx_ZeroScreen
 	extern	__fdiv
-	extern	__srems
 	extern	__imulu
 	extern	_sinf
-	extern	__ltof
-	extern	_gfx_Rectangle
 	extern	__ineg
-	extern	_gfx_SetColor
 	extern	_cosf
 	extern	_sqrtf
+	extern	__ltof
+	extern	_gfx_PrintStringXY
 	extern	_os_GetCSC
-	extern	_gfx_End
 	extern	__fcmp
 	extern	__frameset0
 	extern	_clock
-	extern	_gfx_PrintStringXY
 	extern	__fsub
-	extern	__irems
+	extern	_gfx_End
