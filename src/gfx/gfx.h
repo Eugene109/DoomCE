@@ -9,6 +9,8 @@ extern "C" {
 #define sprites_palette_offset 0
 #include "brick_wall.h"
 #include "ceiling_floor_tex.h"
+#define rlet_sprites_palette_offset 0
+#include "overlay.h"
 
 #ifdef __cplusplus
 }

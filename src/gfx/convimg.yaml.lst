@@ -2,4 +2,6 @@ global_palette.h
 global_palette.c
 ceiling_floor_tex.h
 ceiling_floor_tex.c
+overlay.h
+overlay.c
 gfx.h

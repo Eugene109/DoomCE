@@ -278,19 +278,25 @@ double dot(const vec3 &a, const vec3 &b) { return a.x * b.x + a.y * b.y + a.z * 
 //     cout << a.x << " " << a.y << "\n";
 // }
 
-double min(double a, double b) {
-    if (a > b) {
-        return b;
-    }
-    return a;
-}
-double max(double a, double b) {
+// double min(double a, double b) {
+//     if (a > b) {
+//         return b;
+//     }
+//     return a;
+// }
+// double max(double a, double b) {
+//     if (a < b) {
+//         return b;
+//     }
+//     return a;
+// }
+
+inline int max(int a, int b) {
     if (a < b) {
         return b;
     }
     return a;
 }
-
 vec3 normalize(const vec3 &in) {
     double length = sqrt(in.x * in.x + in.y * in.y + in.z * in.z);
     return in / length;

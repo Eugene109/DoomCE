@@ -38,10 +38,10 @@ for i in (1,2,4,8,16,32,64):
         r = np_frame[j][0]
         g = np_frame[j][1]
         b = np_frame[j][2]
-        offset = 100
+        offset = 1000000
         current_palette_index = 0
         for c in range(0, len(palette)):
-            new_offset = abs(palette[c][0] - r)+abs(palette[c][1] - g)+abs(palette[c][2]-b)
+            new_offset = pow(palette[c][0] - r, 2)+pow(palette[c][1] - g, 2)+pow(palette[c][2]-b, 2)
             if(new_offset < offset):
                 current_palette_index = c
                 offset = new_offset
@@ -61,3 +61,48 @@ out.write(string)
 
 print("\n--------------------------------\n")
 print(string)
+
+
+size = 240;
+string = """
+unsigned char ceiling_floor_tex_data["""+str(size+2)+"""] =
+{
+    """
+
+padding = 4
+
+im_frame = Image.open('src/gfx/ceiling_floor_tex.png')
+np_frame = np.array(im_frame.getdata())
+# palette_indices = []
+string += (f"{1:#0{padding}x}"+",")
+string += (f"{240:#0{padding}x}"+",")
+for j in range(0, size):
+    # np_frame[j] is pixel in form [r,g,b,a]
+    # must now search through the palette for best matching palette entry
+    r = np_frame[j][0]
+    g = np_frame[j][1]
+    b = np_frame[j][2]
+    if(j >= 120):
+        r+= 64
+        g+= 64
+        b+= 64
+    
+    offset = 1000000
+    current_palette_index = 0
+    for c in range(0, len(palette)):
+        new_offset = pow(palette[c][0] - r, 2)+pow(palette[c][1] - g, 2)+pow(palette[c][2]-b, 2)
+        if(new_offset < offset):
+            current_palette_index = c
+            offset = new_offset
+    
+    # palette_indices.append(current_palette_index)
+    if(j % 16 == 0):
+        string += "\n    "
+    string += (f"{current_palette_index:#0{padding}x}"+",")
+
+string += """
+};
+"""
+
+out = open("src/gfx/ceiling_floor_tex.c", "w")
+out.write(string)
