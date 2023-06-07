@@ -10,7 +10,12 @@ extern "C" {
 #include "brick_wall.h"
 #include "ceiling_floor_tex.h"
 #define rlet_sprites_palette_offset 0
-#include "overlay.h"
+#include "pistol_1.h"
+#include "pistol_2.h"
+#include "pistol_4.h"
+#include "pistol_5.h"
+#include "pistol_7.h"
+#include "pistol_8.h"
 
 #ifdef __cplusplus
 }

@@ -1,187 +1,0 @@
-	section	.text,"ax",@progbits
-	assume	adl = 1
-	file	0 "C:\Users\Eugene\C++\DoomCE" "src/gfx\brick_wall.c" md5 0xd233fa99afc4ea490c0fe486ba2582a6
-	file	1 "src/gfx" "brick_wall.c" md5 0xd233fa99afc4ea490c0fe486ba2582a6
-	section	.rodata,"a",@progbits
-	public	_brick_wall_arr_data
-_brick_wall_arr_data:
-	db	"}|~|œ}›}›d|›S{¼~|š¼d ®~}aİ›}{”|›|µdd}{dµSd~³œÀœ”STe‘f œœSd|”œ|Úe~|}¿~c×œœ~¿dOÑÁ‘D¼°°« šdXTÜÔŸ‘P¢‚®°h`D¿reÁÁ¿R½‰e’”e`ÜŒe¹³ÀRÀŠf”“h‘a¿f¶µÀŒD¿®i—‘³O¿Œf³µU""'¿®e|DhÒ|¢Di¹µgB4İ¶dÔzf×œÁ” —‘fN4¿¶ ¹zhµœŞ¶ ™“gA4]f³tjÛfŞ® ›’€A4Â~³sf|dŞ®ŸÁÀ€A3Á‘f”w€bŞŸí×h>""œ‘f·w€°aŞŠí¼E=3¿e Ÿ¢µa Œí¹¢dTÀe•¡µOOgÙÓ¢Rİ€Š¡ÒRgJTÔÑ¡RÜ®i®Œ¡µbXTÑÏÄ¼³]&›Ô³­R¨´®Œ«hÜ­6¢uXX=lÜÑÎÎÃÚ‘w&Ÿ´”°S¨®°®³gÁœ}FuYX=náÜÛÛ‚¼“w'Ël‚ƒlÊ±®®³hURD2*á’sYK„âÄÄÄ€¹°s(¢‰«^¨±««¹FŸªŒ#à³‘rKl×Ñ¸ì€µ¯t) «‰p[l°‘”—)ŸŒ$Âµ‘Œ^k¹³“Óƒ³‘Šw8ß®‰ŠKW”°”( “4á²s`lÚ³“µÄ“yŒs7ô®ŠŒKl´““7Áy‘‹5áy‘Œ]n¹µµÒÃ¯Œt)á®r^…¶‘°GÁ³Œ5à¯t]„¶³¯Ñ¤ŒŒt'Â®°«a…´‘¯GÁÑ4áŒK…¶³µÑÄ­Œts'Â®®®aˆ½‘‘lÁµ¯Š4áªŒŒK…¶³µÑ¨8#""GÂ®«®bW76%GÂµÑ®4ËE546¨ØµµÑ†2!!)á«Òag¶—‘a)Áµ×î4äz`AN…¶³³³¥B///+ô­wØafÒÔ‘{Á¸ìş6ã‘^„¶‘“]¦BBNC)õ®°ØOiëÒ{)ŞµìşTø‘³³{„¶®”…CLQD'õ‘¹¹b‚Ú³{:ßµÒî6ø‘³¹š„¼‘­„N@QCá¶°a¤¹°˜Fİµµì6ù®”Ø{n¼‘¯„M>CPÁxN£¹“t:ÀÔ×ì6øªt¼šn½‘¯¨C?BPƒ`L03nÔ‘]:ÃÀŸ Fùª´šn {z`§NAAC(ÈhFÆÒ]FheefEø®«ªšná¢¢¢ÊNLLB)á‘‘­D¤¹“>G›¯Sø®®®”kğÓÓšÈNLKA(Ä›‘Cƒ¶‘‘wHœ“Tø®®«”‚ğ×Ó»¨NA..(â˜“2ƒ°yVÀ“4ø®«‰s¥ğ×ÓÚ¨OA..(¡‘C†Ü]VÀ‘‘‘4ù®ŒŠrƒïÙ×½‡C>=-'¡°‘¯0l¿‘]Hİµ³°$ã«ŠŒZ‚ïì×›„0>=-(Á¶ ƒ´””zVÜµµ³#£«Š‰pƒğ×Ö¶‡3=A=)à³0‡ƒ£¤ƒ¨Áµµ³3Ä•®u…ğÖÖµÈiE98Gá°0…{˜{Vßµµ°#ÊE86(†ïÓÖÓÆ¶””z9Â¹Ak•‰p‰Uñµµ°¤ZZZAl×ÔÓÓ¨Ÿy8à×PÄŒ‰kğ×¶›%„aJJAkÙÔÓÓÈ¿w*ßì‘DÇ®‰ŠUñÔµº6¥aJJ=W×ÑÏÏ¦zy)ßÚ°4Æ®«qŠUñÒµ¶5£ZJX=lØÎÎÑÅš‘z)À×³‘4Å«®®UñÒµ´%‚[YY.l×ÏÎÏ…õÜ»³³‘–K; ­Øµ×‘‘‘#nè·®®°Š‰‰”""Èà°­¯N:ÅeuuJYYYZ(èà²¸ÓÎ²²Î…ö¾¸¶®=;Ÿ“×¹¹ª³c#Wç±°®°«Œ¶2Èà—­“C;¥eurJJXXY(èàÏÑÑÎ²²Înö¾Ú–L;°¶“‘ª­~3Wæ±®®°®««¹2¦ß³‘v³¼D:¤~urYXXXZ.(êÃµÓÑÎ²²ÎVö¾Ú“w:Ä}{´¶˜˜º&ˆæ±®®°°®®¹2ˆÃÂ¡¡¡  j8ÉÅ~u˜[XXXZ.)ıûáàßßßŞÁHö¾Ô“w;èê¨ˆ‡n†ˆ¨ÈÌæ±«®®®®°¶""¨nH:8(9HÈŸuxuYYYZ27üüèüüüüüûGÃ¾³³‘ŒŒ];ç„Fig€€j+…æ·®®‘°«®»""¨kdL\[[[Z+Èİ’—”qZY[2+üàŸ Ÿf €EGà¼°µ‘ŒŒ];å€•u«´®Š3næ·®®ª«ª°»""§ƒ™¬‹‹Œ.'ÆÛ°³°Œq[r2+ûïÓÓÔÔ×ïîEŞ¸ÑÑŒŒŠK;ÈR«ŠpY«ŠYOnæ·ª«ªŒ®¹»!¦k—ªªŒ‘(ÄÚµµ³srrr0)ÊØµ³³³µÖ×EÁµµÑŒ‘ŒK;ãO«®‰ppppPHÊ·‘ª®t°¶¶W‚™ŒsŒŒŒ.*ÄÚµµ³sŠ’ )È×µ³°‘³ÑÓGßµµµŠ”L%;Äx’«‰ŠppD;È¶‘—`”I‚™­Œss‹.+ÆÚµ²³sŒ‹Ò!*ä×¶µ“°µÓHóµ²³Œss’^5;È±®®pŒppC;¦´w”—z”Iƒ¶¯“ts‘09Èîµ²­sss´C8æî¶³“°µµWöµ—°ŠŠŠŒu5<å½®®Œpr’p3;¦š®³³tIƒ¶¯_wŒA:åİ³²ssŠO8æğµ³°“³µµ†ö—A]–ŠŒ?&;çİ®®«pŒŒp3<¦¶”‘³µ[V¤¹“w—­‹Œ/:åÜwL“ª‹Š‘/*ÊÛ¯µµµµ¶×†ô³¯]“­ŠK&;æÜ®®pŠp3I¦¾­³‘nÄ¼yw‘‹Š‹0;§Û°‘]°Š“0:ûÛ‘µµµµµ×†ô¯¯yŒŒŒ]5;æ½®®«qpq‰2n§Û‘‘“¯”¨Ä»µ¯ŒsŠ‘B;¦Ú¯¯tŒ‹C:üÛ°µ³¯³×†ô¯¯ss‘­\#;Ê½®®®Œsr‘2n¦¼t‘¯°©Ä»µµsŠ®0:ÊØ¯‘vsŠ­A8ûÛŒ”µ³‘°Ó†ô­Œs‹ss\;Èº®®°®«Œ°3n¦Ø‘¯°©¤»ÑÏs« :û¼‘tsŠsŒt.8üÛŒ­µ³³µÓ†áŒŒª\;È·®®°®««¶3lˆÛ‘­°#¨¤»ÑÑ‘Œs :û¼Œª/FüÚ¯µµµµÓ†ô‘ªŒŒŒ‘\;Å·«®®®®®´3nˆÛªª°&©ÄÔµÑµŠŒ 9æ½‘ªŒŒŒ/Fü½¯µµµµÓ‡ö°ªŠsssŠK;¦º«®®®®°´3léôz’­­‘tKGÌÄ»µÑÑ¯ss 9Éİª‹sstt.+êİ‘³µµµÏÓ†èg200A> HG¦½«®«®«°¹3H‡<9*7(&;nÆØ³ÑÑÑŒ08ÊÊS2AAA0 &IêİµµµµµµÑ†¨G:()<<Å½®ªªªª´¹3<…6$44""""$WÄØ³µ³ÓĞ”2+ÌçWHF77+8GIüÜ³³µµ³µÑo†4"""";ä½«ªŒ°Õ¹2:¢¶—”’“½3VÃ¹³ÑµÙììC*éÄbPP0!C3;ü½“³µµ³³¸…¥C?/0! C/;úºªªt¶Øº2+À¯Ô¹“‘­½0IÃ¹³ÑÔîîşC)üàwyy]{˜B8üÛ“¯³µ³“²…¥B@?/// Hüºª«s‘ÔØ¼2*Ÿ­ÚÔµ‘­¿0IÃ¹³Ñ×îîğD+üŞxsA8ü¿°³‘sw…ÄB/?///B0Wü¼®­t’ØØ¼2+ ÏìÔÔºOIÃÒµÓÙîîğD8êŞ‘‘‘”N8ü¾““w.]…ÅC//BNBB2Vü½®®w´ØØš2,Â×ìÚÔv‹®TIÄ¹³ÑÙîîğP9éó‘‘¶³“¶N8ü¾­®””…ÈP?@NbMN2GüÛ®‘®¹ØØLD:à×ì¹³Œ“RWâ»µÏÔîîğP:üõ‘“Õ»“»N7ü¾‘‘³µwnÈR?@NbCOD;ûÛ’°ÕÕ¹ºDHáÔì×—DnãÔµµµìîşP:çö­­Ò»™Øa7üÜ‘‘­³wHÇP?AMQbCC;ûÜ‘³Ø¶¹¼3Wá×ìØ‘—R¨â»µ³³ÔëşN9èö‘®ĞØ¹¹a7êñ“‘“¯¯IÇPA@BQbQ!:û½wµÕ³¶º""lõ³ìÔ‘}¨ÃÔÑ³³µÔşN:ıö­­‘³ØØ—N)êİ‘‘“¯¯VÈP@@/CbPC:ù¶‘w“¶—”º""nö‘Ô¹}§á¹µÑÒÒÒşNFıõ®°®’ÕØ¼`(êİw‘­¯VÈO@@.BQPC:ã°w”˜3nÃ®»³‘L§á¹¶×ÒëÔïC:ıô‘­‘]¹ØØ`(êñ‘­¯VÇO@?.AQbC:Æ”wat""n‚ÔÔ°“>§Ã»ÔÙìÔÕïO;ıô‘ªr´ØØN(üß‘‘­°nÇO??//PbC:È·‘­”]Mz`3nƒÚ—“­>§ÃÛïïşğñòR;ıôªªªŒ®¼Ø`(üà‘ª®°¨ÇO@?>>BbC:Ê€D22""&o‚î°‘“>¨§âEEG;+7‡ıõªªªÒØ`*ı…fd||P2!oÈOL@???NC;éÌÈ¨lIW‡n„ËÄØµ­>¨VGFEFFFUUIıõ«®‘ª«¹a+êÈ¦¦¥¦¨¦lˆÈOLBAKALC;ç |cd~~œP†öµÔ‘­=¨jb{|››››D)üô«®®®«ª¶a8úó¼½ŸŸ Ÿ ©ÈOABLBABB<úÛ“‘“‘¯`&†áÑÔ“wt.¨Ÿ­³‘|)üô«®®®®®³`8Èÿ×»¸¸»š|éÇOLLLLLAB<ùœ‹‹Œ³]†á¹³¹[¨Ÿ¯°“{*éá®®°®®°®`7Åÿ×ÖÖÖÓ×{©ÇOLLLLAAC<ûİ‘Œ°w†¢Ûµ³‘‘‘=© ‘°°‘b9éô®°°®®±a7ãÿí×ÖÓÓÙ|ˆÈOLALK>>A<üàŸ’Œ²]†i{®‘“ÓKË¢‘‘N9èô®®®®«Š«`9åÿí×ÓÓÓ×œ‡ÉRLBK==..;ûßœ’²?ok´wµLÌÃ‘°M9éõ®®®ª‰‰Š]UúÿíÙÖÓÓÓ¾ˆÉRLLA---.;æÀ™v¯”o‚ëyv²KÌÃ‘°@9éõ«®®ŒppqLUúğí×ÖÓÓÔ¾‡ÉRLK=-=@-;Ç›‘—n¦ğ·wvµ?çõ‘‘‘®A9üö®±qp«‰[8úïí×ÓÓ××¾‡ÉRLL>->@-;Äaw¯–lÉÿ’v³.Êô”—®“‘‘/9üö®°®‰p®‰Z8ùïíÙÙÖÛ¿|‡¦DBL=-=.-;¤a—‘‘‘ÓyIÇŞ—µ.ˆáµµµ³³“¯/*éá’®«pqŒrZ8äğïííÖÚ¾`o£ABA.AA--:¤¾¹°°³=H‚À»’µ.)ˆá³µµµµ³³/)èÂŒ®Š‰®spZ9äğíÙÙÖÓÛaoƒ!BA=>=--;¤×µ¶“HÄ¹³A*¦ò‘³µµµµ³/Ë«®ŠŒŠŠp[EäÿÙÖÖÓÖ×z…n""KA-----#;¤Ø×“‘=H÷Ú´³´´´ÒN*§ó°³µµµµ°?©’®ŒppqprEæÿí×ÖÓÓ×z…„#=.--B>-;äØ»‘‘]Håhfg€hf(I©ö¹µµµµµ³@(©¢˜ppŠ°prEûÿÙÖÖÓÓ×”oÉ7DAAALK0<äÛ¹wwIê¨§ËÌÊÊÊÌÉÌ÷»µµµµµ³@'Êâ••ÍÍ°«a;üÿÙÖÓÓÖ×”†üWIHHG7:UnGåœĞ‘‹wWûhfT Ÿb|S(Ì÷Úµµµµ¶”.æçVHGU86EGHüñ×ÓÓÓÖÖµ†åfTTeeTT4*<å½µ“wW£Àrrpq°Š«Ì÷ìµµµµ¶z Ë¥T445443;ûğÖÓÓÓÓÓÓoùÜ³³´´˜³`)<Ç¼Ô³vwWippŠp‰$ÌöÚÒµµµµzÊÂu[[[[Zx"",úîÓÓÓÓÓÓÑoä¼–M(GÈ¶¹ÒŒyng•‰pppŠ$ÌóÚ¶³µµ³”*©€ZXJJJJt+åÚÑÔÓÓÓÓÑ†ÇŸ¼¯M&Gä¹¸Ø›§ÃŒ®Œs®p‰%ûàÚµ¹µµ¶{9¨cZJJJJt*äÚÓÔÓÓÓÖÓ‡å  ‘–L&<ù»Úì‘¾…÷s®«qŠŒq‰#èòììÚÒµ½a:‡£c•JJJXs)äÛÔÔÓÓÓÓÏˆæñ‘¯><ø×ìì’lú°®ŠpŠŠ‰ËòìÚÔĞ³Àa!;¨Ä}OJJJJs(åÛÑÓÑ¸ÏÏÎˆå¾›¯L<ã»ìì‘}lû’°®Šp‰Ëòì×µµ³¶·3:©¢•KJJJJs(çÛÎ²ÎÎÏÏÑ‡Ç›y‘]<ã»ì×–œlû®®ŠpqqËóíÔ³µµ³¶29Ê€^JJJJJr(ûÜÎÎÎÎÎÑÓ†Åzy“_;ãÔì×Ø‘Àlú’°®«qqq’Ëöí×³µµ³¶""+©KYJJJXr(ûğÎÎÎÎÎÑÑˆ£N°‘Ó_;ÃÒì»×‘ lú°®®ŠŒŠ´Êöî×³µµ³¶!*©TAJJJJrt(ûîÎÎÎÎÎÏÏÊÄ¾»‘®¸>;¢³Ú¸×‘­°TWù®®°®«¶ÉôìÒµµµµš *Ê{ZrJJZ>(èÚµÑÑÎÎ²²", 0, 0
-
-	section	.debug_abbrev,"",@progbits
-	private	abbrev_start0
-abbrev_start0:
-	db	1
-	db	17
-	db	1
-	db	37
-	db	37
-	db	19
-	db	5
-	db	3
-	db	37
-	db	114
-	db	23
-	db	16
-	db	23
-	db	27
-	db	37
-	db	115
-	db	23
-	db	0
-	db	0
-	db	2
-	db	52
-	db	0
-	db	3
-	db	37
-	db	73
-	db	19
-	db	63
-	db	25
-	db	58
-	db	11
-	db	59
-	db	11
-	db	2
-	db	24
-	db	0
-	db	0
-	db	3
-	db	1
-	db	1
-	db	73
-	db	19
-	db	0
-	db	0
-	db	4
-	db	33
-	db	0
-	db	73
-	db	19
-	db	55
-	db	5
-	db	0
-	db	0
-	db	5
-	db	38
-	db	0
-	db	73
-	db	19
-	db	0
-	db	0
-	db	6
-	db	36
-	db	0
-	db	3
-	db	37
-	db	62
-	db	11
-	db	11
-	db	11
-	db	0
-	db	0
-	db	7
-	db	36
-	db	0
-	db	3
-	db	37
-	db	11
-	db	11
-	db	62
-	db	11
-	db	0
-	db	0
-	db	0
-	section	.debug_info,"",@progbits
-	private	cu_begin0
-cu_begin0:
-	dd	debug_info_end0-debug_info_start0
-	private	debug_info_start0
-debug_info_start0:
-	dw	5
-	db	1
-	db	3
-	dd	abbrev_start0
-	db	1
-	db	0
-	dw	12
-	db	1
-	dd	str_offsets_base0
-	dd	line_table_start0
-	db	2
-	dd	addr_table_base0
-	db	2
-	db	3
-	dd	41
-
-	db	1
-	db	2
-	db	2
-	db	161
-	db	0
-	db	3
-	dd	54
-	db	4
-	dd	63
-	dw	5463
-	db	0
-	db	5
-	dd	59
-	db	6
-	db	4
-	db	8
-	db	1
-	db	7
-	db	5
-	db	8
-	db	7
-	db	0
-	private	debug_info_end0
-debug_info_end0:
-	section	.debug_str_offsets,"",@progbits
-	dd	28
-	dw	5
-	dw	0
-	private	str_offsets_base0
-str_offsets_base0:
-	section	.debug_str,"MS",@progbits,1
-	private	info_string0
-info_string0:
-	db	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)", 0
-	private	info_string1
-info_string1:
-	db	"src/gfx\brick_wall.c", 0
-	private	info_string2
-info_string2:
-	db	"C:\Users\Eugene\C++\DoomCE", 0
-	private	info_string3
-info_string3:
-	db	"brick_wall_arr_data", 0
-	private	info_string4
-info_string4:
-	db	"unsigned char", 0
-	private	info_string5
-info_string5:
-	db	"__ARRAY_SIZE_TYPE__", 0
-	section	.debug_str_offsets,"",@progbits
-	dd	info_string0
-	dd	info_string1
-	dd	info_string2
-	dd	info_string3
-	dd	info_string4
-	dd	info_string5
-	section	.debug_addr,"",@progbits
-	dd	debug_addr_end0-debug_addr_start0
-	private	debug_addr_start0
-debug_addr_start0:
-	dw	5
-	db	3
-	db	0
-	private	addr_table_base0
-addr_table_base0:
-	dl	_brick_wall_arr_data
-	private	debug_addr_end0
-debug_addr_end0:
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	section	.debug_line,"",@progbits
-line_table_start0:

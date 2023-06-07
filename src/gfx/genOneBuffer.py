@@ -63,7 +63,7 @@ print("\n--------------------------------\n")
 print(string)
 
 
-size = 240;
+size = 180;
 string = """
 unsigned char ceiling_floor_tex_data["""+str(size+2)+"""] =
 {
@@ -75,14 +75,14 @@ im_frame = Image.open('src/gfx/ceiling_floor_tex.png')
 np_frame = np.array(im_frame.getdata())
 # palette_indices = []
 string += (f"{1:#0{padding}x}"+",")
-string += (f"{240:#0{padding}x}"+",")
+string += (f"{size:#0{padding}x}"+",")
 for j in range(0, size):
     # np_frame[j] is pixel in form [r,g,b,a]
     # must now search through the palette for best matching palette entry
     r = np_frame[j][0]
     g = np_frame[j][1]
     b = np_frame[j][2]
-    if(j >= 120):
+    if(j >= size/2):
         r+= 64
         g+= 64
         b+= 64

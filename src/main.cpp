@@ -1,4 +1,6 @@
 #include <graphx.h>
+#include <keypadc.h>
+
 #include <sys/timers.h>
 #include <ti/getcsc.h>
 
@@ -12,6 +14,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "aa_lines.h"
+#include "fixed.h"
 #include "matrixMath.h"
 #include "vectorMath.h"
 
@@ -26,77 +30,7 @@
 #define PI 3.14159265359 * (1 << SHIFT)
 #endif
 
-#define DELTA 16 // maybe decrease a little?
-// Axis-Aligned line
-
-// +Y is forward,
-// +X is right
-// X is parallel to x-axis
-enum LineType { X_LINE, Y_LINE };
-class AA_Line {
-  public:
-    AA_Line(LineType X_Y_line, double off, double min, double max, double t1, double t2) {
-        type = X_Y_line;
-        pos = off * (1 << SHIFT);
-        min_value = min * (1 << SHIFT);
-        max_value = max * (1 << SHIFT);
-        tex1 = t1 * (1 << SHIFT);
-        tex2 = t2 * (1 << SHIFT);
-        wPos = pos;
-        wMin_value = min_value;
-        wMax_value = max_value;
-    }
-    bool rayIntersection(const ivec2 &ray, ivec2 *hit, fixed *texCoord) {
-        if (type == X_LINE) {
-            if ((ray.y <= DELTA) && (ray.y >= -DELTA)) {
-                return false;
-            }
-            fixed mult = (pos << SHIFT) / ray.y;
-            if (mult >= DELTA) {
-                fixed xPos = (ray.x * mult) >> SHIFT;
-                if (min_value <= xPos + DELTA && xPos - DELTA <= max_value) {
-                    // dbg_printf("hiiii");
-                    *hit = ivec2(xPos, pos);
-                    if (texCoord != nullptr) {
-                        *texCoord =
-                            ((((xPos - min_value) << SHIFT) / (max_value - min_value) * (tex2 - tex1)) >> SHIFT) + tex1;
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        } else if (type == Y_LINE) {
-            if ((ray.x <= DELTA) && (ray.x >= -DELTA)) {
-                return false;
-            }
-            fixed mult = (pos << SHIFT) / ray.x;
-            if (mult >= DELTA) {
-                fixed yPos = (ray.y * mult) >> SHIFT;
-                if (min_value <= yPos + DELTA && yPos - DELTA <= max_value) {
-                    *hit = ivec2(pos, yPos);
-                    if (texCoord != nullptr) {
-                        *texCoord =
-                            ((((yPos - min_value) << SHIFT) / (max_value - min_value) * (tex2 - tex1)) >> SHIFT) + tex1;
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        }
-        assert(0);
-        return false;
-    }
-    LineType type;
-    fixed pos;
-    fixed min_value, max_value;
-    fixed tex1, tex2;
-    fixed wPos;
-    fixed wMin_value, wMax_value;
-};
+#define RENDER_H 180
 
 inline void bresenhamLine(unsigned x0, unsigned y0, unsigned x1, unsigned y1) {
     unsigned dx = x1 - x0;
@@ -145,17 +79,22 @@ inline uint8_t *writeTexStripToBuffer(const unsigned char *start_arr_ptr, uint8_
     return dest;
 }
 
-gfx_UninitedSprite(img_strip, 1, GFX_LCD_HEIGHT);
+gfx_UninitedSprite(img_strip, 1, RENDER_H);
 
 inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos, fixed tex_pos,
                          unsigned dest_height, unsigned darken_factor) {
+    // handle this later:
+    if (yPos < 0 || dest_height > RENDER_H) {
+        return;
+    }
+
     // code to set background to black
     // memset(img_strip->data, 0, GFX_LCD_HEIGHT);
     // img_strip->height = GFX_LCD_HEIGHT;
     // img_strip->width = 1;
 
     // copy in floor texture
-    memcpy(img_strip, ceiling_floor_tex, GFX_LCD_HEIGHT + 2);
+    memcpy(img_strip, ceiling_floor_tex, RENDER_H + 2);
     unsigned SRC_H = 64;
     unsigned SRC_H_SHIFT = 6;
     for (uint8_t a = 0; a < 6; a++) {
@@ -212,28 +151,27 @@ ivec2 playerPos = ivec2(0);
 //     ivec2 pos;
 // };
 
+#define NUM_FRAMES_PISTOL 7
+
+const gfx_rletsprite_t *pistol_anim[NUM_FRAMES_PISTOL] = {
+    pistol_1, pistol_2, pistol_4, pistol_5, pistol_5, pistol_7, pistol_8,
+};
+
 int main(void) {
     gfx_Begin();
     gfx_SetDrawBuffer();
 
-    uint8_t key = os_GetCSC();
-    uint8_t add = 0;
+#include "maze1_lvl.h"
 
     uint8_t count = 16;
 
     clock_t start_t, end_t;
     double total_t = 1;
 
-    const uint8_t NUM_LINES = 10;
-    AA_Line lines[NUM_LINES] = {AA_Line(X_LINE, 10, -10, 7, 0, 17),  AA_Line(Y_LINE, 7, 7, 10, 0, 3),
-                                AA_Line(X_LINE, 7, 7, 10, 0, 3),     AA_Line(Y_LINE, 10, -10, 7, 0, 17),
-
-                                AA_Line(X_LINE, -10, -7, 10, 0, 17), AA_Line(Y_LINE, -7, -10, -7, 0, 3),
-                                AA_Line(X_LINE, -7, -10, -7, 0, 3),  AA_Line(Y_LINE, -10, -7, 10, 0, 17),
-
-                                AA_Line(X_LINE, 7, -5, 2, 0, 7),     AA_Line(Y_LINE, 7, -5, 2, 0, 7)};
-
     int counter = 0;
+
+    uint8_t pistol_current_frame = 0;
+    bool alpha_key, alpha_prevkey;
 
     const uint8_t SKIP = 4;
     const uint8_t NUM_RAYS = GFX_LCD_WIDTH / SKIP;
@@ -252,30 +190,35 @@ int main(void) {
         start_t = clock();
         gfx_ZeroScreen();
 
-        if (key == sk_Up) {
+        if (kb_Data[7] & kb_Up) {
             count += 2;
-            playerPos += cam_forward;
+            playerPos.x += cam_forward.x >> 3;
+            playerPos.y += cam_forward.y >> 3;
             // loop through lines, find ones with pos < certain value, limit playerPos
-        } else if (key == sk_Down) {
+        }
+        if (kb_Data[7] & kb_Down) {
             count -= 2;
-            playerPos -= cam_forward;
+            playerPos.x -= cam_forward.x >> 3;
+            playerPos.y -= cam_forward.y >> 3;
         }
-        for (uint8_t i = 0; i < NUM_LINES; ++i) {
-            if (lines[i].type == X_LINE) {
-                lines[i].pos = lines[i].wPos - playerPos.y;
-                lines[i].min_value = lines[i].wMin_value - playerPos.x;
-                lines[i].max_value = lines[i].wMax_value - playerPos.x;
-            } else {
-                lines[i].pos = lines[i].wPos - playerPos.x;
-                lines[i].min_value = lines[i].wMin_value - playerPos.y;
-                lines[i].max_value = lines[i].wMax_value - playerPos.y;
-            }
+        for (uint8_t i = 0; i < MAZE1_NUM_X_LINES; ++i) {
+            maze1_x_lines[i].pos = maze1_x_lines[i].wPos - playerPos.y;
+            maze1_x_lines[i].min_value = maze1_x_lines[i].wMin_value - playerPos.x;
+            maze1_x_lines[i].max_value = maze1_x_lines[i].wMax_value - playerPos.x;
         }
+        for (uint8_t i = 0; i < MAZE1_NUM_Y_LINES; ++i) {
+            maze1_y_lines[i].pos = maze1_y_lines[i].wPos - playerPos.x;
+            maze1_y_lines[i].min_value = maze1_y_lines[i].wMin_value - playerPos.y;
+            maze1_y_lines[i].max_value = maze1_y_lines[i].wMax_value - playerPos.y;
+        }
+        // sort list of aa-lines:
+        qsort(&(maze1_x_lines[0]), MAZE1_NUM_X_LINES, sizeof(maze1_x_lines[0]), aa_single_comp);
+        qsort(&(maze1_y_lines[0]), MAZE1_NUM_Y_LINES, sizeof(maze1_y_lines[0]), aa_single_comp);
 
-        if (key == sk_Right) {
+        if (kb_Data[7] & kb_Right) {
             ++counter;
         }
-        if (key == sk_Left) {
+        if (kb_Data[7] & kb_Left) {
             --counter;
         }
         rot = rotate(int(-0.05 * counter * PI));
@@ -298,21 +241,24 @@ int main(void) {
             int dist = 100 * (1 << SHIFT);
             fixed texCoord = 0;
 
-            for (uint8_t i = 0; i < NUM_LINES; ++i) {
-                if (lines[i].rayIntersection(ray, &current_hit, &current_texCoord)) {
-                    current_dist = dot(current_hit, cam_forward);
-                    if (current_dist < dist) {
-                        hit = current_hit;
-                        dist = current_dist;
-                        texCoord = current_texCoord;
-#ifdef DEBUG
-                        dbg_printf("dist: %f\n, a = %d\n", dist / double(1 << SHIFT), a);
-                        dbg_printf("hit: %f, %f\n", hit.x / double(1 << SHIFT), hit.y / double(1 << SHIFT));
-#endif
-                    }
+            for (uint8_t i = 0; i < MAZE1_NUM_X_LINES; ++i) {
+                if (maze1_x_lines[i].rayIntersection(ray, &hit, &texCoord)) {
+                    dist = dot(hit, cam_forward);
+                    break;
                 }
             }
-            int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dist) * 500;
+            for (uint8_t i = 0; i < MAZE1_NUM_Y_LINES; ++i) {
+                if (maze1_y_lines[i].rayIntersection(ray, &current_hit, &current_texCoord)) {
+                    current_dist = dot(current_hit, cam_forward);
+                    if (current_dist < dist) {
+                        dist = current_dist;
+                        hit = current_hit;
+                        texCoord = current_texCoord;
+                    }
+                    break;
+                }
+            }
+            int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dist) * 100;
 #ifdef DEBUG
             dbg_printf("striplen: %d\n", stripLen);
 #endif
@@ -320,15 +266,14 @@ int main(void) {
 // #define LOW_RES
 #ifdef LOW_RES
             // striplen>>2 for skip of 4
-            drawTexStrip_scl_h(brick_wall_arr_data, SKIP, a * SKIP,
-                               (GFX_LCD_HEIGHT - (((stripLen >> 2) >> SHIFT) << 2)) >> 1, texCoord,
-                               ((stripLen >> 2) >> SHIFT));
+            drawTexStrip_scl_h(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - (((stripLen >> 2) >> SHIFT) << 2)) >> 1,
+                               texCoord, ((stripLen >> 2) >> SHIFT));
 #else
             // writeTexStripToBuffer(brick_wall_arr_data, &(gfx_vbuffer[0][0]), SKIP, a * SKIP,
-            //                       (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT),
+            //                       (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT),
             //                       (dist / 3) >> SHIFT);
-            drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (GFX_LCD_HEIGHT - ((stripLen) >> SHIFT)) >> 1, texCoord,
-                         (stripLen >> SHIFT), (dist / 3) >> SHIFT);
+            drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord << 1,
+                         (stripLen >> SHIFT), (dist) >> SHIFT);
 
 #endif
         }
@@ -339,9 +284,9 @@ int main(void) {
         char str[100];
         // sprintf(str, "REV 0.1.6 render time: %f, asm_test: %d", total_t,
         //         draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[0]), 0, 0, 64));
-        sprintf(str, "REV 0.1.6 render time: %f", total_t);
+        sprintf(str, "REV 0.2.2 render time: %f", total_t);
         gfx_SetTextFGColor(254);
-        uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
+        uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
 
 #ifdef PRINT_NAME
@@ -349,12 +294,25 @@ int main(void) {
         offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
         gfx_PrintStringXY(str, offsetX, 20);
 #endif
-        gfx_RLETSprite_NoClip(overlay, (GFX_LCD_WIDTH >> 1) - 26, GFX_LCD_HEIGHT - 64);
+
+        if (pistol_current_frame) {
+            ++pistol_current_frame;
+            ++pistol_current_frame;
+            pistol_current_frame = pistol_current_frame * (pistol_current_frame < NUM_FRAMES_PISTOL);
+        }
+
+        alpha_key = kb_Data[2] & kb_Alpha;
+
+        if (alpha_key && !alpha_prevkey) {
+            pistol_current_frame = 1;
+        }
+        alpha_prevkey = alpha_key;
+
+        gfx_RLETSprite_NoClip(pistol_anim[pistol_current_frame], (GFX_LCD_WIDTH >> 1) - (pistol_1_width >> 1),
+                              RENDER_H - pistol_1_height);
 
         gfx_SwapDraw();
-        add = (add + 1) % (254 - count);
-        key = os_GetCSC();
-    } while (key != sk_Enter);
+    } while (os_GetCSC() != sk_Enter);
 
     /* End graphics drawing */
     gfx_End();

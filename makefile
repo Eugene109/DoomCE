@@ -6,7 +6,7 @@ NAME = DOOM
 ICON = icon.png
 DESCRIPTION = "CE C Toolchain Demo"
 COMPRESSED = NO
-ARCHIVED = NO
+ARCHIVED = YES
 
 # OPTIMIZE_FLAG = -ggdb3 -O3
 

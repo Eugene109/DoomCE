@@ -271,7 +271,12 @@ converts:
     transparent-color-index: 2
     style: rlet
     images:
-      - overlay.png
+      - pistol_anim/pistol_1.png
+      - pistol_anim/pistol_2.png
+      - pistol_anim/pistol_4.png
+      - pistol_anim/pistol_5.png
+      - pistol_anim/pistol_7.png
+      - pistol_anim/pistol_8.png
 
 outputs:
   - type: c
