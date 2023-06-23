@@ -19,6 +19,7 @@
 #include "matrixMath.h"
 #include "vectorMath.h"
 
+#include "asm_test_func.h"
 #include "drawStrip.h"
 
 // #define DEBUG
@@ -115,14 +116,73 @@ inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, un
     // }
     unsigned x0 = yPos;
     unsigned x1 = x0 + dest_height;
-    unsigned dx = x1 - x0;
+    unsigned dx = dest_height;
     unsigned dy = SRC_H;
     int D = 2 * dy - dx;
-    unsigned y = 0;
 
     uint8_t *ptr = &(img_strip->data[x0 - 1]);
     for (unsigned x = x0; x <= x1; ++x) {
         *(++ptr) = max(int(*(strip_arr_ptr)) - (darken_factor << 5), 0);
+        if (D > 0) {
+            ++strip_arr_ptr;
+            D = D - 2 * dx;
+        }
+        D = D + 2 * dy;
+    }
+
+    // if ((xPos + pxl_scl) <= GFX_LCD_WIDTH && (yPos + dest_height) < GFX_LCD_HEIGHT && xPos >= 0 && yPos >= 0) {
+    gfx_ScaledSprite_NoClip(img_strip, xPos, 0, pxl_scl, 1);
+    // } else {
+    //     gfx_SetColor(1);
+    //     gfx_Rectangle(xPos, yPos, pxl_scl, dest_height);
+    //     // continue;
+    // }
+}
+
+inline void drawTexStrip_Clipped(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos,
+                                 fixed tex_pos, unsigned dest_height, unsigned darken_factor) {
+    // handle this later:
+    if (yPos >= 0 && dest_height <= RENDER_H) {
+        return drawTexStrip(start_arr_ptr, pxl_scl, xPos, yPos, tex_pos, dest_height, darken_factor);
+    }
+
+    // code to set background to black
+    // memset(img_strip->data, 0, GFX_LCD_HEIGHT);
+    // img_strip->height = GFX_LCD_HEIGHT;
+    // img_strip->width = 1;
+
+    // copy in floor texture
+    memcpy(img_strip, ceiling_floor_tex, RENDER_H + 2);
+    unsigned SRC_H = 64;
+    unsigned SRC_H_SHIFT = 6;
+    for (uint8_t a = 0; a < 6; a++) {
+        if (dest_height > (SRC_H >>= a)) {
+            break;
+        }
+        --SRC_H_SHIFT;
+    }
+
+    // ( [ 2^{SRC_H_SHIFT-1} ]^2)*4/3
+    // ( [ 2^((SRC_H_SHIFT-1)*2)]*4/3
+    unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (2)) / 3);
+    const uint8_t *strip_arr_ptr =
+        start_arr_ptr + img_offset + (((((tex_pos) % (1 << SHIFT)) << SRC_H_SHIFT) >> SHIFT) << SRC_H_SHIFT);
+    // gfx_sprite_t *img_strip = gfx_MallocSprite(1, dest_height); // maybe use gfx_tempSprite with set height
+    // for (unsigned i = 0; i < dest_height; ++i) {
+    //     img_strip->data[i] = *(strip_arr_ptr + (((i << SRC_H_SHIFT) / dest_height)));
+    // }
+    int x0 = yPos;
+    unsigned x1 = x0 + dest_height;
+    unsigned dx = dest_height;
+    unsigned dy = SRC_H;
+    int D = 2 * dy - dx;
+
+    uint8_t *ptr = &(img_strip->data[0]) + (x0 - 1);
+    for (unsigned x = x0; x <= x1; ++x) {
+        ++ptr;
+        if (x >= 0 && x < RENDER_H) {
+            *(ptr) = max(int(*(strip_arr_ptr)) - (darken_factor << 5), 0);
+        }
         if (D > 0) {
             ++strip_arr_ptr;
             D = D - 2 * dx;
@@ -272,8 +332,13 @@ int main(void) {
             // writeTexStripToBuffer(brick_wall_arr_data, &(gfx_vbuffer[0][0]), SKIP, a * SKIP,
             //                       (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT),
             //                       (dist / 3) >> SHIFT);
-            drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord << 1,
-                         (stripLen >> SHIFT), (dist) >> SHIFT);
+            if (stripLen <= RENDER_H) {
+                drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
+                             texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
+            } else {
+                drawTexStrip_Clipped(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
+                                     texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
+            }
 
 #endif
         }
@@ -282,10 +347,13 @@ int main(void) {
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
-        // sprintf(str, "REV 0.1.6 render time: %f, asm_test: %d", total_t,
-        //         draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[0]), 0, 0, 64));
+        // int idk = *(int *)draw_strip(69, 420, &(gfx_vbuffer[0][0]), &(brick_wall_arr_data[0]), 0, 0, 64);
+        int val[] = {5, 6};
+        asm_test_func(&(val[0]));
+        draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 64 + 256 + 32 * 32]), 0, 0, 64);
+        // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
         sprintf(str, "REV 0.2.2 render time: %f", total_t);
-        gfx_SetTextFGColor(254);
+        gfx_SetTextFGColor(225);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
 

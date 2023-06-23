@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A94D D1A94D             0h
 .init            D1A94D D1A977            2Ah
 .fini            D1A977 D1A9AB            34h
-.text            D1A9AB D1DFC1          3616h
-.data            D1DFC1 D2102F          306Eh
-.rodata          D2102F D2269A          166Bh
+.text            D1A9AB D1E336          398Bh
+.data            D1E336 D213A4          306Eh
+.rodata          D213A4 D22A15          1671h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -85,12 +85,12 @@ _os_DisableHomeTextBuffer                    = D1AE23
 _os_EnableHomeTextBuffer                     = D1AE35
 _os_GetCSC                                   = 021D3C
 _npf_vpprintf                                = D1AE47
-JTI0_0                                       = D2102F
-JTI0_1                                       = D2104D
-JTI0_2                                       = D21092
-JTI0_3                                       = D210B3
-JTI0_4                                       = D210CB
-JTI0_5                                       = D210E3
+JTI0_0                                       = D213A4
+JTI0_1                                       = D213C2
+JTI0_2                                       = D21407
+JTI0_3                                       = D21428
+JTI0_4                                       = D21440
+JTI0_5                                       = D21458
 _npf_utoa_rev                                = D1C5B1
 __printf_c                                   = D1C679
 __vsnprintf_c                                = D1C698
@@ -101,9 +101,9 @@ __vsprintf_c                                 = D1C74F
 __vprintf_c                                  = D1C76D
 _npf_putc_std                                = D1C78D
 __sprintf_c                                  = D1C79D
-_.str                                        = D210FB
-_.str.1                                      = D210FF
-_.str.2                                      = D21103
+_.str                                        = D21470
+_.str.1                                      = D21474
+_.str.2                                      = D21478
 _qsort                                       = D1C7C6
 _clock                                       = D1CB5E
 _cos                                         = 02211C
@@ -114,10 +114,10 @@ _vprintf                                     = D1C76D
 _vsnprintf                                   = D1C698
 _sinf                                        = 022118
 _sin                                         = 022118
-.missingappvar                               = D21107
-.libloadname                                 = D2110C
+.missingappvar                               = D2147C
+.libloadname                                 = D21481
 .libloadnamelen                              = 000007
-.webaddress                                  = D21114
+.webaddress                                  = D21489
 ___init_clock                                = D1A932
 __start                                      = D1A94D
 ___exithl                                    = D1A977
@@ -129,23 +129,27 @@ _exit.flash_wait_states                      = D1A982
 __Z6rotatei                                  = D1CB7F
 __Z14aa_single_compPKvS0_                    = D1CC4E
 _main                                        = D1CC94
-__ZN5imat2mlERK5ivec2                        = D1DBD9
-__ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi = D1DC4C
-__Z12drawTexStripPKhhjiijj                   = D1DE04
+__ZN5imat2mlERK5ivec2                        = D1DD31
+__ZN7AA_Line15rayIntersectionERK5ivec2PS0_Pi = D1DDA4
+__Z12drawTexStripPKhhjiijj                   = D1DF5C
+__Z20drawTexStrip_ClippedPKhhjiijj           = D1E119
 _img_strip_data                              = D052C6
-_img_strip                                   = D1DFC1
+_img_strip                                   = D1E336
 _playerPos                                   = D0537C
-_pistol_1_data                               = D1DFC4
-_pistol_2_data                               = D1E63F
-_pistol_4_data                               = D1EE1B
-_pistol_5_data                               = D1F4C2
-_pistol_7_data                               = D1FE90
-_pistol_8_data                               = D206BD
-_pistol_anim                                 = D20D64
-_brick_wall_arr_data                         = D21129
-_global_palette                              = D20D79
-_.str                                        = D22680
-_ceiling_floor_tex_data                      = D20F79
+_pistol_1_data                               = D1E339
+_pistol_2_data                               = D1E9B4
+_pistol_4_data                               = D1F190
+_pistol_5_data                               = D1F837
+_pistol_7_data                               = D20205
+_pistol_8_data                               = D20A32
+_pistol_anim                                 = D210D9
+_brick_wall_arr_data                         = D2149E
+_global_palette                              = D210EE
+___const.main.val                            = D229F5
+_.str                                        = D229FB
+_ceiling_floor_tex_data                      = D212EE
+_asm_test_func                               = D1E302
+_draw_strip                                  = D1E310
 lib.LibLoad                                  = D1A8F3
 _#gfx_Begin                                  = D1A906
 _#gfx_End                                    = D1A90A

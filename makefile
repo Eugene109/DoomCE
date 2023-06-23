@@ -10,8 +10,8 @@ ARCHIVED = YES
 
 # OPTIMIZE_FLAG = -ggdb3 -O3
 
-CFLAGS = -Wall -Wextra -Oz# -ffast-math
-CXXFLAGS = -Wall -Wextra -Oz# -ffast-math
+CFLAGS = -Wall -Wextra -Oz# -ffast-math -v
+CXXFLAGS = -Wall -Wextra -Oz# -ffast-math -v
 
 # ----------------------------
 

@@ -1,9 +1,10 @@
-
+#include <graphx.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-int draw_strip(const uint8_t *dest, const uint8_t *texturePtr, uint24_t xPos, uint24_t yPos, uint24_t height);
+
+void draw_strip(const uint8_t *dest, const uint8_t *texturePtr, int xPos, int yPos, int height);
 
 #ifdef __cplusplus
 };

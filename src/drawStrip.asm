@@ -1,15 +1,11 @@
 
-
-;-------------------------------------------------------------------------------
-; include 'library.inc'
-;-------------------------------------------------------------------------------
     assume adl=1
 
-    ; section .rodata
+    section .rodata
     ; public lcdWidth
-    ; lcdWidth := 320
+    lcdWidth := 320
     ; public lcdHeight
-    ; lcdHeight := 240
+    lcdHeight := 240
 
     section .text
 
@@ -25,22 +21,37 @@ _draw_strip:
 ;  arg4: target height
 ; Returns:
 ;  None
-    ld iy, 0
+    ld  iy, 0
     add iy, sp
-    
-    ld  hl,(iy+3)       ;  destination
-    ld  bc,(iy + 9)     ;  x coordinate
-    add	hl,bc
-    ld  d, 160 ;lcdWidth / 2
-    ld  e,(iy + 12)      ;  y coordinate
-    mlt de
-    add hl,de
-    add hl,de
-    ex  de,hl           ; de = start draw location
 
-    ld a, (iy + 15) ; might be wrong, but a is target height?
+    ld a,240            ;  how tall
 
-    ld  hl,(iy+6)       ; hl = sprite structure
+    ld  de,(iy+3)       ;  destination
+    ld  hl,(iy+6)       ;  source
+    ld  bc, 320         ;  screen width
+.loop:
+    ldi                 ;  send to dest (de) from src(hl) + increment hl
+    dec de              ;  automatically incremented, must correct 
+    inc bc              ;  same as above
+    ex de,hl            ;  swap de & hl for idk reasons
+    add hl,bc           ;  move down layer, aka jump by width
+    ex de,hl            ;  swap back
+    dec a               ;  a is counter
+    jp nz,.loop         ;  jump back to loop while more than 0
+
+    ld  bc,(iy+9)     ;  x coordinate
+    ; add	hl,bc
+    ; ld  d, 160 ;lcdWidth / 2
+    ; ld  e,(iy + 12)      ;  y coordinate
+    ; mlt de
+    ; add hl,de
+    ; add hl,de
+    ; ex  de,hl           ; de = start draw location
+
+    ; ld a, (iy + 15) ; might be wrong, but a is target height?
+
+    ; ld  hl,(iy+6)       ; hl = sprite structure
+
     ; find correct offset for strip
     ; then, add hl, //offset idk
     ; .loop:
@@ -49,8 +60,8 @@ _draw_strip:
     ; // bresenham for hl
     ; dec a
     ; jr
+    ; ld de,(5)
 
-    push de
     ret
 
     assume adl=1

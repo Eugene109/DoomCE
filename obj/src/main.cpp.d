@@ -23,4 +23,4 @@ obj/src/main.cpp.bc: src\main.cpp C:\Users\Eugene\CEdev\include\graphx.h \
   C:\Users\Eugene\CEdev\include\c++\__config \
   C:\Users\Eugene\CEdev\include\c++\cstddef \
   C:\Users\Eugene\CEdev\include\stddef.h src\vectorMath.h \
-  src\drawStrip.h src\maze1_lvl.h
+  src\asm_test_func.h src\drawStrip.h src\maze1_lvl.h
