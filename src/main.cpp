@@ -332,9 +332,20 @@ int main(void) {
             // writeTexStripToBuffer(brick_wall_arr_data, &(gfx_vbuffer[0][0]), SKIP, a * SKIP,
             //                       (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT),
             //                       (dist / 3) >> SHIFT);
-            if (stripLen <= RENDER_H) {
-                drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
-                             texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
+            if ((stripLen >> SHIFT) <= RENDER_H) {
+                if ((stripLen >> SHIFT) >= 64) {
+#ifdef DEBUG
+                    dbg_printf("a: %d, gfx_vbuffer: %d\n", a, uint24_t(&(gfx_vbuffer[0][0])));
+#endif
+                    draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
+                               a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT));
+                    // draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 64 + 256 + 32 * 32]), 0,
+                    // 0,
+                    // 64);
+                } else {
+                    drawTexStrip(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
+                                 texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
+                }
             } else {
                 drawTexStrip_Clipped(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
                                      texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
@@ -350,7 +361,7 @@ int main(void) {
         // int idk = *(int *)draw_strip(69, 420, &(gfx_vbuffer[0][0]), &(brick_wall_arr_data[0]), 0, 0, 64);
         int val[] = {5, 6};
         asm_test_func(&(val[0]));
-        draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 64 + 256 + 32 * 32]), 0, 0, 64);
+        // draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 64 + 256 + 32 * 32]), 0, 0, 64);
         // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
         sprintf(str, "REV 0.2.2 render time: %f", total_t);
         gfx_SetTextFGColor(225);

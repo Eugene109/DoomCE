@@ -1,1 +1,1 @@
-obj/src/gfx/ceiling_floor_tex.c.bc: src\gfx\ceiling_floor_tex.c
+obj/src/gfx/ceiling_floor_tex.c.src: src\gfx\ceiling_floor_tex.c
