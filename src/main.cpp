@@ -333,12 +333,13 @@ int main(void) {
             //                       (RENDER_H - ((stripLen) >> SHIFT)) >> 1, texCoord, (stripLen >> SHIFT),
             //                       (dist / 3) >> SHIFT);
             if ((stripLen >> SHIFT) <= RENDER_H) {
-                if ((stripLen >> SHIFT) >= 64) {
+                if ((stripLen >> SHIFT) >= 0) {
 #ifdef DEBUG
                     dbg_printf("a: %d, gfx_vbuffer: %d\n", a, uint24_t(&(gfx_vbuffer[0][0])));
 #endif
                     draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
-                               a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT));
+                               a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoord << 1,
+                               dist >> SHIFT);
                     // draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 64 + 256 + 32 * 32]), 0,
                     // 0,
                     // 64);
