@@ -1,5 +1,6 @@
 
     assume adl=1
+    ;https://youtube.com/shorts/f0--ib8HpOM?feature=share
 
     section .rodata
     ; public lcdWidth
@@ -49,28 +50,45 @@ _draw_strip:           ; this is most likely at D1E3BE
     ld  a,0             ;  check if target size is > 256
     ld  de,(iy+15)      ;  target height
     cp  a,d
-    jp  nz,.end          ;  quit if greater than 256  aka something in bit d
+    jp  nz,.end         ;  quit if greater than 256  aka something in bit d
     add a,64
     bit 7,e             ;  test bit 7, value is 128
     jp  nz,.set_src_size
     bit 6,e             ;  test bit 6, value is 64
     jp  nz,.set_src_size
+
     sub a,32
+    ld  bc,-1024        ;  32*32
+    add hl,bc
     bit 5,e             ;  test bit 5, value is 32
     jp  nz,.set_src_size
+
     sub a,16
+    ld  bc,-256         ;  16*16
+    add hl,bc
     bit 4,e             ;  test bit 4, value is 16
     jp  nz,.set_src_size
+
     sub a,8
+    ld  bc,-64          ;  8*8
+    add hl,bc
     bit 3,e             ;  test bit 3, value is 8
     jp  nz,.set_src_size
+
     sub a,4
+    ld  bc,-16          ;  4*4
+    add hl,bc
     bit 2,e             ;  test bit 2, value is 4
     jp  nz,.set_src_size
+
     sub a,2
+    ld  bc,-4           ;  2*2
+    add hl,bc
     bit 1,e             ;  test bit 1, value is 2
     jp  nz,.set_src_size
+
     sub a,1
+    dec hl              ;  1*1
     bit 0,e             ;  test bit 0, value is 1
     jp  nz,.set_src_size
     jp  .end

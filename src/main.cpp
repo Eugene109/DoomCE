@@ -201,6 +201,8 @@ inline void drawTexStrip_Clipped(const unsigned char *start_arr_ptr, uint8_t pxl
 
 void draw();
 
+int divide(int a) { return a / 3; }
+
 // placeholders
 ivec2 playerPos = ivec2(0);
 
@@ -252,14 +254,14 @@ int main(void) {
 
         if (kb_Data[7] & kb_Up) {
             count += 2;
-            playerPos.x += cam_forward.x >> 3;
-            playerPos.y += cam_forward.y >> 3;
+            playerPos.x += cam_forward.x >> 2;
+            playerPos.y += cam_forward.y >> 2;
             // loop through lines, find ones with pos < certain value, limit playerPos
         }
         if (kb_Data[7] & kb_Down) {
             count -= 2;
-            playerPos.x -= cam_forward.x >> 3;
-            playerPos.y -= cam_forward.y >> 3;
+            playerPos.x -= cam_forward.x >> 2;
+            playerPos.y -= cam_forward.y >> 2;
         }
         for (uint8_t i = 0; i < MAZE1_NUM_X_LINES; ++i) {
             maze1_x_lines[i].pos = maze1_x_lines[i].wPos - playerPos.y;
@@ -276,12 +278,12 @@ int main(void) {
         qsort(&(maze1_y_lines[0]), MAZE1_NUM_Y_LINES, sizeof(maze1_y_lines[0]), aa_single_comp);
 
         if (kb_Data[7] & kb_Right) {
-            ++counter;
-        }
-        if (kb_Data[7] & kb_Left) {
             --counter;
         }
-        rot = rotate(int(-0.05 * counter * PI));
+        if (kb_Data[7] & kb_Left) {
+            ++counter;
+        }
+        rot = rotate(int(counter * (PI >> 3)));
         ivec2 ray;
 
         ivec2 current_hit = ivec2();
