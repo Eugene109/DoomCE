@@ -1,1 +1,1 @@
-obj/src/gfx/pistol_8.c.src: src\gfx\pistol_8.c
+obj/src/gfx/pistol_8.c.bc: src\gfx\pistol_8.c

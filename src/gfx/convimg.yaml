@@ -277,6 +277,7 @@ converts:
       - pistol_anim/pistol_5.png
       - pistol_anim/pistol_7.png
       - pistol_anim/pistol_8.png
+      - thing_tex.png
 
 outputs:
   - type: c

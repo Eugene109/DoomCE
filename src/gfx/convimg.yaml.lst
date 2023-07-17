@@ -14,4 +14,6 @@ pistol_7.h
 pistol_7.c
 pistol_8.h
 pistol_8.c
+thing_tex.h
+thing_tex.c
 gfx.h

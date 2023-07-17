@@ -16,6 +16,7 @@ extern "C" {
 #include "pistol_5.h"
 #include "pistol_7.h"
 #include "pistol_8.h"
+#include "thing_tex.h"
 
 #ifdef __cplusplus
 }

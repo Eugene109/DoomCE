@@ -57,6 +57,10 @@ class imat2 {
         return ivec2((data[0][0] * in.x + data[1][0] * in.y) >> SHIFT,
                      (data[0][1] * in.x + data[1][1] * in.y) >> SHIFT);
     }
+    const ivec2 operator*(const ivec2 &in) const {
+        return ivec2((data[0][0] * in.x + data[1][0] * in.y) >> SHIFT,
+                     (data[0][1] * in.x + data[1][1] * in.y) >> SHIFT);
+    }
     imat2 operator*(const imat2 &in) {
         imat2 out = imat2();
         out.data[0][0] = (in.data[0][0] * data[0][0] + in.data[0][1] * data[1][0]) >> SHIFT;

@@ -10,7 +10,8 @@ obj/src/main.cpp.bc: src\main.cpp C:\Users\Eugene\CEdev\include\graphx.h \
   src\gfx\global_palette.h src\gfx\brick_wall.h \
   src\gfx\ceiling_floor_tex.h src\gfx\pistol_1.h src\gfx\pistol_2.h \
   src\gfx\pistol_4.h src\gfx\pistol_5.h src\gfx\pistol_7.h \
-  src\gfx\pistol_8.h C:\Users\Eugene\CEdev\include\c++\cassert \
+  src\gfx\pistol_8.h src\gfx\thing_tex.h \
+  C:\Users\Eugene\CEdev\include\c++\cassert \
   C:\Users\Eugene\CEdev\include\assert.h \
   C:\Users\Eugene\CEdev\include\c++\cstring \
   C:\Users\Eugene\CEdev\include\string.h \
@@ -23,4 +24,4 @@ obj/src/main.cpp.bc: src\main.cpp C:\Users\Eugene\CEdev\include\graphx.h \
   C:\Users\Eugene\CEdev\include\c++\__config \
   C:\Users\Eugene\CEdev\include\c++\cstddef \
   C:\Users\Eugene\CEdev\include\stddef.h src\vectorMath.h \
-  src\asm_test_func.h src\drawStrip.h src\maze1_lvl.h
+  src\asm_test_func.h src\drawStrip.h src\thing.h src\maze1_lvl.h
