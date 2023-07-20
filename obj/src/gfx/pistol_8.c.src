@@ -1,178 +1,0 @@
-	section	.text,"ax",@progbits
-	assume	adl = 1
-	file	0 "C:\Users\Eugene\C++\DoomCE" "src/gfx\pistol_8.c" md5 0x97fc2dd40b9e58022df420b5174e1d19
-	file	1 "src/gfx" "pistol_8.c" md5 0x97fc2dd40b9e58022df420b5174e1d19
-	section	.data,"aw",@progbits
-	public	_pistol_8_data
-_pistol_8_data:
-	db	"FTFFFFFFFFFFFFFFFFFFFFFFFFFF&$!!!!!#	!!AA!!!Ú", 26, """", 10, "AAaA!!A", 26, """", 10, "!aaA!!!", 26, """", 10, "!aaA!!!", 26, "!Ú!aa!!Ú!!!Aa!!", 0, "!!!Aaa!!", 0, 0, " ", 13, "A!AAA!!", 0, 0, " !!AAA!!A !!!!!!!!A!A!!Ú!!A!!!!!!Ú!A!!Ú!Ú", 0, 0, "", 0, "Ú", 0, "", 0, 0, 0, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 0, 0, "!AAAAš!AA", 0, 0, 0, "!AAA!A!z!AA", 0, 0, 0, "Aaaa!", 26, "Ašš!", 0, 0, 0, "!!!!Aº»»", 0, 0, "", 0, 0, 0, 0, "!A!ÚÚš", 0, 0, "", 0, 0, 0, "", 0, 0, "A", 26, "AššÚÚš", 0, 0, 0, 0, "!A!ººÚÚÚz!$Ú!šºÚÚÚÚÚšzAA&Ú!ššÚÚÚÚÚúÚ", 0, 0, "zºšššzz!", 13, "'ÚzššÚÚÚÚÚûúš", 0, 0, 0, 0, 0, 0, "", 0, "zšÚÚÚÚšºš!'Úzš»ÚÚÚºÚúû»z", 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, "zÚûûûúÚºšÚ!'ÚšÚÚÚÚÚºÚûûûÚ", 0, 0, 0, 0, 0, 0, 0, 0, "zúûûûûúÚšzš!(AšÚÚÚÚÚÚ»ÚûûûûºzzÚûûûúÚºzz!(!zšÚÚÚÚÚÚÚ»ÚúûûûúúÚšššºÚúûûÚÚš(!zšÚÚÚÚÚÚÚº»ÚÚûûúÚÚššºÚúûûûûúÚÚšz)A!zzš»Ú»ÚÚÚÚ»ºÚÚúÚÚ»ššÚÚúûûûûûûÚÚÚš)AšzšÚºº»ÚúÚºšššššºÚÚúúúúúúûûûÚÚ»š", 0, ")AšzzššššºÚÚÚºšššºÚÚúúÚÚúúúúúûûÚººš)Azzzšššš»ÚÚÚššºÚúÚÚÚúúûúÚÚúûûÚºšz", 0, "!(Azzzšššš»»»ºÚÚÚÚÚúúûûûûúÚÚûúºššz!", 13, "%!zzzzzššššºÚÚÚúúÚÚÚúúûûûÚÚúÚššzz!%!z»šzzzššÚºÚÚÚÚÚÚúúúÚºÚúÚºÚÚºšz!%!šÚ»ššº»ÚÚÚúûûûÚÚ»ÚÚúÚ»šzzÚºšz!$ÚÚÚÚºšÚÚÚÚÚ»»úúûÚšššÚšzšš", 0, "!#ÚÚÚºšºÚÚÚÚÚÚÚººÚúúšzš»zzšz#šºšºš»úûûÚºÚúûûúÚÚúÚºzšzzz", 0, "#zzšzÚûû»ššzzš»ÚÚúÚÚ»Úšz", 0, "$zšºšÚºšÚûûûÚÚÚ»ššššššºz", 0, 0, 0, "!&ÚAzÚššÚÚúûûûÚÚšššÚÚºšzzzzš", 0, 0, 0, 0, "!'!!zšÚÚÚš»ššzšÚúúúúÚšzšºº»ºzz", 0, "", 0, 0, "!(!zšÚûûûûûûúÚšzzºÚÚÚšzzšººz", 0, "", 0, 0, 0, "!'!zºÚûûûûúºššzšÚÚÚzzš»z", 0, 0, 0, 0, "&zzºšzššzzzšúûûûÚºzšÚú»zÚÚ", 0, 0, "!"
-
-	section	.debug_abbrev,"",@progbits
-	private	abbrev_start0
-abbrev_start0:
-	db	1
-	db	17
-	db	1
-	db	37
-	db	37
-	db	19
-	db	5
-	db	3
-	db	37
-	db	114
-	db	23
-	db	16
-	db	23
-	db	27
-	db	37
-	db	115
-	db	23
-	db	0
-	db	0
-	db	2
-	db	52
-	db	0
-	db	3
-	db	37
-	db	73
-	db	19
-	db	63
-	db	25
-	db	58
-	db	11
-	db	59
-	db	11
-	db	2
-	db	24
-	db	0
-	db	0
-	db	3
-	db	1
-	db	1
-	db	73
-	db	19
-	db	0
-	db	0
-	db	4
-	db	33
-	db	0
-	db	73
-	db	19
-	db	55
-	db	5
-	db	0
-	db	0
-	db	5
-	db	36
-	db	0
-	db	3
-	db	37
-	db	62
-	db	11
-	db	11
-	db	11
-	db	0
-	db	0
-	db	6
-	db	36
-	db	0
-	db	3
-	db	37
-	db	11
-	db	11
-	db	62
-	db	11
-	db	0
-	db	0
-	db	0
-	section	.debug_info,"",@progbits
-	private	cu_begin0
-cu_begin0:
-	dd	debug_info_end0-debug_info_start0
-	private	debug_info_start0
-debug_info_start0:
-	dw	5
-	db	1
-	db	3
-	dd	abbrev_start0
-	db	1
-	db	0
-	dw	12
-	db	1
-	dd	str_offsets_base0
-	dd	line_table_start0
-	db	2
-	dd	addr_table_base0
-	db	2
-	db	3
-	dd	41
-
-	db	1
-	db	1
-	db	2
-	db	161
-	db	0
-	db	3
-	dd	54
-	db	4
-	dd	58
-	dw	1703
-	db	0
-	db	5
-	db	4
-	db	8
-	db	1
-	db	6
-	db	5
-	db	8
-	db	7
-	db	0
-	private	debug_info_end0
-debug_info_end0:
-	section	.debug_str_offsets,"",@progbits
-	dd	28
-	dw	5
-	dw	0
-	private	str_offsets_base0
-str_offsets_base0:
-	section	.debug_str,"MS",@progbits,1
-	private	info_string0
-info_string0:
-	db	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)", 0
-	private	info_string1
-info_string1:
-	db	"src/gfx\pistol_8.c", 0
-	private	info_string2
-info_string2:
-	db	"C:\Users\Eugene\C++\DoomCE", 0
-	private	info_string3
-info_string3:
-	db	"pistol_8_data", 0
-	private	info_string4
-info_string4:
-	db	"unsigned char", 0
-	private	info_string5
-info_string5:
-	db	"__ARRAY_SIZE_TYPE__", 0
-	section	.debug_str_offsets,"",@progbits
-	dd	info_string0
-	dd	info_string1
-	dd	info_string2
-	dd	info_string3
-	dd	info_string4
-	dd	info_string5
-	section	.debug_addr,"",@progbits
-	dd	debug_addr_end0-debug_addr_start0
-	private	debug_addr_start0
-debug_addr_start0:
-	dw	5
-	db	3
-	db	0
-	private	addr_table_base0
-addr_table_base0:
-	dl	_pistol_8_data
-	private	debug_addr_end0
-debug_addr_end0:
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	section	.debug_line,"",@progbits
-line_table_start0:

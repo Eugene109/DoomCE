@@ -270,8 +270,9 @@ int main(void) {
                            a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoord << 1,
                            dist >> SHIFT);
             } else {
-                drawTexStrip_Clipped(brick_wall_arr_data, SKIP, a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1,
-                                     texCoord << 1, (stripLen >> SHIFT), (dist) >> SHIFT);
+                draw_strip_clipped(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
+                                   a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT),
+                                   texCoord << 1);
             }
         }
         test_thing.render(rotate(-counter), playerPos);
@@ -280,8 +281,8 @@ int main(void) {
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
-        int val[] = {5, 6};
-        asm_test_func(&(val[0]));
+        // int val[] = {5, 6};
+        // asm_test_func(&(val[0]));
         // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
         sprintf(str, "REV 0.2.2 render time: %f", total_t);
         gfx_SetTextFGColor(225);

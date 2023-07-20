@@ -11,8 +11,8 @@
     section .text
 
 ; scales a vertical texture strip using the bresenham line algorithm
-    public _draw_strip
-_draw_strip:           ; this is most likely at D1E3BE
+    public _draw_strip_clipped
+_draw_strip_clipped:           ; this is most likely at D1E3BE
 ; draws a strip of texture, scaled, as fast as possible(hopefully)
 ; strip will be centered in future, for now will center before calling
 ; Arguments:
@@ -23,7 +23,6 @@ _draw_strip:           ; this is most likely at D1E3BE
 ;    arg4: y coordinate
 ;    arg5: target height
 ;    arg6: texcoord
-;    arg7: darkening factor
 ; Returns:
 ;  None
     di                  ;  disables interrupts, these use alternate register set, which this needs
@@ -35,105 +34,67 @@ _draw_strip:           ; this is most likely at D1E3BE
     push ix             ;  ix must be preserved
 
     ld  ix,(iy+3)       ;  destination
-    ld  hl,(iy+6)       ;  source
+
+; finding offset for source
+    ld  bc,(iy+12)      ;  y coord (negative)
+    ld  hl,1
+    and a,a             ;  reset carry
+    sbc hl,bc           ;  abs of y coord + 1
+    push hl                                                ;  stack:(k+1)
+    ld  bc,64
+    call __imuls
+    ld  bc,(iy+15)      ;  target height
+    call __idivs
+
+    ld  bc,(iy+6)       ;  source
+    add hl,bc
 
     ld  bc,(iy+9)       ;  load x coord
     add ix,bc           ;  add x coord to dest pointer
 
-    ld  b,(iy+12)       ;  load y pos
-    ld  c, 160          ;  load 1/2 screen width
-    mlt bc              ;  mult to find 1/2 offset
-    add ix,bc           ;  add twice to add offset to dest
-    add ix,bc
-
-; figure out correct source size:
-    ld  a,0             ;  check if target size is > 256
-    ld  de,(iy+15)      ;  target height
-    cp  a,d
-    jp  nz,.end         ;  quit if greater than 256  aka something in bit d
-    add a,64
-    bit 7,e             ;  test bit 7, value is 128
-    jp  nz,.set_src_size
-    bit 6,e             ;  test bit 6, value is 64
-    jp  nz,.set_src_size
-
-    sub a,32
-    ld  bc,-1024        ;  32*32
-    add hl,bc
-    bit 5,e             ;  test bit 5, value is 32
-    jp  nz,.set_src_size
-
-    sub a,16
-    ld  bc,-256         ;  16*16
-    add hl,bc
-    bit 4,e             ;  test bit 4, value is 16
-    jp  nz,.set_src_size
-
-    sub a,8
-    ld  bc,-64          ;  8*8
-    add hl,bc
-    bit 3,e             ;  test bit 3, value is 8
-    jp  nz,.set_src_size
-
-    sub a,4
-    ld  bc,-16          ;  4*4
-    add hl,bc
-    bit 2,e             ;  test bit 2, value is 4
-    jp  nz,.set_src_size
-
-    sub a,2
-    ld  bc,-4           ;  2*2
-    add hl,bc
-    bit 1,e             ;  test bit 1, value is 2
-    jp  nz,.set_src_size
-
-    sub a,1
-    dec hl              ;  1*1
-    bit 0,e             ;  test bit 0, value is 1
-    jp  nz,.set_src_size
-    jp  .end
-
-.set_src_size:          ;  a is source size
-
 ; figure out texture coordinate offset
     ld  e,(iy+18)       ;  texCoord, 0-255
-    ld  d,a             ;  source size
-    mlt de              ;  size scaled by texCoord in d, fixed point arithemetic (shifted 8 bits)
-    ld  e,a
+    ld  d,64             ;  source size
+    mlt de              ;  size scaled by texCoord in d, fixed point arithemetic
+    ld  e,64
     mlt de              ;  de is now offset for source texCoord
     add hl,de           ;  add offset
 
-    ld  b,(iy+21)       ;  darkening factor
-    ld  c,32            ;  x32 for the correct offset
-    mlt bc
-    ld  b,c             ;  shouldn't overflow
-
     ld  de,320          ;  screen width
-    ld  c,(iy+15)       ;  target height
+    ld  c,180           ;  target height
 
 
 ;---bresenham algorithm init---
     ; x is dest, y is source
 
     exx                 ;  swap to alternate register set
-    ld  bc,(iy+15)      ;  dx = target height
-    ld  e,a             ;  dy = source size
-    ld  d,2             ;  de is 2dy
-    mlt de
-    ; hl is D,  D= 2dy-dx
-    ld  hl,0
-    add hl,de           ;  D += 2dy
-    and a,a             ;  reset carry
-    sbc hl,bc           ;  D -= dx
+                        ;  (from before)                   ;  stack:(k+1)
+    pop bc              ;  k+1                             ;  stack:
+    ld  hl,128
+    call __imuls        ;  hl is (k+1)*2*dy
 
-    ld  b,2
-    mlt bc              ;  2*dx
+    ld  bc,(iy+15)      ;  dx = target height
+    push bc                                                ;  stack:(dx)
+    ld  a,0
+    sla c               ;  mult 2 for c(LSB)
+    ex af,af'           ;  save carry bit to af'
+    sla b               ;  mult 2 for b(MSB)
+    ex af,af'           ;  retrieve carry bit from af'
+    adc a,b             ;  add carry bit to b
+    ld  b,a             ;  bc is now 2dx
+
+    call __irems        ;  hl%bc, or ((k+1)*2*dy)%(2*dx)
+    pop de              ;  dx                              ;  stack:
+    and a,a             ;  reset carry
+    sbc hl,de           ;  hl is D, D = (((k+1)*2*dy)%(2*dx))-dx
+
+    ld  de,128          ;  2dy
+    ; reminder: de = 2dy, bc = 2dx,     <-same as non-clipped drawStrip
 
     exx                 ;  swap back for loop
 ;----end of bresenham init-----
 .loop:
     ld  a,(hl)
-    sub a,b
     ld  (ix),a
     ld  (ix+1),a
     ld  (ix+2),a
@@ -192,5 +153,9 @@ _draw_strip:           ; this is most likely at D1E3BE
 
     ei
     ret                 ;  if c is 0, return
+
+    extern __imuls
+    extern __irems
+    extern __idivs
 
     assume adl=1
