@@ -190,7 +190,7 @@ int main(void) {
                                    texCoord << 1);
             }
         }
-        test_thing.render(rotate(-counter), playerPos);
+        // test_thing.render(rotate(-counter), playerPos);
         gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
         HitInfo hitInfoTest;
@@ -199,7 +199,7 @@ int main(void) {
         int distX = 6969;
         int distY = 420;
         for (int hi_there = 0; hi_there < 100; hi_there++) {
-            raycast(256 * 4 + 23 + hi_there, 4 * 256 + 250, 247, 66, &distX, &distY);
+            raycast_q1_yx(256 * 3 + 23 + hi_there, 1 * 256 + 250, 66, 247, &distX, &distY);
         }
 
         end_t = clock();

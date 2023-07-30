@@ -13,6 +13,7 @@ struct HitInfo {
 };
 
 void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY);
+void raycast_q1_yx(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY);
 
 #ifdef __cplusplus
 };

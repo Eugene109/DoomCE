@@ -289,80 +289,80 @@ _raycast_q1_yx:
     ld  de,(iy+6)       ;  y_pos
     ld  iy,_y_walls_transposed
     ld  ix,_x_walls_transposed
-    ld  c,b             ;  shifting right by 8 bits
-    ld  b,0
-    add ix,bc           ;  add offset to x_walls (gaps)
-    inc bc
-    add iy,bc           ;  add offset +1 to y_walls (dividers) (because if checking y, then it is directly in front)
+    ld  e,d             ;  shifting right by 8 bits
+    ld  d,0
+    add iy,de           ;  add offset to x_walls (gaps)
+    inc de
+    add ix,de           ;  add offset +1 to y_walls (dividers) (because if checking y, then it is directly in front)
 
-    ld  c,9             ;  y_walls, 9 dividers
-    ld  b,d
-    mlt bc              ;  9*(y offset), no increment
-    add iy,bc
-    ld  e,8             ;  x_walls, 8 gaps
-    inc d
-    mlt de              ;  8*(x offset + 1), directly above, so increment by one
+    ld  e,9             ;  y_walls, 9 dividers
+    ld  d,b
+    mlt de              ;  9*(y offset), no increment
     add ix,de
-    ld  bc,8            ;  x_walls increment
-    ld  de,9            ;  y increment
+    ld  c,8             ;  x_walls, 8 gaps
+    inc b
+    mlt bc              ;  8*(x offset + 1), directly above, so increment by one
+    add iy,bc
+    ld  bc,9            ;  x_walls increment
+    ld  de,8            ;  y increment
 
     ld  hl,0            ;  h:x  l:y
     exx
 
     and a,a             ;  reset carry flag
-    sbc hl,bc           ;  hl = -dx + dy*x + dx*y
+    sbc hl,de           ;  hl = -dy + dy*x + dx*y
 
-    jp  p,.inc_y_start  ;  must check top and side above
+    jp  p,.inc_x_start  ;  must check top and side above
     ; check side (y lines)
     exx
-    ld  a,(iy)          ;  retrieve side byte
+    ld  a,(ix)          ;  retrieve side byte
     bit 6,a             ;  letter/space?
-    jp  nz,.hit_y
-    inc iy              ;  move right 1
+    jp  nz,.hit_x_inv
     inc ix              ;  move right 1
-    inc h               ;  increment x
+    inc iy              ;  move right 1
+    inc l               ;  increment y
     exx
-    jp  .loop
+    jp  .loop_yx
 
-.inc_y_start:
+.inc_x_start:
     and a,a
-    sbc hl,bc           ;  if D > 0:  D -= dx
+    sbc hl,de           ;  if D > 0:  D -= dy
     exx
-    ld  a,(ix)          ;  check x walls(above)
+    ld  a,(iy)          ;  check x walls(above)
     bit 6,a
-    jp  nz,.hit_x
-    add ix,bc           ;  + 8 (go up one row)
+    jp  nz,.hit_y_inv
+    add iy,de           ;  + 8 (go up one row)
     
-    inc l               ;  go up
-    add iy,de           ;  + 9 (go up one row)
-    ld  a,(iy)          ;  check y-aligned walls
+    inc h               ;  go up
+    add ix,bc           ;  + 9 (go up one row)
+    ld  a,(ix)          ;  check y-aligned walls
     bit 6,a
-    jp  nz,.hit_y
+    jp  nz,.hit_x_inv
 
     inc ix
     inc iy
-    inc h               ;  increment x, go sideways
+    inc l               ;  increment x, go sideways
     exx
-    jp  .loop
+    jp  .loop_yx
 
-.loop:
+.loop_yx:
     and a,a
-    adc hl,de           ;  D += dy
-    jp  p,.inc_y_start
+    adc hl,bc           ;  D += dx
+    jp  p,.inc_x_start
     ; check side (y lines)
     exx
-    ld  a,(iy)          ;  check side
+    ld  a,(ix)          ;  check side
     bit 6,a
-    jp  nz,.hit_y
+    jp  nz,.hit_x_inv
 
     inc iy
     inc ix
-    inc h               ;  increment x
+    inc l               ;  increment y
     exx
-    jp  .loop
+    jp  .loop_yx
 
 
-.hit_x:                 ;  hit at horizontal wall
+.hit_x_inv:                 ;  hit at horizontal wall
     ;  h is x increase
     ;  l is y increase
     ld  iy,3
@@ -399,7 +399,7 @@ _raycast_q1_yx:
     ei
     pop ix
     ret
-.hit_y:                 ;  hit at vertical wall
+.hit_y_inv:                 ;  hit at vertical wall
     ; h is total accumulated x increase
     ld  iy,3
     add iy,sp
