@@ -21,6 +21,7 @@
 
 #include "asm_test_func.h"
 #include "drawStrip.h"
+#include "raycast.h"
 
 #include "thing.h"
 
@@ -51,92 +52,7 @@ inline void bresenhamLine(unsigned x0, unsigned y0, unsigned x1, unsigned y1) {
     }
 }
 
-gfx_UninitedSprite(img_strip, 1, RENDER_H);
-
-inline void drawTexStrip(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos, fixed tex_pos,
-                         unsigned dest_height, unsigned darken_factor) {
-    if (yPos < 0 || dest_height > RENDER_H) {
-        return;
-    }
-
-    // copy in floor texture
-    memcpy(img_strip, ceiling_floor_tex, RENDER_H + 2);
-    unsigned SRC_H = 64;
-    unsigned SRC_H_SHIFT = 6;
-    for (uint8_t a = 0; a < 6; a++) {
-        if (dest_height > (SRC_H >>= a)) {
-            break;
-        }
-        --SRC_H_SHIFT;
-    }
-
-    unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (2)) / 3);
-    const uint8_t *strip_arr_ptr =
-        start_arr_ptr + img_offset + (((((tex_pos) % (1 << SHIFT)) << SRC_H_SHIFT) >> SHIFT) << SRC_H_SHIFT);
-    unsigned x0 = yPos;
-    unsigned x1 = x0 + dest_height;
-    unsigned dx = dest_height;
-    unsigned dy = SRC_H;
-    int D = 2 * dy - dx;
-
-    uint8_t *ptr = &(img_strip->data[x0 - 1]);
-    for (unsigned x = x0; x <= x1; ++x) {
-        *(++ptr) = max(int(*(strip_arr_ptr)) - (darken_factor << 5), 0);
-        if (D > 0) {
-            ++strip_arr_ptr;
-            D = D - 2 * dx;
-        }
-        D = D + 2 * dy;
-    }
-    gfx_ScaledSprite_NoClip(img_strip, xPos, 0, pxl_scl, 1);
-}
-
-inline void drawTexStrip_Clipped(const unsigned char *start_arr_ptr, uint8_t pxl_scl, unsigned xPos, int yPos,
-                                 fixed tex_pos, unsigned dest_height, unsigned darken_factor) {
-    if (yPos >= 0 && dest_height <= RENDER_H) {
-        return drawTexStrip(start_arr_ptr, pxl_scl, xPos, yPos, tex_pos, dest_height, darken_factor);
-    }
-
-    // copy in floor texture
-    memcpy(img_strip, ceiling_floor_tex, RENDER_H + 2);
-    unsigned SRC_H = 64;
-    unsigned SRC_H_SHIFT = 6;
-    for (uint8_t a = 0; a < 6; a++) {
-        if (dest_height > (SRC_H >>= a)) {
-            break;
-        }
-        --SRC_H_SHIFT;
-    }
-
-    unsigned img_offset = (((1 << ((SRC_H_SHIFT - 1) << 1)) << (2)) / 3);
-    const uint8_t *strip_arr_ptr =
-        start_arr_ptr + img_offset + (((((tex_pos) % (1 << SHIFT)) << SRC_H_SHIFT) >> SHIFT) << SRC_H_SHIFT);
-
-    int x0 = yPos;
-    int x1 = x0 + dest_height;
-    unsigned dx = dest_height;
-    unsigned dy = SRC_H;
-    int D = 2 * dy - dx;
-
-    uint8_t *ptr = &(img_strip->data[0]) + (x0 - 1);
-    for (int x = x0; x <= x1; ++x) {
-        ++ptr;
-        if (x >= 0 && x < RENDER_H) {
-            *(ptr) = max(int(*(strip_arr_ptr)) - (darken_factor << 5), 0);
-        }
-        if (D > 0) {
-            ++strip_arr_ptr;
-            D = D - 2 * dx;
-        }
-        D = D + 2 * dy;
-    }
-
-    gfx_ScaledSprite_NoClip(img_strip, xPos, 0, pxl_scl, 1);
-}
-
 void draw();
-
-int divide(int a) { return a / 3; }
 
 // placeholders
 ivec2 playerPos = ivec2(0);
@@ -179,7 +95,6 @@ int main(void) {
         rayOffsets[i] =
             (ivec2((((double(i * SKIP) / double(GFX_LCD_WIDTH - 1.0)) * 2.0) - 1.0) * (1 << SHIFT), (1 << SHIFT)));
     }
-
     imat2 rot = rotate(0);
     ivec2 cam_forward = rot * ivec2(0, 1 << SHIFT);
 
@@ -278,13 +193,22 @@ int main(void) {
         test_thing.render(rotate(-counter), playerPos);
         gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
+        HitInfo hitInfoTest;
+        hitInfoTest.distX = 6969;
+        hitInfoTest.distY = 420;
+        int distX = 6969;
+        int distY = 420;
+        for (int hi_there = 0; hi_there < 100; hi_there++) {
+            raycast(256 * 4 + 23 + hi_there, 4 * 256 + 250, 247, 66, &distX, &distY);
+        }
+
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
         // int val[] = {5, 6};
         // asm_test_func(&(val[0]));
         // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
-        sprintf(str, "REV 0.2.2 render time: %f", total_t);
+        sprintf(str, "distX: %d, distY: %d, time: %f", distX, distY, total_t);
         gfx_SetTextFGColor(225);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);

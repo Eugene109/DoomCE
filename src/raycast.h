@@ -6,7 +6,13 @@
 extern "C" {
 #endif
 
-void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY);
+struct HitInfo {
+    int distX;
+    int distY;
+    char wallType;
+};
+
+void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY);
 
 #ifdef __cplusplus
 };
