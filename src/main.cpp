@@ -10,11 +10,11 @@
 
 #include <cassert>
 #include <cstring>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#include "aa_lines.h"
 #include "fixed.h"
 #include "matrixMath.h"
 #include "vectorMath.h"
@@ -74,10 +74,6 @@ int main(void) {
     gfx_Begin();
     gfx_SetDrawBuffer();
 
-#include "maze1_lvl.h"
-
-    uint8_t count = 16;
-
     clock_t start_t, end_t;
     double total_t = 1;
 
@@ -90,11 +86,22 @@ int main(void) {
     const uint8_t NUM_RAYS = GFX_LCD_WIDTH / SKIP;
 
     // will want to make const later
-    ivec2 rayOffsets[NUM_RAYS];
-    for (uint8_t i = 0; i < NUM_RAYS; ++i) {
-        rayOffsets[i] =
-            (ivec2((((double(i * SKIP) / double(GFX_LCD_WIDTH - 1.0)) * 2.0) - 1.0) * (1 << SHIFT), (1 << SHIFT)));
-    }
+    ivec2 rayOffsets[NUM_RAYS] = {
+        ivec2(-181, 181), ivec2(-178, 183), ivec2(-176, 185), ivec2(-173, 187), ivec2(-171, 190), ivec2(-168, 192),
+        ivec2(-165, 195), ivec2(-162, 197), ivec2(-159, 199), ivec2(-156, 202), ivec2(-153, 204), ivec2(-150, 207),
+        ivec2(-146, 209), ivec2(-143, 212), ivec2(-139, 214), ivec2(-135, 217), ivec2(-131, 219), ivec2(-127, 221),
+        ivec2(-123, 224), ivec2(-118, 226), ivec2(-114, 228), ivec2(-109, 231), ivec2(-105, 233), ivec2(-100, 235),
+        ivec2(-95, 237),  ivec2(-89, 239),  ivec2(-84, 241),  ivec2(-79, 243),  ivec2(-73, 245),  ivec2(-67, 246),
+        ivec2(-62, 248),  ivec2(-56, 249),  ivec2(-50, 251),  ivec2(-44, 252),  ivec2(-37, 253),  ivec2(-31, 254),
+        ivec2(-25, 254),  ivec2(-19, 255),  ivec2(-12, 255),  ivec2(-6, 255),   ivec2(0, 256),    ivec2(6, 255),
+        ivec2(12, 255),   ivec2(19, 255),   ivec2(25, 254),   ivec2(31, 254),   ivec2(37, 253),   ivec2(44, 252),
+        ivec2(50, 251),   ivec2(56, 249),   ivec2(62, 248),   ivec2(67, 246),   ivec2(73, 245),   ivec2(79, 243),
+        ivec2(84, 241),   ivec2(89, 239),   ivec2(95, 237),   ivec2(100, 235),  ivec2(105, 233),  ivec2(109, 231),
+        ivec2(114, 228),  ivec2(118, 226),  ivec2(123, 224),  ivec2(127, 221),  ivec2(131, 219),  ivec2(135, 217),
+        ivec2(139, 214),  ivec2(143, 212),  ivec2(146, 209),  ivec2(150, 207),  ivec2(153, 204),  ivec2(156, 202),
+        ivec2(159, 199),  ivec2(162, 197),  ivec2(165, 195),  ivec2(168, 192),  ivec2(171, 190),  ivec2(173, 187),
+        ivec2(176, 185),  ivec2(178, 183),
+    };
     imat2 rot = rotate(0);
     ivec2 cam_forward = rot * ivec2(0, 1 << SHIFT);
 
@@ -105,29 +112,14 @@ int main(void) {
         gfx_ZeroScreen();
 
         if (kb_Data[7] & kb_Up) {
-            count += 2;
             playerPos.x += cam_forward.x >> 2;
             playerPos.y += cam_forward.y >> 2;
             // loop through lines, find ones with pos < certain value, limit playerPos
         }
         if (kb_Data[7] & kb_Down) {
-            count -= 2;
             playerPos.x -= cam_forward.x >> 2;
             playerPos.y -= cam_forward.y >> 2;
         }
-        for (uint8_t i = 0; i < MAZE1_NUM_X_LINES; ++i) {
-            maze1_x_lines[i].pos = maze1_x_lines[i].wPos - playerPos.y;
-            maze1_x_lines[i].min_value = maze1_x_lines[i].wMin_value - playerPos.x;
-            maze1_x_lines[i].max_value = maze1_x_lines[i].wMax_value - playerPos.x;
-        }
-        for (uint8_t i = 0; i < MAZE1_NUM_Y_LINES; ++i) {
-            maze1_y_lines[i].pos = maze1_y_lines[i].wPos - playerPos.x;
-            maze1_y_lines[i].min_value = maze1_y_lines[i].wMin_value - playerPos.y;
-            maze1_y_lines[i].max_value = maze1_y_lines[i].wMax_value - playerPos.y;
-        }
-        // sort list of aa-lines:
-        qsort(&(maze1_x_lines[0]), MAZE1_NUM_X_LINES, sizeof(maze1_x_lines[0]), aa_single_comp);
-        qsort(&(maze1_y_lines[0]), MAZE1_NUM_Y_LINES, sizeof(maze1_y_lines[0]), aa_single_comp);
 
         if (kb_Data[7] & kb_Right) {
             counter -= 67;
@@ -137,10 +129,6 @@ int main(void) {
         }
         rot = rotate(counter);
         ivec2 ray;
-
-        ivec2 current_hit = ivec2();
-        int current_dist = 0;
-        fixed current_texCoord = 0;
 
         cam_forward = rot * ivec2(0, 1 << SHIFT);
 
@@ -152,35 +140,18 @@ int main(void) {
             ray = rot * rayOffsets[a];
 
             ivec2 hit = ivec2();
-            int dist = 100 * (1 << SHIFT);
+            int dist;
             fixed texCoord = 0;
 
-            for (uint8_t i = 0; i < MAZE1_NUM_X_LINES; ++i) {
-                if (maze1_x_lines[i].rayIntersection(ray, &hit, &texCoord)) {
-                    dist = dot(hit, cam_forward);
-                    break;
-                }
-            }
-            for (uint8_t i = 0; i < MAZE1_NUM_Y_LINES; ++i) {
-                if (maze1_y_lines[i].rayIntersection(ray, &current_hit, &current_texCoord)) {
-                    current_dist = dot(current_hit, cam_forward);
-                    if (current_dist < dist) {
-                        dist = current_dist;
-                        hit = current_hit;
-                        texCoord = current_texCoord;
-                    }
-                    break;
-                }
-            }
+            raycast(playerPos.x + 256 * 3 + 50, playerPos.y + 256 * 3 + 50, ray.x, ray.y, &hit.x, &hit.y);
+            dist = dot(hit, cam_forward);
+
             int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dist) * 100;
 #ifdef DEBUG
             dbg_printf("striplen: %d\n", stripLen);
 #endif
 
             if ((stripLen >> SHIFT) <= RENDER_H) {
-#ifdef DEBUG
-                dbg_printf("a: %d, gfx_vbuffer: %d\n", a, uint24_t(&(gfx_vbuffer[0][0])));
-#endif
                 draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
                            a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoord << 1,
                            dist >> SHIFT);
@@ -199,7 +170,7 @@ int main(void) {
         int distX = 6969;
         int distY = 420;
         for (int hi_there = 0; hi_there < 100; hi_there++) {
-            raycast_q1_yx(256 * 3 + 23 + hi_there, 1 * 256 + 250, 66, 247, &distX, &distY);
+            raycast_q2_yx(256 * 2 + 23 + hi_there, 0 * 256 + 250, 66, 247, &distX, &distY);
         }
 
         end_t = clock();

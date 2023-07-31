@@ -15,14 +15,13 @@ obj/src/main.cpp.bc: src\main.cpp C:\Users\Eugene\CEdev\include\graphx.h \
   C:\Users\Eugene\CEdev\include\assert.h \
   C:\Users\Eugene\CEdev\include\c++\cstring \
   C:\Users\Eugene\CEdev\include\string.h \
+  C:\Users\Eugene\CEdev\include\math.h \
   C:\Users\Eugene\CEdev\include\stdio.h \
   C:\Users\Eugene\CEdev\include\stdarg.h \
-  C:\Users\Eugene\CEdev\include\time.h src\aa_lines.h src\fixed.h \
-  src\matrixMath.h C:\Users\Eugene\CEdev\include\c++\cmath \
-  C:\Users\Eugene\CEdev\include\math.h \
+  C:\Users\Eugene\CEdev\include\time.h src\fixed.h src\matrixMath.h \
+  C:\Users\Eugene\CEdev\include\c++\cmath \
   C:\Users\Eugene\CEdev\include\c++\type_traits \
   C:\Users\Eugene\CEdev\include\c++\__config \
   C:\Users\Eugene\CEdev\include\c++\cstddef \
   C:\Users\Eugene\CEdev\include\stddef.h src\vectorMath.h \
-  src\asm_test_func.h src\drawStrip.h src\raycast.h src\thing.h \
-  src\maze1_lvl.h
+  src\asm_test_func.h src\drawStrip.h src\raycast.h src\thing.h

@@ -307,6 +307,11 @@ vec2 normalize(const vec2 &in) {
     return in / length;
 }
 
+ivec2 i_normalize(const ivec2 &in) {
+    int length = sqrt(in.x * in.x + in.y * in.y);
+    return ivec2((in.x << SHIFT) / length, (in.y << SHIFT) / length);
+}
+
 double lengthSQ(const vec3 &in) { return in.x * in.x + in.y * in.y + in.z * in.z; }
 double lengthSQ(const vec2 &in) { return in.x * in.x + in.y * in.y; }
 
