@@ -1454,13 +1454,13 @@ _raycast:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB29_6
+	jp	m, BB29_7
 	push	de
 	pop	hl
 	lea	bc, iy
 	or	a, a
 	sbc	hl, bc
-	jp	nc, BB29_9
+	jp	nc, BB29_11
 	ld	hl, (ix + 21)
 	push	hl
 	ld	hl, (ix + 18)
@@ -1472,59 +1472,55 @@ _raycast:
 	ld	hl, (ix + 6)
 	push	hl
 	call	_raycast_q1_xy
-	jp	BB29_10
+	jp	BB29_12
 BB29_4:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB29_7
+	jp	m, BB29_9
 	ex	de, hl
 	call	__ineg
-	ld	de, (ix + 21)
-	push	de
-	ld	de, (ix + 18)
-	push	de
 	push	hl
+	pop	de
+	lea	bc, iy
+	or	a, a
+	sbc	hl, bc
+	jp	nc, BB29_13
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	de
 	push	iy
 	ld	hl, (ix + 9)
 	push	hl
 	ld	hl, (ix + 6)
 	push	hl
 	call	_raycast_q2_yx
-	ld	iy, (ix + 21)
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	jp	BB29_13
-BB29_6:
+	jp	BB29_14
+BB29_7:
 	lea	hl, iy
 	call	__ineg
-	ld	bc, (ix + 21)
-	push	bc
-	ld	bc, (ix + 18)
-	push	bc
-	push	de
 	push	hl
+	pop	bc
+	push	de
+	pop	hl
+	or	a, a
+	sbc	hl, bc
+	jp	nc, BB29_15
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	de
+	push	bc
 	ld	hl, (ix + 9)
 	push	hl
 	ld	hl, (ix + 6)
 	push	hl
-	call	_raycast_q2_yx
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 18)
-	ld	hl, (hl)
-	call	__ineg
-	ld	iy, (ix + 18)
-	jp	BB29_14
-BB29_7:
+	call	_raycast_q2_xy
+	jp	BB29_16
+BB29_9:
 	lea	bc, iy
 	push	bc
 	pop	hl
@@ -1535,12 +1531,13 @@ BB29_7:
 	call	__ineg
 	push	hl
 	pop	iy
-	ex	de, hl
+	push	bc
+	pop	hl
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	call	pe, __setflag
 	ld	hl, (ix + 21)
-	jp	p, BB29_11
+	jp	p, BB29_17
 	push	hl
 	ld	hl, (ix + 18)
 	push	hl
@@ -1551,9 +1548,9 @@ BB29_7:
 	push	hl
 	ld	hl, (ix + 6)
 	push	hl
-	call	_raycast_q1_xy
-	jr	BB29_12
-BB29_9:
+	call	_raycast_q3_xy
+	jr	BB29_18
+BB29_11:
 	ld	hl, (ix + 21)
 	push	hl
 	ld	hl, (ix + 18)
@@ -1565,15 +1562,57 @@ BB29_9:
 	ld	hl, (ix + 6)
 	push	hl
 	call	_raycast_q1_yx
-BB29_10:
+BB29_12:
 	pop	hl
 	pop	hl
 	pop	hl
 	pop	hl
 	pop	hl
 	pop	hl
-	jr	BB29_15
-BB29_11:
+	jr	BB29_20
+BB29_13:
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	de
+	push	iy
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	_raycast_q1_yx
+BB29_14:
+	ld	iy, (ix + 21)
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	jr	BB29_19
+BB29_15:
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	de
+	push	bc
+	ld	hl, (ix + 9)
+	push	hl
+	ld	hl, (ix + 6)
+	push	hl
+	call	_raycast_q2_yx
+BB29_16:
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, (ix + 18)
+	jr	BB29_19
+BB29_17:
 	push	hl
 	ld	hl, (ix + 18)
 	push	hl
@@ -1584,8 +1623,8 @@ BB29_11:
 	push	hl
 	ld	hl, (ix + 6)
 	push	hl
-	call	_raycast_q2_xy
-BB29_12:
+	call	_raycast_q3_yx
+BB29_18:
 	pop	hl
 	pop	hl
 	pop	hl
@@ -1597,12 +1636,11 @@ BB29_12:
 	call	__ineg
 	ld	(iy), hl
 	ld	iy, (ix + 21)
-BB29_13:
+BB29_19:
 	ld	hl, (iy)
 	call	__ineg
-BB29_14:
 	ld	(iy), hl
-BB29_15:
+BB29_20:
 	pop	hl
 	pop	ix
 	ret
@@ -3913,12 +3951,14 @@ __ZTI5Thing:
 	extern	_gfx_RLETSprite_NoClip
 	extern	__ZTVN10__cxxabiv117__class_type_infoE
 	extern	__ishrs
-	extern	__ishru
+	extern	_raycast_q3_xy
 	extern	__ultof
 	extern	_gfx_SwapDraw
+	extern	__ishru
 	extern	__fmul
 	extern	_gfx_ConvertFromRLETSprite
 	extern	_gfx_SetDraw
+	extern	_raycast_q3_yx
 	extern	__Unwind_SjLj_Unregister
 	extern	__fneg
 	extern	_gfx_ZeroScreen

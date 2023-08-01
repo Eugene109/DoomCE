@@ -40,7 +40,7 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
                 raycast_q1_yx(playerX, playerY, rayX, rayY, distX, distY);
             }
         } else {
-            if (rayX > rayY) {
+            if (-1 * rayX > rayY) {
                 raycast_q2_xy(playerX, playerY, -1 * (rayX), rayY, distX, distY);
             } else {
                 raycast_q2_yx(playerX, playerY, -1 * (rayX), rayY, distX, distY);
@@ -49,7 +49,7 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
         }
     } else {
         if (rayX > 0) {
-            if (rayX > rayY) {
+            if (rayX > -1 * rayY) {
                 // raycast_q4_xy(playerX, playerY, rayX, -1 * (rayY), distX, distY);
                 // temp, testing for speed
                 raycast_q2_yx(playerX, playerY, rayX, -1 * (rayY), distX, distY);
@@ -58,12 +58,10 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
                 raycast_q1_yx(playerX, playerY, rayX, -1 * (rayY), distX, distY);
             }
         } else {
-            if (rayX > rayY) {
-                // raycast_q3_xy(playerX, playerY, -1*(rayX), -1 * (rayY), distX, distY);
-                raycast_q1_xy(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY);
+            if (rayX < rayY) { // -x>-y
+                raycast_q3_xy(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY);
             } else {
-                // raycast_q3_yx(playerX, playerY, -1*(rayX), -1 * (rayY), distX, distY);
-                raycast_q2_xy(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY);
+                raycast_q3_yx(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY);
             }
             *distX = (*distX) * -1;
         }
