@@ -55,7 +55,7 @@ inline void bresenhamLine(unsigned x0, unsigned y0, unsigned x1, unsigned y1) {
 void draw();
 
 // placeholders
-ivec2 playerPos = ivec2(0);
+ivec2 playerPos = ivec2(256 * 3 + 128, 256 * 3 + 128);
 
 // maybe do something like this in future?
 // class Player {
@@ -107,18 +107,83 @@ int main(void) {
 
     Thing test_thing(ivec2(0, 2 << SHIFT));
 
+    const int SPACE = 64;
     do {
         start_t = clock();
         gfx_ZeroScreen();
 
         if (kb_Data[7] & kb_Up) {
-            playerPos.x += cam_forward.x >> 2;
-            playerPos.y += cam_forward.y >> 2;
+            int incX = cam_forward.x >> 3;
+            int incY = cam_forward.y >> 3;
+            if (incX > 0) {
+                char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT) + 1;
+                if (*y_walls_ptr != ' ') {
+                    if (((playerPos.x + SPACE) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
+                        incX = (255 - SPACE) - int(playerPos.x & int(255));
+                    }
+                }
+            } else {
+                char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT);
+                if (*y_walls_ptr != ' ') {
+                    if (((playerPos.x - SPACE) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
+                        incX = SPACE - int(playerPos.x & int(255));
+                    }
+                }
+            }
+            if (incY > 0) {
+                char *x_walls_ptr = (char *)(&x_walls) + ((playerPos.y >> SHIFT) + 1) * 8 + (playerPos.x >> SHIFT);
+                if (*x_walls_ptr != ' ') {
+                    if (((playerPos.y + SPACE) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
+                        incY = (255 - SPACE) - int(playerPos.y & int(255));
+                    }
+                }
+            } else {
+                char *x_walls_ptr = (char *)(&x_walls) + (playerPos.y >> SHIFT) * 8 + (playerPos.x >> SHIFT);
+                if (*x_walls_ptr != ' ') {
+                    if (((playerPos.y - SPACE) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
+                        incY = SPACE - int(playerPos.y & int(255));
+                    }
+                }
+            }
+            playerPos.x += incX;
+            playerPos.y += incY;
             // loop through lines, find ones with pos < certain value, limit playerPos
         }
         if (kb_Data[7] & kb_Down) {
-            playerPos.x -= cam_forward.x >> 2;
-            playerPos.y -= cam_forward.y >> 2;
+            int incX = -cam_forward.x >> 3;
+            int incY = -cam_forward.y >> 3;
+            if (incX > 0) {
+                char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT) + 1;
+                if (*y_walls_ptr != ' ') {
+                    if (((playerPos.x + SPACE) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
+                        incX = (255 - SPACE) - int(playerPos.x & int(255));
+                    }
+                }
+            } else {
+                char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT);
+                if (*y_walls_ptr != ' ') {
+                    if (((playerPos.x - SPACE) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
+                        incX = SPACE - int(playerPos.x & int(255));
+                    }
+                }
+            }
+            if (incY > 0) {
+                char *x_walls_ptr = (char *)(&x_walls) + ((playerPos.y >> SHIFT) + 1) * 8 + (playerPos.x >> SHIFT);
+                if (*x_walls_ptr != ' ') {
+                    if (((playerPos.y + SPACE) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
+                        incY = (255 - SPACE) - int(playerPos.y & int(255));
+                    }
+                }
+            } else {
+                char *x_walls_ptr = (char *)(&x_walls) + (playerPos.y >> SHIFT) * 8 + (playerPos.x >> SHIFT);
+                if (*x_walls_ptr != ' ') {
+                    if (((playerPos.y - SPACE) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
+                        incY = SPACE - int(playerPos.y & int(255));
+                    }
+                }
+            }
+            playerPos.x += incX;
+            playerPos.y += incY;
         }
 
         if (kb_Data[7] & kb_Right) {
@@ -141,9 +206,10 @@ int main(void) {
 
             ivec2 hit = ivec2();
             int dist;
-            fixed texCoord = 0;
+            uint8_t texCoord = 0;
+            char texType;
 
-            raycast(playerPos.x + 256 * 3 + 50, playerPos.y + 256 * 3 + 50, ray.x, ray.y, &hit.x, &hit.y);
+            raycast(playerPos.x, playerPos.y, ray.x, ray.y, &hit.x, &hit.y, &texCoord, &texType);
             dist = dot(hit, cam_forward);
 
             int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dist) * 100;
@@ -164,22 +230,13 @@ int main(void) {
         // test_thing.render(rotate(-counter), playerPos);
         gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
-        HitInfo hitInfoTest;
-        hitInfoTest.distX = 6969;
-        hitInfoTest.distY = 420;
-        int distX = 6969;
-        int distY = 420;
-        for (int hi_there = 0; hi_there < 100; hi_there++) {
-            raycast_q2_yx(256 * 2 + 23 + hi_there, 0 * 256 + 250, 66, 247, &distX, &distY);
-        }
-
         end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         char str[100];
         // int val[] = {5, 6};
         // asm_test_func(&(val[0]));
         // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
-        sprintf(str, "distX: %d, distY: %d, time: %f", distX, distY, total_t);
+        sprintf(str, "time: %fs, %d FPS", total_t, int(1.0 / total_t));
         gfx_SetTextFGColor(225);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
