@@ -12,66 +12,67 @@ struct HitInfo {
     char wallType;
 };
 
-void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-             char *texType);
-void raycast_q1_xy(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType);
-void raycast_q1_yx(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType);
+void raycast_asm(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
+                 char *texType, void *x_walls_ptr);
 
-void raycast_q2_xy(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
-void raycast_q2_yx(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
-
-void raycast_q3_xy(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
-void raycast_q3_yx(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
-
-void raycast_q4_xy(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
-void raycast_q4_yx(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                   char *texType); // dx & dy are absolute value
+void x_walls();
+void y_walls();
+void y_walls_transposed();
+void x_walls_transposed();
+void x_walls_q2();
+void y_walls_q2();
+void y_walls_transposed_q2();
+void x_walls_transposed_q2();
+void x_walls_q3();
+void y_walls_q3();
+void y_walls_transposed_q3();
+void x_walls_transposed_q3();
+void x_walls_q4();
+void y_walls_q4();
+void y_walls_transposed_q4();
+void x_walls_transposed_q4();
 
 void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
              char *texType) {
     if (rayY > 0) {
         if (rayX > 0) {
             if (rayX > rayY) {
-                raycast_q1_xy(playerX, playerY, rayX, rayY, distX, distY, texCoord, texType);
+                raycast_asm(playerX, playerY, rayX, rayY, distX, distY, texCoord, texType, (void *)&x_walls);
             } else {
-                raycast_q1_yx(playerX, playerY, rayX, rayY, distX, distY, texCoord, texType);
+                raycast_asm(playerY, playerX, rayY, rayX, distY, distX, texCoord, texType, (void *)&y_walls_transposed);
             }
         } else {
             if (-1 * rayX > rayY) {
-                raycast_q2_xy(playerX, playerY, -1 * (rayX), rayY, distX, distY, texCoord, texType);
+                raycast_asm((8 * 256) - playerX, playerY, -1 * (rayX), rayY, distX, distY, texCoord, texType,
+                            (void *)&x_walls_q2);
             } else {
-                raycast_q2_yx(playerX, playerY, -1 * (rayX), rayY, distX, distY, texCoord, texType);
+                raycast_asm(playerY, (8 * 256) - playerX, rayY, -1 * (rayX), distY, distX, texCoord, texType,
+                            (void *)&y_walls_transposed_q2);
             }
             *distX = (*distX) * -1;
         }
     } else {
         if (rayX > 0) {
             if (rayX > -1 * rayY) {
-                raycast_q4_xy(playerX, playerY, rayX, -1 * (rayY), distX, distY, texCoord, texType);
+                raycast_asm(playerX, (8 * 256) - playerY, rayX, -1 * (rayY), distX, distY, texCoord, texType,
+                            (void *)&x_walls_q4);
             } else {
-                raycast_q4_yx(playerX, playerY, rayX, -1 * (rayY), distX, distY, texCoord, texType);
+                raycast_asm((8 * 256) - playerY, playerX, -1 * (rayY), rayX, distY, distX, texCoord, texType,
+                            (void *)&y_walls_transposed_q4);
             }
         } else {
             if (rayX < rayY) { // -x>-y
-                raycast_q3_xy(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY, texCoord, texType);
+                raycast_asm((8 * 256) - playerX, (8 * 256) - playerY, -1 * (rayX), -1 * (rayY), distX, distY, texCoord,
+                            texType, (void *)&x_walls_q3);
             } else {
-                raycast_q3_yx(playerX, playerY, -1 * (rayX), -1 * (rayY), distX, distY, texCoord, texType);
+                raycast_asm((8 * 256) - playerY, (8 * 256) - playerX, -1 * (rayY), -1 * (rayX), distY, distX, texCoord,
+                            texType, (void *)&y_walls_transposed_q3);
             }
             *distX = (*distX) * -1;
         }
         *distY = (*distY) * -1;
     }
 }
-
-void x_walls();
-void y_walls();
 
 #ifdef __cplusplus
 };

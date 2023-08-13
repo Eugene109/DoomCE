@@ -1441,26 +1441,27 @@ BB28_6:
 _raycast:
 	ld	hl, -3
 	call	__frameset
-	ld	iy, (ix + 12)
-	ld	de, (ix + 15)
-	ld	bc, 1
-	push	de
-	pop	hl
+	ld	bc, (ix + 9)
+	ld	hl, (ix + 15)
+	ld	de, 1
+	push	hl
+	pop	iy
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	call	pe, __setflag
-	lea	hl, iy
+	ld	hl, (ix + 12)
 	jp	m, BB29_4
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	call	pe, __setflag
 	jp	m, BB29_7
-	push	de
-	pop	hl
-	lea	bc, iy
+	lea	hl, iy
+	ld	de, (ix + 12)
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	jp	nc, BB29_11
+	ld	hl, _x_walls
+	push	hl
 	ld	hl, (ix + 27)
 	push	hl
 	ld	hl, (ix + 24)
@@ -1469,186 +1470,230 @@ _raycast:
 	push	hl
 	ld	hl, (ix + 18)
 	push	hl
-	push	de
 	push	iy
-	ld	hl, (ix + 9)
+	ld	hl, (ix + 12)
 	push	hl
+	push	bc
 	ld	hl, (ix + 6)
 	push	hl
-	call	_raycast_q1_xy
 	jp	BB29_12
 BB29_4:
 	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
 	call	pe, __setflag
 	jp	m, BB29_9
-	ex	de, hl
-	call	__ineg
-	push	hl
-	pop	de
-	lea	bc, iy
-	or	a, a
-	sbc	hl, bc
-	jp	nc, BB29_13
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	de
-	push	iy
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q4_xy
-	jp	BB29_14
-BB29_7:
 	lea	hl, iy
 	call	__ineg
+	push	bc
+	pop	de
 	push	hl
 	pop	bc
-	push	de
-	pop	hl
+	ld	hl, 2048
 	or	a, a
-	sbc	hl, bc
-	jp	nc, BB29_15
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	de
-	push	bc
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q2_xy
-	jp	BB29_16
-BB29_9:
-	lea	bc, iy
-	push	bc
-	pop	hl
-	call	__ineg
-	ld	(ix - 3), hl
-	push	de
-	pop	hl
-	call	__ineg
+	sbc	hl, de
 	push	hl
 	pop	iy
 	push	bc
 	pop	hl
+	ld	de, (ix + 12)
+	or	a, a
+	sbc	hl, de
+	jp	nc, BB29_13
+	ld	hl, _x_walls_q4
+	push	hl
+	ld	hl, (ix + 27)
+	push	hl
+	ld	hl, (ix + 24)
+	push	hl
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	bc
+	ld	hl, (ix + 12)
+	push	hl
+	push	iy
+	ld	hl, (ix + 6)
+	push	hl
+	jp	BB29_14
+BB29_7:
+	ld	hl, (ix + 12)
+	call	__ineg
+	push	hl
+	pop	de
+	ld	hl, 2048
+	ld	bc, (ix + 6)
+	or	a, a
+	sbc	hl, bc
+	push	hl
+	pop	bc
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	jp	nc, BB29_15
+	ld	hl, _x_walls_q2
+	push	hl
+	ld	hl, (ix + 27)
+	push	hl
+	ld	hl, (ix + 24)
+	push	hl
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	push	iy
+	push	de
+	ld	hl, (ix + 9)
+	push	hl
+	push	bc
+	jp	BB29_16
+BB29_9:
+	ld	hl, (ix + 12)
+	lea	de, iy
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	ld	hl, (ix + 27)
 	jp	p, BB29_17
+	ld	iy, 2048
+	lea	hl, iy
+	ld	de, (ix + 6)
+	or	a, a
+	sbc	hl, de
+	ld	(ix - 3), hl
+	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
 	push	hl
-	ld	hl, (ix + 24)
+	pop	iy
+	ld	hl, (ix + 12)
+	call	__ineg
 	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	iy
-	ld	hl, (ix - 3)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q3_xy
-	jp	BB29_18
-BB29_11:
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
+	pop	de
+	ld	hl, (ix + 15)
+	call	__ineg
+	ld	bc, _x_walls_q3
+	push	bc
+	ld	bc, (ix + 27)
+	push	bc
+	ld	bc, (ix + 24)
+	push	bc
+	ld	bc, (ix + 21)
+	push	bc
+	ld	bc, (ix + 18)
+	push	bc
 	push	hl
 	push	de
 	push	iy
-	ld	hl, (ix + 9)
+	ld	hl, (ix - 3)
 	push	hl
+	jp	BB29_18
+BB29_11:
+	ld	hl, _y_walls_transposed
+	push	hl
+	ld	hl, (ix + 27)
+	push	hl
+	ld	hl, (ix + 24)
+	push	hl
+	ld	hl, (ix + 18)
+	push	hl
+	ld	hl, (ix + 21)
+	push	hl
+	ld	hl, (ix + 12)
+	push	hl
+	push	iy
 	ld	hl, (ix + 6)
 	push	hl
-	call	_raycast_q1_yx
+	push	bc
 BB29_12:
-	ld	hl, 24
+	call	_raycast_asm
+	ld	hl, 27
 	add	hl, sp
 	ld	sp, hl
 	jp	BB29_20
 BB29_13:
+	ld	hl, _y_walls_transposed_q4
+	push	hl
 	ld	hl, (ix + 27)
 	push	hl
 	ld	hl, (ix + 24)
 	push	hl
+	ld	hl, (ix + 18)
+	push	hl
 	ld	hl, (ix + 21)
 	push	hl
+	ld	hl, (ix + 12)
+	push	hl
+	push	bc
+	ld	hl, (ix + 6)
+	push	hl
+	push	iy
+BB29_14:
+	call	_raycast_asm
+	ld	iy, (ix + 21)
+	ld	hl, 27
+	add	hl, sp
+	ld	sp, hl
+	jp	BB29_19
+BB29_15:
+	ld	hl, _y_walls_transposed_q2
+	push	hl
+	ld	hl, (ix + 27)
+	push	hl
+	ld	hl, (ix + 24)
+	push	hl
 	ld	hl, (ix + 18)
+	push	hl
+	ld	hl, (ix + 21)
 	push	hl
 	push	de
 	push	iy
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q4_yx
-BB29_14:
-	ld	iy, (ix + 21)
-	ld	hl, 24
-	add	hl, sp
-	ld	sp, hl
-	jr	BB29_19
-BB29_15:
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	de
 	push	bc
 	ld	hl, (ix + 9)
 	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q2_yx
 BB29_16:
-	ld	hl, 24
+	call	_raycast_asm
+	ld	hl, 27
 	add	hl, sp
 	ld	sp, hl
 	ld	iy, (ix + 18)
 	jr	BB29_19
 BB29_17:
+	ld	de, 2048
+	push	de
+	pop	hl
+	or	a, a
+	sbc	hl, bc
 	push	hl
-	ld	hl, (ix + 24)
+	pop	iy
+	ex	de, hl
+	ld	de, (ix + 6)
+	or	a, a
+	sbc	hl, de
+	ld	(ix - 3), hl
+	ld	hl, (ix + 15)
+	call	__ineg
 	push	hl
-	ld	hl, (ix + 21)
+	pop	bc
+	ld	hl, (ix + 12)
+	call	__ineg
+	ld	de, _y_walls_transposed_q3
+	push	de
+	ld	de, (ix + 27)
+	push	de
+	ld	de, (ix + 24)
+	push	de
+	ld	de, (ix + 18)
+	push	de
+	ld	de, (ix + 21)
+	push	de
 	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	iy
+	push	bc
 	ld	hl, (ix - 3)
 	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	_raycast_q3_yx
+	push	iy
 BB29_18:
-	ld	hl, 24
+	call	_raycast_asm
+	ld	hl, 27
 	add	hl, sp
 	ld	sp, hl
 	ld	iy, (ix + 18)
@@ -2130,7 +2175,7 @@ BB30_1:
 	ld	a, l
 	bit	3, a
 	ld	a, 8
-	jp	z, BB30_24
+	jp	z, BB30_21
 	ld	bc, -624
 	lea	hl, ix
 	add	hl, bc
@@ -2140,7 +2185,7 @@ BB30_1:
 	ld	c, 3
 	call	__ishrs
 	ld	(ix - 3), de
-	ld	de, -645
+	ld	de, -642
 	lea	iy, ix
 	add	iy, de
 	ld	(iy), hl
@@ -2151,22 +2196,27 @@ BB30_1:
 	pop	ix
 	call	__ishrs
 	push	ix
-	ld	de, -642
+	ld	de, -645
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
 	ld	hl, (_playerPos+3)
 	push	ix
-	ld	de, -630
+	ld	de, -651
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
 	ld	c, a
 	call	__ishrs
+	push	ix
+	ld	de, -648
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
 	ld	bc, 9
 	call	__imulu
 	push	ix
-	ld	de, -648
+	ld	de, -657
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
@@ -2177,45 +2227,213 @@ BB30_1:
 	sbc	hl, bc
 	call	pe, __setflag
 	jp	m, BB30_5
+	ld	iy, (_playerPos)
+	lea	hl, iy
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	hl, _y_walls+1
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -657
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	add	hl, bc
+	ld	de, (ix - 3)
+	push	ix
+	ld	bc, -657
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	add	hl, de
+	ld	e, a
+	ld	a, (hl)
+	cp	a, 32
+	ld	bc, -630
+	lea	hl, ix
+	push	af
+	add	hl, bc
+	pop	af
+	ld	(hl), iy
+	jr	nz, BB30_8
+	ld	a, e
+	jp	BB30_11
+BB30_5:
+	ld	iy, _y_walls
+	ld	bc, -657
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	add	iy, de
 	ld	de, (_playerPos)
 	push	de
 	pop	hl
 	ld	c, a
 	call	__ishrs
 	push	hl
-	pop	iy
-	ld	hl, _y_walls+1
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -648
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	add	hl, bc
-	ld	a, (hl)
+	pop	bc
+	add	iy, bc
+	ld	l, a
+	ld	a, (iy)
 	cp	a, 32
+	ld	(ix - 3), bc
+	ld	bc, -630
+	lea	iy, ix
+	push	af
+	add	iy, bc
+	pop	af
+	ld	(iy), de
+	ld	bc, (ix - 3)
+	ld	a, l
+	jp	z, BB30_11
+	ld	(ix - 3), de
+	ld	de, -642
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	push	bc
+	pop	iy
+	ld	bc, -64
+	add	hl, bc
 	ld	de, (ix - 3)
-	jp	nz, BB30_8
-	ld	bc, -645
+	add	hl, de
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	bc
+	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB30_11
+	ex	de, hl
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 64
+	jr	BB30_10
+BB30_8:
+	ld	bc, -642
 	lea	hl, ix
 	add	hl, bc
 	ld	hl, (hl)
-	jp	BB30_12
-BB30_5:
-	ld	iy, _y_walls
-	ld	bc, -648
-	lea	hl, ix
+	ld	a, e
+	lea	bc, iy
+	ld	de, 64
+	add	hl, de
 	add	hl, bc
-	ld	de, (hl)
-	add	iy, de
-	ld	hl, (_playerPos)
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
 	push	ix
-	ld	de, -651
-	add	ix, de
-	ld	(ix), hl
+	ld	bc, -657
+	add	ix, bc
+	ld	hl, (ix)
 	pop	ix
+	or	a, a
+	sbc	hl, de
+	ld	bc, (ix - 3)
+	jr	z, BB30_11
+	lea	hl, iy
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 191
+BB30_10:
+	or	a, a
+	sbc	hl, de
+	ld	de, -642
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), hl
+BB30_11:
+	ld	de, -648
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	c, 3
+	call	__ishl
+	push	hl
+	pop	de
+	ld	(ix - 3), de
+	ld	de, -621
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	bc, 8
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	ld	de, (ix - 3)
+	ld	iy, _x_walls
+	jp	m, BB30_15
+	add	iy, de
+	ld	de, -630
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	de
+	add	iy, de
+	ld	a, (iy + 8)
+	cp	a, 32
+	jp	z, BB30_16
+	ld	de, -651
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	lea	hl, iy
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -645
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	add	hl, de
+	ld	de, 64
+	add	hl, de
+	ld	bc, (ix - 3)
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -648
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	or	a, a
+	sbc	hl, de
+	lea	de, iy
+	ld	bc, -645
+	lea	hl, ix
+	push	af
+	add	hl, bc
+	pop	af
+	ld	hl, (hl)
+	ld	bc, (ix - 3)
+	ld	a, c
+	jp	z, BB30_20
+	ex	de, hl
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 191
+	jp	BB30_19
+BB30_15:
+	add	iy, de
+	ld	de, -630
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
 	ld	c, a
 	call	__ishrs
 	push	hl
@@ -2223,264 +2441,87 @@ BB30_5:
 	add	iy, de
 	ld	a, (iy)
 	cp	a, 32
-	jp	z, BB30_9
-	ld	bc, -651
+	jr	nz, BB30_17
+BB30_16:
+	ld	de, -645
 	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	de, -64
-	add	iy, de
-	lea	hl, iy
-	push	ix
-	ld	bc, -645
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
 	add	hl, de
-	lea	bc, iy
-	call	__ixor
-	ld	de, 256
-	or	a, a
-	sbc	hl, de
-	jr	c, BB30_9
-	ld	bc, -651
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
-	ld	hl, 64
-	jr	BB30_11
-BB30_8:
-	ld	bc, -651
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	push	de
-	pop	iy
-	ld	de, 64
-	add	iy, de
-	lea	hl, iy
-	push	ix
-	ld	bc, -645
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	lea	bc, iy
-	call	__ixor
-	ld	de, 256
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB30_10
-BB30_9:
-	ld	bc, -651
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -645
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	push	ix
-	ld	bc, -648
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	jr	BB30_13
-BB30_10:
-	ld	bc, -651
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
-	ld	hl, 191
-BB30_11:
-	or	a, a
-	sbc	hl, bc
-BB30_12:
-	ld	bc, -648
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-BB30_13:
-	ld	a, 8
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
 	ld	hl, (hl)
-	ld	c, 5
-	call	__ishrs
-	push	hl
-	pop	iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -621
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	ld	bc, 8
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	ld	de, (ix - 3)
-	ld	bc, -645
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	(hl), de
-	jp	m, BB30_17
-	ld	bc, 8
-	add	iy, bc
-	lea	hl, iy
-	ld	bc, -8
-	call	__iand
-	push	hl
-	pop	bc
-	ld	iy, _x_walls
-	add	iy, bc
-	ex	de, hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	a, (iy)
-	cp	a, 32
-	jp	z, BB30_18
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	iy
-	ld	bc, 64
-	add	iy, bc
-	lea	hl, iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -642
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	call	__ixor
-	ld	bc, 256
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -642
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	a, 8
-	ld	de, (ix - 3)
-	jp	c, BB30_23
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
-	ld	hl, 191
-	jp	BB30_21
-BB30_17:
-	lea	hl, iy
-	ld	bc, -8
-	call	__iand
-	push	hl
-	pop	bc
-	ld	iy, _x_walls
-	add	iy, bc
-	ex	de, hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	a, (iy)
-	cp	a, 32
-	jr	nz, BB30_19
-BB30_18:
-	ld	bc, -642
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	a, 8
-	jr	BB30_22
-BB30_19:
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	iy
-	ld	bc, -64
-	add	iy, bc
-	lea	hl, iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -642
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	call	__ixor
-	ld	bc, 256
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -642
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	a, 8
-	ld	de, (ix - 3)
-	jr	c, BB30_23
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
-	ld	hl, 64
-BB30_21:
-	or	a, a
-	sbc	hl, bc
-BB30_22:
-	ld	bc, -630
+	ld	a, c
+	ld	bc, -651
 	lea	iy, ix
 	add	iy, bc
 	ld	de, (iy)
-BB30_23:
-	ld	(ix - 3), de
-	ld	de, -645
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
+	jr	BB30_20
+BB30_17:
+	ld	de, -651
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	lea	hl, iy
+	ld	(ix - 3), bc
 	push	ix
-	ld	de, -648
+	ld	bc, -645
+	add	ix, bc
+	ld	de, (ix)
+	pop	ix
+	add	hl, de
+	ld	de, -64
+	add	hl, de
+	ld	bc, (ix - 3)
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -648
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	or	a, a
+	sbc	hl, de
+	lea	de, iy
+	ld	bc, -645
+	lea	hl, ix
+	push	af
+	add	hl, bc
+	pop	af
+	ld	hl, (hl)
+	ld	bc, (ix - 3)
+	ld	a, c
+	jr	z, BB30_20
+	ex	de, hl
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 64
+BB30_19:
+	or	a, a
+	sbc	hl, de
+	ld	(ix - 3), bc
+	ld	bc, -651
+	lea	iy, ix
+	add	iy, bc
+	ld	de, (iy)
+	ld	bc, (ix - 3)
+BB30_20:
+	ld	bc, -642
+	lea	iy, ix
+	add	iy, bc
+	ld	iy, (iy)
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -630
 	add	ix, de
-	ld	iy, (ix)
+	ld	bc, (ix)
 	pop	ix
 	add	iy, bc
 	ld	(_playerPos), iy
 	ld	de, (ix - 3)
 	add	hl, de
 	ld	(_playerPos+3), hl
-BB30_24:
+BB30_21:
 	ld	hl, -720866
 	push	de
 	ld	e, (hl)
@@ -2492,7 +2533,7 @@ BB30_24:
 	ld.sis	bc, 1
 	call	__sand
 	bit	0, l
-	jp	z, BB30_45
+	jp	z, BB30_41
 	ld	bc, -624
 	lea	hl, ix
 	add	hl, bc
@@ -2503,7 +2544,7 @@ BB30_24:
 	ld	c, 3
 	call	__ishrs
 	ld	(ix - 3), de
-	ld	de, -645
+	ld	de, -630
 	lea	iy, ix
 	add	iy, de
 	ld	(iy), hl
@@ -2521,16 +2562,21 @@ BB30_24:
 	pop	ix
 	ld	hl, (_playerPos+3)
 	push	ix
-	ld	de, -630
+	ld	de, -648
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
 	ld	c, a
 	call	__ishrs
+	push	ix
+	ld	de, -645
+	add	ix, de
+	ld	(ix), hl
+	pop	ix
 	ld	bc, 9
 	call	__imulu
 	push	ix
-	ld	de, -648
+	ld	de, -651
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
@@ -2540,74 +2586,212 @@ BB30_24:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	p, BB30_29
+	jp	p, BB30_25
+	ld	iy, (_playerPos)
+	lea	hl, iy
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	hl, _y_walls+1
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -651
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	add	hl, bc
+	ld	de, (ix - 3)
+	push	ix
+	ld	bc, -651
+	add	ix, bc
+	ld	(ix), de
+	pop	ix
+	add	hl, de
+	ld	c, a
+	ld	a, (hl)
+	cp	a, 32
+	ld	de, -624
+	lea	hl, ix
+	push	af
+	add	hl, de
+	pop	af
+	ld	(hl), iy
+	jr	nz, BB30_28
+	ld	a, c
+	jp	BB30_31
+BB30_25:
+	ld	iy, _y_walls
+	ld	bc, -651
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	add	iy, de
 	ld	de, (_playerPos)
 	push	de
 	pop	hl
 	ld	c, a
 	call	__ishrs
 	push	hl
-	pop	iy
-	ld	hl, _y_walls+1
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -648
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	add	hl, bc
-	ld	a, (hl)
+	pop	bc
+	add	iy, bc
+	ld	l, a
+	ld	a, (iy)
 	cp	a, 32
-	ld	de, (ix - 3)
-	jp	z, BB30_34
+	ld	(ix - 3), bc
 	ld	bc, -624
+	lea	iy, ix
+	push	af
+	add	iy, bc
+	pop	af
+	ld	(iy), de
+	ld	bc, (ix - 3)
+	ld	a, l
+	jp	z, BB30_31
+	ld	(ix - 3), de
+	ld	de, -630
 	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	push	de
+	add	hl, de
+	ld	hl, (hl)
+	push	bc
 	pop	iy
-	ld	de, 64
-	add	iy, de
+	ld	bc, -64
+	add	hl, bc
+	ld	de, (ix - 3)
+	add	hl, de
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	bc
 	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB30_31
+	ex	de, hl
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 64
+	jr	BB30_30
+BB30_28:
+	ld	de, -630
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	de, 64
+	add	hl, de
+	lea	de, iy
+	add	hl, de
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
 	push	ix
-	ld	bc, -645
+	ld	bc, -651
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
+	or	a, a
+	sbc	hl, de
+	ld	bc, (ix - 3)
+	ld	a, c
+	jr	z, BB30_31
+	lea	hl, iy
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	de
+	ld	hl, 191
+BB30_30:
+	or	a, a
+	sbc	hl, de
+	ld	de, -630
+	lea	iy, ix
+	add	iy, de
+	ld	(iy), hl
+BB30_31:
+	ld	de, -645
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	c, 3
+	call	__ishl
+	push	hl
+	pop	de
+	ld	(ix - 3), de
+	ld	de, -621
+	lea	iy, ix
+	add	iy, de
+	ld	hl, (iy)
+	ld	bc, -7
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	ld	de, (ix - 3)
+	ld	iy, _x_walls
+	jp	p, BB30_35
+	add	iy, de
+	ld	de, -624
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
+	ld	c, a
+	call	__ishrs
+	push	hl
+	pop	de
+	add	iy, de
+	ld	a, (iy + 8)
+	cp	a, 32
+	jp	z, BB30_36
+	ld	de, -648
+	lea	hl, ix
+	add	hl, de
+	ld	iy, (hl)
+	lea	hl, iy
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -642
 	add	ix, bc
 	ld	de, (ix)
 	pop	ix
 	add	hl, de
-	lea	bc, iy
-	call	__ixor
-	ld	de, 256
+	ld	de, 64
+	add	hl, de
+	ld	bc, (ix - 3)
+	call	__ishrs
+	push	hl
+	pop	de
+	ld	(ix - 3), bc
+	push	ix
+	ld	bc, -645
+	add	ix, bc
+	ld	hl, (ix)
+	pop	ix
 	or	a, a
 	sbc	hl, de
-	jp	c, BB30_31
-	ld	bc, -624
+	lea	de, iy
+	ld	bc, -642
 	lea	hl, ix
+	push	af
 	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
+	pop	af
+	ld	hl, (hl)
+	ld	bc, (ix - 3)
+	jp	z, BB30_40
+	ex	de, hl
 	ld	bc, 255
 	call	__iand
 	push	hl
-	pop	bc
+	pop	de
 	ld	hl, 191
-	jp	BB30_33
-BB30_29:
-	ld	iy, _y_walls
-	ld	bc, -648
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
+	jp	BB30_39
+BB30_35:
 	add	iy, de
-	ld	hl, (_playerPos)
-	push	ix
 	ld	de, -624
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
+	lea	hl, ix
+	add	hl, de
+	ld	hl, (hl)
 	ld	c, a
 	call	__ishrs
 	push	hl
@@ -2615,217 +2799,85 @@ BB30_29:
 	add	iy, de
 	ld	a, (iy)
 	cp	a, 32
-	jr	z, BB30_31
-	ld	bc, -624
+	jr	nz, BB30_37
+BB30_36:
+	ld	bc, -642
 	lea	hl, ix
 	add	hl, bc
+	ld	hl, (hl)
+	ld	bc, -648
+	lea	iy, ix
+	add	iy, bc
+	ld	de, (iy)
+	jr	BB30_40
+BB30_37:
+	ld	de, -648
+	lea	hl, ix
+	add	hl, de
 	ld	iy, (hl)
-	ld	de, -64
-	add	iy, de
 	lea	hl, iy
+	ld	(ix - 3), bc
 	push	ix
-	ld	bc, -645
+	ld	bc, -642
 	add	ix, bc
 	ld	de, (ix)
 	pop	ix
 	add	hl, de
-	lea	bc, iy
-	call	__ixor
-	ld	de, 256
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB30_32
-BB30_31:
-	ld	bc, -624
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	jr	BB30_34
-BB30_32:
-	ld	bc, -624
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
-	ld	hl, 64
-BB30_33:
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -645
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-BB30_34:
-	ld	a, 8
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	c, 5
+	ld	de, -64
+	add	hl, de
+	ld	bc, (ix - 3)
 	call	__ishrs
 	push	hl
-	pop	iy
-	ld	(ix - 3), de
+	pop	de
+	ld	(ix - 3), bc
 	push	ix
-	ld	de, -621
-	add	ix, de
+	ld	bc, -645
+	add	ix, bc
 	ld	hl, (ix)
 	pop	ix
-	ld	bc, -7
 	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	ld	de, (ix - 3)
-	ld	bc, -624
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	(hl), de
-	jp	p, BB30_38
-	ld	bc, 8
-	add	iy, bc
-	lea	hl, iy
-	ld	bc, -8
-	call	__iand
-	push	hl
-	pop	bc
-	ld	iy, _x_walls
-	add	iy, bc
-	ex	de, hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	a, (iy)
-	cp	a, 32
-	jp	z, BB30_39
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	iy
-	ld	bc, 64
-	add	iy, bc
-	lea	hl, iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -642
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	call	__ixor
-	ld	bc, 256
-	or	a, a
-	sbc	hl, bc
+	sbc	hl, de
+	lea	de, iy
 	ld	bc, -642
 	lea	hl, ix
 	push	af
 	add	hl, bc
 	pop	af
 	ld	hl, (hl)
-	ld	de, (ix - 3)
-	jp	c, BB30_44
+	ld	bc, (ix - 3)
+	jr	z, BB30_40
 	ex	de, hl
 	ld	bc, 255
 	call	__iand
 	push	hl
-	pop	bc
-	ld	hl, 191
-	jp	BB30_42
-BB30_38:
-	lea	hl, iy
-	ld	bc, -8
-	call	__iand
-	push	hl
-	pop	bc
-	ld	iy, _x_walls
-	add	iy, bc
-	ex	de, hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	a, (iy)
-	cp	a, 32
-	jr	nz, BB30_40
-BB30_39:
-	ld	bc, -642
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	jr	BB30_43
-BB30_40:
-	ld	bc, -630
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	iy
-	ld	bc, -64
-	add	iy, bc
-	lea	hl, iy
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -642
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	lea	bc, iy
-	call	__ixor
-	ld	bc, 256
-	or	a, a
-	sbc	hl, bc
-	ld	bc, -642
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	de, (ix - 3)
-	jr	c, BB30_44
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	bc
+	pop	de
 	ld	hl, 64
-BB30_42:
+BB30_39:
 	or	a, a
-	sbc	hl, bc
-BB30_43:
-	ld	bc, -630
+	sbc	hl, de
+	ld	(ix - 3), bc
+	ld	bc, -648
 	lea	iy, ix
 	add	iy, bc
 	ld	de, (iy)
-BB30_44:
-	ld	(ix - 3), de
-	ld	de, -624
+	ld	bc, (ix - 3)
+BB30_40:
+	ld	bc, -630
 	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
+	add	iy, bc
+	ld	iy, (iy)
+	ld	(ix - 3), de
 	push	ix
-	ld	de, -645
+	ld	de, -624
 	add	ix, de
-	ld	iy, (ix)
+	ld	bc, (ix)
 	pop	ix
 	add	iy, bc
 	ld	(_playerPos), iy
 	ld	de, (ix - 3)
 	add	hl, de
 	ld	(_playerPos+3), hl
-BB30_45:
+BB30_41:
 	ld	hl, -720866
 	push	de
 	ld	e, (hl)
@@ -2844,10 +2896,10 @@ BB30_45:
 	ld	de, -67
 	add	hl, de
 	bit	2, a
-	jr	z, BB30_47
+	jr	z, BB30_43
 	push	hl
 	pop	bc
-BB30_47:
+BB30_43:
 	ld	hl, -720866
 	push	de
 	ld	e, (hl)
@@ -2862,10 +2914,10 @@ BB30_47:
 	ld	de, 67
 	add	hl, de
 	bit	1, a
-	jr	z, BB30_49
+	jr	z, BB30_45
 	push	hl
 	pop	bc
-BB30_49:
+BB30_45:
 	ld	de, -633
 	lea	hl, ix
 	add	hl, de
@@ -2909,13 +2961,13 @@ BB30_49:
 	lea	hl, ix
 	add	hl, de
 	ld	iy, (hl)
-BB30_50:
+BB30_46:
 	push	bc
 	pop	hl
 	ld	de, 320
 	or	a, a
 	sbc	hl, de
-	jp	z, BB30_55
+	jp	z, BB30_51
 	ld	de, -630
 	lea	hl, ix
 	add	hl, de
@@ -3065,7 +3117,7 @@ BB30_50:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	p, BB30_53
+	jp	p, BB30_49
 	ld	de, -657
 	lea	hl, ix
 	add	hl, de
@@ -3100,8 +3152,8 @@ BB30_50:
 	ld	hl, 21
 	add	hl, sp
 	ld	sp, hl
-	jr	BB30_54
-BB30_53:
+	jr	BB30_50
+BB30_49:
 	push	iy
 	ld	bc, -648
 	lea	hl, ix
@@ -3132,7 +3184,7 @@ BB30_53:
 	pop	hl
 	pop	hl
 	pop	hl
-BB30_54:
+BB30_50:
 	ld	bc, -642
 	lea	hl, ix
 	add	hl, bc
@@ -3147,8 +3199,8 @@ BB30_54:
 	add	hl, de
 	push	hl
 	pop	bc
-	jp	BB30_50
-BB30_55:
+	jp	BB30_46
+BB30_51:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -3244,16 +3296,16 @@ BB30_55:
 	add	a, 2
 	ld	l, a
 	cp	a, 7
-	jr	c, BB30_57
+	jr	c, BB30_53
 	ld	l, 0
-BB30_57:
+BB30_53:
 	ld	a, e
 	or	a, a
 	ld	a, 0
 	ld	e, a
-	jr	z, BB30_59
+	jr	z, BB30_55
 	ld	e, l
-BB30_59:
+BB30_55:
 	ld	hl, -720876
 	push	de
 	ld	e, (hl)
@@ -3273,18 +3325,18 @@ BB30_59:
 	or	a, a
 	ld	a, -1
 	ld	bc, (ix - 3)
-	jr	z, BB30_61
+	jr	z, BB30_57
 	ld	a, 0
-BB30_61:
+BB30_57:
 	ld	bc, -635
 	lea	hl, ix
 	add	hl, bc
 	or	a, (hl)
 	bit	0, a
-	jr	nz, BB30_63
+	jr	nz, BB30_59
 	ld	a, 1
 	ld	e, a
-BB30_63:
+BB30_59:
 	or	a, a
 	sbc	hl, hl
 	ld	bc, -634
@@ -3318,9 +3370,9 @@ BB30_63:
 	ld	a, e
 	or	a, a
 	ld	a, -1
-	jr	nz, BB30_65
+	jr	nz, BB30_61
 	ld	a, 0
-BB30_65:
+BB30_61:
 	ld	bc, -635
 	lea	iy, ix
 	add	iy, bc
@@ -3610,7 +3662,7 @@ _ceiling_floor_tex_data:
 	public	_playerPos
 _playerPos:
 	dl	896
-	dl	896
+	dl	1024
 
 	section	.data,"aw",@progbits
 	public	_pistol_1_data
@@ -4510,34 +4562,36 @@ __ZTI5Thing:
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
 	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	extern	__Unwind_SjLj_Register
 	extern	_malloc
+	extern	__Unwind_SjLj_Register
 	extern	_gfx_SetTextFGColor
 	extern	_gfx_Begin
 	extern	__fadd
 	extern	_x_walls
+	extern	_y_walls_transposed_q2
+	extern	_y_walls_transposed_q3
+	extern	_y_walls_transposed_q4
 	extern	_gfx_SetPalette
 	extern	__sand
 	extern	__ishl
 	extern	__ftol
+	extern	_x_walls_q2
+	extern	_x_walls_q3
+	extern	_x_walls_q4
 	extern	__idivs
 	extern	__idivu
 	extern	__setflag
 	extern	__iand
-	extern	__ixor
 	extern	_gfx_AllocSprite
-	extern	_raycast_q1_xy
 	extern	__ltof
 	extern	__ineg
-	extern	_raycast_q1_yx
+	extern	_y_walls_transposed
 	extern	_os_GetCSC
 	extern	__fsub
 	extern	_y_walls
-	extern	_raycast_q2_xy
 	extern	__frameset
 	extern	_gfx_SetTransparentColor
 	extern	_sprintf
-	extern	_raycast_q2_yx
 	extern	_sin
 	extern	__lsub
 	extern	_pow
@@ -4548,25 +4602,22 @@ __ZTI5Thing:
 	extern	_gfx_RLETSprite_NoClip
 	extern	__ZTVN10__cxxabiv117__class_type_infoE
 	extern	__ishrs
-	extern	_raycast_q3_xy
-	extern	__ultof
 	extern	__ishru
+	extern	__ultof
 	extern	_gfx_SwapDraw
 	extern	__fmul
 	extern	_gfx_ConvertFromRLETSprite
 	extern	_gfx_SetDraw
-	extern	_raycast_q3_yx
 	extern	__Unwind_SjLj_Unregister
 	extern	__fneg
 	extern	_gfx_ZeroScreen
 	extern	__fdiv
 	extern	__imulu
-	extern	_raycast_q4_xy
+	extern	_raycast_asm
 	extern	_gfx_PrintStringXY
 	extern	_gfx_End
 	extern	__fcmp
 	extern	__frameset0
 	extern	_cos
-	extern	_raycast_q4_yx
 	extern	_clock
 	extern	_draw_strip

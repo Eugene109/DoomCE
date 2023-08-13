@@ -55,7 +55,7 @@ inline void bresenhamLine(unsigned x0, unsigned y0, unsigned x1, unsigned y1) {
 void draw();
 
 // placeholders
-ivec2 playerPos = ivec2(256 * 3 + 128, 256 * 3 + 128);
+ivec2 playerPos = ivec2(256 * 3 + 128, 256 * 4);
 
 // maybe do something like this in future?
 // class Player {
@@ -118,14 +118,14 @@ int main(void) {
             if (incX > 0) {
                 char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT) + 1;
                 if (*y_walls_ptr != ' ') {
-                    if (((playerPos.x + SPACE) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
+                    if (((playerPos.x) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
                         incX = (255 - SPACE) - int(playerPos.x & int(255));
                     }
                 }
             } else {
                 char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT);
                 if (*y_walls_ptr != ' ') {
-                    if (((playerPos.x - SPACE) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
+                    if (((playerPos.x) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
                         incX = SPACE - int(playerPos.x & int(255));
                     }
                 }
@@ -133,14 +133,14 @@ int main(void) {
             if (incY > 0) {
                 char *x_walls_ptr = (char *)(&x_walls) + ((playerPos.y >> SHIFT) + 1) * 8 + (playerPos.x >> SHIFT);
                 if (*x_walls_ptr != ' ') {
-                    if (((playerPos.y + SPACE) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
+                    if (((playerPos.y) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
                         incY = (255 - SPACE) - int(playerPos.y & int(255));
                     }
                 }
             } else {
                 char *x_walls_ptr = (char *)(&x_walls) + (playerPos.y >> SHIFT) * 8 + (playerPos.x >> SHIFT);
                 if (*x_walls_ptr != ' ') {
-                    if (((playerPos.y - SPACE) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
+                    if (((playerPos.y) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
                         incY = SPACE - int(playerPos.y & int(255));
                     }
                 }
@@ -155,14 +155,14 @@ int main(void) {
             if (incX > 0) {
                 char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT) + 1;
                 if (*y_walls_ptr != ' ') {
-                    if (((playerPos.x + SPACE) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
+                    if (((playerPos.x) >> SHIFT) != ((playerPos.x + SPACE + incX) >> SHIFT)) {
                         incX = (255 - SPACE) - int(playerPos.x & int(255));
                     }
                 }
             } else {
                 char *y_walls_ptr = (char *)(&y_walls) + (playerPos.y >> SHIFT) * 9 + (playerPos.x >> SHIFT);
                 if (*y_walls_ptr != ' ') {
-                    if (((playerPos.x - SPACE) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
+                    if (((playerPos.x) >> SHIFT) != ((playerPos.x - SPACE + incX) >> SHIFT)) {
                         incX = SPACE - int(playerPos.x & int(255));
                     }
                 }
@@ -170,14 +170,14 @@ int main(void) {
             if (incY > 0) {
                 char *x_walls_ptr = (char *)(&x_walls) + ((playerPos.y >> SHIFT) + 1) * 8 + (playerPos.x >> SHIFT);
                 if (*x_walls_ptr != ' ') {
-                    if (((playerPos.y + SPACE) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
+                    if (((playerPos.y) >> SHIFT) != ((playerPos.y + SPACE + incY) >> SHIFT)) {
                         incY = (255 - SPACE) - int(playerPos.y & int(255));
                     }
                 }
             } else {
                 char *x_walls_ptr = (char *)(&x_walls) + (playerPos.y >> SHIFT) * 8 + (playerPos.x >> SHIFT);
                 if (*x_walls_ptr != ' ') {
-                    if (((playerPos.y - SPACE) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
+                    if (((playerPos.y) >> SHIFT) != ((playerPos.y - SPACE + incY) >> SHIFT)) {
                         incY = SPACE - int(playerPos.y & int(255));
                     }
                 }
