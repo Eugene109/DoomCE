@@ -167,18 +167,18 @@ asm_out_str += "\n"
 # quadrant 4
 
 
-asm_out_str += "_y_walls_q4:\n    db  \""
-for y in range (0,8):
-    for x in range(0,9):
-        asm_out_str += f"{y_lines[y][x]}"
-
-asm_out_str += "\"\n"
-
 
 asm_out_str += "_x_walls_q4:\n    db  \""
 for y in range (0,9):
     for x in range(0,8):
         asm_out_str += f"{x_lines[y][x]}"
+
+asm_out_str += "\"\n"
+
+asm_out_str += "_y_walls_q4:\n    db  \""
+for y in range (0,8):
+    for x in range(0,9):
+        asm_out_str += f"{y_lines[y][x]}"
 
 asm_out_str += "\"\n"
 

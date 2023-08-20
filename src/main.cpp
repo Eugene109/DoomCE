@@ -105,7 +105,7 @@ int main(void) {
     imat2 rot = rotate(0);
     ivec2 cam_forward = rot * ivec2(0, 1 << SHIFT);
 
-    Thing test_thing(ivec2(0, 2 << SHIFT));
+    Thing test_thing(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
 
     const int SPACE = 64;
     do {
@@ -197,10 +197,17 @@ int main(void) {
 
         cam_forward = rot * ivec2(0, 1 << SHIFT);
 
+        end_t = clock();
+
         // dist, texCoord, maybe add a texture index
         // fixed rayCastBuff[NUM_RAYS * 2];
         // fixed *rayCastBuffPtr = &(rayCastBuff[0]);
+        int dists[NUM_RAYS] = {0};
+        uint8_t texCoords[NUM_RAYS] = {0};
 
+        clock_t start_r_t, end_r_t;
+        double total_r_t = 1;
+        start_r_t = clock();
         for (uint8_t a = 0; a < NUM_RAYS; ++a) {
             ray = rot * rayOffsets[a];
 
@@ -209,34 +216,42 @@ int main(void) {
             uint8_t texCoord = 0;
             char texType;
 
-            raycast(playerPos.x, playerPos.y, ray.x, ray.y, &hit.x, &hit.y, &texCoord, &texType);
-            dist = dot(hit, cam_forward);
+            raycast(playerPos.x, playerPos.y, ray.x, ray.y, &hit.x, &hit.y, &(texCoords[a]), &texType);
+            dists[a] = dot(hit, cam_forward);
+        }
+        end_r_t = clock();
 
-            int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dist) * 100;
+        clock_t start_d_t, end_d_t;
+        double total_d_t = 1;
+        start_d_t = clock();
+        for (uint8_t a = 0; a < NUM_RAYS; ++a) {
+            int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dists[a]) * 100;
 #ifdef DEBUG
             dbg_printf("striplen: %d\n", stripLen);
 #endif
 
             if ((stripLen >> SHIFT) <= RENDER_H) {
                 draw_strip(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
-                           a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoord << 1,
-                           dist >> SHIFT);
+                           a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoords[a] << 1,
+                           dists[a] >> SHIFT);
             } else {
                 draw_strip_clipped(&(gfx_vbuffer[0][0]), &(brick_wall_arr_data[1 + 4 + 16 + 8 * 8 + 16 * 16 + 32 * 32]),
                                    a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT),
-                                   texCoord << 1);
+                                   texCoords[a] << 1);
             }
         }
-        // test_thing.render(rotate(-counter), playerPos);
+        end_d_t = clock();
+        test_thing.render(rotate(-counter), playerPos);
         gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
-        end_t = clock();
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+        total_r_t = (double)(end_r_t - start_r_t) / CLOCKS_PER_SEC;
+        total_d_t = (double)(end_d_t - start_d_t) / CLOCKS_PER_SEC;
         char str[100];
         // int val[] = {5, 6};
         // asm_test_func(&(val[0]));
         // sprintf(str, "asm_test: %d, %d", val[0], val[1]);
-        sprintf(str, "time: %fs, %d FPS", total_t, int(1.0 / total_t));
+        sprintf(str, "cpp:%fs,rc:%fs,d:%fs", total_t, total_r_t, total_d_t);
         gfx_SetTextFGColor(225);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);

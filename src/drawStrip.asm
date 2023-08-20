@@ -28,8 +28,8 @@ _draw_strip:           ; this is most likely at D1E3BE
 ;  None
     di                  ;  disables interrupts, these use alternate register set, which this needs
 
-    ld  iy, 0           ;  set iy to stack pointer
-    add iy, sp
+    ld  iy,0            ;  set iy to stack pointer
+    add iy,sp
 
     ; must save state of C++ stuff
     push ix             ;  ix must be preserved
@@ -47,10 +47,10 @@ _draw_strip:           ; this is most likely at D1E3BE
     add ix,bc
 
 ; figure out correct source size:
-    ld  a,0             ;  check if target size is > 256
+    ld  a,0             ;  check if target size is > 256                         ; unnecessary
     ld  de,(iy+15)      ;  target height
-    cp  a,d
-    jp  nz,.end         ;  quit if greater than 256  aka something in bit d
+    cp  a,d                                                                      ; unnecessary
+    jp  nz,.end         ;  quit if greater than 256  aka something in bit d      ; unnecessary
     add a,64
     bit 7,e             ;  test bit 7, value is 128
     jp  nz,.set_src_size
@@ -117,9 +117,9 @@ _draw_strip:           ; this is most likely at D1E3BE
 
     exx                 ;  swap to alternate register set
     ld  bc,(iy+15)      ;  dx = target height
-    ld  e,a             ;  dy = source size
-    ld  d,2             ;  de is 2dy
-    mlt de
+    ld  de,0
+    add a,a
+    ld  e,a             ;  2dy = 2*source size
     ; hl is D,  D= 2dy-dx
     ld  hl,0
     add hl,de           ;  D += 2dy
@@ -182,10 +182,7 @@ _draw_strip:           ; this is most likely at D1E3BE
     dec c               ;  c is counter
     jp  nz,.loop        ;  jump back to loop while more than 0
 
-    pop ix              ;  ix must be preserved before exit
-
-    ei
-    ret                 ;  if c is 0, return
+    ; control falls through
 
 .end:
     pop ix              ;  ix must be preserved before exit

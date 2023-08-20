@@ -19,7 +19,7 @@ class Thing {
     }
     virtual void render(const imat2 &inv_cam_rot, const ivec2 &cam_pos) {
         ivec2 viewSpacePos = inv_cam_rot * (pos - cam_pos);
-        if (viewSpacePos.y <= 16) {
+        if (viewSpacePos.y <= 69) { //  less than 240 <- height of screen
             return;
         }
         int texHeight = (64 << SHIFT) / viewSpacePos.y;
@@ -28,11 +28,17 @@ class Thing {
                            (texHeight >> 1);
         // 90 is half of RENDER_H, 50 is half of standard unit-pixel conversion(100)
         int screenSpaceY = (90 + ((50 << SHIFT) / viewSpacePos.y)) - (texHeight);
-        if (screenSpaceX < 0 || screenSpaceX >= (SCR_W - (texHeight >> 1)) || screenSpaceY > 180 - texHeight) {
+        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W) {
             return;
         }
         gfx_SetTransparentColor(2);
-        gfx_RotatedScaledTransparentSprite_NoClip(tex, screenSpaceX, screenSpaceY, 0, texHeight);
+        gfx_sprite_t *tex_conv = gfx_MallocSprite(texHeight, texHeight);
+        gfx_ScaleSprite(tex, tex_conv);
+        if (screenSpaceY + texHeight > 180) {
+            tex_conv->height = 180 - screenSpaceY;
+        }
+        gfx_TransparentSprite(tex_conv, screenSpaceX, screenSpaceY);
+        delete tex_conv;
         // gfx_RotatedScaledTransparentSprite_NoClip(tex, 0, 0, 0, texHeight);
     }
     ivec2 pos;

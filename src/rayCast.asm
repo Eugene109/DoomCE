@@ -51,10 +51,10 @@ _x_walls_transposed_q3:
 
 
 
-_y_walls_q4:
-    db  "b  b    bb  bb bbbb  bb bbbb b  bbbbb b  bb bb b  b  bb b  b  bb b  b  b"
 _x_walls_q4:
     db  "bbbbbbbb    bbb           b b                 bb                bbbbbbbb"
+_y_walls_q4:
+    db  "b  b    bb  bb bbbb  bb bbbb b  bbbbb b  bb bb b  b  bb b  b  bb b  b  b"
 _y_walls_transposed_q4:
     db  "bbbbbbbb           bbbbbbbb      bb        bbbbb bbbb    bbb    bbbbbbbb"
 _x_walls_transposed_q4:
