@@ -7,9 +7,9 @@ extern "C" {
 
 #define thing_tex_width 64
 #define thing_tex_height 64
-#define thing_tex_size 850
+#define thing_tex_size 844
 #define thing_tex ((gfx_rletsprite_t*)thing_tex_data)
-extern unsigned char thing_tex_data[850];
+extern unsigned char thing_tex_data[844];
 
 #ifdef __cplusplus
 }

@@ -50,6 +50,7 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
                             (void *)&y_walls_transposed_q2);
             }
             *distX = (*distX) * -1;
+            *texCoord = (*texCoord) * -1;
         }
     } else {
         if (rayX > 0) {
@@ -60,6 +61,7 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
                 raycast_asm((8 * 256) - playerY, playerX, -1 * (rayY), rayX, distY, distX, texCoord, texType,
                             (void *)&y_walls_transposed_q4);
             }
+            *texCoord = (*texCoord) * -1;
         } else {
             if (rayX < rayY) { // -x>-y
                 raycast_asm((8 * 256) - playerX, (8 * 256) - playerY, -1 * (rayX), -1 * (rayY), distX, distY, texCoord,

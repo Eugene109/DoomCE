@@ -7,8 +7,9 @@ extern "C" {
 
 #include "global_palette.h"
 #define sprites_palette_offset 0
-#include "brick_wall.h"
 #include "ceiling_floor_tex.h"
+#include "brick_wall.h"
+#include "portrait.h"
 #define rlet_sprites_palette_offset 0
 #include "pistol_1.h"
 #include "pistol_2.h"

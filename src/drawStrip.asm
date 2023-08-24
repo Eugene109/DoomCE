@@ -3,12 +3,40 @@
     ;https://youtube.com/shorts/f0--ib8HpOM?feature=share
 
     section .rodata
-    ; public lcdWidth
-    lcdWidth := 320
-    ; public lcdHeight
+    public lcdWidth
+lcdWidth:=320
+    public lcdHeight
     lcdHeight := 240
 
     section .text
+    public _64_divis_lut
+_64_divis_lut:
+    dl  $004000, $002000, $001555, $001000, $000CCC, $000AAA, $000924, $000800, $00071C, $000666
+    dl  $0005D1, $000555, $0004EC, $000492, $000444, $000400, $0003C3, $00038E, $00035E, $000333
+    dl  $00030C, $0002E8, $0002C8, $0002AA, $00028F, $000276, $00025E, $000249, $000234, $000222
+    dl  $000210, $000200, $0001F0, $0001E1, $0001D4, $0001C7, $0001BA, $0001AF, $0001A4, $000199
+    dl  $00018F, $000186, $00017D, $000174, $00016C, $000164, $00015C, $000155, $00014E, $000147
+    dl  $000141, $00013B, $000135, $00012F, $000129, $000124, $00011F, $00011A, $000115, $000111
+    dl  $00010C, $000108, $000104, $000100, $0000FC, $0000F8, $0000F4, $0000F0, $0000ED, $0000EA
+    dl  $0000E6, $0000E3, $0000E0, $0000DD, $0000DA, $0000D7, $0000D4, $0000D2, $0000CF, $0000CC
+    dl  $0000CA, $0000C7, $0000C5, $0000C3, $0000C0, $0000BE, $0000BC, $0000BA, $0000B8, $0000B6
+    dl  $0000B4, $0000B2, $0000B0, $0000AE, $0000AC, $0000AA, $0000A8, $0000A7, $0000A5, $0000A3
+    dl  $0000A2, $0000A0, $00009F, $00009D, $00009C, $00009A, $000099, $000097, $000096, $000094
+    dl  $000093, $000092, $000090, $00008F, $00008E, $00008D, $00008C, $00008A, $000089, $000088
+    dl  $000087, $000086, $000085, $000084, $000083, $000082, $000081, $000080, $00007F, $00007E
+    dl  $00007D, $00007C, $00007B, $00007A, $000079, $000078, $000077, $000076, $000075, $000075
+    dl  $000074, $000073, $000072, $000071, $000070, $000070, $00006F, $00006E, $00006D, $00006D
+    dl  $00006C, $00006B, $00006B, $00006A, $000069, $000069, $000068, $000067, $000067, $000066
+    dl  $000065, $000065, $000064, $000063, $000063, $000062, $000062, $000061, $000060, $000060
+    dl  $00005F, $00005F, $00005E, $00005E, $00005D, $00005D, $00005C, $00005C, $00005B, $00005B
+    dl  $00005A, $00005A, $000059, $000059, $000058, $000058, $000057, $000057, $000056, $000056
+    dl  $000055, $000055, $000054, $000054, $000054, $000053, $000053, $000052, $000052, $000051
+    dl  $000051, $000051, $000050, $000050, $00004F, $00004F, $00004F, $00004E, $00004E, $00004E
+    dl  $00004D, $00004D, $00004C, $00004C, $00004C, $00004B, $00004B, $00004B, $00004A, $00004A
+    dl  $00004A, $000049, $000049, $000049, $000048, $000048, $000048, $000047, $000047, $000047
+    dl  $000046, $000046, $000046, $000046, $000045, $000045, $000045, $000044, $000044, $000044
+    dl  $000043, $000043, $000043, $000043, $000042, $000042, $000042, $000042, $000041, $000041
+    dl  $000041, $000041, $000040, $000040, $000040
 
 ; scales a vertical texture strip using the bresenham line algorithm
     public _draw_strip
@@ -37,8 +65,8 @@ _draw_strip:           ; this is most likely at D1E3BE
     ld  ix,(iy+3)       ;  destination
     ld  hl,(iy+6)       ;  source
 
-    ld  bc,(iy+9)       ;  load x coord
-    add ix,bc           ;  add x coord to dest pointer
+    ld  de,(iy+9)       ;  load x coord
+    add ix,de           ;  add x coord to dest pointer
 
     ld  b,(iy+12)       ;  load y pos
     ld  c, 160          ;  load 1/2 screen width
@@ -46,121 +74,49 @@ _draw_strip:           ; this is most likely at D1E3BE
     add ix,bc           ;  add twice to add offset to dest
     add ix,bc
 
-; figure out correct source size:
-    ld  a,0             ;  check if target size is > 256                         ; unnecessary
-    ld  de,(iy+15)      ;  target height
-    cp  a,d                                                                      ; unnecessary
-    jp  nz,.end         ;  quit if greater than 256  aka something in bit d      ; unnecessary
-    add a,64
-    bit 7,e             ;  test bit 7, value is 128
-    jp  nz,.set_src_size
-    bit 6,e             ;  test bit 6, value is 64
-    jp  nz,.set_src_size
-
-    sub a,32
-    ld  bc,-1024        ;  32*32
-    add hl,bc
-    bit 5,e             ;  test bit 5, value is 32
-    jp  nz,.set_src_size
-
-    sub a,16
-    ld  bc,-256         ;  16*16
-    add hl,bc
-    bit 4,e             ;  test bit 4, value is 16
-    jp  nz,.set_src_size
-
-    sub a,8
-    ld  bc,-64          ;  8*8
-    add hl,bc
-    bit 3,e             ;  test bit 3, value is 8
-    jp  nz,.set_src_size
-
-    sub a,4
-    ld  bc,-16          ;  4*4
-    add hl,bc
-    bit 2,e             ;  test bit 2, value is 4
-    jp  nz,.set_src_size
-
-    sub a,2
-    ld  bc,-4           ;  2*2
-    add hl,bc
-    bit 1,e             ;  test bit 1, value is 2
-    jp  nz,.set_src_size
-
-    sub a,1
-    dec hl              ;  1*1
-    bit 0,e             ;  test bit 0, value is 1
-    jp  nz,.set_src_size
-    jp  .end
-
-.set_src_size:          ;  a is source size
-
 ; figure out texture coordinate offset
     ld  e,(iy+18)       ;  texCoord, 0-255
-    ld  d,a             ;  source size
+    ld  d,64            ;  source size
     mlt de              ;  size scaled by texCoord in d, fixed point arithemetic (shifted 8 bits)
-    ld  e,a
+    ld  e,64
     mlt de              ;  de is now offset for source texCoord
     add hl,de           ;  add offset
 
-    ld  b,(iy+21)       ;  darkening factor
-    ld  c,32            ;  x32 for the correct offset
-    mlt bc
-    ld  b,c             ;  shouldn't overflow
+    ld  de,(iy+15)       ;  target height
+    ld  c,e
+    ld  iy,_64_divis_lut
+    add iy,de
+    add iy,de
+    add iy,de
+    ld  de,(iy-3)
+    ld  b,e
+    ld  e,d
+    ld  d,0
+    
+    exx
+    ld  de,320
+    exx
 
-    ld  de,320          ;  screen width
-    ld  c,(iy+15)       ;  target height
+    ex  af, af'
+    ld  a,0
+    ex  af, af'
 
-
-;---bresenham algorithm init---
-    ; x is dest, y is source
-
-    exx                 ;  swap to alternate register set
-    ld  bc,(iy+15)      ;  dx = target height
-    ld  de,0
-    add a,a
-    ld  e,a             ;  2dy = 2*source size
-    ; hl is D,  D= 2dy-dx
-    ld  hl,0
-    add hl,de           ;  D += 2dy
-    and a,a             ;  reset carry
-    sbc hl,bc           ;  D -= dx
-
-    ld  b,2
-    mlt bc              ;  2*dx
-
-    exx                 ;  swap back for loop
-;----end of bresenham init-----
 .loop:
     ld  a,(hl)
-    sub a,b
+    ; sub a,c
     ld  (ix),a
     ld  (ix+1),a
     ld  (ix+2),a
     ld  (ix+3),a
 
-    add ix,de            ;  move down layer, aka jump by width
+    exx
+    add ix,de
+    exx
 
-; now for bresenham part
-; C code looks like this:
-;plot(x, y);  <-- already done
-;D = D + 2 * dy;
-;if (D > 0) {
-;    y = y + 1;
-;    D = D - 2 * dx;
-;}
-
-    exx                 ;  bresenham data is stored on alt registers
-
-;  D = D + 2*dy
-    and a,a             ;  reset carry
-    adc hl,de           ;  hl is D, de is dy
-
-    ; if( D > 0 ) {
-    jp  p,.positive     ;  jump to positive control
-
-.negative:
-    exx                 ;  swap back
+    ex  af,af'
+    add a,b
+    adc hl,de
+    ex  af,af'
 
     dec c               ;  c is counter
     jp  nz,.loop        ;  jump back to loop while more than 0
@@ -170,24 +126,11 @@ _draw_strip:           ; this is most likely at D1E3BE
     ei
     ret                 ;  if c is 0, return
 
-; y is automatically incremented; no need for change
-.positive:              ;  D = D - 2*dx;
-
-    and a,a
-    sbc hl,bc
-
-    exx                 ;  swap back
-    inc hl              ;  increment source
-
-    dec c               ;  c is counter
-    jp  nz,.loop        ;  jump back to loop while more than 0
-
-    ; control falls through
-
 .end:
     pop ix              ;  ix must be preserved before exit
 
     ei
     ret                 ;  if c is 0, return
 
+    extern __sdvrmu
     assume adl=1

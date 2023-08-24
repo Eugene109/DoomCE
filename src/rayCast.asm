@@ -19,46 +19,46 @@
     public _x_walls_transposed_q4
     public _y_walls_transposed_q4
 _x_walls:
-    db  "bbbbbbbb                      bb          b b               bbb bbbbbbbb"
+    db  "AAACAAAA                      AA          A A               AAA AAAAAAAA"
 _y_walls:
-    db  "b b  b  bb b  b  bb b  b  bb b  bb bb b  bbbbb  bb bbbb  bb bbbb  b    b"
+    db  "B B  B  BB D  D  BB B  B  BB D  DB BB B  BBBBB  BB BBBB  BB BBBB  B    B"
 _y_walls_transposed:
-    db  "bbbbbbbb        bbbbb        bbb     bb bbbbb      bbbb     bbb bbbbbbbb"
+    db  "BBBBBBBB        BDBDB        BBB     BB BDBDB      BBBB     BBB BBBBBBBB"
 _x_walls_transposed:
-    db  "b       bb       bb    b  bb       bb    b bbb      bbb  b   bbb  b    b"
+    db  "A       AA       AA    A  AC       AA    A AAA      AAA  A   AAA  A    A"
 
 
 
 _x_walls_q2:
-    db  "bbbbbbbb                bb                 b b           bbb    bbbbbbbb"
+    db  "AAAACAAA                AA                 A A           AAA    AAAAAAAA"
 _y_walls_q2:
-    db  "b  b  b bb  b  b bb  b  b bb bb  b bbbbb  b bbbb bb  bbbb bb  bb    b  b"
+    db  "B  B  B BB  D  D BB  B  B BB BD  D BBBBB  B BBBB BB  BBBB BB  BB    B  B"
 _y_walls_transposed_q2:
-    db  "bbbbbbbb    bbb    bbbb bbbbb        bb      bbbbbbbb           bbbbbbbb"
+    db  "BBBBBBBB    BBB    BBBB BDBDB        BB      BBBBDBDB           BBBBBBBB"
 _x_walls_transposed_q2:
-    db  "b  b    bb  b   bbb      bbb    b bbb       bb    b  bb       bb       b"
+    db  "A  A    AA  A   AAA      AAA    A AAC       AA    A  AA       AA       A"
 
 
 
 _x_walls_q3:
-    db  "bbbbbbbb bbb               b b          bb                      bbbbbbbb"
+    db  "AAAAAAAA AAA               A A          AA                      AAAACAAA"
 _y_walls_q3:
-    db  "b    b  bbbb bb  bbbb bb  bbbbb  b bb bb  b bb  b  b bb  b  b bb  b  b b"
+    db  "B    B  BBBB BB  BBBB BB  BBBBB  B BB BD  D BB  B  B BB  D  D BB  B  B B"
 _y_walls_transposed_q3:
-    db  "bbbbbbbb bbb     bbbb      bbbbb bb     bbb        bbbbb        bbbbbbbb"
+    db  "BBBBBBBB BBB     BBBB      BDBDB BB     BBB        BDBDB        BBBBBBBB"
 _x_walls_transposed_q3:
-    db  "b    b  bbb   b  bbb      bbb b    bb       bb  b    bb       bb       b"
+    db  "A    A  AAA   A  AAA      AAA A    AA       CA  A    AA       AA       A"
 
 
 
 _x_walls_q4:
-    db  "bbbbbbbb    bbb           b b                 bb                bbbbbbbb"
+    db  "AAAAAAAA    AAA           A A                 AA                AAACAAAA"
 _y_walls_q4:
-    db  "b  b    bb  bb bbbb  bb bbbb b  bbbbb b  bb bb b  b  bb b  b  bb b  b  b"
+    db  "B  B    BB  BB BBBB  BB BBBB B  BBBBB D  DB BB B  B  BB D  D  BB B  B  B"
 _y_walls_transposed_q4:
-    db  "bbbbbbbb           bbbbbbbb      bb        bbbbb bbbb    bbb    bbbbbbbb"
+    db  "BBBBBBBB           BDBDBBBB      BB        BDBDB BBBB    BBB    BBBBBBBB"
 _x_walls_transposed_q4:
-    db  "b       bb       bb  b    bb       bbb b    bbb      bbb   b  bb    b  b"
+    db  "A       AA       AA  A    AA       CAA A    AAA      AAA   A  AA    A  A"
 
     section .text
 
@@ -104,31 +104,29 @@ _raycast_asm:
     ld  hl,0
 
     ; hl += dy*x
-    ld  bc,(iy+3)       ;  fractional part of x, must take 2's complement
-    ld  a,c
+    ld  a,(iy+3)        ;  fractional part of x, must take 2's complement
     cpl                 ;  two's complement is 1's complement...
     add a,1             ;  plus an increment
-    ld  bc,(iy+12)      ;  dy
+    ld  de,(iy+12)      ;  dy
     jp  c,.x_is_one     ;  carry/overflow, aka 256
-    bit 0,b
+    bit 0,d
     jp  nz,.dy_is_one
-    ld  b,a
-    mlt bc              ;  dy*x << SHIFT
-    ld  c,b
-    ld  b,0
+    ld  d,a
+    mlt de              ;  dy*x << SHIFT
+    ld  e,d
+    ld  d,0
 .x_is_one:
-    add hl,bc           ;  hl += dy*x
+    add hl,de           ;  hl += dy*x
     ; hl += dx*y
-    ld  bc,(iy+6)       ;  fractional part of y, keep same
-    ld  a,c
-    ld  bc,(iy+9)       ;  dx
-    bit 0,b
+    ld  a,(iy+6)       ;  fractional part of y, keep same
+    ld  de,(iy+9)       ;  dx
+    bit 0,d
     jp  nz,.dx_is_one
-    ld  b,a
-    mlt bc              ;  dx*y
-    ld  c,b
-    ld  b,0
-    add hl,bc           ;  hl += dx*y
+    ld  d,a
+    mlt de              ;  dx*y
+    ld  e,d
+    ld  d,0
+    add hl,de           ;  hl += dx*y
 
 .init_D_done:           ;  hl is D
     ld  bc,(iy+9)       ;  bc is dx
@@ -136,7 +134,7 @@ _raycast_asm:
 
     exx
     ld  bc,(iy+3)       ;  x pos
-    ld  de,(iy+6)       ;  y_pos
+    ld  de,(iy+6)       ;  y pos
     ld  ix,(iy+27)
     lea iy,ix+72
     ld  c,b             ;  shifting right by 8 bits
@@ -244,14 +242,22 @@ _raycast_asm:
     call __idivu        ;  hl = (total change in y << SHIFT)/(dy),   <- scale factor
     ld  bc,(iy+9)       ;  dx
     call __imulu        ;  hl = total change in y << SHIFT
-    ld  bc,100h         ;  256
-    call __idivu        ;  essentially >> SHIFT
-    ; hl now contains total change in x
+    ;  >> SHIFT
+    push hl
+    ld  hl, 2
+    add hl, sp
+    ld  a,(hl)
+    pop hl
+    ld  de,0
+    ld  e,h
+    ld  d,a
+
+    ; de now contains total change in x
     ld  ix,(iy+15)
-    ld  (ix),hl         ;  total change in x
+    ld  (ix),de         ;  total change in x
     ld  bc,(iy+3)       ;  x position
     ld  a,c
-    add a,l
+    add a,e
     ld  ix,(iy+21)
     ld  (ix),a
 
@@ -290,14 +296,22 @@ _raycast_asm:
     call __idivu        ;  hl = (total change in x << SHIFT)/(dx),   <- scale factor
     ld  bc,(iy+12)      ;  dy
     call __imulu        ;  hl = total change in y << SHIFT
-    ld  bc,100h         ;  256
-    call __idivu        ;  essentially >> SHIFT
-    ; hl now contains total change in y
+    ;  >> SHIFT
+    push hl
+    ld  hl, 2
+    add hl, sp
+    ld  a,(hl)
+    pop hl
+    ld  de,0
+    ld  e,h
+    ld  d,a
+
+    ; de now contains total change in y
     ld  ix,(iy+18)
-    ld  (ix),hl         ;  total change in y
+    ld  (ix),de         ;  total change in y
     ld  bc,(iy+6)       ;  y position
     ld  a,c
-    add a,l
+    add a,e
     cpl
     inc a
     ld  ix,(iy+21)
@@ -308,15 +322,15 @@ _raycast_asm:
     ret
 
 .dx_is_one:
-    ld  bc,0
-    ld  c,a
-    add hl,bc           ;  hl += y
+    ld  de,0
+    ld  e,a
+    add hl,de           ;  hl += y
     jp  .init_D_done
 
 .dy_is_one:             ;  means that dy is 0, can skip
-    ld  bc,0
-    ld  c,a             ;  a stores x
-    add hl,bc           ;  hl += x
+    ld  de,0
+    ld  e,a             ;  a stores x
+    add hl,de           ;  hl += x
     jp  .init_D_done
 
     extern __idivs

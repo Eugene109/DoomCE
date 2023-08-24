@@ -26,9 +26,9 @@ class Thing {
 
         int screenSpaceX = ((((((viewSpacePos.x << SHIFT) / viewSpacePos.y) + (1 << SHIFT)) >> 1) * SCR_W) >> SHIFT) -
                            (texHeight >> 1);
-        // 90 is half of RENDER_H, 50 is half of standard unit-pixel conversion(100)
-        int screenSpaceY = (90 + ((50 << SHIFT) / viewSpacePos.y)) - (texHeight);
-        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W) {
+        // 90 is half of RENDER_H, 80 is half of standard unit-pixel conversion(160)
+        int screenSpaceY = (90 + ((80 << SHIFT) / viewSpacePos.y)) - (texHeight);
+        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W || screenSpaceY < 0) {
             return;
         }
         gfx_SetTransparentColor(2);
