@@ -1,7 +1,7 @@
 
 padding = 8
 string = ""
-for a in range(1,256):
+for a in range(1,641):
     string += (f"{(64*256//a):#0{padding}x}")[2:]
 
 out = ""
