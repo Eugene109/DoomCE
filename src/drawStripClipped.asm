@@ -42,7 +42,19 @@ _draw_strip_clipped:           ; this is most likely at D1E3BE
     ld  hl,0
     and a,a             ;  reset carry
     sbc hl,de           ;  abs of y coord
-    ld  b,l             ;  should be less than 256:  (640-180)/2 = 320-90 = 230
+
+    ld  de,(iy+15)      ;  target height
+    ld  iy,_64_divis_lut
+    add iy,de
+    add iy,de
+    add iy,de
+    ld  bc,(iy-3)
+    call _imulu         ;  64/target_height  *  abs(y_coord)    =  abs(y_coord)/target_height *  64
+    ex  af, af'
+    ld  a,l             ;  fractional part of hl
+    ex  af, af'
+    ld  c,h             ;  integer part of hl
+    ld  b,0
 
     ld  hl,(iy+6)       ;  source
 ; figure out texture coordinate offset
@@ -53,20 +65,6 @@ _draw_strip_clipped:           ; this is most likely at D1E3BE
     mlt de              ;  de is now offset for source texCoord
     add hl,de           ;  add offset
 
-    ld  de,(iy+15)      ;  target height
-    ld  c,e
-    ld  iy,_64_divis_lut
-    add iy,de
-    add iy,de
-    add iy,de
-    ld  de,(iy-3)
-    ld  c,e
-    mlt bc              ;  64/target_height  *  abs(y_coord)    =  abs(y_coord)/target_height *  64
-    ex  af, af'
-    ld  a,c             ;  fractional part of bc
-    ex  af, af'
-    ld  c,b             ;  integer part of bc
-    ld  b,0
     add hl,bc
     ld  b,e             ;  64/target_height
     ld  de,0
@@ -108,6 +106,7 @@ _draw_strip_clipped:           ; this is most likely at D1E3BE
     ret                 ;  if c is 0, return
 
     extern __imuls
+    extern __imulu
     extern __irems
     extern __idivs
     extern _64_divis_lut

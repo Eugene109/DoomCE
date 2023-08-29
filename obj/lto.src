@@ -1,5158 +1,0 @@
-	section	.text,"ax",@progbits
-	assume	adl = 1
-	section	.text,"ax",@progbits
-	public	__Zmld4vec2
-__Zmld4vec2:
-	ld	hl, -4
-	call	__frameset
-	ld	de, (ix + 6)
-	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	pea	ix + 15
-	push	de
-	call	__ZN4vec2mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4vec2mlERKd
-__ZN4vec2mlERKd:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
-	call	__fmul
-	ld	(ix - 3), bc
-	ld	d, a
-	ld	iy, (ix + 9)
-	ld	iy, (iy + 4)
-	push	hl
-	pop	bc
-	ld	a, e
-	lea	hl, iy
-	ld	iy, (ix + 9)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	(iy + 3), d
-	ld	(iy + 4), bc
-	ld	(iy + 7), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Zmli5ivec2
-__Zmli5ivec2:
-	call	__frameset0
-	ld	iy, (ix + 6)
-	ld	bc, (ix + 9)
-	ld	hl, (ix + 12)
-	call	__imulu
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	hl, (ix + 15)
-	ld	bc, (ix + 9)
-	call	__imulu
-	ld	c, a
-	call	__ishrs
-	ld	(iy), de
-	ld	(iy + 3), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__ZmldRK4vec3
-__ZmldRK4vec3:
-	ld	hl, -4
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	push	de
-	push	bc
-	call	__ZNK4vec3mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3mlERKd
-__ZNK4vec3mlERKd:
-	ld	hl, -11
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	ld	hl, (iy)
-	ld	d, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
-	ld	(ix - 11), hl
-	ld	e, d
-	call	__fmul
-	ld	(ix - 3), bc
-	ld	(ix - 4), a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	(ix - 7), bc
-	push	hl
-	pop	bc
-	ld	a, d
-	ld	hl, (ix - 7)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	hl, (iy + 8)
-	ld	bc, (ix - 11)
-	ld	a, d
-	ld	e, (iy + 11)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	l, (ix - 4)
-	ld	(iy + 3), l
-	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
-	ld	l, (ix - 8)
-	ld	(iy + 7), l
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__ZmidRK4vec3
-__ZmidRK4vec3:
-	ld	hl, -12
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 12), hl
-	ld	(ix - 9), a
-	ld	(ix - 8), hl
-	ld	(ix - 5), a
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	push	de
-	pea	ix - 12
-	push	bc
-	call	__ZN4vec3miERKS_
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN4vec3miERKS_
-__ZN4vec3miERKS_:
-	ld	hl, -7
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	bc, (iy)
-	ld	hl, (hl)
-	ld	a, (iy + 3)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 3)
-	call	__fsub
-	ld	(ix - 3), bc
-	ld	(ix - 4), a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 9)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
-	call	__fsub
-	ld	(ix - 7), bc
-	ld	d, a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 8)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 11)
-	call	__fsub
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	l, (ix - 4)
-	ld	(iy + 3), l
-	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
-	ld	(iy + 7), d
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__ZpldRK4vec3
-__ZpldRK4vec3:
-	ld	hl, -12
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	de, (ix + 9)
-	ld	a, (ix + 12)
-	ld	hl, (ix + 15)
-	ld	(ix - 12), de
-	ld	(ix - 9), a
-	ld	(ix - 8), de
-	ld	(ix - 5), a
-	ld	(ix - 4), de
-	ld	(ix - 1), a
-	pea	ix - 12
-	push	hl
-	push	bc
-	call	__ZNK4vec3plERKS_
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3plERKS_
-__ZNK4vec3plERKS_:
-	ld	hl, -7
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	bc, (iy)
-	ld	hl, (hl)
-	ld	a, (iy + 3)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 3)
-	call	__fadd
-	ld	(ix - 3), bc
-	ld	(ix - 4), a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 9)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
-	call	__fadd
-	ld	(ix - 7), bc
-	ld	d, a
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 12)
-	ld	hl, (iy + 8)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	ld	iy, (ix + 12)
-	ld	e, (iy + 11)
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	l, (ix - 4)
-	ld	(iy + 3), l
-	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
-	ld	(iy + 7), d
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z3powRK4vec3d
-__Z3powRK4vec3d:
-	ld	hl, -8
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	bc, (ix + 12)
-	ld	hl, (iy)
-	ld	a, (iy + 3)
-	ld	e, (ix + 15)
-	push	de
-	push	bc
-	ld	e, a
-	push	de
-	push	hl
-	call	_pow
-	ld	(ix - 3), hl
-	ld	(ix - 4), e
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 7)
-	ld	e, (ix + 15)
-	push	de
-	ld	de, (ix + 12)
-	push	de
-	ld	e, a
-	push	de
-	push	hl
-	call	_pow
-	ld	(ix - 7), hl
-	ld	(ix - 8), e
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 8)
-	ld	a, (iy + 11)
-	ld	e, (ix + 15)
-	push	de
-	ld	de, (ix + 12)
-	push	de
-	ld	e, a
-	push	de
-	push	hl
-	call	_pow
-	pop	bc
-	pop	bc
-	pop	bc
-	pop	bc
-	ld	iy, (ix + 6)
-	ld	bc, (ix - 3)
-	ld	(iy), bc
-	ld	a, (ix - 4)
-	ld	(iy + 3), a
-	ld	bc, (ix - 7)
-	ld	(iy + 4), bc
-	ld	a, (ix - 8)
-	ld	(iy + 7), a
-	ld	(iy + 8), hl
-	ld	(iy + 11), e
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z5crossRK4vec3S1_
-__Z5crossRK4vec3S1_:
-	ld	hl, -28
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	bc, (ix + 12)
-	ld	hl, (iy + 4)
-	ld	(ix - 3), hl
-	ld	a, (iy + 7)
-	lea	de, iy
-	ld	(ix - 4), a
-	push	bc
-	pop	iy
-	ld	hl, (iy + 8)
-	ld	(ix - 7), hl
-	ld	a, (iy + 11)
-	lea	hl, iy
-	ld	(ix - 8), a
-	push	de
-	pop	iy
-	ld	bc, (iy + 8)
-	push	hl
-	pop	iy
-	ld	hl, (iy + 4)
-	ld	(ix - 14), hl
-	ld	d, (iy + 7)
-	ld	(ix - 15), d
-	ld	iy, (ix + 9)
-	ld	a, (iy + 11)
-	call	__fneg
-	push	bc
-	pop	iy
-	ld	(ix - 27), iy
-	ld	e, a
-	ld	(ix - 28), e
-	push	hl
-	pop	bc
-	ld	a, d
-	lea	hl, iy
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 4)
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
-	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
-	ld	(ix - 18), bc
-	ld	(ix - 19), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 11), hl
-	ld	d, (iy + 3)
-	ld	(ix - 20), d
-	ld	hl, (ix + 12)
-	ld	bc, (hl)
-	ld	(ix - 23), bc
-	ld	iy, (ix + 12)
-	ld	a, (iy + 3)
-	ld	(ix - 24), a
-	ld	hl, (ix - 27)
-	ld	e, (ix - 28)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 27), a
-	ld	bc, (ix - 11)
-	ld	a, d
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 27)
-	call	__fadd
-	call	__fneg
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	bc, (ix - 3)
-	ld	a, (ix - 4)
-	call	__fneg
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	bc, (ix - 23)
-	ld	a, (ix - 24)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 11)
-	ld	a, (ix - 20)
-	ld	hl, (ix - 14)
-	ld	e, (ix - 15)
-	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 18)
-	ld	(iy), hl
-	ld	l, (ix - 19)
-	ld	(iy + 3), l
-	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
-	ld	l, (ix - 8)
-	ld	(iy + 7), l
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__ZmldRK4vec4
-__ZmldRK4vec4:
-	ld	hl, -4
-	call	__frameset
-	ld	bc, (ix + 6)
-	ld	hl, (ix + 9)
-	ld	a, (ix + 12)
-	ld	de, (ix + 15)
-	ld	(ix - 4), hl
-	ld	(ix - 1), a
-	pea	ix - 4
-	push	de
-	push	bc
-	call	__ZNK4vec4mlERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec4mlERKd
-__ZNK4vec4mlERKd:
-	ld	hl, -15
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	ld	hl, (iy)
-	ld	d, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
-	ld	(ix - 3), hl
-	ld	e, d
-	call	__fmul
-	ld	(ix - 6), bc
-	ld	(ix - 7), a
-	ld	bc, (ix + 9)
-	push	bc
-	pop	iy
-	ld	iy, (iy + 4)
-	push	hl
-	pop	bc
-	ld	a, d
-	lea	hl, iy
-	ld	iy, (ix + 9)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	(ix - 10), bc
-	ld	(ix - 11), a
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 8)
-	ld	bc, (ix - 3)
-	ld	a, d
-	ld	e, (iy + 11)
-	call	__fmul
-	ld	(ix - 14), bc
-	ld	(ix - 15), a
-	ld	hl, (iy + 12)
-	ld	bc, (ix - 3)
-	ld	a, d
-	ld	e, (iy + 15)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 6)
-	ld	(iy), hl
-	ld	l, (ix - 7)
-	ld	(iy + 3), l
-	ld	hl, (ix - 10)
-	ld	(iy + 4), hl
-	ld	l, (ix - 11)
-	ld	(iy + 7), l
-	ld	hl, (ix - 14)
-	ld	(iy + 8), hl
-	ld	l, (ix - 15)
-	ld	(iy + 11), l
-	ld	(iy + 12), bc
-	ld	(iy + 15), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z3dotRK4vec2S1_
-__Z3dotRK4vec2S1_:
-	ld	hl, -8
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	bc, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 7), hl
-	ld	a, (iy + 3)
-	lea	de, iy
-	ld	(ix - 8), a
-	push	bc
-	pop	hl
-	ld	hl, (hl)
-	push	bc
-	pop	iy
-	ld	(ix - 3), hl
-	ld	a, (iy + 3)
-	ld	(ix - 4), a
-	push	de
-	pop	iy
-	ld	bc, (iy + 4)
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 6)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	bc, (ix - 7)
-	ld	a, (ix - 8)
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
-	call	__fmul
-	lea	hl, iy
-	ld	e, d
-	call	__fadd
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z3dotRK5ivec2S1_
-__Z3dotRK5ivec2S1_:
-	call	__frameset0
-	ld	hl, (ix + 6)
-	ld	iy, (ix + 9)
-	ld	bc, (hl)
-	ld	hl, (iy)
-	call	__imulu
-	push	hl
-	pop	de
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 3)
-	call	__imulu
-	add	hl, de
-	ld	c, 8
-	call	__ishrs
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z3dotRK4vec3S1_
-__Z3dotRK4vec3S1_:
-	ld	hl, -11
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	de, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 7), hl
-	ld	a, (iy + 3)
-	ld	(ix - 8), a
-	push	de
-	pop	hl
-	ld	hl, (hl)
-	ld	(ix - 3), hl
-	push	de
-	pop	iy
-	ld	a, (iy + 3)
-	ex	de, hl
-	ld	(ix - 4), a
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 4)
-	push	hl
-	pop	iy
-	ld	hl, (iy + 4)
-	lea	de, iy
-	ld	iy, (ix + 6)
-	ld	a, (iy + 7)
-	push	de
-	pop	iy
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	(ix - 11), bc
-	ld	d, a
-	ld	bc, (ix - 7)
-	ld	a, (ix - 8)
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
-	call	__fmul
-	ld	hl, (ix - 11)
-	ld	e, d
-	call	__fadd
-	ld	(ix - 3), bc
-	ld	d, a
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 8)
-	ld	iy, (ix + 6)
-	ld	a, (iy + 11)
-	ld	iy, (ix + 9)
-	ld	e, (iy + 11)
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fadd
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z9normalizeRK4vec3
-__Z9normalizeRK4vec3:
-	ld	hl, -11
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 11), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	bc, (ix - 11)
-	ld	a, d
-	push	bc
-	pop	hl
-	ld	e, d
-	call	__fmul
-	ld	hl, (ix - 7)
-	ld	e, (ix - 8)
-	call	__fadd
-	ld	(ix - 7), bc
-	ld	d, a
-	ld	bc, (iy + 8)
-	ld	a, (iy + 11)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	ld	hl, (ix - 7)
-	ld	e, d
-	call	__fadd
-	ld	l, a
-	push	hl
-	push	bc
-	call	_sqrt
-	pop	bc
-	pop	bc
-	ld	(ix - 4), hl
-	ld	(ix - 1), e
-	pea	ix - 4
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	__ZNK4vec3dvERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec3dvERKd
-__ZNK4vec3dvERKd:
-	ld	hl, -7
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
-	call	__fdiv
-	ld	(ix - 3), bc
-	ld	(ix - 4), a
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	call	__fdiv
-	ld	(ix - 7), bc
-	ld	d, a
-	ld	bc, (iy + 8)
-	ld	a, (iy + 11)
-	call	__fdiv
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	l, (ix - 4)
-	ld	(iy + 3), l
-	ld	hl, (ix - 7)
-	ld	(iy + 4), hl
-	ld	(iy + 7), d
-	ld	(iy + 8), bc
-	ld	(iy + 11), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z9normalizeRK4vec2
-__Z9normalizeRK4vec2:
-	ld	hl, -8
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 8), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 5), a
-	ld	bc, (ix - 8)
-	ld	a, d
-	push	bc
-	pop	hl
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 5)
-	call	__fadd
-	ld	l, a
-	push	hl
-	push	bc
-	call	_sqrt
-	pop	bc
-	pop	bc
-	ld	(ix - 4), hl
-	ld	(ix - 1), e
-	pea	ix - 4
-	ld	hl, (ix + 9)
-	push	hl
-	ld	hl, (ix + 6)
-	push	hl
-	call	__ZNK4vec2dvERKd
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix + 6)
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK4vec2dvERKd
-__ZNK4vec2dvERKd:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 9)
-	ld	iy, (ix + 12)
-	ld	bc, (hl)
-	lea	hl, iy
-	ld	hl, (hl)
-	ld	e, (iy + 3)
-	ld	iy, (ix + 9)
-	ld	a, (iy + 3)
-	call	__fdiv
-	ld	(ix - 3), bc
-	ld	d, a
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	call	__fdiv
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 3)
-	ld	(iy), hl
-	ld	(iy + 3), d
-	ld	(iy + 4), bc
-	ld	(iy + 7), a
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z11i_normalizeRK5ivec2
-__Z11i_normalizeRK5ivec2:
-	call	__frameset0
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z8lengthSQRK4vec3
-__Z8lengthSQRK4vec3:
-	ld	hl, -6
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	hl, (iy)
-	ld	(ix - 6), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 3), a
-	ld	bc, (ix - 6)
-	ld	a, d
-	push	bc
-	pop	hl
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 3)
-	call	__fadd
-	ld	(ix - 3), bc
-	ld	d, a
-	ld	iy, (ix + 6)
-	ld	bc, (iy + 8)
-	ld	iy, (ix + 6)
-	ld	a, (iy + 11)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fadd
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z8lengthSQRK4vec2
-__Z8lengthSQRK4vec2:
-	ld	hl, -4
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	hl, (iy)
-	ld	(ix - 4), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 1), a
-	ld	bc, (ix - 4)
-	ld	a, d
-	push	bc
-	pop	hl
-	ld	e, d
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fadd
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z5clampddd
-__Z5clampddd:
-	ld	hl, -5
-	call	__frameset
-	ld	de, (ix + 6)
-	ld	iy, (ix + 12)
-	ld	hl, (ix + 18)
-	ld	(ix - 4), hl
-	ld	a, (ix + 21)
-	ld	(ix - 1), a
-	ex	de, hl
-	ld	e, (ix + 9)
-	lea	bc, iy
-	ld	a, (ix + 15)
-	call	__fcmp
-	ld	d, 1
-	ld	l, 0
-	ld	a, d
-	jp	m, BB23_2
-	ld	a, l
-BB23_2:
-	ld	(ix - 5), a
-	ld	hl, (ix + 18)
-	ld	e, (ix + 21)
-	ld	bc, (ix + 6)
-	ld	a, (ix + 9)
-	call	__fcmp
-	jp	m, BB23_4
-	ld	d, 0
-BB23_4:
-	bit	0, d
-	ld	e, (ix + 15)
-	jr	nz, BB23_6
-	ld	hl, (ix + 6)
-	ld	(ix - 4), hl
-BB23_6:
-	bit	0, d
-	jr	nz, BB23_8
-	ld	a, (ix + 9)
-	ld	(ix - 1), a
-BB23_8:
-	ld	a, (ix - 5)
-	bit	0, a
-	jr	nz, BB23_10
-	ld	iy, (ix - 4)
-BB23_10:
-	bit	0, a
-	jr	nz, BB23_12
-	ld	e, (ix - 1)
-BB23_12:
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z6rotated
-__Z6rotated:
-	ld	hl, -12
-	call	__frameset
-	ld	de, (ix + 9)
-	ld	l, (ix + 12)
-	push	hl
-	push	de
-	call	_cos
-	ld	(ix - 3), hl
-	ld	(ix - 4), e
-	pop	hl
-	pop	hl
-	ld	l, (ix + 12)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	pop	hl
-	pop	hl
-	call	__fneg
-	ld	(ix - 7), bc
-	ld	(ix - 8), a
-	ld	l, (ix + 12)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	_sin
-	ld	(ix - 11), hl
-	ld	(ix - 12), e
-	pop	hl
-	pop	hl
-	ld	l, (ix + 12)
-	push	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	_cos
-	pop	bc
-	pop	bc
-	ld	iy, (ix + 6)
-	ld	bc, (ix - 3)
-	ld	(iy), bc
-	ld	a, (ix - 4)
-	ld	(iy + 3), a
-	ld	bc, (ix - 7)
-	ld	(iy + 8), bc
-	ld	a, (ix - 8)
-	ld	(iy + 11), a
-	ld	bc, (ix - 11)
-	ld	(iy + 4), bc
-	ld	a, (ix - 12)
-	ld	(iy + 7), a
-	ld	(iy + 12), hl
-	ld	(iy + 15), e
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z6rotatei
-__Z6rotatei:
-	ld	hl, -15
-	call	__frameset
-	ld	bc, (ix + 9)
-	ld	e, 59
-	push	bc
-	pop	hl
-	push	bc
-	pop	iy
-	add	iy, iy
-	sbc	hl, hl
-	ld	a, l
-	call	__ltof
-	ld	hl, -8388608
-	call	__fmul
-	ld	(ix - 3), bc
-	ld	l, a
-	ld	(ix - 6), hl
-	push	hl
-	push	bc
-	call	_cos
-	push	hl
-	pop	bc
-	ld	a, e
-	pop	hl
-	pop	hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 9), bc
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	pop	hl
-	pop	hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	push	bc
-	pop	hl
-	call	__ineg
-	ld	(ix - 12), hl
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_sin
-	push	hl
-	pop	bc
-	ld	a, e
-	pop	hl
-	pop	hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	(ix - 15), bc
-	ld	hl, (ix - 6)
-	push	hl
-	ld	hl, (ix - 3)
-	push	hl
-	call	_cos
-	push	hl
-	pop	bc
-	ld	a, e
-	pop	hl
-	pop	hl
-	ld	hl, -8388608
-	ld	e, 67
-	call	__fmul
-	call	__ftol
-	ld	iy, (ix + 6)
-	ld	hl, (ix - 9)
-	ld	(iy), hl
-	ld	hl, (ix - 12)
-	ld	(iy + 6), hl
-	ld	hl, (ix - 15)
-	ld	(iy + 3), hl
-	ld	(iy + 9), bc
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	__Z8f_rotatei
-__Z8f_rotatei:
-	ld	hl, -9
-	call	__frameset
-	ld	hl, (ix + 9)
-	push	hl
-	call	__Z5f_cosi
-	ld	(ix - 3), hl
-	pop	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	__Z5f_sini
-	pop	de
-	call	__ineg
-	ld	(ix - 6), hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	__Z5f_sini
-	ld	(ix - 9), hl
-	pop	hl
-	ld	hl, (ix + 9)
-	push	hl
-	call	__Z5f_cosi
-	pop	de
-	ld	iy, (ix + 6)
-	ld	de, (ix - 3)
-	ld	(iy), de
-	ld	de, (ix - 6)
-	ld	(iy + 6), de
-	ld	de, (ix - 9)
-	ld	(iy + 3), de
-	ld	(iy + 9), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__Z5f_cosi
-__Z5f_cosi:
-	ld	hl, -3
-	call	__frameset
-	ld	hl, (ix + 6)
-	ld	iy, __ZL8cosTable
-	ld	bc, 0
-	push	hl
-	pop	de
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	ex	de, hl
-	jp	m, BB27_3
-	ld	bc, 804
-	call	__idivu
-	push	hl
-	pop	de
-	ld	bc, 1
-	call	__iand
-	ld	(ix - 3), hl
-	ex	de, hl
-	ld	bc, -804
-	call	__imulu
-	ld	de, (ix + 6)
-	add	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	add	iy, de
-	ld	bc, (iy)
-	push	bc
-	pop	hl
-	call	__ineg
-	ld	de, (ix - 3)
-	bit	0, e
-	jr	z, BB27_6
-	push	hl
-	jr	BB27_5
-BB27_3:
-	call	__ineg
-	ld	de, 804
-	push	de
-	pop	bc
-	call	__idivu
-	push	hl
-	pop	iy
-	ld	bc, 1
-	call	__iand
-	ld	(ix - 3), hl
-	lea	hl, iy
-	push	de
-	pop	bc
-	call	__imulu
-	push	hl
-	pop	bc
-	ld	hl, (ix + 6)
-	add	hl, de
-	add	hl, bc
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	de, (hl)
-	push	de
-	pop	hl
-	call	__ineg
-	push	hl
-	pop	bc
-	ld	hl, (ix - 3)
-	bit	0, l
-	jr	z, BB27_6
-	push	de
-BB27_5:
-	pop	bc
-BB27_6:
-	push	bc
-	pop	hl
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__Z5f_sini
-__Z5f_sini:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	bc, 804
-	ld	de, -402
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB28_3
-	ld	de, 402
-	add	iy, de
-	lea	hl, iy
-	call	__idivu
-	push	hl
-	pop	de
-	ld	bc, 1
-	call	__iand
-	ld	(ix - 3), hl
-	ex	de, hl
-	ld	bc, -804
-	call	__imulu
-	lea	de, iy
-	add	hl, de
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	de, (hl)
-	push	de
-	pop	hl
-	call	__ineg
-	push	hl
-	pop	bc
-	ld	hl, (ix - 3)
-	bit	0, l
-	jr	z, BB28_6
-	push	de
-	jr	BB28_5
-BB28_3:
-	ld	hl, -402
-	lea	de, iy
-	or	a, a
-	sbc	hl, de
-	call	__idivu
-	push	hl
-	pop	de
-	ld	bc, 1
-	call	__iand
-	ld	(ix - 3), hl
-	ex	de, hl
-	ld	bc, 804
-	call	__imulu
-	push	hl
-	pop	de
-	ld	bc, 1206
-	add	iy, bc
-	add	iy, de
-	ld	bc, 3
-	lea	hl, iy
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, __ZL8cosTable
-	add	hl, de
-	ld	bc, (hl)
-	push	bc
-	pop	hl
-	call	__ineg
-	ld	de, (ix - 3)
-	bit	0, e
-	jr	z, BB28_6
-	push	hl
-BB28_5:
-	pop	bc
-BB28_6:
-	push	bc
-	pop	hl
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	_raycast
-_raycast:
-	ld	hl, -3
-	call	__frameset
-	ld	bc, (ix + 9)
-	ld	hl, (ix + 15)
-	ld	de, 1
-	push	hl
-	pop	iy
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	ld	hl, (ix + 12)
-	jp	m, BB29_4
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB29_7
-	lea	hl, iy
-	ld	de, (ix + 12)
-	or	a, a
-	sbc	hl, de
-	jp	nc, BB29_11
-	ld	hl, _x_walls
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	iy
-	ld	hl, (ix + 12)
-	push	hl
-	push	bc
-	ld	hl, (ix + 6)
-	push	hl
-	jp	BB29_12
-BB29_4:
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB29_9
-	lea	hl, iy
-	call	__ineg
-	push	bc
-	pop	de
-	push	hl
-	pop	bc
-	ld	hl, 2048
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	iy
-	push	bc
-	pop	hl
-	ld	de, (ix + 12)
-	or	a, a
-	sbc	hl, de
-	jp	nc, BB29_13
-	ld	hl, _x_walls_q4
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	bc
-	ld	hl, (ix + 12)
-	push	hl
-	push	iy
-	ld	hl, (ix + 6)
-	push	hl
-	jp	BB29_14
-BB29_7:
-	ld	hl, (ix + 12)
-	call	__ineg
-	push	hl
-	pop	de
-	ld	hl, 2048
-	ld	bc, (ix + 6)
-	or	a, a
-	sbc	hl, bc
-	push	hl
-	pop	bc
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	jp	nc, BB29_15
-	ld	hl, _x_walls_q2
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	push	iy
-	push	de
-	ld	hl, (ix + 9)
-	push	hl
-	push	bc
-	jp	BB29_16
-BB29_9:
-	ld	hl, (ix + 12)
-	lea	de, iy
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	p, BB29_17
-	ld	iy, 2048
-	lea	hl, iy
-	ld	de, (ix + 6)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), hl
-	lea	hl, iy
-	or	a, a
-	sbc	hl, bc
-	push	hl
-	pop	iy
-	ld	hl, (ix + 12)
-	call	__ineg
-	push	hl
-	pop	de
-	ld	hl, (ix + 15)
-	call	__ineg
-	ld	bc, _x_walls_q3
-	push	bc
-	ld	bc, (ix + 27)
-	push	bc
-	ld	bc, (ix + 24)
-	push	bc
-	ld	bc, (ix + 21)
-	push	bc
-	ld	bc, (ix + 18)
-	push	bc
-	push	hl
-	push	de
-	push	iy
-	ld	hl, (ix - 3)
-	push	hl
-	jp	BB29_18
-BB29_11:
-	ld	hl, _y_walls_transposed
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 12)
-	push	hl
-	push	iy
-	ld	hl, (ix + 6)
-	push	hl
-	push	bc
-BB29_12:
-	call	_raycast_asm
-	ld	hl, 27
-	add	hl, sp
-	ld	sp, hl
-	jp	BB29_20
-BB29_13:
-	ld	hl, _y_walls_transposed_q4
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	ld	hl, (ix + 12)
-	push	hl
-	push	bc
-	ld	hl, (ix + 6)
-	push	hl
-	push	iy
-BB29_14:
-	call	_raycast_asm
-	ld	hl, 27
-	add	hl, sp
-	ld	sp, hl
-	ld	hl, (ix + 24)
-	ld	a, (hl)
-	neg
-	ld	(hl), a
-	jp	BB29_19
-BB29_15:
-	ld	hl, _y_walls_transposed_q2
-	push	hl
-	ld	hl, (ix + 27)
-	push	hl
-	ld	hl, (ix + 24)
-	push	hl
-	ld	hl, (ix + 18)
-	push	hl
-	ld	hl, (ix + 21)
-	push	hl
-	push	de
-	push	iy
-	push	bc
-	ld	hl, (ix + 9)
-	push	hl
-BB29_16:
-	call	_raycast_asm
-	ld	hl, 27
-	add	hl, sp
-	ld	sp, hl
-	ld	iy, (ix + 18)
-	ld	hl, (iy)
-	call	__ineg
-	ld	(iy), hl
-	ld	hl, (ix + 24)
-	ld	a, (hl)
-	neg
-	ld	(hl), a
-	jr	BB29_20
-BB29_17:
-	ld	de, 2048
-	push	de
-	pop	hl
-	or	a, a
-	sbc	hl, bc
-	push	hl
-	pop	iy
-	ex	de, hl
-	ld	de, (ix + 6)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), hl
-	ld	hl, (ix + 15)
-	call	__ineg
-	push	hl
-	pop	bc
-	ld	hl, (ix + 12)
-	call	__ineg
-	ld	de, _y_walls_transposed_q3
-	push	de
-	ld	de, (ix + 27)
-	push	de
-	ld	de, (ix + 24)
-	push	de
-	ld	de, (ix + 18)
-	push	de
-	ld	de, (ix + 21)
-	push	de
-	push	hl
-	push	bc
-	ld	hl, (ix - 3)
-	push	hl
-	push	iy
-BB29_18:
-	call	_raycast_asm
-	ld	hl, 27
-	add	hl, sp
-	ld	sp, hl
-	ld	iy, (ix + 18)
-	ld	hl, (iy)
-	call	__ineg
-	ld	(iy), hl
-BB29_19:
-	ld	iy, (ix + 21)
-	ld	hl, (iy)
-	call	__ineg
-	ld	(iy), hl
-BB29_20:
-	pop	hl
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	public	_main
-_main:
-	ld	hl, -1096
-	call	__frameset
-	ld	bc, -252
-	lea	hl, ix
-	add	hl, bc
-	ld	bc, -1019
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -381
-	lea	hl, ix
-	add	hl, bc
-	push	ix
-	ld	bc, -1025
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	bc, -510
-	lea	iy, ix
-	add	iy, bc
-	ld	bc, -1053
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	push	ix
-	ld	bc, -830
-	add	ix, bc
-	lea	de, ix
-	pop	ix
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1010
-	add	ix, de
-	lea	bc, ix
-	pop	ix
-	lea	hl, iy + 24
-	push	ix
-	ld	de, -1093
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	lea	hl, iy + 12
-	ld	de, -1044
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	ld	de, (ix - 3)
-	push	de
-	pop	iy
-	ld	de, -1060
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), iy
-	lea	hl, iy + 80
-	push	ix
-	ld	de, -1013
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	lea	hl, iy
-	ld	de, -1034
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	push	bc
-	pop	iy
-	lea	hl, iy + 100
-	push	ix
-	ld	bc, -1037
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	bc, -1016
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	lea	hl, iy
-	ld	bc, -1022
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	call	_gfx_Begin
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetDraw
-	pop	hl
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetTransparentColor
-	pop	hl
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetTextTransparentColor
-	pop	hl
-	ld	hl, 1
-	push	hl
-	call	_gfx_SetTextBGColor
-	pop	hl
-	ld	bc, -1053
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, -181
-	ld	(iy + 24), hl
-	ld	hl, 181
-	ld	(iy + 27), hl
-	ld	hl, -178
-	ld	(iy + 30), hl
-	ld	hl, 183
-	ld	(iy + 33), hl
-	ld	hl, -176
-	ld	(iy + 36), hl
-	ld	hl, 185
-	ld	(iy + 39), hl
-	ld	hl, -173
-	ld	(iy + 42), hl
-	ld	hl, 187
-	ld	(iy + 45), hl
-	ld	hl, -171
-	ld	(iy + 48), hl
-	ld	hl, 190
-	ld	(iy + 51), hl
-	ld	hl, -168
-	ld	(iy + 54), hl
-	ld	hl, 192
-	ld	(iy + 57), hl
-	ld	hl, -165
-	ld	(iy + 60), hl
-	ld	hl, 195
-	ld	(iy + 63), hl
-	ld	hl, -162
-	ld	(iy + 66), hl
-	ld	hl, 197
-	ld	(iy + 69), hl
-	ld	hl, -159
-	ld	(iy + 72), hl
-	ld	hl, 199
-	ld	(iy + 75), hl
-	ld	hl, -156
-	ld	(iy + 78), hl
-	ld	hl, 202
-	ld	(iy + 81), hl
-	ld	hl, -153
-	ld	(iy + 84), hl
-	ld	hl, 204
-	ld	(iy + 87), hl
-	ld	hl, -150
-	ld	(iy + 90), hl
-	ld	hl, 207
-	ld	(iy + 93), hl
-	ld	hl, -146
-	ld	(iy + 96), hl
-	ld	hl, 209
-	ld	(iy + 99), hl
-	ld	hl, -143
-	ld	(iy + 102), hl
-	ld	hl, 212
-	ld	(iy + 105), hl
-	ld	hl, -139
-	ld	(iy + 108), hl
-	ld	hl, 214
-	ld	(iy + 111), hl
-	ld	hl, -135
-	ld	(iy + 114), hl
-	ld	hl, 217
-	ld	(iy + 117), hl
-	ld	hl, -131
-	ld	(iy + 120), hl
-	ld	hl, 219
-	ld	(iy + 123), hl
-	ld	hl, -127
-	ld	(iy + 126), hl
-	ld	hl, 221
-	ld	bc, -1025
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	(iy), hl
-	ld	hl, -123
-	ld	(iy + 3), hl
-	ld	hl, 224
-	ld	(iy + 6), hl
-	ld	hl, -118
-	ld	(iy + 9), hl
-	ld	hl, 226
-	ld	(iy + 12), hl
-	ld	hl, -114
-	ld	(iy + 15), hl
-	ld	hl, 228
-	ld	(iy + 18), hl
-	ld	hl, -109
-	ld	(iy + 21), hl
-	ld	hl, 231
-	ld	(iy + 24), hl
-	ld	hl, -105
-	ld	(iy + 27), hl
-	ld	hl, 233
-	ld	(iy + 30), hl
-	ld	hl, -100
-	ld	(iy + 33), hl
-	ld	hl, 235
-	ld	(iy + 36), hl
-	ld	hl, -95
-	ld	(iy + 39), hl
-	ld	hl, 237
-	ld	(iy + 42), hl
-	ld	hl, -89
-	ld	(iy + 45), hl
-	ld	hl, 239
-	ld	(iy + 48), hl
-	ld	hl, -84
-	ld	(iy + 51), hl
-	ld	hl, 241
-	ld	(iy + 54), hl
-	ld	hl, -79
-	ld	(iy + 57), hl
-	ld	hl, 243
-	ld	(iy + 60), hl
-	ld	hl, -73
-	ld	(iy + 63), hl
-	ld	hl, 245
-	ld	(iy + 66), hl
-	ld	hl, -67
-	ld	(iy + 69), hl
-	ld	hl, 246
-	ld	(iy + 72), hl
-	ld	hl, -62
-	ld	(iy + 75), hl
-	ld	hl, 248
-	ld	(iy + 78), hl
-	ld	hl, -56
-	ld	(iy + 81), hl
-	ld	hl, 249
-	ld	(iy + 84), hl
-	ld	hl, -50
-	ld	(iy + 87), hl
-	ld	hl, 251
-	ld	(iy + 90), hl
-	ld	hl, -44
-	ld	(iy + 93), hl
-	ld	hl, 252
-	ld	(iy + 96), hl
-	ld	hl, -37
-	ld	(iy + 99), hl
-	ld	hl, 253
-	ld	(iy + 102), hl
-	ld	hl, -31
-	ld	(iy + 105), hl
-	ld	hl, 254
-	ld	(iy + 108), hl
-	ld	de, -25
-	ld	(iy + 111), de
-	ld	(iy + 114), hl
-	ex	de, hl
-	ld	hl, -19
-	ld	(iy + 117), hl
-	ld	hl, 255
-	ld	(iy + 120), hl
-	ld	bc, -12
-	ld	(iy + 123), bc
-	ld	(iy + 126), hl
-	ld	bc, -1019
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	bc, -6
-	ld	(iy), bc
-	ld	(iy + 3), hl
-	ld	bc, 0
-	ld	(iy + 6), bc
-	ld	bc, 256
-	ld	(iy + 9), bc
-	ld	bc, 6
-	ld	(iy + 12), bc
-	ld	(iy + 15), hl
-	ld	bc, 12
-	ld	(iy + 18), bc
-	ld	(iy + 21), hl
-	ld	bc, 19
-	ld	(iy + 24), bc
-	ld	(iy + 27), hl
-	ld	hl, 25
-	ld	(iy + 30), hl
-	ld	(iy + 33), de
-	ld	hl, 31
-	ld	(iy + 36), hl
-	ld	(iy + 39), de
-	ld	hl, 37
-	ld	(iy + 42), hl
-	ld	hl, 253
-	ld	(iy + 45), hl
-	ld	hl, 44
-	ld	(iy + 48), hl
-	ld	hl, 252
-	ld	(iy + 51), hl
-	ld	hl, 50
-	ld	(iy + 54), hl
-	ld	hl, 251
-	ld	(iy + 57), hl
-	ld	hl, 56
-	ld	(iy + 60), hl
-	ld	hl, 249
-	ld	(iy + 63), hl
-	ld	hl, 62
-	ld	(iy + 66), hl
-	ld	hl, 248
-	ld	(iy + 69), hl
-	ld	hl, 67
-	ld	(iy + 72), hl
-	ld	hl, 246
-	ld	(iy + 75), hl
-	ld	hl, 73
-	ld	(iy + 78), hl
-	ld	hl, 245
-	ld	(iy + 81), hl
-	ld	hl, 79
-	ld	(iy + 84), hl
-	ld	hl, 243
-	ld	(iy + 87), hl
-	ld	hl, 84
-	ld	(iy + 90), hl
-	ld	hl, 241
-	ld	(iy + 93), hl
-	ld	hl, 89
-	ld	(iy + 96), hl
-	ld	hl, 239
-	ld	(iy + 99), hl
-	ld	hl, 95
-	ld	(iy + 102), hl
-	ld	hl, 237
-	ld	(iy + 105), hl
-	ld	hl, 100
-	ld	(iy + 108), hl
-	ld	hl, 235
-	ld	(iy + 111), hl
-	ld	hl, 105
-	ld	(iy + 114), hl
-	ld	hl, 233
-	ld	(iy + 117), hl
-	ld	hl, 109
-	ld	bc, -132
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	hl, 231
-	push	ix
-	ld	bc, -129
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, 114
-	ld	(ix - 126), hl
-	ld	hl, 228
-	ld	(ix - 123), hl
-	ld	hl, 118
-	ld	(ix - 120), hl
-	ld	hl, 226
-	ld	(ix - 117), hl
-	ld	hl, 123
-	ld	(ix - 114), hl
-	ld	hl, 224
-	ld	(ix - 111), hl
-	ld	hl, 127
-	ld	(ix - 108), hl
-	ld	hl, 221
-	ld	(ix - 105), hl
-	ld	hl, 131
-	ld	(ix - 102), hl
-	ld	hl, 219
-	ld	(ix - 99), hl
-	ld	hl, 135
-	ld	(ix - 96), hl
-	ld	hl, 217
-	ld	(ix - 93), hl
-	ld	hl, 139
-	ld	(ix - 90), hl
-	ld	hl, 214
-	ld	(ix - 87), hl
-	ld	hl, 143
-	ld	(ix - 84), hl
-	ld	hl, 212
-	ld	(ix - 81), hl
-	ld	hl, 146
-	ld	(ix - 78), hl
-	ld	hl, 209
-	ld	(ix - 75), hl
-	ld	hl, 150
-	ld	(ix - 72), hl
-	ld	hl, 207
-	ld	(ix - 69), hl
-	ld	hl, 153
-	ld	(ix - 66), hl
-	ld	hl, 204
-	ld	(ix - 63), hl
-	ld	hl, 156
-	ld	(ix - 60), hl
-	ld	hl, 202
-	ld	(ix - 57), hl
-	ld	hl, 159
-	ld	(ix - 54), hl
-	ld	hl, 199
-	ld	(ix - 51), hl
-	ld	hl, 162
-	ld	(ix - 48), hl
-	ld	hl, 197
-	ld	(ix - 45), hl
-	ld	hl, 165
-	ld	(ix - 42), hl
-	ld	hl, 195
-	ld	(ix - 39), hl
-	ld	hl, 168
-	ld	(ix - 36), hl
-	ld	hl, 192
-	ld	(ix - 33), hl
-	ld	hl, 171
-	ld	(ix - 30), hl
-	ld	hl, 190
-	ld	(ix - 27), hl
-	ld	hl, 173
-	ld	(ix - 24), hl
-	ld	hl, 187
-	ld	(ix - 21), hl
-	ld	hl, 176
-	ld	(ix - 18), hl
-	ld	hl, 185
-	ld	(ix - 15), hl
-	ld	hl, 178
-	ld	(ix - 12), hl
-	ld	hl, 183
-	ld	(ix - 9), hl
-	or	a, a
-	sbc	hl, hl
-	push	hl
-	ld	bc, -1044
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	__Z6rotatei
-	pop	hl
-	pop	hl
-	ld	bc, -1053
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 18)
-	push	ix
-	ld	bc, -1031
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (iy + 21)
-	lea	de, iy
-	ld	bc, -1025
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	bc, -1060
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, 896
-	ld	(iy + 80), hl
-	ld	hl, 384
-	ld	(iy + 83), hl
-	pea	iy + 80
-	push	de
-	call	__ZN5ThingC2ERK5ivec2
-	pop	hl
-	pop	hl
-	xor	a, a
-	ld	bc, -1057
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), a
-	or	a, a
-	sbc	hl, hl
-	inc	bc
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-BB30_1:
-	call	_clock
-	ld	bc, -1040
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	dec	bc
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	call	_gfx_ZeroScreen
-	ld	hl, -720866
-	push	de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	l, e
-	ld	h, d
-	pop	de
-	ld	a, l
-	bit	3, a
-	jp	z, BB30_20
-	ld	bc, -1031
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
-	ld	c, 3
-	call	__ishrs
-	ld	(ix - 3), de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	push	ix
-	ld	de, -1025
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	call	__ishrs
-	push	ix
-	ld	de, -1047
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (_playerPos+3)
-	push	ix
-	ld	de, -1064
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -1050
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 9
-	call	__imulu
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, (ix - 3)
-	ex	de, hl
-	dec	bc
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	jp	m, BB30_6
-	ld	iy, (_playerPos)
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	hl, _y_walls+1
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	ld	de, (ix - 3)
-	push	ix
-	ld	bc, -1067
-	add	ix, bc
-	ld	(ix), de
-	pop	ix
-	add	hl, de
-	ld	c, a
-	ld	a, (hl)
-	cp	a, 32
-	ld	a, c
-	ld	bc, -1019
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	(hl), iy
-	jp	z, BB30_10
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	lea	bc, iy
-	ld	de, 64
-	add	hl, de
-	add	hl, bc
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1067
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	ld	bc, (ix - 3)
-	jp	z, BB30_10
-	lea	hl, iy
-	ld	bc, 255
-	call	__iand
-	ld	a, 8
-	push	hl
-	pop	de
-	ld	hl, 191
-	or	a, a
-	sbc	hl, de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	jp	BB30_10
-BB30_6:
-	ld	iy, _y_walls
-	ld	bc, -1067
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	add	iy, de
-	ld	de, (_playerPos)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	l, a
-	ld	a, (iy)
-	cp	a, 32
-	ld	a, l
-	ld	(ix - 3), bc
-	ld	bc, -1019
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	(iy), de
-	ld	bc, (ix - 3)
-	jr	z, BB30_10
-	ld	(ix - 3), de
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	bc
-	pop	iy
-	ld	bc, -64
-	add	hl, bc
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	lea	hl, iy
-	or	a, a
-	sbc	hl, bc
-	jr	z, BB30_9
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 64
-	or	a, a
-	sbc	hl, de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-BB30_9:
-	ld	a, 8
-BB30_10:
-	ld	de, -1050
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, 3
-	call	__ishl
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -1025
-	lea	iy, ix
-	add	iy, de
-	ld	hl, (iy)
-	ld	bc, 8
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	ld	de, (ix - 3)
-	ld	iy, _x_walls
-	jp	m, BB30_14
-	add	iy, de
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	add	iy, de
-	ld	a, (iy + 8)
-	cp	a, 32
-	jp	z, BB30_15
-	ld	de, -1064
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	lea	hl, iy
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1047
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	de, 64
-	add	hl, de
-	ld	bc, (ix - 3)
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1050
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	lea	de, iy
-	ld	bc, -1047
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	bc, (ix - 3)
-	jp	z, BB30_19
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 191
-	jp	BB30_18
-BB30_14:
-	add	iy, de
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	add	iy, de
-	ld	a, (iy)
-	cp	a, 32
-	jr	nz, BB30_16
-BB30_15:
-	ld	bc, -1047
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -1064
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	jr	BB30_19
-BB30_16:
-	ld	de, -1064
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	lea	hl, iy
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1047
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	de, -64
-	add	hl, de
-	ld	bc, (ix - 3)
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1050
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	lea	de, iy
-	ld	bc, -1047
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	bc, (ix - 3)
-	jr	z, BB30_19
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 64
-BB30_18:
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	ld	bc, -1064
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB30_19:
-	ld	bc, -1028
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1019
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	iy, bc
-	ld	(_playerPos), iy
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	(_playerPos+3), hl
-BB30_20:
-	ld	hl, -720866
-	push	de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	l, e
-	ld	h, d
-	pop	de
-	ld.sis	bc, 1
-	call	__sand
-	bit	0, l
-	ld	a, 8
-	jp	z, BB30_39
-	ld	bc, -1031
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	push	de
-	pop	hl
-	call	__ineg
-	ld	c, 3
-	call	__ishrs
-	ld	(ix - 3), de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	push	ix
-	ld	de, -1025
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	call	__ineg
-	call	__ishrs
-	push	ix
-	ld	de, -1047
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (_playerPos+3)
-	push	ix
-	ld	de, -1064
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -1050
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	bc, 9
-	call	__imulu
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, (ix - 3)
-	ex	de, hl
-	ld	bc, -7
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	jp	p, BB30_25
-	ld	iy, (_playerPos)
-	lea	hl, iy
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	hl, _y_walls+1
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	hl, bc
-	ld	de, (ix - 3)
-	push	ix
-	ld	bc, -1031
-	add	ix, bc
-	ld	(ix), de
-	pop	ix
-	add	hl, de
-	ld	c, a
-	ld	a, (hl)
-	cp	a, 32
-	ld	a, c
-	ld	bc, -1019
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	(hl), iy
-	jp	z, BB30_29
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	lea	bc, iy
-	ld	de, 64
-	add	hl, de
-	add	hl, bc
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1031
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	ld	bc, (ix - 3)
-	jp	z, BB30_29
-	lea	hl, iy
-	ld	bc, 255
-	call	__iand
-	ld	a, 8
-	push	hl
-	pop	de
-	ld	hl, 191
-	or	a, a
-	sbc	hl, de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	jp	BB30_29
-BB30_25:
-	ld	iy, _y_walls
-	ld	bc, -1067
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	add	iy, de
-	ld	de, (_playerPos)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	add	iy, bc
-	ld	l, a
-	ld	a, (iy)
-	cp	a, 32
-	ld	a, l
-	ld	(ix - 3), bc
-	ld	bc, -1019
-	lea	iy, ix
-	push	af
-	add	iy, bc
-	pop	af
-	ld	(iy), de
-	ld	bc, (ix - 3)
-	jr	z, BB30_29
-	ld	(ix - 3), de
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	bc
-	pop	iy
-	ld	bc, -64
-	add	hl, bc
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	bc
-	lea	hl, iy
-	or	a, a
-	sbc	hl, bc
-	jr	z, BB30_28
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 64
-	or	a, a
-	sbc	hl, de
-	ld	de, -1028
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-BB30_28:
-	ld	a, 8
-BB30_29:
-	ld	de, -1050
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, 3
-	call	__ishl
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	ld	de, -1025
-	lea	iy, ix
-	add	iy, de
-	ld	hl, (iy)
-	ld	bc, -7
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	ld	de, (ix - 3)
-	ld	iy, _x_walls
-	jp	p, BB30_33
-	add	iy, de
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	add	iy, de
-	ld	a, (iy + 8)
-	cp	a, 32
-	jp	z, BB30_34
-	ld	de, -1064
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	lea	hl, iy
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1047
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	de, 64
-	add	hl, de
-	ld	bc, (ix - 3)
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1050
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	lea	de, iy
-	ld	bc, -1047
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	bc, (ix - 3)
-	jp	z, BB30_38
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 191
-	jp	BB30_37
-BB30_33:
-	add	iy, de
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	de
-	add	iy, de
-	ld	a, (iy)
-	cp	a, 32
-	jr	nz, BB30_35
-BB30_34:
-	ld	bc, -1047
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, -1064
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	jr	BB30_38
-BB30_35:
-	ld	de, -1064
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	lea	hl, iy
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1047
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	de, -64
-	add	hl, de
-	ld	bc, (ix - 3)
-	call	__ishrs
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1050
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	lea	de, iy
-	ld	bc, -1047
-	lea	hl, ix
-	push	af
-	add	hl, bc
-	pop	af
-	ld	hl, (hl)
-	ld	bc, (ix - 3)
-	jr	z, BB30_38
-	ex	de, hl
-	ld	bc, 255
-	call	__iand
-	push	hl
-	pop	de
-	ld	hl, 64
-BB30_37:
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 3), bc
-	ld	bc, -1064
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	bc, (ix - 3)
-BB30_38:
-	ld	bc, -1028
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1019
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	add	iy, bc
-	ld	(_playerPos), iy
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	(_playerPos+3), hl
-BB30_39:
-	ld	hl, -720866
-	push	de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	l, e
-	ld	h, d
-	pop	de
-	ld	a, l
-	ld	de, -1056
-	lea	hl, ix
-	add	hl, de
-	ld	bc, (hl)
-	push	bc
-	pop	hl
-	ld	de, -67
-	add	hl, de
-	bit	2, a
-	jr	z, BB30_41
-	push	hl
-	pop	bc
-BB30_41:
-	ld	hl, -720866
-	push	de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	l, e
-	ld	h, d
-	pop	de
-	ld	a, l
-	push	bc
-	pop	hl
-	ld	de, 67
-	add	hl, de
-	bit	1, a
-	jr	z, BB30_43
-	push	hl
-	pop	bc
-BB30_43:
-	ld	de, -1056
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
-	push	bc
-	ld	bc, -1013
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	push	hl
-	call	__Z6rotatei
-	pop	hl
-	pop	hl
-	ld	bc, -1044
-	lea	hl, ix
-	add	hl, bc
-	ld	de, (hl)
-	ld	bc, -1013
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	ld	bc, 12
-	ldir
-	ld	bc, -1053
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	hl, (iy + 18)
-	push	ix
-	ld	bc, -1031
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (iy + 21)
-	ld	bc, -1025
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	call	_clock
-	ld	bc, -1070
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	dec	bc
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	push	ix
-	ld	bc, -1060
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	(iy + 80), 0
-	push	ix
-	ld	bc, -1013
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	push	hl
-	pop	de
-	inc	de
-	ld	bc, 239
-	ldir
-	ld	(iy), 0
-	ld	bc, -1034
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	pop	iy
-	inc	iy
-	lea	de, iy
-	ld	bc, 79
-	ldir
-	ld	bc, -1016
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	ld	(iy + 100), 0
-	ld	bc, -1037
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	push	hl
-	pop	iy
-	inc	iy
-	lea	de, iy
-	ld	bc, 79
-	ldir
-	call	_clock
-	ld	bc, -1064
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -1067
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	push	ix
-	ld	bc, -1013
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1093
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	ld	de, 0
-BB30_44:
-	ld	(ix - 3), bc
-	ld	bc, -1019
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), de
-	ex	de, hl
-	ld	de, 80
-	or	a, a
-	sbc	hl, de
-	ld	bc, (ix - 3)
-	jp	z, BB30_46
-	ld	de, -1047
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
-	push	bc
-	push	ix
-	ld	bc, -1044
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	push	hl
-	ld	bc, -1016
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	ld	bc, -1028
-	lea	hl, ix
-	add	hl, bc
-	ld	(hl), iy
-	call	__ZN5imat2mlERK5ivec2
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	de, -1016
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	hl, (iy)
-	push	ix
-	ld	de, -1050
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (iy + 3)
-	push	ix
-	ld	de, -1074
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	or	a, a
-	sbc	hl, hl
-	ld	(iy), hl
-	ld	(iy + 3), hl
-	ld	hl, (_playerPos)
-	ld	de, -1077
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), hl
-	ld	bc, (_playerPos+3)
-	ld	de, -1034
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1019
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	iy, de
-	push	ix
-	ld	bc, -1037
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	add	hl, de
-	push	hl
-	push	iy
-	ld	de, -1022
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	pea	iy + 3
-	push	iy
-	ld	de, -1074
-	lea	iy, ix
-	add	iy, de
-	ld	hl, (iy)
-	push	hl
-	ld	de, -1050
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	bc, (ix - 3)
-	push	bc
-	ld	bc, -1077
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	_raycast
-	ld	hl, 24
-	add	hl, sp
-	ld	sp, hl
-	ld	de, -1016
-	lea	hl, ix
-	add	hl, de
-	ld	iy, (hl)
-	ld	hl, (iy)
-	ld	de, -1031
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	push	hl
-	pop	de
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1016
-	add	ix, de
-	ld	iy, (ix)
-	pop	ix
-	ld	hl, (iy + 3)
-	ld	de, -1025
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	call	__imulu
-	ld	de, (ix - 3)
-	add	hl, de
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1019
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	ld	c, 8
-	call	__ishrs
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1028
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	(iy), hl
-	inc	de
-	ld	bc, -1047
-	lea	hl, ix
-	add	hl, bc
-	ld	iy, (hl)
-	lea	iy, iy + 6
-	ld	bc, (ix - 3)
-	lea	bc, iy
-	ld	(ix - 3), bc
-	ld	bc, -1028
-	lea	iy, ix
-	add	iy, bc
-	ld	iy, (iy)
-	lea	iy, iy + 3
-	ld	bc, (ix - 3)
-	jp	BB30_44
-BB30_46:
-	call	_clock
-	ld	bc, -1080
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	dec	bc
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	call	_clock
-	ld	bc, -1074
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -1077
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	or	a, a
-	sbc	hl, hl
-	push	hl
-	pop	bc
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1013
-	add	ix, bc
-	ld	iy, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-BB30_47:
-	push	ix
-	ld	de, -1019
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, 80
-	or	a, a
-	sbc	hl, de
-	jp	z, BB30_52
-	ld	de, -1047
-	lea	hl, ix
-	add	hl, de
-	ld	(hl), bc
-	push	ix
-	ld	de, -1084
-	add	ix, de
-	ld	(ix), iy
-	pop	ix
-	ld	bc, (iy)
-	ld	hl, 65536
-	ld	de, -1096
-	lea	iy, ix
-	add	iy, de
-	ld	(iy), bc
-	call	__idivs
-	ld	bc, 160
-	call	__imulu
-	push	ix
-	ld	de, -1090
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
-	push	ix
-	ld	de, -1050
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	hl, (-1900524)
-	push	ix
-	ld	de, -1087
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -1037
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1019
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	a, (hl)
-	ld	l, a
-	rlc	l
-	sbc	hl, hl
-	push	hl
-	pop	iy
-	ld	iyl, a
-	ld	de, -65
-	add	iy, de
-	lea	hl, iy
-	ld	a, 1
-	ld	bc, (ix - 3)
-	ld	c, a
-	call	__ishrs
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, ___const.main.textures
-	add	hl, de
-	ld	hl, (hl)
-	push	ix
-	ld	de, -1028
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	lea	hl, iy
-	ld	c, 12
-	call	__ishl
-	ld	bc, 4096
-	call	__iand
-	push	hl
-	pop	de
-	ld	(ix - 3), bc
-	ld	bc, -1028
-	lea	iy, ix
-	add	iy, bc
-	ld	hl, (iy)
-	add	hl, de
-	push	ix
-	add	ix, bc
-	ld	(ix), hl
-	pop	ix
-	ld	hl, 180
-	push	ix
-	ld	bc, -1050
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	or	a, a
-	sbc	hl, de
-	ld	bc, (ix - 3)
-	ld	c, a
-	call	__ishrs
-	push	hl
-	pop	iy
-	push	ix
-	ld	de, -1034
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1019
-	add	ix, bc
-	ld	de, (ix)
-	pop	ix
-	add	hl, de
-	ld	de, 0
-	ld	e, (hl)
-	ld	bc, -1090
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	bc, (ix - 3)
-	ld	bc, 46336
-	or	a, a
-	sbc	hl, bc
-	call	pe, __setflag
-	jp	p, BB30_50
-	ld	bc, -1096
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	ld	c, 8
-	call	__ishrs
-	push	hl
-	push	de
-	ld	de, -1050
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	push	iy
-	ld	de, -1047
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1087
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	call	_draw_strip
-	ld	hl, 21
-	add	hl, sp
-	ld	sp, hl
-	jr	BB30_51
-BB30_50:
-	push	de
-	ld	bc, -1050
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	push	iy
-	ld	bc, -1047
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	ld	bc, -1028
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	ld	bc, -1087
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	_draw_strip_clipped
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-	pop	hl
-BB30_51:
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	bc, (hl)
-	inc	bc
-	ld	de, -1084
-	lea	iy, ix
-	add	iy, de
-	ld	iy, (iy)
-	lea	iy, iy + 3
-	ld	de, 4
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1047
-	add	ix, bc
-	ld	hl, (ix)
-	pop	ix
-	add	hl, de
-	ex	de, hl
-	ld	bc, (ix - 3)
-	push	bc
-	pop	hl
-	push	de
-	pop	bc
-	jp	BB30_47
-BB30_52:
-	call	_clock
-	ld	bc, -1084
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	push	ix
-	ld	bc, -1087
-	add	ix, bc
-	ld	(ix), e
-	pop	ix
-	or	a, a
-	sbc	hl, hl
-	push	hl
-	ld	hl, 512
-	push	hl
-	ld	hl, _global_palette
-	push	hl
-	call	_gfx_SetPalette
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, -1070
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	dec	bc
-	lea	iy, ix
-	add	iy, bc
-	ld	e, (iy)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1040
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	dec	de
-	add	ix, de
-	ld	a, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	call	__lsub
-	push	hl
-	pop	bc
-	ld	a, e
-	call	__ultof
-	or	a, a
-	sbc	hl, hl
-	ld	e, 56
-	call	__fmul
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1019
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	ld	l, a
-	push	ix
-	ld	de, -1028
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -1080
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, (ix - 3)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1081
-	add	ix, bc
-	ld	e, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1064
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	a, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	call	__lsub
-	push	hl
-	pop	bc
-	ld	a, e
-	call	__ultof
-	or	a, a
-	sbc	hl, hl
-	ld	e, 56
-	call	__fmul
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1047
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	ld	l, a
-	push	ix
-	ld	de, -1050
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, -1084
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, (ix - 3)
-	ld	(ix - 3), bc
-	push	ix
-	ld	bc, -1087
-	add	ix, bc
-	ld	e, (ix)
-	pop	ix
-	ld	bc, (ix - 3)
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1074
-	add	ix, de
-	ld	bc, (ix)
-	pop	ix
-	push	ix
-	ld	de, -1077
-	add	ix, de
-	ld	a, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	call	__lsub
-	push	hl
-	pop	bc
-	ld	a, e
-	call	__ultof
-	or	a, a
-	sbc	hl, hl
-	ld	e, 56
-	call	__fmul
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1064
-	add	ix, de
-	ld	(ix), bc
-	pop	ix
-	ld	l, a
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	(ix), hl
-	pop	ix
-	ld	de, (ix - 3)
-	call	_clock
-	ld	(ix - 3), de
-	ld	de, -1040
-	lea	iy, ix
-	add	iy, de
-	ld	bc, (iy)
-	push	ix
-	dec	de
-	add	ix, de
-	ld	a, (ix)
-	pop	ix
-	ld	de, (ix - 3)
-	call	__lsub
-	push	hl
-	pop	bc
-	ld	a, e
-	call	__ultof
-	or	a, a
-	sbc	hl, hl
-	ld	e, 56
-	call	__fmul
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	bc, -8388608
-	ld	a, 63
-	call	__fdiv
-	call	__ftol
-	ld	(ix - 3), de
-	push	ix
-	ld	de, -1067
-	add	ix, de
-	ld	hl, (ix)
-	pop	ix
-	push	hl
-	ld	de, -1064
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1050
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1047
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1028
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	ld	de, -1019
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	push	bc
-	ld	hl, _.str
-	push	hl
-	ld	bc, -1022
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	ld	de, (ix - 3)
-	call	_sprintf
-	ld	hl, 27
-	add	hl, sp
-	ld	sp, hl
-	scf
-	sbc	hl, hl
-	push	hl
-	call	_gfx_SetTextFGColor
-	pop	hl
-	ld	bc, -1022
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	_gfx_GetStringWidth
-	push	hl
-	pop	de
-	pop	hl
-	ld	hl, 320
-	or	a, a
-	sbc	hl, de
-	ld	c, 1
-	call	__ishru
-	ld	bc, 255
-	call	__iand
-	ld	de, 4
-	push	de
-	push	hl
-	ld	de, -1022
-	lea	hl, ix
-	add	hl, de
-	ld	hl, (hl)
-	push	hl
-	call	_gfx_PrintStringXY
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	bc, -1057
-	lea	hl, ix
-	add	hl, bc
-	ld	e, (hl)
-	ld	a, e
-	add	a, 2
-	ld	l, a
-	cp	a, 7
-	jr	c, BB30_54
-	ld	l, 0
-BB30_54:
-	ld	a, e
-	or	a, a
-	ld	a, 0
-	ld	e, a
-	jr	z, BB30_56
-	ld	e, l
-BB30_56:
-	ld	hl, -720876
-	push	de
-	ld	e, (hl)
-	inc	hl
-	ld	d, (hl)
-	ld	l, e
-	ld	h, d
-	pop	de
-	ld.sis	bc, 128
-	call	__sand
-	ld	(ix - 3), bc
-	ld	bc, -1019
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), hl
-	ld	a, l
-	or	a, a
-	ld	a, -1
-	ld	bc, (ix - 3)
-	jr	z, BB30_58
-	ld	a, 0
-BB30_58:
-	ld	bc, -1061
-	lea	hl, ix
-	add	hl, bc
-	or	a, (hl)
-	bit	0, a
-	jr	nz, BB30_60
-	ld	a, 1
-	ld	e, a
-BB30_60:
-	or	a, a
-	sbc	hl, hl
-	ld	bc, -1057
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), e
-	ld	l, e
-	ld	bc, 3
-	call	__imulu
-	push	hl
-	pop	de
-	ld	hl, _pistol_anim
-	add	hl, de
-	ld	hl, (hl)
-	ld	de, 96
-	push	de
-	ld	de, 125
-	push	de
-	push	hl
-	call	_gfx_RLETSprite_NoClip
-	pop	hl
-	pop	hl
-	pop	hl
-	call	_gfx_SwapDraw
-	call	_os_GetCSC
-	ld	l, a
-	ld	bc, -1019
-	lea	iy, ix
-	add	iy, bc
-	ld	de, (iy)
-	ld	a, e
-	or	a, a
-	ld	a, -1
-	jr	nz, BB30_62
-	ld	a, 0
-BB30_62:
-	ld	bc, -1061
-	lea	iy, ix
-	add	iy, bc
-	ld	(iy), a
-	ld	a, l
-	cp	a, 9
-	jp	nz, BB30_1
-	call	_gfx_End
-	or	a, a
-	sbc	hl, hl
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN5ThingC2ERK5ivec2
-__ZN5ThingC2ERK5ivec2:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	(ix - 3), iy
-	ld	hl, (ix + 9)
-	ld	de, __ZTV5Thing+6
-	ld	bc, 0
-	ld	(iy), de
-	lea	de, iy + 3
-	ld	(iy + 3), bc
-	ld	(iy + 6), bc
-	ld	bc, 6
-	ldir
-	ld	hl, _malloc
-	push	hl
-	ld	hl, 64
-	push	hl
-	push	hl
-	call	_gfx_AllocSprite
-	pop	de
-	pop	de
-	pop	de
-	ld	iy, (ix - 3)
-	ld	(iy + 9), hl
-	ld	hl, 2
-	push	hl
-	call	_gfx_SetTransparentColor
-	pop	hl
-	ld	iy, (ix - 3)
-	ld	hl, (iy + 9)
-	ld	de, _thing_tex_data
-	ld	(ix + 6), de
-	ld	(ix + 9), hl
-	pop	hl
-	pop	ix
-	jp	_gfx_ConvertFromRLETSprite
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN5imat2mlERK5ivec2
-__ZN5imat2mlERK5ivec2:
-	ld	hl, -6
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	bc, (iy)
-	ld	hl, (hl)
-	ld	(ix - 6), hl
-	call	__imulu
-	ld	(ix - 3), hl
-	ld	bc, (iy + 6)
-	ld	iy, (ix + 12)
-	ld	de, (iy + 3)
-	push	de
-	pop	hl
-	call	__imulu
-	ld	bc, (ix - 3)
-	add	hl, bc
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
-	ld	(ix - 3), hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 3)
-	ld	bc, (ix - 6)
-	call	__imulu
-	ld	(ix - 6), hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 9)
-	push	de
-	pop	bc
-	call	__imulu
-	ld	de, (ix - 6)
-	add	hl, de
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix + 6)
-	ld	de, (ix - 3)
-	ld	(iy), de
-	ld	(iy + 3), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZN5Thing6renderERK5imat2RK5ivec2
-__ZN5Thing6renderERK5imat2RK5ivec2:
-	ld	hl, -24
-	call	__frameset
-	ld	iy, (ix + 6)
-	ld	de, (ix + 12)
-	ld	hl, (iy + 3)
-	push	de
-	pop	iy
-	ld	de, (iy)
-	or	a, a
-	sbc	hl, de
-	push	hl
-	pop	bc
-	ld	iy, (ix + 6)
-	ld	hl, (iy + 6)
-	ld	iy, (ix + 12)
-	ld	de, (iy + 3)
-	or	a, a
-	sbc	hl, de
-	ld	(ix - 12), bc
-	ld	(ix - 9), hl
-	pea	ix - 12
-	ld	hl, (ix + 9)
-	push	hl
-	pea	ix - 6
-	call	__ZNK5imat2mlERK5ivec2
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	iy, (ix - 3)
-	ld	de, 70
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB33_7
-	ld	hl, 16384
-	ld	(ix - 24), iy
-	lea	bc, iy
-	call	__idivu
-	ld	(ix - 15), hl
-	ld	hl, (ix - 6)
-	ld	e, 8
-	ld	c, e
-	call	__ishl
-	lea	bc, iy
-	call	__idivs
-	ld	bc, 256
-	add	hl, bc
-	ld	a, b
-	ld	c, a
-	call	__ishrs
-	ld	bc, 320
-	call	__imulu
-	ld	c, e
-	call	__ishrs
-	ld	(ix - 18), hl
-	ld	de, (ix - 15)
-	push	de
-	pop	hl
-	ld	c, a
-	call	__ishru
-	push	hl
-	pop	bc
-	ld	hl, (ix - 18)
-	or	a, a
-	sbc	hl, bc
-	ld	(ix - 18), hl
-	ld	hl, 20480
-	lea	bc, iy
-	call	__idivu
-	push	hl
-	pop	iy
-	ld	hl, 90
-	push	de
-	pop	bc
-	or	a, a
-	sbc	hl, bc
-	push	hl
-	pop	de
-	add	iy, de
-	ld	(ix - 21), iy
-	ld	hl, (ix - 18)
-	push	hl
-	pop	iy
-	add	iy, bc
-	ld	de, 320
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	p, BB33_7
-	ld	de, 0
-	lea	hl, iy
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB33_7
-	ld	hl, (ix - 21)
-	or	a, a
-	sbc	hl, de
-	call	pe, __setflag
-	jp	m, BB33_7
-	ld	hl, 2
-	push	hl
-	call	_gfx_SetTransparentColor
-	pop	hl
-	ld	hl, _malloc
-	push	hl
-	ld	hl, (ix - 15)
-	push	hl
-	push	hl
-	call	_gfx_AllocSprite
-	pop	de
-	pop	de
-	pop	de
-	ld	iy, (ix + 6)
-	ld	de, (iy + 9)
-	ld	(ix - 15), hl
-	push	hl
-	push	de
-	call	_gfx_ScaleSprite
-	pop	hl
-	pop	hl
-	ld	de, 226
-	ld	hl, (ix - 24)
-	or	a, a
-	sbc	hl, de
-	jr	nc, BB33_6
-	ld	a, -76
-	ld	hl, (ix - 21)
-	sub	a, l
-	ld	iy, (ix - 15)
-	ld	(iy + 1), a
-BB33_6:
-	ld	hl, (ix - 21)
-	push	hl
-	ld	hl, (ix - 18)
-	push	hl
-	ld	hl, (ix - 15)
-	push	hl
-	call	_gfx_TransparentSprite
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix - 15)
-	push	hl
-	call	__ZdlPv
-	pop	hl
-BB33_7:
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	weak	__ZNK5imat2mlERK5ivec2
-__ZNK5imat2mlERK5ivec2:
-	ld	hl, -6
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (ix + 12)
-	ld	bc, (iy)
-	ld	hl, (hl)
-	ld	(ix - 6), hl
-	call	__imulu
-	ld	(ix - 3), hl
-	ld	bc, (iy + 6)
-	ld	iy, (ix + 12)
-	ld	de, (iy + 3)
-	push	de
-	pop	hl
-	call	__imulu
-	ld	bc, (ix - 3)
-	add	hl, bc
-	ld	a, 8
-	ld	c, a
-	call	__ishrs
-	ld	(ix - 3), hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 3)
-	ld	bc, (ix - 6)
-	call	__imulu
-	ld	(ix - 6), hl
-	ld	iy, (ix + 9)
-	ld	hl, (iy + 9)
-	push	de
-	pop	bc
-	call	__imulu
-	ld	de, (ix - 6)
-	add	hl, de
-	ld	c, a
-	call	__ishrs
-	ld	iy, (ix + 6)
-	ld	de, (ix - 3)
-	ld	(iy), de
-	ld	(iy + 3), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.data,"aw",@progbits
-	public	_ceiling_floor_tex_data
-_ceiling_floor_tex_data:
-	db	"´>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>9555555555599999999999>>>>AAAFFPPPQQS^^^eeellll{{{ŠŠ‹‹    »»»»»»»ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
-
-	section	.data,"aw",@progbits
-	public	_playerPos
-_playerPos:
-	dl	896
-	dl	1024
-
-	section	.data,"aw",@progbits
-	public	_pistol_1_data
-_pistol_1_data:
-	db	"FTFFFFFFFFFFFFFFFFFFFFFFFFFFFF%O-$NG3@…""ÀN{l953¨""Ne lP>--""	9e‹eQF)$N!", 10, "…AQ9P3P))Y!@QF$--¨", 26, " ¨@eS>9>>>))¨", 26, " …94)($$=", 26, " …$$-"")", 26, " …""--3$""""", 26, " …)54", 13, ")55)", 26, " …9>9->>-", 26, " -9FA", 26, "-PP-", 26, " )9^P", 26, "3ee-", 26, " ", 13, ")>eQFl>9ll3N ", 13, "-Ae^)SeA>{{3@ ", 13, ")A^Q45-){{3@=", 26, "", 13, 13, "=…YO3$", 13, "", 13, "", 13, 13, "=J<!3F""$$=™YjK!>A((", 13, "…Y‡ª•'-", 26, "((%$…™Jw©ÉÂ8", 26, "$$", 26, "39$$N¨¨NY‡ªª¶Ó‡"")99-", 26, "0JYY¨!Nj‡©ª©ªáÓ8!", 13, "", 26, 13, "8†vdZE<™#¨dw†¶·•©ÉèéZ", 13, 13, 13, 13, 13, 13, "EÉá·—wvv1¨#¨dw¶ª·ª•ªÂîé/", 13, "", 13, "#‡îöóèàÁ‡•E…#¨K†·ªªÁ¶©©ÉÔ©", 0, 0, 0, 0, "<•èöúöàÉ©dZM…#J;vª•©·ÉÂ¶”•¶K*;†èóöúóÉ¶w8*K1%ÀYdEj••””·ÓàÉ•vjMdE‡¶†‡ªáèàïöèÁ©j/8/%¨jM8Zj‡w‡•·ÉÉ¶w‡¶¶ÂÂÉÂÉÓÉÔÓáèÓ¶”d*'*%¨†/';Mdjww•ªª••Â···ÉáóóéÓ·Éèà·•wZ+%¨Z'8EMdjvw†v©¶·Á¶¶ÓéóóïÓ—·àÓ¶wj<""…$¨88ZEEZdjww”···ÉÔª©¶ÔèÁv©ÉÂ©vM<O…#¨+;†jdZd‡ª©ªÁÂª¶ªÔÓÉ•ª•d‡Á·‡Z8'¨""@'Z¶”†••©ªÉÓÔèîÔ¶·©ÉÂvZ8j©‡d;'1¨!@'8wÉ¶©w·ÂÁÂÂ©©·àáÓ‡†ªw8*dvZ8*N …+8©·•w¶àéàÔÔàèáÂÁÁà‡j‡M/ZZ;/,8‡††àïà‡vdZj•·ÂÔÉ•©M8Z;E;/", 13, 0, "…1EMj·Â••ÂáÉ¶¶‡†vdj•©w;*8*'Y<MvªÉÔáööéÂ•‡†•ª—vZMjv8*", 13, "", 13, 0, """…O/M©”vwv‡ÂéóééÂdZj©©•d88M*", 0, "", 0, "#J1;j©ÂÉÔááÔªwjd†ÉÂÁwMd••Z*88", 10, "", 0, 0, "Y$™='/djjjv†¶èöïè·‡;ZwÁªjd©•;''", 13, 0, 0, "Y#O'8ZjZZdZMZv‡áîÓÉ†ZM·Ó‡·ÉM", 10, 0, 0, "™#O*KdÉîÂ¶Âà©jZE8;—àáÓv;jÔáÉZ*", 0, 0, 0, 0, 0, "™", 13, "$ÀN/‡É•Éî·¶èáÔ‡vvZ;8MªÔÔ‡;d¶©Z*", 0, 0, 0, 0, 0, "™$N<;†©éªÁÉÔ¶èÔè©”ÉwZ8'8w·á‡/jwZ*", 0, 0, "", 0, "Y", 10, "$¨…MM©ÂáèÂ¶•é”èîéÂªÓªvM8", 26, "8dªàZ*ZM'", 0, 0, "	%¨<Ed•Ôáîéàá•îààîï©‡ª•jKE/Z¶©**/", 0, 0, "N'¨1<v‡·èéÉéîéóÂöáÔóé‡w‡wjKM'/j‡8", 0, 0, 0, "…)…YZZjw©Âéáè·áèöáï¶îîÉjdjZdZ;/Kd;", 13, 0, 0, 0, "…+¨¨YdMv©·àèöÂéª¶Âïïğ•óá”MEZZdd*8;*", 0, 0, 0, 0, "…-…Yjjd•ª•Ó·îúöîï©·•èïïwéÉ‡ZMEZj88/", 0, 0, 0, 0, "…", 0, ".JM/Z©Ôááïáóúöúöóè¶©·îéwÂ•Z88;K;/'8'", 0, 0, 0, 0, "(™À"
-
-	section	.data,"aw",@progbits
-	public	_pistol_2_data
-_pistol_2_data:
-	db	"FTFFFFFFFFFFFFFFF$Às…$s¿¿s#s¿áà…¨… s…sõöïÔµ„ …¨“ãùúúù÷ÆY …Ñ÷øúûüúùôr™", 26, " ", 13, "sÇôøúüşûõôôƒY¨µÇôøúışüù÷ôÆDYs¥÷øøùüşşıúõøô…s§¾÷÷õúúışşıüúùø…¨sôôô÷ùûıışşşıüêùø½i¨™sôôøùüışşşşşşşıûõ÷Æ¡™“¡ôøùüışşıüúışşşıûõãÆ¡¨“Æôøúışııûïªúüıııüõ÷ôÆs", 26, "¨„÷õûşşüúéw/Éïûüııùø÷ôq…Y¨", 26, "…r÷õúışıö©ÇiÚ³Üúüşûùøôô±X¨¨½Æìùüşşë–X80/;8ƒÒûşıûùãÆ¡r™", 26, "r±Şúüüüz(0K†“†,", 26, "7öûüúõŞ…¨„¨", 26, "iÆÆìûüò3*8*8*+#(éûûìµ…", 26, "ÀrÆèûê!E\%$$$))=ûúÍ…™NLrõß0k>-34-)($/ùç¾…¨LÇ)$$%$øÆi™Nh", 26, "", 13, "$-)Æ„Y O#$%>e9$)$…¨ …-994>3)94)", 26, " …9A9$()A9-", 26, " )9PA", 13, ")QQ-", 26, " )9^P", 13, "3ee-", 26, " ", 13, ")>eQ", 13, "9ll3N ", 13, "-AeS5{{3@™)>S>%{{3@3", 0, "", 0, "=…1=4$", 13, 0, 13, "", 13, "=", 26, "¨J<""4P((", 13, "", 0, "1¨¨YwZ'>9(%", 13, "", 0, """Y™L•·©')($", 13, 13, 13, "$$…¨L‡ªÂÂE$5>)$NY¨YY•ªªªÓ•", 13, "", 13, ")44)88J11¨""ÀYj‡ª¶©ªàÔM", 13, ";©wjdM<¨#¨dw‡¶·©©Âèî‡jáéÉ¶•w‡1…#¨Zw·©·¶•ª·èéE1ªïöóèà·‡‡E…#¨E†·ªªÁ·©—ÂÉ©K©éöúöÔÂ©ZMM…$™J;jª•©·ÉÂ·”‡¶Z/E•éïóúïÉªw8'K1%™Yd;j‡•‡”·ÉàÉ—vvdjd©Â•‡·áèÔîóá·•j/8*%¨vE/Zj†w‡•¶ÉÉªw‡ÁÂÂÁÉÉÔÓÂÓÓáèÉª‡d'!*%¨w/';Mdjvw•©—••Â···ÓèóóéÓ·Âèà·”wZ1%¨M'8EKZjjvwv•¶¶Á¶¶ÂáîïïÉ•·ÔÉªwj;", 26, "(¨$¨88dEEZdjww”···ÓÔ¶©©ÉàÁv•ÉÁ©jM;…¨#¨1'E‡jdZj•©©·ÂÉÁª©ÓÓÉ©©‡Z‡Á¶‡Z8'¨""@*d¶•‡©‡©¶ÉÓÓáîà··•ÂÂvM8j•‡Z;'1™!@'8†É¶©v·ÉÂÉÉ¶©ªÓàÓ•w©w8*djZ8*Y …+8©¶•wÁáéÔÁÂÔèéÔÁ·à•jwZ/ZZ;/+8‡w†àîÔwvdZj•¶ÁÓÉ•©M8Z;;;*", 0, "¨1EMj··•ªÔéÔÁ·•‡wdj‡©w;'8*'", 13, "Y ¨<Zw¶ÉÔèööé·‡wv•ª©vZMdv8*", 0, 13, 0, """…Y8Z©‡jvvw¶áîáèÂvZj•©©d88M*", 0, "", 10, 0, "#J1Ed•ÉÔááááÁ‡jdvÂÂÉ‡Ed”©Z*88", 0, 0, 0, "O$¨<'/Zddjjw©áïïéÂ•EZv··vd©•;''", 0, "Y#O';dvZZdZZZjvÔéÔÉ”dKªÔ•·ÓZ", 0, 0, "™#O*MjÉîÂ¶ÉàªjZE/;•ÔáÓw8dÔáÉZ*", 0, 0, 0, 0, 0, "™", 13, "$™J8”É•Éé·¶èáÔ‡vvZ;8M©ÔÔ‡;Zª—Z*", 0, 0, 0, 0, 0, "™$N<;‡ªé¶·ÉÔ¶èÔèª•ÉwZ;'8vªá‡/jvZ*", 0, 0, "Y", 10, "$…OMZªÂàèÁ¶•é”èîéÂªÓªvM8", 26, "8dªàd*ZM'", 0, 0, "	%¨<Ed•Ôáïéàá—îàÔîï•‡ª•vME8Zª©***", 0, 0, "Y'¨1<v‡·èéÉéééóÂóáÔïè‡wwwjMM'/j‡8", 0, 0, 0, "…)…YZZjwªÂèáè·áèöáó¶îîÉjdjZdZ;", 13, "/Md;", 0, 0, 0, "…,À¨¨MjMvª·àèóÂéª¶Âîîğ•óá”MEZZdd*8;*", 0, 0, 0, 0, "…-…Yjjj•ª•Ó·îúöîî©·•èîïvéÉ‡ZMEZd8'//'", 0, 0, 0, 0, "…", 0, ".JM8Z©Ôààîáóúöúöóá¶©·ééwÂ•Z88;M;/'8'", 0, 0, 0, 0, "(™À"
-
-	section	.data,"aw",@progbits
-	public	_pistol_4_data
-_pistol_4_data:
-	db	"FTFFFFFFFFFFFFFFFFFFFFFFFFFF&-1$@@3$@@O#	@Al^>9-@À", 26, """", 10, "¨4llA53-¨", 26, """", 10, "4F l>5>3-", 26, """", 10, ")Pl>9>4(", 26, "!ÀQ{»F5""""À!4>l F9", 0, 13, "=!1Ql {F9", 0, "1 ", 13, "¨19ellP9$", 0, "1 O43AeS^PA-", 13, "¨ O3>PF495P^$…¨43A)$""@À=3>SPFAFA5-(($-™35^S9-(""$""$$(((™349$", 13, 13, 13, 13, 13, 13, "$$™3(", 0, "", 13, "", 0, """™)", 13, "Y($", 26, """$3…$)>3!$4--$(54)3Y->3(9>>-->9$3Y-94", 26, """$$""4A93N-AA-PA>(3N9AF)", 26, "9SPA-1Y(PQS-", 13, 0, "Pe^^-)¨u1)Q^^-", 0, 0, "Plle-""O¨uL""$Ple)", 13, 0, 0, 0, 13, "^‹-Y", 26, "™u‡!(4(", 0, 0, 0, ")PFA#Y¨…©—", 0, 0, "", 0, 0, 0, "", 13, "Y¨Y©É‡#", 0, 0, "", 0, 0, "", 0, """(¨", 26, "¨u‡©Év/", 13, 13, "", 0, 0, """$…¨Y••ªÂªE", 13, "$$#", 13, "$N$™Yj•¶ªª·Âj", 13, ")""$""<LJ0¨¨&™Yv‡©ªª©·à¶8", 13, "", 0, "E‡wvvZZO", 13, "'™Zwwª©ª©¶èÉv8", 0, 0, 0, 0, "", 13, "EjÉª¶·w•j'…'™Zw©ª¶¶•ªÉè©Z", 0, 0, 0, 0, 0, "", 0, 0, 0, 0, "d©éèààÂ”‡©/…'™;†·ªª·ª•Âèïé©;", 0, 0, 0, 0, "", 0, 0, "dÔóóîèÉ·‡Zj8…(¨J8j··ªª·ª©Éèïóá•K**/M·éöööîÉ·•K8K;Y(Yd;jªªª©ªÂ¶—ÂàèîèàÓ©vv‡•·àóööööáÂ¶wE*/(Yd;j©ª©©©ÉÁ••¶ÂàèÉÂ¶vv•©ÓïïóöööàÂ¶vE*)¨YZ8Z†©©©©ÂÂ¶•‡©ÉàÂ·©††¶ÂàéééïööÉª©j;", 13, "", 26, ")¨w;';d†©”•©ÉÔ·•wvw†‡”©·ÓÓààààèïóÂª—j8", 13, ")¨v8*KZj†‡w”ªÁ·•wvw‡©·ÉÉÂÂÔÓÉÔÓéé·•‡j8", 13, 13, ")¨Z'';EZjww‡—··©w‡•ÂÉÂÁÂÉÉàÔ·ÂÓèè©”‡d/Y(¨<*MEZdjww©—©•ªÂ¶¶ÂÓàïóóîà··áà•wvM'1@", 13, "%Y", 26, "*MdEMdjv‡w”·¶·ÉÉ·ÁÂÔáéîéÂÁÉÂ‡jdEN%Y'd©jdZMv‡ª‡¶·ªª¶ÂÔÓÉÉ•¶à·‡Á·•jZ8'Y%…'/†·©ww•—ª¶ÂÔèéèÁ©•©ÉÉÂ©jMd©•vK;*N$""/8¶Â¶ª‡‡··¶¶ª©©ÓààÁ‡vw·‡;*Zvj;/*Y#""/;¶··•v•¶·ÂÂÂ·¶••ÂàÔwdj—Z/MjK8*'", 13, "#,/v•d•w©ÔîàÁ–·àééÓ¶ÂÉÉ•Mvd/MZE/'#,;KdjdÁéè—vvZdj—©ÁÉ·ª—©v8KE;;*'", 13, "", 0, """$"";dv•vÂ•w¶áïáÉÂª•†jjjw‡”d;'**O&À¨1Zª‡w©ÂÓèóöîÂ©wjw©ª•†ZMKdj8*", 0, "", 0, "N'OYMw¶Â¶w•‡jd‡ªÔáààªjdj”•©•Z88M*", 13, "", 0, 0, "N(…</8Mv¶ááïóóóáªvZZ•ªÉÉvMZ†••M*8/", 26, "", 0, 0, 0, "Y'N***8;Ed•ÂéïóéÉ–jjEjÂÉÂdZ†©d///", 0, 0, "1&*Md•vddjKMZ‡Ôîöî·•M;jªÉ©Z·©;", 13, "", 13, 13, "O"
-
-	section	.data,"aw",@progbits
-	public	_pistol_5_data
-_pistol_5_data:
-	db	"FT#ON1@Y""…>A$3(¨""Q^-""-""^{F4-""""ee>-", 26, """""	", 26, "le>-", 26, "N!", 10, "¨-le>4)@!1>{e>4)+¨", 26, " ™=^‹e>4-""", 13, "¨", 26, " O>e^>--$¨", 26, " OAe^>--%¨", 26, "", 13, "¨(Al ^9--%", 26, "", 26, "", 13, "¨%Fl ^>--)", 26, "", 13, "¨%H{ e>)%", 26, "", 13, "¨%H{ eA)", 26, "", 13, "¨$A{ eA4", 26, "", 13, "¨$Al ‹eA5$", 10, 26, "", 13, "¨$PŠŠ^A3", 10, 26, "", 13, "¨%Q‹l^>)", 26, "", 26, "", 13, "¨)^‹lS>)", 26, "", 13, "¨)elQ>4%", 13, 26, "Y)llQ>3)O-l‹eQ>-)", 26, 26, "1)l‹eH9-)1""leH9-%1", 26, "-{eA4)%1)9l‹‹S9)%$$…À@)Alle>-)$$…¨(AeleF-)55)…¨)AQP^A$-PS>", 26, "…¨(PF$""", 26, "$)$", 26, "…¨)^P", 13, "…", 13, ">SQ-F^eP)", 13, 13, "3Fl{P4-$$$4…", 13, """S{lA))413QF4", 13, """À…$--)", 13, "", 13, "", 13, """", 13, "Y…", 13, 26, "5^e44AF-", 26, "YÀN‡K", 13, "-AQ9A^S5", 13, "¨Y•©M", 13, "-$)))%(4-", 26, "@Y”¶ÁZ", 26, "", 13, 26, "", 26, "$$$$%$@¨YªÔà•", 26, "", 13, """", 13, "1Y•Áéé©", 13, "1…wªÂîï¶", 13, "$$%$", 0, "……†Â·Óîé·", 13, "", 26, "", 13, "", 13, "", 0, "1&¨uÁÂ··ÓààÂ8", 13, "$$$""", 13, "", 13, "'Z<<¨¨'NÉÂ·ª¶¶ÁÉÉK", 13, "", 13, "M©ÔÔÉvKN", 13, "(Y©©©ª¶©©ªÉd", 13, "", 13, 13, 13, "©áèèà·©'…(Y•‡•ª©¶©©à•", 0, """94", 13, "", 0, "EÔáààÁ•—'…(Yd‡©¶ª¶©©ÉÔ8", 13, ")QP", 10, "FA", 0, "†èèàÓ·‡‡/…)…vZ•ªªªÁ©©·éd>A%A5", 0, 0, "jèéèáàÉ©v8…)ÂjZ‡·ª©Â·ª©áÔ;", 13, 26, "4", 13, 0, "jïööîáÉÁ©M;…*…¶dZw·ª¶ªÂÂªÉîÂM", 0, 0, 0, ";áúúúóàÂ·•E8*…”MZw·©©©ªÉÁªàà©j;88/'8jïúúûúàÁ·wK'*NvEKj·©©©©ªÁ©ªÔÓ¶jKKK;*''*EvàöúúúóàÁ·w8*Nj8;j·©©©©©ª©•ªÂÉªvZZE**;ZwÂéïöúúöèÉ¶‡Z)j8;j©©©©©©ª©”•©··¶©•‡jj‡ÂáîïïïöúïÂª•jE", 26, ")Y*/Mw‡—•©¶ÉÉ·‡w‡‡‡”””•©Óàèèàèèïóàª©‡Z'…(¨*8Mdw‡”‡”·ÉÁ©wvjw‡©©ÉÉÉÉÓÓÔàÔéïÂ•‡jEJY…", 13, "&¨/EZjvwww•·Áª‡w‡•·ÉÂÂÂàîéàÓÉÓèè¶•‡d*N&¨;MMdjvw‡©©•••©ÂÂÂÂÁáïóóîèÔÉàà—wjM'N&¨/jZEEZdvw‡‡··¶ÉÔ·ÂáéóööóîàÂÂÁ†jZEN&¨8••jjdZj‡ª—·ÂÂ¶ªª¶¶ª·ÂÂàè·•wwjKE/'Y&¨*E·¶ª‡‡©‡ª¶ÉÓàèîà¶·ÂÉàÔwdZEZdZE//'Y&¨8ZÉÁ·ª•vÁ·¶·¶••ªÔáÉ•••¶Âd//8E;/''Y%¨/d·©Á©w‡ÂÔàèáéÔ•”·ÂàÔ•Zj—Z/*8/'%¨/d•”•‡•Óéá·‡•ÉèóèÂ¶·ÉÉ©Mjd8;*'&¨8Md••É·w”ÂáÔ·¶ªÂ‡••••••‡Z8/**…'™¨'8”•‡ªÉÉáîöóÔ¶†‡–ÔóÉjw©ZMjj/*", 0, "N(…1Ev¶·–j•”†j•Éïïáá•ddv‡©‡j‡d/;M'", 0, "", 0, "N)=8/;Mv¶ÔÉÓÔááÉ©jjd•ÉÂÁ‡ZZd‡‡dE*8/", 0, "", 0, 0, 0, "N", 13, "*¨""'/Mdjjw©·àóöéÂ†ZZMdÂÓÓ·Zd‡©Z///", 0, 0, "™", 13, "(Y'/;EjjZdjZZj–áîóî·jZEjw·Â‡d·—;O", 13, "(YZ•¶ªÔé©¶”w¶·¶d8j·àÓªv8;v¶àªÉÓM", 0, 0, 0, 0, 0, "O)™Yj”É•¶àé”ÁÁÔîéÉ¶•E/Z¶ÔáÉ‡E;ZÉà¶M", 0, 0, 0, 0, 0, 0, "O*À=jéªéª¶ÂÔ··ÔáîïÓ··vK/*Z©Éà·Z8K—wM", 0, 0, 0, "¨", 10, "'™JZ©ÂáèÂ¶¶ÁáÂÉîóïÔ©ÔªjE/'Mv•áÉ”/djM", 0, 0, "", 10, "'Y‡ÁèéïóèóÁ·ïàáïóîÉ•É¶‡Z;'';M‡ÉÉM*K;", 0, 0, "Y)NZÂéïóèóïïúèÔöéïèïóª‡ª•wKM/*E‡©©*'", 0, 13, "¨*…YvÂèàîóîéïîöóéóîáéöïÔªÂvjMZ/", 0, "/Zjw/", 0, "…*…d‡ÉÓáîóóïáéÓÂéïöóÉÉïîÔ—·jZdZ8*EKM*1¨¨)¨Oj·ÉáèéóïóóóîÓªàîöî·àïéÉ—ªjZjZ", 13, "/88'1", 26, ")Y†ÂáèéóáïóóèóóÉËèáîé—Âïá··wdZZ*/8*¨", 13, "À"
-
-	section	.data,"aw",@progbits
-	public	_pistol_7_data
-_pistol_7_data:
-	db	"FTFFFFFFFFFFFFFFF#¨…O@…""@@Q-""-11""AlA)-""""PlF5", 26, "!", 10, "À1^lA5)", 26, "1!O4llA4-""""¨", 26, " ™=^{lA4-%O", 26, " …>eeA4-(Y", 26, " ", 13, ")9eeA4--™ ", 13, ")>l  lF-$%™ ", 13, ")9l lF4", 26, "", 13, "™ ", 13, ")5elF5)", 26, "™ ", 13, ")9{‹eF3™ ", 13, "(AŠ{eF-", 26, "!™¨$Q‹{SA4)", 13, "…N""^‹{QA4)", 26, 26, 26, "N^‹lQA3)", 26, "", 26, "N^lP9-%", 26, "N-e‹‹^>-%$", 26, "O…9eleF4)))$Y9QSeQ-%FQ>""Y>P", 26, "-%---", 26, "…", 13, 26, "S^", 13, "", 13, "™", 13, "(QQ", 26, "$1-Q^P(-1-e‹ŠQ4)""", 26, "3™1>{‹e3""$4…#A^>-", 13, "!", 13, "4)(", 13, 13, 13, 13, "", 13, 13, "", 13, "@(A^4", 13, "", 13, ")35)1¨u[", 13, 26, ")A^F", 26, "9^^>", 13, "¨¨u•w", 26, "-)$%%%(>5""Y¨[©·†$$%%%%%@…‡·àÂ*$$$$…j¶àïÓ*", 13, "", 13, 13, "ÀY—¶àóà8", 13, "$$$$", 13, 13, "…N©Á·éóàE", 13, 13, 10, "", 26, """", 13, 13, "", 0, "@À#……ÉÂ·ÉàèÓv", 10, 13, "$##JJ='™•ÓÂ·¶··ÓÓv", 13, "", 13, "", 13, ";†ÂÂªZ<¨", 13, "(™v¶•©¶ª©ªÓ‡", 13, "vÔèèá·‡""…(™d•‡©©ªª©ÉÉ/)3", 13, 13, "", 0, "/ÉàààÂ©©'…(™Z††ªªªª©ÂàM", 13, "AQ""", 10, "9>", 13, 0, "jèèàÓ·‡”8…)À…;†¶ª¶·¶•ªè‡'9Q""FF", 0, 0, ";ÔèèèàÉ©w8…)…Â;j·ª©¶·ª—ÉàZ", 13, ">", 13, ")", 0, "MáöóéàÉÁ©M;…*¨ˆ©;jª¶ª¶ÂÁª©éÉM", 26, "", 26, 13, "", 0, "'ªúúúóáÉÁ•E;*¨·j;jª¶©©ªÉÂ·Ôè¶j8/*", 13, 13, "", 13, "*MèúúúúáÁ·†K'*¨•j;dª¶©©©ªÁ·ªÓÓªjKZME**''/8Z·óöúúöáÁ·†;*¨wM/Zª¶©©©©ªª•ªÂÓªjKE;'*;Z‡àïööúúéÓ¶”Z", 26, ")NM/Z•ª©©©©¶¶•—©ÂÁ¶©•wdZv•ÓéïïóöúóÔ·©wM)NE';v‡©—©ªÂÂ·•‡••••••””·Ôèèáèéîöè·©‡d*Y'1*Mjw‡‡””¶ÉÉ¶‡vjv‡••¶ÁÓÓÓààààéóÉ©”jE1N", 13, "%1';Zjwwww•¶Á¶•ww‡•ÂÂÂÉÉáèàÔÉÓèé·•‡j/@%""*EZjvww‡©·ª•‡•ÂÉÉÉÁàïïïïèÔÉáè©‡wZ*@%""*ZZEKZjvw‡w©··ÂÉ··ÔáïóóïîàÁÉÉ•jdM'@%+'j•ddddMw©—•·ª©·¶¶¶©·ÉàèîÉ©‡‡vZK8*@%+'/†·©‡vw•ª—ÂÉàîéÉ©©ÓÓÓÓ‡†‡vjjdM88*@%+*8ªÂ¶ªª‡©¶···©©Âáàà•‡ªÂÉd*/;ME8**@%+*8·ÂÁ·‡v¶··ÂÉÂ·†”¶ÂÔà†jj•d**88*À$+*Eª•©•wªàéàÉÂáîîáÂÁÁÉÓ”Mvj88/*%+'EMvw·Ô©†‡··••†‡†•ª©•¶ª‡Z*;*/$¨%+*M••ª··¶ÉïöóÔÁÂáÔÉ·w‡†jjjj**@(™¨1Z†¶•d‡•©•·èööéè‡Kd©©©—dwj8MM'", 0, "", 13, "", 0, "@)™1;/Kj©àÓÂÁ—wvdZv‡ÂèÔ‡ZKdj•‡ZE';8", 0, "", 0, "@)¨''/Zdv‡•·ÂáóöéÁvZMjvÂÓÂ•Md‡•Z//8", 0, 0, 0, "…(*/8E;Ejjj•Éîóîà©dKd•©Â·jd©•;''", 0, 0, 0, "Y™'*Zw‡©à·”†vvvw‡j—áàÉ•Z;;wÂÔ‡·ÉZ", 13, "", 0, 0, "Y", 13, "(¨0ZÂ©ªÂîÓ©··áéÓ¶‡E/dÂààÁjEKjÔáÉd'", 0, 0, 0, 0, 0, 0, "Y)¨YwÉÉÔª·áà©ÉàîóàÉ¶•K/;vÂÔàªE8d¶©d'", 0, 0, 0, 0, 0, "…(Jd¶Ôàè©©©óÂÉáóéèªÂ¶jE/'Z‡—à¶†/vwd'", 0, 0, "………"
-
-	section	.data,"aw",@progbits
-	public	_pistol_8_data
-_pistol_8_data:
-	db	"FTFFFFFFFFFFFFFFFFFFFFFFFFFF&-1$@@3$@@O#	@Al^>9-@À", 26, """", 10, "¨4llA53-¨", 26, """", 10, "4F l>5>3-", 26, """", 10, ")Pl>9>4(", 26, "!ÀQ{»F5""""À!4>l F9", 0, 13, "=!1Ql {F9", 0, "1 ", 13, "¨19ellP9$", 0, "1 O43AeS^PA-", 13, "¨ O3>PF495P^$…¨43A)$""@À=3>SPFAFA5-(($-™35^S9-(""$""$$(((™349$", 13, 13, 13, 13, 13, 13, "$$™3(", 0, "", 13, "", 0, """™)", 13, "Y($", 26, """$3…$)>3!$4--$(54)3Y->3(9>>-->9$3Y-94", 26, """$$""4A93N-AA-PA>(3N9AF)", 26, "9SPA-1Y(PQS-", 13, 0, "Pe^^-)¨u1)Q^^-", 0, 0, "Plle-""O¨uL""$Ple)", 13, 0, 0, 0, 13, "^‹-Y", 26, "™u‡!(4(", 0, 0, 0, ")PFA#Y¨…©—", 0, 0, "", 0, 0, 0, "", 13, "Y¨Y©É‡#", 0, 0, "", 0, 0, "", 0, """(¨", 26, "¨u‡©Év/", 13, 13, "", 0, 0, """$…¨Y••ªÂªE", 13, "$$#", 13, "$N$™Yj•¶ªª·Âj", 13, ")""$""<LJ0¨¨&™Yv‡©ªª©·à¶8", 13, "", 0, "E‡wvvZZO", 13, "'™Zwwª©ª©¶èÉv8", 0, 0, 0, 0, "", 13, "EjÉª¶·w•j'…'™Zw©ª¶¶•ªÉè©Z", 0, 0, 0, 0, 0, "", 0, 0, 0, 0, "d©éèààÂ”‡©/…'™;†·ªª·ª•Âèïé©;", 0, 0, 0, 0, "", 0, 0, "dÔóóîèÉ·‡Zj8…(¨J8j··ªª·ª©Éèïóá•K**/M·éöööîÉ·•K8K;Y(Yd;jªªª©ªÂ¶—ÂàèîèàÓ©vv‡•·àóööööáÂ¶wE*/(Yd;j©ª©©©ÉÁ••¶ÂàèÉÂ¶vv•©ÓïïóöööàÂ¶vE*)¨YZ8Z†©©©©ÂÂ¶•‡©ÉàÂ·©††¶ÂàéééïööÉª©j;", 13, "", 26, ")¨w;';d†©”•©ÉÔ·•wvw†‡”©·ÓÓààààèïóÂª—j8", 13, ")¨v8*KZj†‡w”ªÁ·•wvw‡©·ÉÉÂÂÔÓÉÔÓéé·•‡j8", 13, 13, ")¨Z'';EZjww‡—··©w‡•ÂÉÂÁÂÉÉàÔ·ÂÓèè©”‡d/Y(¨<*MEZdjww©—©•ªÂ¶¶ÂÓàïóóîà··áà•wvM'1@", 13, "%Y", 26, "*MdEMdjv‡w”·¶·ÉÉ·ÁÂÔáéîéÂÁÉÂ‡jdEN%Y'd©jdZMv‡ª‡¶·ªª¶ÂÔÓÉÉ•¶à·‡Á·•jZ8'Y%…'/†·©ww•—ª¶ÂÔèéèÁ©•©ÉÉÂ©jMd©•vK;*N$""/8¶Â¶ª‡‡··¶¶ª©©ÓààÁ‡vw·‡;*Zvj;/*Y#""/;¶··•v•¶·ÂÂÂ·¶••ÂàÔwdj—Z/MjK8*'", 13, "#,/v•d•w©ÔîàÁ–·àééÓ¶ÂÉÉ•Mvd/MZE/'#,;KdjdÁéè—vvZdj—©ÁÉ·ª—©v8KE;;*'", 13, "", 0, """$"";dv•vÂ•w¶áïáÉÂª•†jjjw‡”d;'**O&À¨1Zª‡w©ÂÓèóöîÂ©wjw©ª•†ZMKdj8*", 0, "", 0, "N'OYMw¶Â¶w•‡jd‡ªÔáààªjdj”•©•Z88M*", 13, "", 0, 0, "N(…</8Mv¶ááïóóóáªvZZ•ªÉÉvMZ†••M*8/", 26, "", 0, 0, 0, "Y'N***8;Ed•ÂéïóéÉ–jjEjÂÉÂdZ†©d///", 0, 0, "1&*Md•vddjKMZ‡Ôîöî·•M;jªÉ©Z·©;", 13, "", 13, 13, "O"
-
-	section	.data,"aw",@progbits
-	public	_pistol_anim
-_pistol_anim:
-	dl	_pistol_1_data
-	dl	_pistol_2_data
-	dl	_pistol_4_data
-	dl	_pistol_5_data
-	dl	_pistol_5_data
-	dl	_pistol_7_data
-	dl	_pistol_8_data
-
-	section	.data,"aw",@progbits
-	public	_brick_wall_data
-_brick_wall_data:
-	db	"@€ÌğßæÜÜÏĞÚ§išÊÙçİçĞĞĞÒ“¹ñŞÙÙÛÍÍÍÑ„âîÛÏÏÏÏÚÚ´šÖÀÈÈ±¾¾¾¾ƒ…ñîÜåæääääÌğßİİÙÏÏÏ¥ršßÑçååÏØÜ¿“¸ëÛÛÙÛØÏÎİ„×îÛÏÏÏÏÙÑ“šÌÀÈÇ±±½½¾ƒ…ñîİååääää¹ğççÑÏÏÏÏ³ršßÛİÑĞÏØÙÒ“¸ëÙÙÙÛÙÙØå„ÖéÜĞÏÏÏÜç“šÕÒÈÈ¾½½½¾ƒ…òÕİæåääää­ğçìÑÏÏÏÏÈršÖÒÑÜŞÛÛŞÒuÌëÙÙÙÛÛÙÙå„ÖÕéáËËÊÊËˆâÖÒÈÑÇ½½½¾¥ˆòñïîîîéáá¬ğßæÑÏÏÏÏÈišñò×ÖÖ¹ÌÖ××ëëÛÙÙÙÙÙÛİ„×¹¬š™…usi™¬âßÈÈÈ¾¾¾¾§ˆòòñòññòòñ¬ÕßÜÜĞÏÎÎÈišëÕ««ËÊÊËË˜ÌëŞÙÙĞÛÙÙæ„×¸À³ÇÇÇÇ¾r˜âßĞÛÑÇ¾¾Ç§ˆòéÔÔßÁÊÊÀ«îçÛİĞÏÎÎ³sšëÊÑÈÎÙÜÙÍ“¹ëŞÙÙØØØÛæ„Ö¸ÜØÏÍÎÎÏƒ…ÖßÛÜÛÎÇÇÇ§˜ñíææææçíí«èåååÏÎÎÍ³sšêµØÍ¾¾ØÍ¾´¹ëŞØÙØÎÙåærÖ¸ÛÏØÏØÎĞƒ…ÖçİİÜÍÍÍÇ§ˆâçİÜÜÜİçæ«èİİåÏÎĞÎ§sšÖ´ØÙÇ¾¾¾¾µ¬âŞĞØÙÈÛİİr¸¸ÜÎÈÎÎÎÏƒˆÖçİİÜÍÏÍÑƒˆâçİÜÛĞÜåæ«éİİİÏÍÏÑ³t›ğÏĞØÍÎÍÇ¾´›×ŞÏÏÏĞÑ´Ñh­¸ÜÚÎÍÍÎÏƒ˜ÖíİİÜÍÎÎårˆêçİİÑÏÛİæ¬ïİäÜÎÍÍÑÈ…›êÙÙÙÇÎÏÇ¾“šÖŞÏÏÏÑÛÑÑh­ÕİÚÑÈÍÏĞ§˜âíİİÙÍÍÍÜ³˜ëíİÜÑÏÛİİ¸ğİÛÛÍÍÍÎÈ…›ëçÙÙÎÇÇÑ¾“šÖÜÏÏÏÙÜÜÈh­ÕİÚ´ÏÏÎÏ§™ëíÜÜÏÍÍÍÏ´˜ëàİÜÛÑÜİİÌğÑ§ÈÚÏÍÎ¥…›ëßÙÙØÇÎÎÇ“›ÖŞÑÏĞÏÜİÇh­ÕİÑÈÑÚÍÎ¥™êíÈ³ÑØÎÍĞ§ˆëíÚİİİİİçÌğÜÚÈÑÙÍÏ³u›ëçÙÙÏÇÍÏÇ“¬ÖçÏÏÏÏÚÜĞrºÖçĞÏĞÎÍÎ§šÖßÛĞÈÛÏÍÑ§™ñßĞİİİİİçÌğÚÚĞÏÎÎÎÈušëçÙÙÙÇÇÇÍ“¹ÖíĞÏÏĞÑÚÑi×ÖçİÚÎÍÍĞ³šÖçÚÚÈÏÎÎÏ³™òßÏÛİÜÚÜçÌğÚÚÏÈÍĞÙ³sšâçÙÙÙÎÍÇĞ“¹ÖÒÏÏÈÏĞÚÛi×ÌæİİÏÍÍÙ§šâçÚĞÈÍÍÙÏ§™ñíÎÑİÜĞÛæÌğÙÎÍÈÈÈÏ³išâŞÙÙÛÙØÎÛ“¹ÖçÏÏÏÏĞÚÛi×ÕæåİÏÈÙÏr™ñçĞÈÈÍÍÎÈ’™òíÎÚİÜÜİæÌïÏÎÏÎÏÏØ³iš×ŞÙÙÛÙÙØŞ“¹ÖßÏÏÏÏĞÙÛs×ÕæååĞÎÏÈƒ™ñçÏÏÏÏÎØÏ¥šòçÏÚİİİİæÌğĞØÏÎÎÎĞ³išÖŞÙÙÙÙÙÙÜ“¹ÖßÏÏÏÏØØÛ…×ÌçİåİÏÍÎr™ëçĞØÏÎÎÏÎ¥«òçÏÚİİİİæÌğÛØÍÍÍÈÍ§išÖŞÙÙÙÙÙÛÜ“¹ñïÑÑÙÚĞÈ³«ëÖçİååÚÈÈr™âßØÏÎÈÈÈÈ’ˆòíĞÜİİİåæÌñÊ„§¥¥¥ƒr¬«ÖÒÙÙØÙÙÛŞ“¬Ì›™ˆ˜……uuš¹ÖçÜåååÎÏ§™ââ¨§§§§¥ru­òíİİİİİİåÌ×«š…usssˆ››ÖçÙØØØØÜŞ“›Ì¨s†“„„“rs¸ÌçÜİÜæİÑ§˜ëë¸¬«ˆˆˆ™«­òßÜÜİİÜİåÌÌu„„rWWrrušêÒØØÏÎÛçŞ“™ËŞÑÑĞÏÑÒ“X­ÕåÜåİçíí“ˆñğµµµ§hr““šòçĞÜİİÜÜåÌÖ“§¥§„r“„išñÒØØÏÈİçŞ„ˆßÚçåĞĞØç¥C­ÕåÜåæííí“ˆòîÏÏĞĞÈÑÑ³™òßĞÚÜİÜÑÜÌÖ§§¥¥’§rƒi¬òŞØØÈĞæçç„ˆßØíçİĞØß¥C¬ÕåÜåçííí´ˆòéÏÏÏÏÏÈÈ§™òßÏÏÛÜĞÈÏÌÖ³§§§§¥§§s¸òçÙÙÈĞççç„ˆÔİíææÏÏŞµX­Õåİæìííí´™òéĞÏÏĞÏĞÑ´™òßÏÏÑÑÏ¥ÈÌÖ´§§³´³³“i¸òçÙÙÏÜççŞ“™éìíççÏÎÙ¿X­ğåÜåìíííµ™ñîĞÏĞİÜÑİ³™òßÏÏÏÚÙÑÑÌâµ§§´µ³´“i«òçÙĞÙåçç³´šéìíİÜÏÎÑµX¸Öçİåçíííµ™ñğĞÏÑççÑæ³˜òßĞÏÏĞÜİÏ¹âµ§§´µ´´´išñßÏÑÛççåŞ“›îæíçÏÏÏÛ“XºêçİİİìííµšëğÙÏÙåçÜçµˆòßĞÏĞÏÚÜÈ¬×µ§§³µµ´“išñíÏĞÜçİİç“¸ïçíçĞÏÏÛµX×ÖæİÜÜæìí´™ñğĞÏÙåçŞŞµˆòèÑÏÏĞÑÚÚ­×µ§§³µµµ„ršñçÏÏİçÜİŞ„¸ğÜíçÏÏÏĞÒX×ğæåÜÜİæí´™òğÚÙĞÜççÑ´ˆòàĞÏÏĞĞÚÚ­×µ§§§´µµ“XšëŞĞÏÑİÑÑŞ„¹ğĞçİÏÏÏÏÒX×Õåİååååí´šòğÙÛÙĞççç´…òàÏÏÏÏĞÚÚ¸×´§§ƒ§µµ´XšêÛÏÏÏÏÏÑÑ“¹ÕÙçÜÏÏÏĞ³X×Õåİìåìçí“™òğĞÙĞÈŞçç´…òèÏÏÏÏĞÚÚ­×´§§ƒ§µµ“X™ÖÑÏÏÏÏÈÈÈ„¹ÕççÛÏÏÏĞ¥X×Õææìíççí´šòğĞØÏÈŞçç´…òéĞÏÏÏĞÙÛ¹×´§¥¥¥´µ“XšâŞĞÙÑÈ³ÑÈ“¹ÕìÛÑÏÏÏÙ¥X×ÕííííàèîµšòğØØØÎÙçç´…òîĞÏÏÏØÙÛ××µ§§¥¥³µ“išëË“„„hhƒ„uÌÕíÛĞÏÏÏÑ¥X××ÖË«š«šˆˆÌòğØØØÏÏåç´ˆòÌÀ¿¿¿µ“„Ì×µ³§§¥¥³“išñë×Ö¸¬¸ÌÕÕëÖçİÏÏÏÏÙ¥X×­««š«««Ë¬¬òğÙÙĞØÏÙåµ˜òâÖÖÌÌ×ÖÕÌ×´³³§§§³“sšëÊ¿¿¿ÒÒÒµuÌğİçĞÏÏÏÙ¥X×ËµÑŞÒŞŞÒµˆòğØÙÙÙÙØİµ™ëóçÒßÊÔßÊâ×´§³³³§³§s›ëíĞĞÑĞÏÚ´…ÌïåçÑÏÏÏÈƒi×ÊØÜĞÏÏÏÏ¿ˆòïØÙÙÙÙÙÜ´™âïçæİææİ¿ñÖ´³³³³³§§i›ëÒÏÎÎÏÎÜ³sÌïåÜİÏÏÏ³ƒi×ÊÚÛÑÏÏÏÏ¿ˆñîÙÙÛÙÙÛÙ´ˆÖîçææææçÑâ×´³³³³§§³i›ñÀíĞÎÏÏÛÈsÌËíİÜĞÏĞĞ¥s×ÊĞÛÛĞÏÏÏµ™ñîÙÛÛÙÙÏÛ´ˆÖîíçæææç¿Öâ´³§³§¥¥§i›òéßĞÎÏÏÜÈiÌ«ÑÙĞÏÏÑæ³uëËÏÏĞÏÏÏĞ´™ñğÙÙÙÙØÍÙ´™êïíçæææçÒÌâµ³³§¥¥ƒ¥išñéÒĞÏÏÏİ¥iÌËÜÏÏÏÏÏİ³uëÕĞÏÏÏÏÏÛ³™ñğÙÙÙØÍÇÍ³¬ëîíçææææßÌâµ³³§ƒƒƒƒišëßÜÏÏÏÏÚÑiÌÕìĞÏÏÏÏÜ³tëğĞÏÏÏÏÏÛ§™ñğÙÙÙÎÇÇÇ³ËëèíçææææßÌâµ³³¥¥§ƒiš×ÒĞÏÏÏÏÏÑiÌÖíŞÏÏÏÏİ§tëğĞÏÏÏĞĞÙ§™òğÙÛÏÇÇØÍ³™ëííçææççßÌâµ³³¥¥§ƒišÖÑÏÏÏÏÏÚÑi¹âîÒĞÏÏÏÜƒuëğÑÛÙÑĞÏĞ’™òğÙÛÙÍÇÙÍ¾˜ëíííçæíßŞÌÖ´³³¥¥¥išÕµÛĞĞÏĞæÑi¬×áßÑÏÏÏİ¥uÖïİİİÜÜÑÚ’˜ñîĞÙØÇÇÎÇ¾˜êàíííæçß´ÌÕ§§§ƒ§§išÕßåÛÛÏÏÜ¥i¬¸ßæĞÏÏÏİƒˆÖïÜİİİİÜÜ¥ˆñÊÎÙÍÍÙÍ¾¾™êèíççææßµÌÕr³§¥¥¥ƒsšÕçİŞÑÏÏÏƒi¬ğŞÏÏÏÏÏÜ¥ˆÖîĞÜİİİİÜ§uëÀØÙÍÎÍÍ¾Ç™âèíææææçÑÌÕr§§‘ƒsšÌççÑÏÏÏĞ¥r¬êçÜÜÜŞÜå³ˆ×ïÛÜİİİİÛ¥…âÀÑÙÎ¾¾Ç¾Ç™ëîíçæææçÑÌÌ“¥¥ƒ§¥sšêçæĞÏÏÏĞÈr¬ëËÊÀÊËÊÊ¨¬×ğİİİİİİÜ§…âËÑÎÇ¾ÍÛÇÇšñîçææææçÑÌ×¨§§§§³³¥u›êßåÏÏÏÏÏÈr¬ò××ëëââëëâëğæİİİİİÜ§…ëğÒÑÙãÙÛØµšòîìæææææÑÌò¸­¬¬«ˆ™¬Õ¬êÒŞĞÎÏÏÏÈh¸ñÊÀ¨Êß¿¿¿ˆëğìİİİİİÑ¥…ëë­¬««˜¨™«­òéçæææææİÌêÀ©©ÀÀÀ©“ˆ›êçİÑÏÏÏÏÏh¸ÕßÍÇÇÇÛÍØiëğíİİİİİÑƒ…ëÌ¨t…¨µ““išñèæææææææÌëíÜÜÜÜÛÜ´ˆ›×ÒçÜÏÏÏÏÈr¸«ÒÎÎ¾¾ÍÇÍsëğíåİİİİÑƒ…âËÈÇÇÇÇ¾Èr™ëíææææææåÌêÒÏÏÏÏÏÚ³¨«âİååÏÏÏÎĞr¹ÊÑÏÏÍÇÇ¾ÍsëğíİÜİİÜÑƒˆâÊ¾½±±±±ÈrˆëçåæææææåÌÖßŞÏÏÏÏÚ³…«êŞİçÏÏÏÏÒiÖÕÎÙÎÍÙÏÇÍtñîçİåİİİ¿r™ÖËµ¾±±±±ÈhˆâçæææææææÌêÊÊĞÏÏÏÚ³u«ëæçíĞÏÏÏßiÌğÈÙØÇÍÎÇÇsëîííçåİçµršÖÕ¿Ñ±±±½ÈhˆêíææææææåÖëèÒĞÏÏÏÚ¥s›êçííĞÏÏÏÒr¸ûÏÛÙÍÇÍÍÍsëîíçæåÜßµ„šÖÕÒ³±±±±Èh…ëíåæååİåäÖêßÒÏÏÏÏÚ³s›êæííĞÏÏÏ¿r¸ñÑÛÙÍÇÏÏÍiëïíçİİÜİŞ“šâËŞ¾±±±±Íh…ëíääääİååÌ×ÒĞÏÏÏÏĞÈs›êæíçÚÏÏÏÒX¸ñÏÙÙÍÇÇÇÎiëğíçÜİİÜŞ“™âÊÈ±±±±±Çh…ñíäääääåæÌÖÑĞÏÏÏÏÚÈs›êçíççĞÏÏßX¸ñĞÛÙØÇÇÇÑiëğíçÜİİÜŞ„˜âÀ¥¾±±±½Çh…ñíäääääååÖÕ´ÛÏÏÏĞæ´sšÕåíæçĞÏÏÊr¸ëÏÛÙÙÍÎÍÜiëğíçÜİİÜŞ„ˆâ¨§±±±±ÇÈh…ñíäääääåİâğßæĞÙÏÏå¥sšËÜçİçĞÙÛ¿h¸êÏÙÙÛÙÏØŞiâğíåİİİİÜrˆâÀÑ¾Ç±±¾¾h…ñçİååääääxÀ¦’€€‚a:J„¤¤€€€r7k¸‘~}~‚:¬¨‚€€p€‚‚VJ›rooaggggIC¹”‘£¢xÀ’‘‘pp€I.J„‚¤‘‘€hVk¸I›”‚€pp‚VJxrogaaaagIB¹”¢££¢kÀ’¦‚pppg:J„‘‚€rV\­€‘Iyµppp’VJˆrpogaaggICº˜£‘¢[À’¦qppp€p:Jšƒ‚‚‚‘rBy­‘Uy˜†tttissD‰›rpqgggggICº¹–”µµµµ“[™¦£‚pp:J¹›yykyyz‰­¸‚‚‚:‰k[JXBB7.J[‰„opoggggUDº¹¸¹¹¹ºº¹Y˜¦€€po:J­ˆisuisssDx¸‘:›\rUgggga:D¬“€‚ggggUD¹”„“„„isiY”’€po7L­i‚o‚oVk¸€‘:yk€oooIC›¦ongnUD¹²££££¤²²Lµ‘£‘€pooa7J›c€~ng€~gbk­‘‘‘:yw‚€€€ICš¦ooooIC¬¤‘¤¤Lµ‘‘‘€pa7L«b€}nnnncY¬€€p‘.\w‚ooo€IDš¦‘‘o€o:C¬’‘‚€£¤L”oaBLšp€}~nnVL›€€€‚bq.[koop€ID›¦‘‘o‘ID¬¤€‘£[©oopBL«‚nnnVLy€€p‚‚q‚.[kpo€ID¬²‘‚oooUD­²€\Á‚oooopBL­¥nngVJypp€‚p.[ˆ‘qp€oUJ­´ooo€bD­´‘xÁ‚Ub‚opaBL¸§€nnVLy‘€€g.\˜‘‚p‚‚opIJ¬³paooID­¦¤y¶‚oo€aBL­¥n~nV[y¦€p€€‚€.xš’qp€oopIJ›¦qooIJ¹¦€¤x©qppoBL­¥nnn~Uk›¦pp‚:‰š’oo€UJy¦‚ppUJ¹¦p‚¤x©‚oo€g7J¬’oon€Vky’ppp€:‰š‘€ooIJ‰’ooo€ID¹¦‚q¤x©poooopa:J‰‘€Vky’pppp:‰™’‘‘€o€IJ¹’oooopoID¹¦‚¤x©€€g:J›‘Vky¦€p7‰™’‘‘ooIJ¹’pIJº¦‚‘£x©€opo€g:J›‘Vky¦€pp€B‰š¤‘‘ooID­’€po€pILº’‚£y™‚€oooooa:Lš‘‚Vk¹©q€paYŠš’‘£‚ooID‰“oooooID¹³‘£x¸iIIIIII:YYš’‘V[yLDCXCBB7Jk›’‘‘£ID‰¬hUUIII:B[¹³‘‘£x›YJCB777CLL›’€€€‘VLxCBBV::B:7kš’‘£‘‚UD­®\YJDCDDY[¹§‘xyB:::..::BL¬’€¤‘UJ†‘‚q€’U.\˜‘‘‘¤²¦VC¹šcccI:IVVJº’‘xxVIIII:VI:L¸ƒ€€o‘¤‘ID„’‘€’I.[˜‘£¤²²´VCº¨ppqqoq‚UXº¦xšUUIIII::.[º‘o€£’’ID„¦¤‘€¥I.[˜‘£¤²²´VDºµ€pp€€poIXº¦€€€opxšUIIIIIUI7\º’oq’’’UD“¦££p€‘b.[˜‘£¦²²´VD¹µ€p€€€bXº¦ppIpx›VIIVVUUU:\º’p’’UD†¤¦¦¤pph.\™‘‘¦²²´cJ¹¨€€‘‚‘VXº’p€‚‚‚‚x›cIIVcVVV.Y¹¦‚€‚‘’¤UVJ”¤²‘pc.\š’‘¤²²´cJ¹Àp¤’‘UXº’€€€€pk¬cUUVcVcV.J¹¦€¤¤‘‘VY”¤¦¤€pp‚V.x«£¦²´cJ¸À€£’’cCº§€€€‚p[›cIUbccVV.J¹§€¤‘’U\–¤¦¤€pp‚c.‰«££¦²VJ®À€‘¤‘‘cCºµpp€[›cUUUccc:.J¸’€p¤‘:kÀ¦¤€ppr.‰˜£‘£²VJºÀ‚¤’‚bCº´pp\›cUUIVccV.J­‘€p‘‚‚‘:kÀ€¤‘€pp€ƒ.‰–‘‘‘‘£²VJºÀ‚‚q¤’’qCº“ppp€€‚\›VUUIUccV.J«€p‚Uk˜‚’pp€U.‰–‘¤‘¤¤²VJº˜€o‘’’bCºµ€pp€€\›VUUIUccV.J›€€ppqp:kˆ¤¤pppa.‰˜‘£¦¦¤£²VLº˜€€o’’bCºµ€€€€€k›bUUIIccV.J‰‘‚‚pUqpUkˆ¦‚pppa.›˜²²´´´µ¿cJº˜€€o’’bCºµ€€€€‰›bUUIIUcV.J­sVIU:.::Bxk²‚pppa.‰›šuiJYJDDy»À€€‘’cCºxihhhcU:y‰bUUUUIVV7J¹­››k[\xkk­š¤€pppa.‰\YLJJLLu[[ºÀ€‘cDº¬ššxx›yky‰bUUUUUUV7J¸„hhhrrrcBxš¤€ppp‚I.‰jc‚ƒƒƒƒƒcCºÀ€cX¸¶’’„„„„“‰›bUUUUUUU7L¸¦€bBx–£¤‚ppppI.‰„pp€hC¹¨€cX¬¿¤£‘‘’h¹›bUUUUUUU7L­’€pppb7x˜‘‘€p€gI7‰„‚€qC¹¨cD›¿¤¤¤¤¤¤q‰›bUUUUUUU7L¸r“€p‚p7xu¦€pqI7‰“€‚€ppcD¹¨cD›¿²¤¤¤¤¤ƒy‰bUUUUIIU7L¹¨„pppp:xYq‚€pp£U7Š†€€pp€cJ¹¨~bX¬¿²¤¤¤¤¤’y¬cUUUIIII7J¹”’€pppa:xuppp€U7Š˜€€€pp€UJ¹˜€~}~bY­¿²¤¤¤¤¤¦y¬cUUUIIII7J­„‚ppppq:xˆ¤qppppU7­˜pppp€UD¹ÀnnnU[¸´²¤¤¤¤¤¦y‰cUUIIIUI:J›ƒpppp€‚:xy´‘ppppU7­˜€€p€‚UJ¹À€nn~aD¸´²¤¤¤¤¤’y‰cUUIIIUI7Jšqpppp€‚:k‰µƒpppI7‰˜‚‚‚€€€ID¹À}n~aD­´²¦¦¤¦„ƒy›VUUIIIII7Jˆq‚€p€£q:[›µ’‚ppp‘IBy©‚ID¹¨€nnnaD¬´²²²¤¦’bxˆUUUIUUII:Jˆ¦‘‚ppI:[…§‘€ppp‘ICy¨IC¸“~~onaX¬´²¦¦¤¤¦qykIUUIaIII7Jˆ’‘pppI:[™‘ppIDy¿IB­r€~~~ngJ¬µ¦¤¤¤¤¤qxk:aUIIIII7J™’¤€ppI:[«¦‘UC›©IB‰i€gnnngJ­¿²¤¤¤¤¤qxxVIIIIUII7J¬’’qppp€o.Y¬siiisiiC[‰À‘UC‰snn~ngJ¹¿¦¤¤¤¤¤qx‰XUUUUUUIBL¬¦‘€p€pp.[ºyy­Š‰‰‰­‰Š«£UC­™r€cJºµ¦¤¤¤¤¤qx¹\[[[LDJYkY¬’‘€pp€€p.\¹siX“„chhC­«¦IB­¸[[YYXCJY[¹µ¤¤¤¤¤¤‘x¬iXXXXXXBCL¬’pp€p.\ˆ“onnn~7­«¦qIB­xXBBBBWV7J¹´¤¤¤¤¤¤£x­¦‚cCL›’¤ppp.\Yƒnn~n}B­À¦‘q:B‰sogggggp:D¸²£¤¤¤¤££x¬’pppp‚bCL¬‘‘‘pppq.ki‚€}nnn~7­©¦‘‚:D‰sgaaaaap:D­¦£¤¤¤¤££x›„‘p€pp‚UBL¬‘‘¤ppppƒ:›¨oon}B¹¨¦‘‘‘‘‚:Jysqgaaaap.D¬¦£¤¤¤¤¤£y¬„“€p‚UBL­‘¤¦€pp’:x«o€n~n}7¸¿¦¦¦‘’c:Jyˆhpaaaao:C¬¦¤¤¤¤££¢y­µr€pI7L¬’²¦ppr.k¸p~n~~}7­¿¦¦¤‘§c:Jy™ƒaaaaao.C­¦£££‘¢¢y¬„ƒppU7L¬’¦¦pp€ƒ.kÕ~n~:­©²¤‘VJ‰…‚aaaaao:C¸¦¢¢¢£y›ƒqppp7L«’¦¤‚€p€ƒ.k¸€~nn}7­¶²¤‘UJ‰soaaaaag:C¹³¢¢‘£xšqqp€‚p7L«¤¦¤¤p€„.k¸€nnn:­À²¤‘:D‰ragaaagg:C¹´¢££yˆbp€p€£p7L˜‘¦‘¤€€€„.k¸€~~:­À²¤‘ID‰haaaaano:C¹²¢¢¢¢‘‰™’’p€‘I7Lu¦‘¤€h.\¬€€‘:¬©²£‚:D‰rqgnaaga.C¹¦‘££¢"
-
-	section	.data,"aw",@progbits
-	public	_portrait_data
-_portrait_data:
-	db	"@€ÌğßæÜÜÏĞÚ§išÊÙçİçĞĞĞÒ“¹ñŞÙÙÛÍÍÍÑ„âîÛÏÏÏÏÚÚ´šÖÀÈÈ±¾¾¾¾ƒ…ñîÜåæääääÌğßİİÙÏÏÏ¥ršßÑçååÏØÜ¿“¸ëÛÛÙÛØÏÎİ„×îÛÏÏÏÏÙÑ“šÌÀÈÇ±±½½¾ƒ…ñîİååääää¹ğççÑÏÏÏÏ³ršßÛİÑĞÏØÙÒ“¸ëÙÙÙÛÙÙØå„ÖéÜĞÏÏÏÜç“šÕÒÈÈ¾½½½¾ƒ…òÕİæåääää­ğçìÑÏÏÏÏÈršÖÒÑÜŞÛÛŞÒuÌëÙÙÙÛÛÙÙå„ÖÕéáËËÊÊËˆâÖÒÈÑÇ½½½¾¥ˆòñïîîîéáá¬ğßæÑÏÏÏÏÈišñò×ÖÖ¹ÌÖ××ëëÛÙÙÙÙÙÛİ„×¹¬š™…usi™¬âßÈÈÈ¾¾¾¾§ˆòòñòññòòñ¬ÕßÜÜĞÏÎÎÈišëÕ««ËÊÊËË˜ÌëŞÙÙĞÛÙÙæ„×¸À³ÇÇÇÇ¾r˜âßĞÛÑÇ¾¾Ç§ˆòéÔÔßÁÊÊÀ«îçÛİĞÏÎÎ³sšëÊÑÈÎÙÜÙÍ“¹ëŞÙÙØØØÛæ„Ö¸ÜØÏÍÎÎÏƒ…ÖßÛÜÛÎÇÇÇ§˜ñíææææçíí«èåååÏÎÎÍ³sšêµØÍ¾¾ØÍ¾´¹ëŞØÙØÎÙåærÖ¸ÛÏØÏØÎĞƒ…ÖçİİÜÍÍÍÇ§ˆâçİÜÜÜİçæ«èl99999999999999999999999999999999999999999999999999999999999åæ«él9FFFFFFFFlllllllllllll                                    9İæ¬ïl9ŸŸŸ°¼°ŸŸ¼¼°¼°Œ|ŒŸŒ|Œ°m|||ŒŒ||¼¼¼¼»»¼||||||||||ŒŒŒŒœœ 9İİ¸ğl9ŸŸŸ°°°¯ÃÅÃÃÃ°||Œ°°Œ|Œ||œ¯°Ÿ|œ¼¼¼¼®®lz{|||mm||ŒŒŒŒŒœœœœ 9İİÌğl9ŸŸŸ°ÃÃÃÅÅÃÃ°Œ||ŒŸ¯Œ||mŒ¯¼Œ|°°»P--1""(3e||Œ|||Œœœœ 9İçÌğl9Ÿ°¯°ÅÅÅÅÅÃ¼ŸŒ|ŒŒ|ŒŒŒ¯|||Œœ||ŒŒŒe+$(!""($-®œ¯Œ||Œœœœ 9İçÌğl9¯¼¯¯ÃÅÃÃÃ°ŸŒŒŒŸŒŒ¯°¼°|m|m|||l3!!(($""e¯°¯œŒŒŒœœœ 9ÜçÌğl9°¼ŸŸ°ÃÃ¼¼ŸŒŒ¯¯°°¯Œ°Ã¼¼¼¯Œ|||Œ{=#", 26, "$(($P¯»¯¯ŒŒœœœœ 9ÛæÌğl9¼¼ŸŸ°ÃÃ¼¼Œ|Œ°°°°°Œœ°¼¼°°ŒŒœF""""!$$$Nœ»œœœœœœœ 9İæÌïl9°¼ŸŒ¼¼Ÿ|||||œŒ|Œ¯¼°¯œŒŒŠze1""""""!""$$$"",®®‹œœœœ 9İæÌğl9°°Ÿ||°¼Œ||ŒŒ||Œ¯°°¯¯‹e3((""""$#", 26, "", 26, """$$$""""{œœœœœœœœœœœœ 9İæÌğl9ŸŸ|m|¯°||Œ°°¼œ|Œ¯¯°¯¯=-($$""!""!#$$$""+Šœœœœœœ‹Š{e^ 9åæÌñl9|||||Œ|ŒŸ¯°¯Ÿ|||œœœz(($""""""""!!$$$$"",®œœœœœ®l^P5-)$"" 9İåÌ×l9|||Œ||||||||||||||||k((#""""$$$)!1{lze^F5)$""""$$ 9İåÌÌl9|||||||||||||||||||Š[""""""""""!!", 26, "", 26, "!$$)\!'!$$#""""$$""""""""$ 9ÜåÌÖl9||||||||||||||||||ŒlL""###$$##""""""""""$$$)A!""""""""""""$$ 9ÑÜÌÖl9|||||||ŒŸŒ||||||||œz<""""""""""""""######$$$$( 9ÈÏÌÖl9|Œ||Œ|ŒŒ||Œœ¯|‹x<!""!!!!!!!""""###(+ 9¥ÈÌÖlQŸ°m|Œ|m||¯°¯¯¯œ®k1""##""!!!!!!+Y[Y", 26, " 9ÑÑÌâlQ°°|Œ¯||Œ°°°°°°°¯®[0!##""""!!+[™›ˆ'", 26, 26, "", 26, " 9İÏ¹âlQ¼¼œ|Œ¯»Œ|¯¼°°°°°»»­L'!!""""!!!!!+…™™™[0/!", 26, 26, " 9ÜÈ¬×lQ¼¯ŒŒŠ‰­‰Š»»»»°°°°»\(##""""#####""![™ˆˆˆ*!'3"" 9ÚÚ­×lQ¼œ®›[LLY[y›«­¯°°»e(((((###(((((ˆˆˆˆˆ# 9ÚÚ­×lQ¼œ¬dLDˆˆˆˆ™«™¬»»®N4--(((##(((((™ˆˆˆ… 9ÚÚ¸×lQ¼«KDDY«¬™…«««««™™««¬|G1((####!\™u<, 9ÚÚ­×lQ»˜DJDY««ˆ…««««™«™™«™™¯^=31((#""180! 9ÙÛ¹×lQ¯–XKDL««™««™™«™«šˆ™™ˆŠ^\\N==31,!!!!", 26, "! 9ÙÛ×× Q®ÂsDDJ««ˆ…ˆ…ˆˆ…™ˆu˜ˆ…y{^SQPNNN>=311,!!", 26, """""""!", 26, " 9“„Ì× Q|ÂsDDL™ˆuuˆ…………ˆ…u………QPQPPQPQQPF>===3111(#!!""""""""""#( 9ÖÕÌ× Q|¬†XDZˆ…uuˆˆˆ……ˆˆ……ˆ…k\\\AP^l{Šl\FFFA>>>>>===33333333=>> 9ßÊâ× QŒ|™©†v™™˜ˆ™ˆ™™™¬››¬˜ulzykPP\FPPP>=>>===>>=3333=FA>A>FFPP 9İ¿ñÖ Q||ŠËÊtw˜¬ËËË¹»¯||®®®®y===43333333333334-,#3PFFFFQS^^ 9çÑâ× Q|||Š®š™¬®ÀÀ¬¯¼°ŒŒ‹œ®¬¬y0+###!!!!!!!##!!!!!(-39>>AAAA 9ç¿Öâ QŸ|ŒŒŒŒŒŒ°¯°Ã¼¼¼°Œ|ŒL<0+!!!!##!!!!!""""!!!###!!!!!l9çÒÌâ QŸ|ŒŒŒŒ°ÃÃÃÃ¼¼Ã¼°Œ|ŒY0+'!!!###!!!!!(3=1+'''l9æßÌâ S¯|ŒŒŒœ¼ÃÃÃÃÃÃÃÃÃ¼Œ|x8++'##!#!!!!!!#3NN=0+'3k=1)""((""l9æßÌâ S¼ŸŒŒŸ¼Ÿ¼ÃÃÃÅÅÃÅÃÃ¼Œœ®[+++++'''!!!!'''''*'0®œ®{OOO@3l9çßÌâ S¼°ŒŒ°ÃŸ°ÃÅÅÅÅÅÅÃÃ»œ¼¬L0,+++''!#!!'''''<JDDJJDx®‹Šœœ‹{zl9ßŞÌÖ S¼¼ŒŸ¼ÃŸŸŸ¼ÃÅÅÅÅÅÃ¼¯¯Ã»k1+++++''+++++,=<\…isˆ™ˆYzŠ{œl9ß´ÌÕ SŸ°Ÿ¯°°°Ã¼°°Ã¼¼ÃÃ¯¯¼¼ŸŸÃ¼œzz]]z®®®Š{®‹œ¼»»­˜™ˆkYk»»|‹‹l9ßµÌÕ SŸŸ¯°°°°°°°°°°°°°¯°ÃÃ°œ¯»¯œœœ‹»¯¯‹œ»¯‹‹¯¯»›ˆ™¬zœ¼Äœ{{œl9çÑÌÕ SŸŸŸ°°°°¯Ÿ°°°°°°°°¯¯¯ŸœŒŒŒœœœŒ‹‹ŒŒŒœ¯œœœœœœŠŠ®œ¯¯¯œ{{‹ŒF9çÑÌÌ SŸŸ¯¯°°°°Ÿ°°°°°°°°¯¯¯ŸœŒŒŒœœœŒŒŒŒœœŒœœœœœœœœœœœœœœœŒ|||{|F9çÑÌ× SŸ°°Ÿ¼¼°Ã¼¼Ã¼Ã°°°°°°°ŸœŒŒŒœœœŒŒŒœœœœœœœœœœœœœœœœœŒ||{|F9æÑÌò SŸŸŸ°ÃÃ°¼ÅÅÅÅÅ°°ÃÅÅÅÃ¼¼°œŒ¯°¯¯¯¯¯¯œŒŒ|||F9æİÌê S¼ŸŸ°ÅÅ°°¼ÃÅÅ¼°ÃÅÅÅÅÅÃÃ°ŒÃÃÃ¼ÃÃ¼ÃÃ¼°œ¯¯¯Ÿ¯¯¯œŒ|||F9ææÌë SSSSSSSSSSSSSQQQQQQQQQQQQQQQQQQ9999999999999999999999999999æåÌê                            llllllllllllllllllllllllllllllllæåÌÖßŞÏÏÏÏÚ³…«êŞİçÏÏÏÏÒiÖÕÎÙÎÍÙÏÇÍtñîçİåİİİ¿r™ÖËµ¾±±±±ÈhˆâçæææææææÌêÊÊĞÏÏÏÚ³u«ëæçíĞÏÏÏßiÌğÈÙØÇÍÎÇÇsëîííçåİçµršÖÕ¿Ñ±±±½ÈhˆêíææææææåÖëèÒĞÏÏÏÚ¥s›êçííĞÏÏÏÒr¸ûÏÛÙÍÇÍÍÍsëîíçæåÜßµ„šÖÕÒ³±±±±Èh…ëíåæååİåäÖêßÒÏÏÏÏÚ³s›êæííĞÏÏÏ¿r¸ñÑÛÙÍÇÏÏÍiëïíçİİÜİŞ“šâËŞ¾±±±±Íh…ëíääääİååÌ×ÒĞÏÏÏÏĞÈs›êæíçÚÏÏÏÒX¸ñÏÙÙÍÇÇÇÎiëğíçÜİİÜŞ“™âÊÈ±±±±±Çh…ñíäääääåæÌÖÑĞÏÏÏÏÚÈs›êçíççĞÏÏßX¸ñĞÛÙØÇÇÇÑiëğíçÜİİÜŞ„˜âÀ¥¾±±±½Çh…ñíäääääååÖÕ´ÛÏÏÏĞæ´sšÕåíæçĞÏÏÊr¸ëÏÛÙÙÍÎÍÜiëğíçÜİİÜŞ„ˆâ¨§±±±±ÇÈh…ñíäääääåİâğßæĞÙÏÏå¥sšËÜçİçĞÙÛ¿h¸êÏÙÙÛÙÏØŞiâğíåİİİİÜrˆâÀÑ¾Ç±±¾¾h…ñçİååääääxÀ¦’€€‚a:J„¤¤€€€r7k¸‘~}~‚:¬¨‚€€p€‚‚VJ›rooaggggIC¹”‘£¢xÀ’‘‘pp€I.J„‚¤‘‘€hVk¸I›”‚€pp‚VJxrogaaaagIB¹”¢££¢kÀ’¦‚pppg:J„‘‚€rV\­€‘Iyµppp’VJˆrpogaaggICº˜£‘¢[À’¦qppp€p:Jšƒ‚‚‚‘rBy­‘Uy˜†tttissD‰›rpqgggggICº¹–”µµµµ“[™¦£‚pp:J¹›yykyyz‰­¸‚‚‚:‰k[JXBB7.J[‰„opoggggUDº¹¸¹¹¹ºº¹Y˜¦€€po:J­ˆisuisssDx¸‘:›\rUgggga:D¬“€‚ggggUD¹”„“„„isiY”’€po7L­i‚o‚oVk¸€‘:yk€oooIC›¦ongnUD¹²££££¤²²Lµ‘£‘€pooa7J›c€~ng€~gbk­‘‘‘:yw‚€€€ICš¦ooooIC¬¤‘¤¤Lµ5£¤L”55555555555555SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS‘£[©5RRRTf`RRff```H@HRH@H`@@@@GH@G]`fff``f]@@@@@@@GGGGGHHHHHQS\Á5RRRTTTTfmmffT@@H`TH@H@@HR`R@H`ffz]OF=3>G@@>>@@GGHHHHHHHQSxÁ5RRR`fmfmmmm`H@@GRRH@@@GRT`G@]``],", 10, "3F@G@@GHHQHHHHHHQS¤y¶5RTR`|mmmmmfRG@HH@GGHR@@@HH@@GGG3", 0, 0, "GO^G@GGH]]QHHHQQS¤x©5RfRRmmmmm`RHHHRRGHR```]@@@@@@@=", 0, 0, 0, 0, "", 0, 0, "3]`]OHGHHOHHHQQQS¤x©5`fRR`ffffRGHRR``RG`fff`]HG@GG>", 0, 0, 0, 0, 0, 0, 0, 0, 0, "$]`]]QHHHHHHQQQQS¤x©5f`RR`fff`H@H`T``THH``f``]GGOQ""", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, "]^]]OHHOOHOOOQQS¤x©5`fRGHffR@@@@@HG@G]``RHHGN=4", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, "N]GFOOOOQQQQQQQS‘£x©5T`H@@`fH@@HHH@@H]````QF3", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "NOOOOOOOOOQOOQQS£y™5RR@@@TT@@HT``H@H]``]]", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "NOOOOOO]QQPF>4)S‘£x¸5@@@@@RH@GRRTRR@@@HOO=", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "FOOOOQP=-$", 0, 0, "S‘£x›5@@@H@@@@@@@@@@@@@@@@1", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 10, "N>=3)""", 0, 0, 0, 0, 0, 0, 0, "S‘xy5@@@@@@@@@@@@@@@@@@@N", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, """", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S‘xx5@@@@@@@@@@@@@@@@@@G=", 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Sxš5@@@@@@@HRH@@@@@G@@O=", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Sopxš5@HR@@H@GH@@G]]O]]GG<", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "SIpx›5%RTR@@RH@@@G]]`]]]OF+", 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "&77", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S‚‚x›5%``R@G]]@@H```````]P", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "7JJC", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Spk¬5%ffH@G]`G@]````````N&", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "CJJJ7", 0, 0, 0, 0, 10, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Sp[›5%f]GGN[[=N^e^`````^'", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "7XDDD", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, "S[›5%fOOY7&&&7<YY[]``e3", 0, 0, 0, 0, "", 0, "DCCCC", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S\›5%fOY7&&CDCDJJJ[^^F", 26, "", 0, 0, 0, 0, "", 0, "DCCCC", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S‚\›5%zY&&&YYXBYYYYJJJJJY]@""", 10, "", 0, 0, 0, 0, 0, "*X7", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S\›5%zD&&&YYCCYYYYJYJJiXJRR-", 10, "", 0, 0, 10, "", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Sk›5%]D&&&YJXYYJJYXYJCXXCN]1'!", 10, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "S‰›S%Gi7&JJDCCCCCBXDBXCC1>-1(""", 26, 26, 26, 26, "", 10, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "SU:y‰S%Fi7&XD7BCBCBBCCBCCC1((((($(((""", 26, "", 10, 10, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Syky‰S%@[B.&&CC77CCCCCCDCCCC,""""!!""-5>F=!!""""", 26, 26, 26, 26, 26, "", 13, "", 26, "S„“‰›S%HNJXBBJJDCXDDDJYYYYXB=41,,+!""#(#", 26, "", 26, "", 26, 26, """", 26, "$$$Sh¹›S%R@@NjdBBDYutsk`]@GGP\QF3", 13, "", 0, 0, 0, """!""""$())-S¤q‰›S%H@@GNkJJ[\ir[]``GGGOP[[<", 10, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 13, "", 26, "!!!S¤ƒy‰S%R@HHHOHGH`]`ffff`GGH]&", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "5¤’y¬S%R@HRHHHH`fmffffff`H@G&", 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "5¤¦y¬S)T@HHHRHH`mmffffffffG@<", 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, "+", 10, "", 0, 0, "5¤¦y‰S)fRGHRfRH`mmmmmmmmmfHHP", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0, 10, "POG>($$", 26, "5¤’y‰S)fTHH`fRRTmmm||m|mm`H]zY&", 0, "", 0, 0, 0, 0, 0, "&&&1PFFPOF>95„ƒy›S)ffHRfmRRR`mm||||mfRO]l]1'C77CXC7=>>PQQQQ5’bxˆS)RTRRTT`f`T`ff`mfRRffRRfzO=311=FFGNNFFOQz^^[XDDC71e^@FFQQ5¦qykS)RRRTTT```TT`TT`TR`ff`O]`]OOOFQ^]]GOe]GG]]eQJCJN=OflH>>HQ5¤qxkS)RRRTTTTTRTT``TTTTTTRRHHHGHOOGGGGGGO]]OOOOOOFNGO]]]]H>>FH¤qxxS)HRTTTTTTRT```TTTTTRRRHHGGHOHGGGGOOHHOOOOOOOOOOOOOOGG@>>A¤qx‰S)HTTR```ffffff`T```TTRHHHHHOOHHHHOOOOOOO]OOOOOOOOOOOGG@>@¤qx¹S)RRRTmmTfmmŒŒ|``fmmmmf``HHR``]]]]]]]]O]]]]]]]]]O]Q]OHG@>@¤‘x¬S)`RRTmmTTfmmm``mmmmmmmf`HRmmmfflflff`O]]]]]]RR]RR]]]HG@@@¤£x­S)))))))))))))%%%%%%%%%%%%%%%%%%££x¬SSSSSSSSSSSSSSSSSSSSSSSSSSSS55555555555555555555555555555555££x›„‘p€pp‚UBL¬‘‘¤ppppƒ:›¨oon}B¹¨¦‘‘‘‘‚:Jysqgaaaap.D¬¦£¤¤¤¤¤£y¬„“€p‚UBL­‘¤¦€pp’:x«o€n~n}7¸¿¦¦¦‘’c:Jyˆhpaaaao:C¬¦¤¤¤¤££¢y­µr€pI7L¬’²¦ppr.k¸p~n~~}7­¿¦¦¤‘§c:Jy™ƒaaaaao.C­¦£££‘¢¢y¬„ƒppU7L¬’¦¦pp€ƒ.kÕ~n~:­©²¤‘VJ‰…‚aaaaao:C¸¦¢¢¢£y›ƒqppp7L«’¦¤‚€p€ƒ.k¸€~nn}7­¶²¤‘UJ‰soaaaaag:C¹³¢¢‘£xšqqp€‚p7L«¤¦¤¤p€„.k¸€nnn:­À²¤‘:D‰ragaaagg:C¹´¢££yˆbp€p€£p7L˜‘¦‘¤€€€„.k¸€~~:­À²¤‘ID‰haaaaano:C¹²¢¢¢¢‘‰™’’p€‘I7Lu¦‘¤€h.\¬€€‘:¬©²£‚:D‰rqgnaaga.C¹¦‘££¢"
-
-	section	.rodata,"a",@progbits
-	private	___const.main.textures
-___const.main.textures:
-	dl	_brick_wall_data+2
-	dl	_portrait_data+2
-
-	section	.data,"aw",@progbits
-	public	_global_palette
-_global_palette:
-	db	0, 0, "|", 0, 0, 0, 0, 0, "", 0, "„", 0, "„!!!!!ˆ!ˆB!ŒBŒBŒBŒBŒc", 0, "Bbb„„„”¤¤¥¥”‚˜¤˜¤˜¥˜ÅÆÆ˜A£œÆœçÃ Ä Å !", 0, "¤Ã¤å$æ$¥¥)%)¥)¥b(ä¨J) ,--)­K­K­M­k­‚°¤°Ä°±l±m±1", 0, "´5µµ%5Kµ5Œµ­5°5­µ±µ ¸`8c8Å¸(9%¹I¹j¹¯9Î9Î9Ñ9", 0, "¼b<<E=ï=ò=", 0, "À¤@AFÁ‹ÁBÂ", 0, "Ä@D@Ä`ÄÅÄ'ÅGEHÅfEgÅÌEÍÅğE1F3F H È@È`H`È€H£ÈIjIgÉ‡I‹ÉÊ1ÊRJTJRÊ`Ì€Ì L¡ÌÂÌ&M‡M‡ÍˆÍ¨MªM¬ÍÌÍíMTÎtNuNvN“NBP PÀPÁĞÄĞâĞåĞjÑ¨Q¨ÑíQÒ/ÒRRvÒ—R¤TUU%ÕGÕ¨ÕÈUPVqÖ’V•Ö¸V¤XÄXhÙ«ÙÉYÉÙÙZÖÚûZ!Üä\İé]ì]Ş’Şaá%a%áFa‰áéáêáqb³bÔb%åFeEåFåfefåhåÊe", 10, "fæÔæ'iei†i†é¨i+j,êÔêk¨mÉíMnMî‘n7ïXomòctìuöçøjyPzÒ~ÿXšÿÛÿÿÿ"
-
-	section	.rodata,"a",@progbits
-	private	_.str
-_.str:
-	db	"fps:%d,cpp:%fs,rc:%fs,d:%fs", 0
-
-	section	.rodata,"a",@progbits
-	private	__ZL8cosTable
-__ZL8cosTable:
-	dl	256
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	255
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	254
-	dl	253
-	dl	253
-	dl	253
-	dl	253
-	dl	253
-	dl	253
-	dl	253
-	dl	252
-	dl	252
-	dl	252
-	dl	252
-	dl	252
-	dl	252
-	dl	251
-	dl	251
-	dl	251
-	dl	251
-	dl	251
-	dl	250
-	dl	250
-	dl	250
-	dl	250
-	dl	250
-	dl	249
-	dl	249
-	dl	249
-	dl	249
-	dl	249
-	dl	248
-	dl	248
-	dl	248
-	dl	248
-	dl	247
-	dl	247
-	dl	247
-	dl	247
-	dl	246
-	dl	246
-	dl	246
-	dl	245
-	dl	245
-	dl	245
-	dl	245
-	dl	244
-	dl	244
-	dl	244
-	dl	243
-	dl	243
-	dl	243
-	dl	242
-	dl	242
-	dl	242
-	dl	242
-	dl	241
-	dl	241
-	dl	241
-	dl	240
-	dl	240
-	dl	239
-	dl	239
-	dl	239
-	dl	238
-	dl	238
-	dl	238
-	dl	237
-	dl	237
-	dl	237
-	dl	236
-	dl	236
-	dl	235
-	dl	235
-	dl	235
-	dl	234
-	dl	234
-	dl	233
-	dl	233
-	dl	233
-	dl	232
-	dl	232
-	dl	231
-	dl	231
-	dl	231
-	dl	230
-	dl	230
-	dl	229
-	dl	229
-	dl	228
-	dl	228
-	dl	227
-	dl	227
-	dl	227
-	dl	226
-	dl	226
-	dl	225
-	dl	225
-	dl	224
-	dl	224
-	dl	223
-	dl	223
-	dl	222
-	dl	222
-	dl	221
-	dl	221
-	dl	220
-	dl	220
-	dl	219
-	dl	219
-	dl	218
-	dl	218
-	dl	217
-	dl	217
-	dl	216
-	dl	216
-	dl	215
-	dl	214
-	dl	214
-	dl	213
-	dl	213
-	dl	212
-	dl	212
-	dl	211
-	dl	211
-	dl	210
-	dl	209
-	dl	209
-	dl	208
-	dl	208
-	dl	207
-	dl	207
-	dl	206
-	dl	205
-	dl	205
-	dl	204
-	dl	204
-	dl	203
-	dl	202
-	dl	202
-	dl	201
-	dl	200
-	dl	200
-	dl	199
-	dl	199
-	dl	198
-	dl	197
-	dl	197
-	dl	196
-	dl	195
-	dl	195
-	dl	194
-	dl	193
-	dl	193
-	dl	192
-	dl	192
-	dl	191
-	dl	190
-	dl	190
-	dl	189
-	dl	188
-	dl	187
-	dl	187
-	dl	186
-	dl	185
-	dl	185
-	dl	184
-	dl	183
-	dl	183
-	dl	182
-	dl	181
-	dl	181
-	dl	180
-	dl	179
-	dl	178
-	dl	178
-	dl	177
-	dl	176
-	dl	176
-	dl	175
-	dl	174
-	dl	173
-	dl	173
-	dl	172
-	dl	171
-	dl	170
-	dl	170
-	dl	169
-	dl	168
-	dl	167
-	dl	167
-	dl	166
-	dl	165
-	dl	164
-	dl	164
-	dl	163
-	dl	162
-	dl	161
-	dl	161
-	dl	160
-	dl	159
-	dl	158
-	dl	157
-	dl	157
-	dl	156
-	dl	155
-	dl	154
-	dl	153
-	dl	153
-	dl	152
-	dl	151
-	dl	150
-	dl	149
-	dl	149
-	dl	148
-	dl	147
-	dl	146
-	dl	145
-	dl	144
-	dl	144
-	dl	143
-	dl	142
-	dl	141
-	dl	140
-	dl	139
-	dl	139
-	dl	138
-	dl	137
-	dl	136
-	dl	135
-	dl	134
-	dl	134
-	dl	133
-	dl	132
-	dl	131
-	dl	130
-	dl	129
-	dl	128
-	dl	128
-	dl	127
-	dl	126
-	dl	125
-	dl	124
-	dl	123
-	dl	122
-	dl	121
-	dl	121
-	dl	120
-	dl	119
-	dl	118
-	dl	117
-	dl	116
-	dl	115
-	dl	114
-	dl	113
-	dl	113
-	dl	112
-	dl	111
-	dl	110
-	dl	109
-	dl	108
-	dl	107
-	dl	106
-	dl	105
-	dl	104
-	dl	104
-	dl	103
-	dl	102
-	dl	101
-	dl	100
-	dl	99
-	dl	98
-	dl	97
-	dl	96
-	dl	95
-	dl	94
-	dl	93
-	dl	92
-	dl	92
-	dl	91
-	dl	90
-	dl	89
-	dl	88
-	dl	87
-	dl	86
-	dl	85
-	dl	84
-	dl	83
-	dl	82
-	dl	81
-	dl	80
-	dl	79
-	dl	78
-	dl	77
-	dl	76
-	dl	75
-	dl	75
-	dl	74
-	dl	73
-	dl	72
-	dl	71
-	dl	70
-	dl	69
-	dl	68
-	dl	67
-	dl	66
-	dl	65
-	dl	64
-	dl	63
-	dl	62
-	dl	61
-	dl	60
-	dl	59
-	dl	58
-	dl	57
-	dl	56
-	dl	55
-	dl	54
-	dl	53
-	dl	52
-	dl	51
-	dl	50
-	dl	49
-	dl	48
-	dl	47
-	dl	46
-	dl	45
-	dl	44
-	dl	43
-	dl	42
-	dl	41
-	dl	40
-	dl	39
-	dl	38
-	dl	37
-	dl	36
-	dl	36
-	dl	35
-	dl	34
-	dl	33
-	dl	32
-	dl	31
-	dl	30
-	dl	29
-	dl	28
-	dl	27
-	dl	26
-	dl	25
-	dl	24
-	dl	23
-	dl	22
-	dl	21
-	dl	20
-	dl	19
-	dl	18
-	dl	17
-	dl	16
-	dl	15
-	dl	14
-	dl	13
-	dl	12
-	dl	11
-	dl	10
-	dl	9
-	dl	8
-	dl	7
-	dl	6
-	dl	5
-	dl	4
-	dl	3
-	dl	2
-	dl	1
-	dl	0
-	dl	0
-	dl	16777215
-	dl	16777214
-	dl	16777213
-	dl	16777212
-	dl	16777211
-	dl	16777210
-	dl	16777209
-	dl	16777208
-	dl	16777207
-	dl	16777206
-	dl	16777205
-	dl	16777204
-	dl	16777203
-	dl	16777202
-	dl	16777201
-	dl	16777200
-	dl	16777199
-	dl	16777198
-	dl	16777197
-	dl	16777196
-	dl	16777195
-	dl	16777194
-	dl	16777193
-	dl	16777192
-	dl	16777191
-	dl	16777190
-	dl	16777189
-	dl	16777188
-	dl	16777187
-	dl	16777186
-	dl	16777185
-	dl	16777184
-	dl	16777183
-	dl	16777182
-	dl	16777181
-	dl	16777180
-	dl	16777179
-	dl	16777178
-	dl	16777177
-	dl	16777176
-	dl	16777175
-	dl	16777174
-	dl	16777173
-	dl	16777172
-	dl	16777171
-	dl	16777170
-	dl	16777169
-	dl	16777168
-	dl	16777167
-	dl	16777166
-	dl	16777165
-	dl	16777164
-	dl	16777163
-	dl	16777162
-	dl	16777161
-	dl	16777160
-	dl	16777159
-	dl	16777158
-	dl	16777157
-	dl	16777156
-	dl	16777155
-	dl	16777154
-	dl	16777153
-	dl	16777152
-	dl	16777151
-	dl	16777150
-	dl	16777149
-	dl	16777148
-	dl	16777147
-	dl	16777147
-	dl	16777146
-	dl	16777145
-	dl	16777144
-	dl	16777143
-	dl	16777142
-	dl	16777141
-	dl	16777140
-	dl	16777139
-	dl	16777138
-	dl	16777137
-	dl	16777136
-	dl	16777135
-	dl	16777134
-	dl	16777133
-	dl	16777132
-	dl	16777131
-	dl	16777130
-	dl	16777129
-	dl	16777128
-	dl	16777128
-	dl	16777127
-	dl	16777126
-	dl	16777125
-	dl	16777124
-	dl	16777123
-	dl	16777122
-	dl	16777121
-	dl	16777120
-	dl	16777119
-	dl	16777118
-	dl	16777117
-	dl	16777116
-	dl	16777115
-	dl	16777115
-	dl	16777114
-	dl	16777113
-	dl	16777112
-	dl	16777111
-	dl	16777110
-	dl	16777109
-	dl	16777108
-	dl	16777107
-	dl	16777106
-	dl	16777105
-	dl	16777105
-	dl	16777104
-	dl	16777103
-	dl	16777102
-	dl	16777101
-	dl	16777100
-	dl	16777099
-	dl	16777098
-	dl	16777097
-	dl	16777097
-	dl	16777096
-	dl	16777095
-	dl	16777094
-	dl	16777093
-	dl	16777092
-	dl	16777091
-	dl	16777090
-	dl	16777090
-	dl	16777089
-	dl	16777088
-	dl	16777087
-	dl	16777086
-	dl	16777085
-	dl	16777084
-	dl	16777083
-	dl	16777083
-	dl	16777082
-	dl	16777081
-	dl	16777080
-	dl	16777079
-	dl	16777078
-	dl	16777078
-	dl	16777077
-	dl	16777076
-	dl	16777075
-	dl	16777074
-	dl	16777073
-	dl	16777073
-	dl	16777072
-	dl	16777071
-	dl	16777070
-	dl	16777069
-	dl	16777068
-	dl	16777068
-	dl	16777067
-	dl	16777066
-	dl	16777065
-	dl	16777064
-	dl	16777064
-	dl	16777063
-	dl	16777062
-	dl	16777061
-	dl	16777060
-	dl	16777060
-	dl	16777059
-	dl	16777058
-	dl	16777057
-	dl	16777056
-	dl	16777056
-	dl	16777055
-	dl	16777054
-	dl	16777053
-	dl	16777053
-	dl	16777052
-	dl	16777051
-	dl	16777050
-	dl	16777050
-	dl	16777049
-	dl	16777048
-	dl	16777047
-	dl	16777047
-	dl	16777046
-	dl	16777045
-	dl	16777044
-	dl	16777044
-	dl	16777043
-	dl	16777042
-	dl	16777041
-	dl	16777041
-	dl	16777040
-	dl	16777039
-	dl	16777038
-	dl	16777038
-	dl	16777037
-	dl	16777036
-	dl	16777036
-	dl	16777035
-	dl	16777034
-	dl	16777034
-	dl	16777033
-	dl	16777032
-	dl	16777031
-	dl	16777031
-	dl	16777030
-	dl	16777029
-	dl	16777029
-	dl	16777028
-	dl	16777027
-	dl	16777027
-	dl	16777026
-	dl	16777025
-	dl	16777025
-	dl	16777024
-	dl	16777023
-	dl	16777023
-	dl	16777022
-	dl	16777021
-	dl	16777021
-	dl	16777020
-	dl	16777019
-	dl	16777019
-	dl	16777018
-	dl	16777018
-	dl	16777017
-	dl	16777016
-	dl	16777016
-	dl	16777015
-	dl	16777014
-	dl	16777014
-	dl	16777013
-	dl	16777013
-	dl	16777012
-	dl	16777011
-	dl	16777011
-	dl	16777010
-	dl	16777010
-	dl	16777009
-	dl	16777008
-	dl	16777008
-	dl	16777007
-	dl	16777007
-	dl	16777006
-	dl	16777006
-	dl	16777005
-	dl	16777004
-	dl	16777004
-	dl	16777003
-	dl	16777003
-	dl	16777002
-	dl	16777002
-	dl	16777001
-	dl	16777001
-	dl	16777000
-	dl	16777000
-	dl	16776999
-	dl	16776998
-	dl	16776998
-	dl	16776997
-	dl	16776997
-	dl	16776996
-	dl	16776996
-	dl	16776995
-	dl	16776995
-	dl	16776994
-	dl	16776994
-	dl	16776993
-	dl	16776993
-	dl	16776992
-	dl	16776992
-	dl	16776991
-	dl	16776991
-	dl	16776991
-	dl	16776990
-	dl	16776990
-	dl	16776989
-	dl	16776989
-	dl	16776988
-	dl	16776988
-	dl	16776987
-	dl	16776987
-	dl	16776986
-	dl	16776986
-	dl	16776986
-	dl	16776985
-	dl	16776985
-	dl	16776984
-	dl	16776984
-	dl	16776983
-	dl	16776983
-	dl	16776983
-	dl	16776982
-	dl	16776982
-	dl	16776981
-	dl	16776981
-	dl	16776981
-	dl	16776980
-	dl	16776980
-	dl	16776979
-	dl	16776979
-	dl	16776979
-	dl	16776978
-	dl	16776978
-	dl	16776978
-	dl	16776977
-	dl	16776977
-	dl	16776977
-	dl	16776976
-	dl	16776976
-	dl	16776976
-	dl	16776975
-	dl	16776975
-	dl	16776975
-	dl	16776974
-	dl	16776974
-	dl	16776974
-	dl	16776973
-	dl	16776973
-	dl	16776973
-	dl	16776972
-	dl	16776972
-	dl	16776972
-	dl	16776971
-	dl	16776971
-	dl	16776971
-	dl	16776971
-	dl	16776970
-	dl	16776970
-	dl	16776970
-	dl	16776970
-	dl	16776969
-	dl	16776969
-	dl	16776969
-	dl	16776969
-	dl	16776968
-	dl	16776968
-	dl	16776968
-	dl	16776968
-	dl	16776967
-	dl	16776967
-	dl	16776967
-	dl	16776967
-	dl	16776966
-	dl	16776966
-	dl	16776966
-	dl	16776966
-	dl	16776966
-	dl	16776965
-	dl	16776965
-	dl	16776965
-	dl	16776965
-	dl	16776965
-	dl	16776964
-	dl	16776964
-	dl	16776964
-	dl	16776964
-	dl	16776964
-	dl	16776964
-	dl	16776964
-	dl	16776963
-	dl	16776963
-	dl	16776963
-	dl	16776963
-	dl	16776963
-	dl	16776963
-	dl	16776963
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776962
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-	dl	16776961
-
-	section	.rodata,"a",@progbits
-	weak	__ZTV5Thing
-__ZTV5Thing:
-	dl	0
-	dl	__ZTI5Thing
-	dl	__ZN5Thing6renderERK5imat2RK5ivec2
-
-	section	.data,"aw",@progbits
-	public	_thing_tex_data
-_thing_tex_data:
-	db	"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 13, "===>@@@@@@@@@@@@@À@@G@N@O@N@GG@G@N@@@=", 13, "N@@@@@@@@@@=4", 13, "9QSS^^^eeeeeOGeleNell^OellN^lllllGellP", 13, "@eeeeee^^^SSA", 13, ">^eeeellllll]Q{{lO{ŠŠeO{Š{OeŠ‹ŠŠŠe{{{S", 13, "OlllllleeeeeP", 13, "9PPQellle^^^G^ŠŠ{O{‹eOŠ‹Ol‹{{‹Š^", 13, "Ol{{l^SSSQQP>]{{lO^‹‹Š]™‹lO‹‹Ol‹OŠ‹‹^O{Š{O", 10, "O{{{N", 13, "^‹Š{{{ŠlO‹Ole‹eO{‹{ONOOOOO@O{{{N", 13, "^lO‹O", 13, "{z‹{`eO{‹{O^eelleQO{{lN", 13, "^‹‹ŠŠ‹‹lO‹OlŠzeO{‹{O]`zlll^Ol{lN", 13, "^‹‹Š]¨¨¨O‹lO‹‹Ol{O{‹^O{Š{OellSGlll@^ŠŠ{O{‹‹eOŠŠOl‹‹le‹‹‹‹Š^", 13, "Ol{{eQQQ^eleQGele@Q{{lOlŠŠeO{‹{OeŠŠlO{{{{{S", 13, "OlllllleeeeeP>^^S@GeeeNellQNellN^lleOellleF", 13, "@^eee^^^^SSQA=---@3333™3443Y344N344333433-", 13, "@-3------111)@"
-
-	section	.rodata,"a",@progbits
-	weak	__ZTS5Thing
-__ZTS5Thing:
-	db	"5Thing", 0
-
-	section	.rodata,"a",@progbits
-	weak	__ZTI5Thing
-__ZTI5Thing:
-	dl	__ZTVN10__cxxabiv117__class_type_infoE+6
-	dl	__ZTS5Thing
-
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 6d9aa7a16db70f3d02ae304b08d4a03011281fef)"
-	extern	_gfx_SetTextTransparentColor
-	extern	__Unwind_SjLj_Register
-	extern	_malloc
-	extern	_gfx_SetTextFGColor
-	extern	_gfx_Begin
-	extern	__fadd
-	extern	_x_walls
-	extern	_y_walls_transposed_q2
-	extern	_y_walls_transposed_q3
-	extern	_y_walls_transposed_q4
-	extern	_gfx_SetPalette
-	extern	__sand
-	extern	__ishl
-	extern	__ftol
-	extern	_x_walls_q2
-	extern	_x_walls_q3
-	extern	_x_walls_q4
-	extern	__idivs
-	extern	__idivu
-	extern	__setflag
-	extern	__iand
-	extern	_gfx_AllocSprite
-	extern	__ltof
-	extern	__ineg
-	extern	__ZdlPv
-	extern	_y_walls_transposed
-	extern	_os_GetCSC
-	extern	_gfx_ScaleSprite
-	extern	__fsub
-	extern	_y_walls
-	extern	__frameset
-	extern	_gfx_SetTransparentColor
-	extern	_gfx_SetTextBGColor
-	extern	_sprintf
-	extern	_sin
-	extern	__lsub
-	extern	_pow
-	extern	_gfx_GetStringWidth
-	extern	_draw_strip_clipped
-	extern	_sqrt
-	extern	_gfx_RLETSprite_NoClip
-	extern	__ZTVN10__cxxabiv117__class_type_infoE
-	extern	__ishrs
-	extern	__ishru
-	extern	__ultof
-	extern	_gfx_SwapDraw
-	extern	__fmul
-	extern	_gfx_ConvertFromRLETSprite
-	extern	_gfx_SetDraw
-	extern	__Unwind_SjLj_Unregister
-	extern	__fneg
-	extern	_gfx_ZeroScreen
-	extern	__fdiv
-	extern	__imulu
-	extern	_raycast_asm
-	extern	_gfx_PrintStringXY
-	extern	_gfx_End
-	extern	__fcmp
-	extern	__frameset0
-	extern	_cos
-	extern	_clock
-	extern	_gfx_TransparentSprite
-	extern	_draw_strip
