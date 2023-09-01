@@ -245,7 +245,7 @@ int main(void) {
             }
         }
         end_d_t = clock();
-        // test_thing.render(rotate(-counter), playerPos);
+        test_thing.render(rotate(-counter), playerPos);
         gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
         total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;

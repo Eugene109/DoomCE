@@ -312,9 +312,9 @@ _raycast_asm:
     ld  bc,(iy+6)       ;  y position
     ld  a,c
     add a,e
-    cpl
-    inc a
-    ld  ix,(iy+21)
+    ; cpl
+    ; inc a
+    ld  ix,(iy+21)      ;  texCoord
     ld  (ix),a
 
     ei

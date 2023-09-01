@@ -28,17 +28,17 @@ class Thing {
                            (texHeight >> 1);
         // 90 is half of RENDER_H, 80 is half of standard unit-pixel conversion(160)
         int screenSpaceY = (90 + ((80 << SHIFT) / viewSpacePos.y)) - (texHeight);
-        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W || screenSpaceY < 0) {
+        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W || screenSpaceY < 0 || screenSpaceY >= 180) {
             return;
         }
-        gfx_SetTransparentColor(2);
+        gfx_SetTransparentColor(255);
         gfx_sprite_t *tex_conv = gfx_MallocSprite(texHeight, texHeight);
         gfx_ScaleSprite(tex, tex_conv);
         if (screenSpaceY + texHeight > 180) {
             tex_conv->height = 180 - screenSpaceY;
         }
-        gfx_TransparentSprite(tex_conv, screenSpaceX, screenSpaceY);
-        delete tex_conv;
+        gfx_Sprite(tex_conv, screenSpaceX, screenSpaceY);
+        free(tex_conv);
         // gfx_RotatedScaledTransparentSprite_NoClip(tex, 0, 0, 0, texHeight);
     }
     ivec2 pos;
