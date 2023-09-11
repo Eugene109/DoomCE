@@ -7,9 +7,9 @@ extern "C" {
 
 #define pistol_2_width 70
 #define pistol_2_height 84
-#define pistol_2_size 2012
+#define pistol_2_size 1892
 #define pistol_2 ((gfx_rletsprite_t*)pistol_2_data)
-extern unsigned char pistol_2_data[2012];
+extern unsigned char pistol_2_data[1892];
 
 #ifdef __cplusplus
 }

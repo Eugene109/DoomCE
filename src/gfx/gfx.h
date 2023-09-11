@@ -10,6 +10,7 @@ extern "C" {
 #include "ceiling_floor_tex.h"
 #include "brick_wall.h"
 #include "portrait.h"
+#include "thing_tex.h"
 #define rlet_sprites_palette_offset 0
 #include "pistol_1.h"
 #include "pistol_2.h"
@@ -17,7 +18,6 @@ extern "C" {
 #include "pistol_5.h"
 #include "pistol_7.h"
 #include "pistol_8.h"
-#include "thing_tex.h"
 
 #ifdef __cplusplus
 }

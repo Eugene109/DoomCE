@@ -6,6 +6,8 @@ brick_wall.h
 brick_wall.c
 portrait.h
 portrait.c
+thing_tex.h
+thing_tex.c
 pistol_1.h
 pistol_1.c
 pistol_2.h
@@ -18,6 +20,10 @@ pistol_7.h
 pistol_7.c
 pistol_8.h
 pistol_8.c
-thing_tex.h
-thing_tex.c
 gfx.h
+zombieman_pt1.h
+EnemyPt1.c
+EnemyPt1.8xv
+zombieman_pt2.h
+EnemyPt2.c
+EnemyPt2.8xv

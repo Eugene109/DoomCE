@@ -72,12 +72,12 @@ class imat2 {
     int data[2][2];
 };
 
-imat2 rotate(int theta) {
-    return imat2((int[]){
-        int(cos(double(theta) / double(1 << SHIFT)) * (1 << SHIFT)),
-        -int(sin(double(theta) / double(1 << SHIFT)) * (1 << SHIFT)),
-        int(sin(double(theta) / double(1 << SHIFT)) * (1 << SHIFT)),
-        int(cos(double(theta) / double(1 << SHIFT)) * (1 << SHIFT)),
+imat2 rotate(uint8_t theta) {
+    return imat2((fixed[]){
+        f_cos(theta),
+        -f_sin(theta),
+        f_sin(theta),
+        f_cos(theta),
     });
 }
 

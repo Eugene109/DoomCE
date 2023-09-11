@@ -116,7 +116,7 @@ _64_divis_lut_ext:
 
 ; scales a vertical texture strip using the bresenham line algorithm
     public _draw_strip_clipped
-_draw_strip_clipped:           ; this is most likely at D1E3BE
+_draw_strip_clipped:
 ; draws a strip of texture, scaled, as fast as possible(hopefully)
 ; strip will be centered in future, for now will center before calling
 ; Arguments:
@@ -212,8 +212,103 @@ _draw_strip_clipped:           ; this is most likely at D1E3BE
     ei
     ret                 ;  if c is 0, return
 
-.end:
-    pop ix              ;  ix must be preserved before exit
+; same algorithm as above, for transparent textures
+    public _draw_strip_transparent_clipped
+_draw_strip_transparent_clipped:
+; draws a strip of texture, scaled, as fast as possible(hopefully)
+; strip will be centered in future, for now will center before calling
+; Arguments:
+;    // technically arg0: return address
+;    arg1: pointer to destination
+;    arg2: pointer to texture structure
+;    arg3: x coordinate
+;    arg4: y coordinate
+;    arg5: target height
+;    arg6: texcoord
+; Returns:
+;  None
+    di                  ;  disables interrupts, these use alternate register set, which this needs
+
+    ld  iy,0            ;  set iy to stack pointer
+    add iy,sp
+
+    ; must save state of C++ stuff
+    push ix             ;  ix must be preserved
+
+    ld  ix,(iy+3)       ;  destination
+    ld  de,(iy+9)       ;  load x coord
+    add ix,de           ;  add x coord to dest pointer
+
+; finding offset for source
+    ld  de,(iy+12)      ;  y coord (negative)
+    ld  hl,0
+    and a,a             ;  reset carry
+    sbc hl,de           ;  abs of y coord
+
+    ld  de,(iy+15)      ;  target height
+    ld  iy,_64_divis_lut_ext
+    add iy,de
+    add iy,de
+    add iy,de
+    ld  bc,(iy-3)
+    exx
+    ld  bc,(iy-3)       ;  increment, 16-bit fixed point
+    exx
+    call __imulu        ;  64/target_height  *  abs(y_coord)    =  abs(y_coord)/target_height *  64
+    push hl
+    ld iy,2
+    add iy,sp
+    ld  c,(iy)        ;  integer part of hl(abs(y_coord)/target_height * 64)
+    ld  (iy),0
+    ld  b,0
+    exx
+    pop hl              ;  fractional part of abs(y_coord)/target_height * 64
+    exx
+
+    ld  iy,3
+    add iy,sp
+    ld  hl,(iy+6)       ;  source
+; figure out texture coordinate offset
+    ld  e,(iy+18)       ;  texCoord, 0-255
+    ld  d,64            ;  source size
+    mlt de              ;  size scaled by texCoord in d, fixed point arithemetic
+    ld  e,64
+    mlt de              ;  de is now offset for source texCoord
+    add hl,de           ;  add offset
+
+    add hl,bc           ;  skip to corresponding texture on edge of screen
+    ld  b,a             ;  64/target_height
+    ld  de,0
+
+    exx
+    ld  de,320          ;  screen width
+    exx
+    ld  c,180           ;  target height
+
+;----end of init-----
+.loop:
+    ld  a,(hl)
+    dec a
+    jp  z,.skip
+    inc a
+    ld  (ix),a
+    ld  (ix+1),a
+    ld  (ix+2),a
+    ld  (ix+3),a
+.skip:
+    exx
+    add ix,de
+    exx
+
+    exx
+    add.s hl,bc
+    exx
+    adc hl,de
+
+    dec c               ;  c is counter
+    jp  nz,.loop        ;  jump back to loop while more than 0
+
+    pop ix              ;  ix must be preserved
 
     ei
     ret                 ;  if c is 0, return

@@ -33,7 +33,7 @@ _64_divis_lut:
 
 ; scales a vertical texture strip using the bresenham line algorithm
     public _draw_strip
-_draw_strip:           ; this is most likely at D1E3BE
+_draw_strip:
 ; draws a strip of texture, scaled, as fast as possible(hopefully)
 ; strip will be centered in future, for now will center before calling
 ; Arguments:
@@ -97,7 +97,6 @@ _draw_strip:           ; this is most likely at D1E3BE
 ;----end of init----
 .loop:
     ld  a,(hl)
-    ; sub a,c
     ld  (ix),a
     ld  (ix+1),a
     ld  (ix+2),a
@@ -120,8 +119,93 @@ _draw_strip:           ; this is most likely at D1E3BE
     ei
     ret                 ;  if c is 0, return
 
-.end:
-    pop ix              ;  ix must be preserved before exit
+; same algorithm as above, for transparent textures
+    public _draw_strip_transparent
+_draw_strip_transparent:
+; draws a strip of texture, scaled, as fast as possible(hopefully)
+; strip will be centered in future, for now will center before calling
+; Arguments:
+;    // technically arg0: return address
+;    arg1: pointer to destination
+;    arg2: pointer to texture structure
+;    arg3: x coordinate
+;    arg4: y coordinate
+;    arg5: target height
+;    arg6: texcoord
+;    arg7: darkening factor
+; Returns:
+;  None
+    di                  ;  disables interrupts, these use alternate register set, which this needs
+
+    ld  iy,0            ;  set iy to stack pointer
+    add iy,sp
+
+    ; must save state of C++ stuff
+    push ix             ;  ix must be preserved
+
+    ld  ix,(iy+3)       ;  destination
+    ld  hl,(iy+6)       ;  source
+
+    ld  de,(iy+9)       ;  load x coord
+    add ix,de           ;  add x coord to dest pointer
+
+    ld  b,(iy+12)       ;  load y pos
+    ld  c,160           ;  load 1/2 screen width
+    mlt bc              ;  mult to find 1/2 offset
+    add ix,bc           ;  add twice to add offset to dest
+    add ix,bc
+
+; figure out texture coordinate offset
+    ld  e,(iy+18)       ;  texCoord, 0-255
+    ld  d,64            ;  source size
+    mlt de              ;  size scaled by texCoord in d, fixed point arithemetic (shifted 8 bits)
+    ld  e,64
+    mlt de              ;  de is now offset for source texCoord
+    add hl,de           ;  add offset
+
+    ld  de,(iy+15)      ;  target height
+    ld  c,e             ;  loop counter
+    ld  iy,_64_divis_lut
+    add iy,de
+    add iy,de
+    add iy,de           ;  3*target height: byte offset for LUT
+    ld  de,(iy-3)
+    ld  b,e             ;  fractional
+    ld  e,d
+    ld  d,0             ;  integer part
+
+    exx
+    ld  de,320
+    exx
+
+    ex  af,af'
+    ld  a,0
+    ex  af,af'
+
+;----end of init----
+.loop:
+    ld  a,(hl)
+    dec a
+    jp  z,.skip
+    inc a
+    ld  (ix),a
+    ; ld  (ix+1),a
+    ; ld  (ix+2),a
+    ; ld  (ix+3),a
+.skip:
+    exx
+    add ix,de
+    exx
+
+    ex  af,af'
+    add a,b
+    adc hl,de
+    ex  af,af'
+
+    dec c               ;  c is counter
+    jp  nz,.loop        ;  jump back to loop while more than 0
+
+    pop ix              ;  ix must be preserved
 
     ei
     ret                 ;  if c is 0, return
