@@ -1,6 +1,5 @@
 
     assume adl=1
-    ;https://youtube.com/shorts/f0--ib8HpOM?feature=share
 
     section .rodata
     public lcdWidth
@@ -29,6 +28,9 @@ _64_divis_lut:
     dl  $00006C, $00006B, $00006B, $00006A, $000069, $000069, $000068, $000067, $000067, $000066
     dl  $000065, $000065, $000064, $000063, $000063, $000062, $000062, $000061, $000060, $000060
     dl  $00005F, $00005F, $00005E, $00005E, $00005D, $00005D, $00005C, $00005C, $00005B, $00005B
+    dl  $00005A, $00005A, $000059, $000059, $000058, $000058, $000057, $000057, $000056, $000056
+    dl  $000055, $000055, $000054, $000054, $000054, $000053, $000053, $000052, $000052, $000051
+    dl  $000051, $000051, $000050, $000050, $00004F, $00004F, $00004F, $00004E
 
 
 ; scales a vertical texture strip using the bresenham line algorithm
@@ -46,7 +48,7 @@ _draw_strip:
 ;    arg6: texcoord
 ;    arg7: darkening factor
 ; Returns:
-;  None
+;    None
     di                  ;  disables interrupts, these use alternate register set, which this needs
 
     ld  iy,0            ;  set iy to stack pointer

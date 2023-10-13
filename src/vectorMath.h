@@ -173,6 +173,8 @@ ivec2 normalize(const ivec2 &in) {
     return ivec2((in.x * inv_len) >> SHIFT, (in.y * inv_len) >> SHIFT);
 }
 
+fixed lengthSQ(const ivec2 &in) { return ((in.x * in.x) >> SHIFT) + ((in.y * in.y) >> SHIFT); }
+
 class vec3 {
   public:
     vec3() : x(0), y(0), z(0) {}

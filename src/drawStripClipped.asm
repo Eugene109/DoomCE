@@ -185,7 +185,7 @@ _draw_strip_clipped:
     exx
     ld  de,320          ;  screen width
     exx
-    ld  c,180           ;  target height
+    ld  c,208           ;  target height
 
 ;----end of init-----
 .loop:
@@ -283,7 +283,7 @@ _draw_strip_transparent_clipped:
     exx
     ld  de,320          ;  screen width
     exx
-    ld  c,180           ;  target height
+    ld  c,208           ;  target height
 
 ;----end of init-----
 .loop:

@@ -1,11 +1,5 @@
 global_palette.h
 global_palette.c
-ceiling_floor_tex.h
-ceiling_floor_tex.c
-brick_wall.h
-brick_wall.c
-portrait.h
-portrait.c
 thing_tex.h
 thing_tex.c
 pistol_1.h
@@ -20,6 +14,12 @@ pistol_7.h
 pistol_7.c
 pistol_8.h
 pistol_8.c
+brick_wall.h
+brick_wall.c
+portrait.h
+portrait.c
+HUD.h
+HUD.c
 gfx.h
 zombieman_pt1.h
 EnemyPt1.c

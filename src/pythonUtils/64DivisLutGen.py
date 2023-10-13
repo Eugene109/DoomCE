@@ -19,8 +19,8 @@
 
 padding = 8
 string = ""
-for a in range(1,1019):    #  180*(256/(sqrt(32)))
-    string += (f"{(64*256*256//a):#0{padding}x}")[2:]
+for a in range(1,208+1):    #  208
+    string += (f"{(64*256//a):#0{padding}x}")[2:]
 
 out = ""
 string = string.upper()

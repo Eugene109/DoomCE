@@ -18,47 +18,53 @@
     public _y_walls_q4
     public _x_walls_transposed_q4
     public _y_walls_transposed_q4
+
+    divs := 17
+    gaps := 16
+
 _x_walls:
-    db  "AAACAAAA                      AA          A A               AAA AAAAAAAA"
+    db  "AAACAAAAAAAAAAAA                                                                                                                                                                      AA                          A A                               AAA         AAAAAAAAAAAAAAAA"
 _y_walls:
-    db  "B B  B  BB D  D  BB B  B  BB D  DB BB B  BBBBB  BB BBBB  BB BBBB  B    B"
+    db  "B B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  DB         BB B  BBB        BB  BB BB        BB  BB BB        BB  B            B"
 _y_walls_transposed:
-    db  "BBBBBBBB        BDBDB        BBB     BB BDBDB      BBBB     BBB BBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                BDBDBDBDBDBDB                BBB             BB BDBDBDBDBDBDB              BBBB             BBB                                                                                                                                 BBBBBBBBBBBBBBBB"
 _x_walls_transposed:
-    db  "A       AA       AA    A  AC       AA    A AAA      AAA  A   AAA  A    A"
+    db  "A               AA               AA            A  AC               AA            A AAA              AAA          A   AAA          A    AA               AA               AA               AA               AA               AA               AA               AA               A"
 
 
 
 _x_walls_q2:
-    db  "AAAACAAA                AA                 A A           AAA    AAAAAAAA"
+    db  "AAAAAAAAAAAACAAA                                                                                                                                                                        AA                                 A A                           AAA    AAAAAAAAAAAAAAAA"
 _y_walls_q2:
-    db  "B  B  B BB  D  D BB  B  B BB BD  D BBBBB  B BBBB BB  BBBB BB  BB    B  B"
+    db  "B          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB         BD  D BB        BBB  B BB        BB BB  BB        BB BB  BB            B  B"
 _y_walls_transposed_q2:
-    db  "BBBBBBBB    BBB    BBBB BDBDB        BB      BBBBDBDB           BBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                                                                                                                                            BBB            BBBB BDBDBDBDBDBDB                BB              BBBBDBDBDBDBDBDB                   BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q2:
-    db  "A  A    AA  A   AAA      AAA    A AAC       AA    A  AA       AA       A"
+    db  "A               AA               AA               AA               AA               AA               AA               AA               AA          A    AA          A   AAA              AAA            A AAC               AA            A  AA               AA               A"
 
 
 
 _x_walls_q3:
-    db  "AAAAAAAA AAA               A A          AA                      AAAACAAA"
+    db  "AAAAAAAAAAAAAAAA         AAA                               A A                          AA                                                                                                                                                                      AAAAAAAAAAAACAAA"
 _y_walls_q3:
-    db  "B    B  BBBB BB  BBBB BB  BBBBB  B BB BD  D BB  B  B BB  D  D BB  B  B B"
+    db  "B            B  BB        BB BB  BB        BB BB  BB        BBB  B BB         BD  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B B"
 _y_walls_transposed_q3:
-    db  "BBBBBBBB BBB     BBBB      BDBDB BB     BBB        BDBDB        BBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                                                                                                                                 BBB             BBBB              BDBDBDBDBDBDB BB             BBB                BDBDBDBDBDBDB                BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q3:
-    db  "A    A  AAA   A  AAA      AAA A    AA       CA  A    AA       AA       A"
+    db  "A               AA               AA               AA               AA               AA               AA               AA               AA    A          AAA   A          AAA              AAA A            AA               CA  A            AA               AA               A"
 
 
 
 _x_walls_q4:
-    db  "AAAAAAAA    AAA           A A                 AA                AAACAAAA"
+    db  "AAAAAAAAAAAAAAAA    AAA                           A A                                 AA                                                                                                                                                                        AAACAAAAAAAAAAAA"
 _y_walls_q4:
-    db  "B  B    BB  BB BBBB  BB BBBB B  BBBBB D  DB BB B  B  BB D  D  BB B  B  B"
+    db  "B  B            BB  BB BB        BB  BB BB        BB B  BBB        BB D  DB         BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          B"
 _y_walls_transposed_q4:
-    db  "BBBBBBBB           BDBDBBBB      BB        BDBDB BBBB    BBB    BBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                   BDBDBDBDBDBDBBBB              BB                BDBDBDBDBDBDB BBBB            BBB                                                                                                                                            BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q4:
-    db  "A       AA       AA  A    AA       CAA A    AAA      AAA   A  AA    A  A"
+    db  "A               AA               AA  A            AA               CAA A            AAA              AAA   A          AA    A          AA               AA               AA               AA               AA               AA               AA               AA               A"
+
+
 
     section .text
 
@@ -137,22 +143,24 @@ _raycast_asm:
     ld  de,(iy+6)       ;  y pos
     ld  ix,(iy+27)
     lea iy,ix+72
+    lea iy,iy+100       ;  iy = ix + 272 // 16*17
+    lea iy,iy+100
     ld  c,b             ;  shifting right by 8 bits
     ld  b,0
     add ix,bc           ;  add offset to x_walls (gaps)
     inc bc
     add iy,bc           ;  add offset +1 to y_walls (dividers) (because if checking y, then it is directly in front)
 
-    ld  c,9             ;  y_walls, 9 dividers
+    ld  c,divs          ;  y_walls, dividers
     ld  b,d
-    mlt bc              ;  9*(y offset), no increment
+    mlt bc              ;  dividers*(y offset), no increment
     add iy,bc
-    ld  e,8             ;  x_walls, 8 gaps
+    ld  e,gaps          ;  x_walls, gaps
     inc d
-    mlt de              ;  8*(x offset + 1), directly above, so increment by one
+    mlt de              ;  gaps*(x offset + 1), directly above, so increment by one
     add ix,de
-    ld  bc,8            ;  x_walls increment
-    ld  de,9            ;  y increment
+    ld  bc,gaps         ;  x_walls increment
+    ld  de,divs         ;  y increment
 
     ld  hl,0            ;  h:x  l:y
     exx
@@ -179,10 +187,10 @@ _raycast_asm:
     ld  a,(ix)          ;  check x walls(above)
     bit 6,a
     jp  nz,.hit_x
-    add ix,bc           ;  + 8 (go up one row)
+    add ix,bc           ;  + gaps (go up one row)
     inc l               ;  go up
     
-    add iy,de           ;  + 9 (go up one row)
+    add iy,de           ;  + divs (go up one row)
     ld  a,(iy)          ;  check y-aligned walls
     bit 6,a
     jp  nz,.hit_y

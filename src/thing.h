@@ -3,7 +3,7 @@
 
 #include "drawStrip.h"
 #include "matrixMath.h"
-#include "std_vector.h"
+#include "std_lib/vector.h"
 #include "vectorMath.h"
 #include <graphx.h>
 

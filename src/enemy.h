@@ -23,7 +23,7 @@ gfx_sprite_t *zombiemanBL[NUM_FRAMES_ENEMY] = {0};
 gfx_sprite_t *zombiemanL[NUM_FRAMES_ENEMY] = {0};
 gfx_sprite_t *zombiemanFL[NUM_FRAMES_ENEMY] = {0};
 
-gfx_sprite_t *zombiemanD[NUM_FRAMES_ENEMY] = {0};
+gfx_sprite_t *zombiemanD[5] = {0};
 
 //      b
 //  bl     br
@@ -36,12 +36,34 @@ gfx_sprite_t *zombiemanD[NUM_FRAMES_ENEMY] = {0};
 class Enemy : public Thing {
   public:
     inline static vector<Enemy *> enemies;
+    inline static bool shotFired;
+    inline static vector<int> shots;
+    inline static void registerShot(int dmg) {
+        shotFired = true;
+        shots.push_back(dmg);
+    }
+    inline static void deregisterShots() {
+        shotFired = false;
+        shots = vector<int>();
+    }
+    void deregisterShot(int index) { shots[index] = 0; }
     Enemy(const ivec2 &p) {
+        pos = p;
+        frame_num = 0;
+        tex = zombiemanF[frame_num];
+        prev_frame_time = 0;
+        forward = ivec2(0, 1 << SHIFT);
+        enemies.push_back(this);
+        shotFired = false;
+        dead = false;
+        health = 20;
+    }
+    static bool InitTextures() {
         if (EnemyPt1_init() == 0) {
-            return;
+            return false;
         }
         if (EnemyPt2_init() == 0) {
-            return;
+            return false;
         }
         zombiemanF[0] = zombiemanF0;
         zombiemanF[1] = zombiemanF1;
@@ -75,16 +97,22 @@ class Enemy : public Thing {
         zombiemanFL[1] = zombiemanFR3;
         zombiemanFL[2] = zombiemanFR0;
         zombiemanFL[3] = zombiemanFR1;
-        pos = p;
-        frame_num = 0;
-        tex = zombiemanF[frame_num];
-        prev_frame_time = 0;
-        forward = ivec2(0, 1 << SHIFT);
-        enemies.push_back(this);
+        zombiemanD[0] = zombiemanD0;
+        zombiemanD[1] = zombiemanD1;
+        zombiemanD[2] = zombiemanD2;
+        zombiemanD[3] = zombiemanD3;
+        zombiemanD[4] = zombiemanD4;
+        return true;
     }
-    static void RenderAll() {}
+    static void RenderAll(unsigned long delta_time, const imat2 &inv_cam_rot, const ivec2 &cam_pos,
+                          int *dists_arr_ptr) {
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies[i]->Render(delta_time, inv_cam_rot, cam_pos, dists_arr_ptr);
+        }
+        deregisterShots();
+    }
 
-    void Update(unsigned long delta_time) {
+    void UpdateFrame(unsigned long delta_time) {
         prev_frame_time += delta_time;
         if (prev_frame_time > (CLOCKS_PER_SEC >> 3)) {
             frame_num++;
@@ -92,119 +120,107 @@ class Enemy : public Thing {
             prev_frame_time = 0;
         }
     }
-    void Render(const imat2 &inv_cam_rot, const ivec2 &cam_pos, int *dists_arr_ptr) {
-        ivec2 viewDir = normalize(cam_pos - pos);
-        ivec2 right = ivec2(forward.y, -forward.x);
-        bool flip = false;
-        if (dot(forward, viewDir) > 236) {
+    void UpdateAnim(fixed dotF, fixed dotR) {
+        flipTex = false;
+        if (dotF > 236) {
             tex = zombiemanF[(frame_num)&0x03];
-        } else if (dot(forward, viewDir) > 98) {
-            if (dot(right, viewDir) > 0) {
+        } else if (dotF > 98) {
+            if (dotR > 0) {
                 tex = zombiemanFR[(frame_num)&0x03];
             } else {
                 tex = zombiemanFL[(frame_num)&0x03];
-                flip = true;
+                flipTex = true;
             }
-        } else if (dot(forward, viewDir) > -98) {
-            if (dot(right, viewDir) > 0) {
+        } else if (dotF > -98) {
+            if (dotR > 0) {
                 tex = zombiemanR[(frame_num)&0x03];
             } else {
                 tex = zombiemanL[(frame_num)&0x03];
-                flip = true;
+                flipTex = true;
             }
-        } else if (dot(forward, viewDir) > -236) {
-            if (dot(right, viewDir) > 0) {
+        } else if (dotF > -236) {
+            if (dotR > 0) {
                 tex = zombiemanBR[(frame_num)&0x03];
             } else {
                 tex = zombiemanBL[(frame_num)&0x03];
-                flip = true;
+                flipTex = true;
             }
         } else {
             tex = zombiemanB[(frame_num)&0x03];
         }
-        // Thing::render(inv_cam_rot, cam_pos, dists_arr_ptr);
-        if (!flip) {
-
-            ivec2 viewSpacePos = inv_cam_rot * (pos - cam_pos);
-            if (viewSpacePos.y <= 69) { //  less than 240 <- height of screen
-                return;
-            }
-            int texHeight = (160 << SHIFT) / viewSpacePos.y;
-
-            int screenSpaceX =
-                ((((((viewSpacePos.x << SHIFT) / viewSpacePos.y) + (1 << SHIFT)) >> 1) * SCR_W) >> SHIFT) -
-                (texHeight >> 1);
-            if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W) {
-                return;
-            }
-            // just centered on screen
-            int screenSpaceY = (180 - (texHeight)) >> 1;
-            int a = 0;
-            if (screenSpaceX < 0) {
-                a = -screenSpaceX;
-            }
-            if (screenSpaceY >= 0) {
-                for (; a < texHeight; a++) {
-                    if (a + screenSpaceX > SCR_W) {
-                        break;
-                    }
-                    if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
-                        draw_strip_transparent(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a, screenSpaceY,
-                                               texHeight, (a << SHIFT) / texHeight);
+    }
+    void Render(unsigned long delta_time, const imat2 &inv_cam_rot, const ivec2 &cam_pos, int *dists_arr_ptr) {
+        ivec2 viewSpacePos = inv_cam_rot * (pos - cam_pos);
+        if (!dead && lengthSQ(cam_pos - pos) > 128) {
+            forward = normalize(cam_pos - pos);
+            pos += forward * 16;
+        }
+        if (viewSpacePos.y <= 69) { //  less than 240 <- height of screen
+            return;
+        }
+        UpdateFrame(delta_time);
+        ivec2 viewDir = normalize(cam_pos - pos);
+        ivec2 right = ivec2(forward.y, -forward.x);
+        UpdateAnim(dot(forward, viewDir), -dot(right, viewDir));
+        bool painState = false;
+        if (shotFired && !dead) {
+            for (int c = 0; c < shots.size(); c++) {
+                if (abs((viewSpacePos.x * inv_sqrt(viewSpacePos.y)) >> SHIFT) < 32 &&
+                    dists_arr_ptr[40] > viewSpacePos.y && shots[c]) {
+                    health -= shots[c];
+                    deregisterShot(c);
+                    if (uint8_t(rand()) < 200)
+                        tex = zombiemanD0;
+                    if (health < 0) {
+                        dead = true;
+                        frame_num = 0;
+                        prev_frame_time = 0;
                     }
                 }
-            } else {
-                // will skip by 4 for larger sizes
-                for (; a < texHeight; a += 4) {
-                    if (a + screenSpaceX > SCR_W - 4) {
-                        break;
-                    }
-                    if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
-                        draw_strip_transparent_clipped(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a,
-                                                       screenSpaceY, texHeight, (a << SHIFT) / texHeight);
-                    }
+            }
+        }
+        if (dead) {
+            tex = zombiemanD[(frame_num) % 5];
+            if (frame_num >= 5) {
+                tex = zombiemanD[4];
+            }
+            flipTex = false;
+        }
+        // Thing::render(inv_cam_rot, cam_pos, dists_arr_ptr);
+
+        int texHeight = (160 << SHIFT) / viewSpacePos.y;
+
+        int screenSpaceX = ((((((viewSpacePos.x << SHIFT) / viewSpacePos.y) + (1 << SHIFT)) >> 1) * SCR_W) >> SHIFT) -
+                           (texHeight >> 1);
+        if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W) {
+            return;
+        }
+        // just centered on screen
+        int screenSpaceY = (RENDER_H - (texHeight)) >> 1;
+        int a = 0;
+        if (screenSpaceX < 0) {
+            a = -screenSpaceX;
+        }
+        if (screenSpaceY >= 0) {
+            for (; a < texHeight; a++) {
+                if (a + screenSpaceX > SCR_W) {
+                    break;
+                }
+                if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
+                    draw_strip_transparent(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a, screenSpaceY,
+                                           texHeight, ((int(flipTex) << 1) - 1) * (a << SHIFT) / texHeight);
                 }
             }
         } else {
-
-            ivec2 viewSpacePos = inv_cam_rot * (pos - cam_pos);
-            if (viewSpacePos.y <= 69) { //  less than 240 <- height of screen
-                return;
-            }
-            int texHeight = (160 << SHIFT) / viewSpacePos.y;
-
-            int screenSpaceX =
-                ((((((viewSpacePos.x << SHIFT) / viewSpacePos.y) + (1 << SHIFT)) >> 1) * SCR_W) >> SHIFT) -
-                (texHeight >> 1);
-            if (screenSpaceX + texHeight < 0 || screenSpaceX >= SCR_W) {
-                return;
-            }
-            // just centered on screen
-            int screenSpaceY = (180 - (texHeight)) >> 1;
-            int a = 0;
-            if (screenSpaceX < 0) {
-                a = -screenSpaceX;
-            }
-            if (screenSpaceY >= 0) {
-                for (; a < texHeight; a++) {
-                    if (a + screenSpaceX > SCR_W) {
-                        break;
-                    }
-                    if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
-                        draw_strip_transparent(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a, screenSpaceY,
-                                               texHeight, -(a << SHIFT) / texHeight);
-                    }
+            // will skip by 4 for larger sizes
+            for (; a < texHeight; a += 4) {
+                if (a + screenSpaceX > SCR_W - 4) {
+                    break;
                 }
-            } else {
-                // will skip by 4 for larger sizes
-                for (; a < texHeight; a += 4) {
-                    if (a + screenSpaceX > SCR_W - 4) {
-                        break;
-                    }
-                    if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
-                        draw_strip_transparent_clipped(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a,
-                                                       screenSpaceY, texHeight, -(a << SHIFT) / texHeight);
-                    }
+                if (viewSpacePos.y < dists_arr_ptr[(a + screenSpaceX) >> 2]) {
+                    draw_strip_transparent_clipped(&(gfx_vbuffer[0][0]), &(tex->data[0]), screenSpaceX + a,
+                                                   screenSpaceY, texHeight,
+                                                   ((int(flipTex) << 1) - 1) * (a << SHIFT) / texHeight);
                 }
             }
         }
@@ -212,6 +228,19 @@ class Enemy : public Thing {
     ivec2 forward;
     uint8_t frame_num;
     unsigned long prev_frame_time;
+    gfx_sprite_t **anim_tex_arr;
+    bool dead;
+    bool flipTex;
+    int health;
+    enum State {
+        STATE_IDLE,
+        STATE_WALK,
+        STATE_SHOOT,
+        STATE_PAIN,
+        STATE_DYING,
+        STATE_DEAD,
+    };
+    State state;
 };
 
 #endif

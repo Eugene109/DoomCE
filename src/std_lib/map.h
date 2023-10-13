@@ -1,24 +1,19 @@
 #include <cstring>
 
 template <typename Object>
+template <typename KeyType>
 
-class vector {
+class map {
   public:
-    vector() {
-        sizeOfVector = 0;
+    map() {
+        sizeOfMap = 0;
         max_capacity = 4;
         objects = new Object[4];
     }
-    vector(unsigned size, Object element) {
-        reserve(2 * size + 1);
-        for (sizeOfVector = 0; sizeOfVector < size; sizeOfVector++) {
-            objects[sizeOfVector] = element;
-        }
-    }
 
-    Object &operator[](unsigned index) { return objects[index]; }
+    Object &operator[](KeyType key) { return objects[keys[key]]; }
 
-    const Object &operator[](unsigned index) const { return objects[index]; }
+    const Object &operator[](KeyType key) const { return objects[keys[key]]; }
 
     void push_back(const Object &obj) {
         if (sizeOfVector == max_capacity) {
@@ -35,6 +30,7 @@ class vector {
         delete[] objects;
         objects = newArray;
     }
+    int size() { return sizeOfVector; }
 
   private:
     unsigned sizeOfVector;

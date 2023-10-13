@@ -30,8 +30,6 @@
 #include <debug.h>
 #endif
 
-#define RENDER_H 180
-
 void draw();
 
 class Player {
@@ -87,14 +85,14 @@ class Player {
 #define SPACE 64
     void DetectCollisions(fixed &incX, fixed &incY) {
         if (incX > 0) {
-            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 9 + (pos.x >> SHIFT) + 1;
+            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
             if (*y_walls_ptr != ' ') {
                 if (((pos.x) >> SHIFT) != ((pos.x + SPACE + incX) >> SHIFT)) {
                     incX = (255 - SPACE) - int(pos.x & int(255));
                 }
             }
         } else {
-            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 9 + (pos.x >> SHIFT);
+            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT);
             if (*y_walls_ptr != ' ') {
                 if (((pos.x) >> SHIFT) != ((pos.x - SPACE + incX) >> SHIFT)) {
                     incX = SPACE - int(pos.x & int(255));
@@ -102,14 +100,14 @@ class Player {
             }
         }
         if (incY > 0) {
-            char *x_walls_ptr = (char *)(&x_walls) + ((pos.y >> SHIFT) + 1) * 8 + (pos.x >> SHIFT);
+            char *x_walls_ptr = (char *)(&x_walls) + ((pos.y >> SHIFT) + 1) * 16 + (pos.x >> SHIFT);
             if (*x_walls_ptr != ' ') {
                 if (((pos.y) >> SHIFT) != ((pos.y + SPACE + incY) >> SHIFT)) {
                     incY = (255 - SPACE) - int(pos.y & int(255));
                 }
             }
         } else {
-            char *x_walls_ptr = (char *)(&x_walls) + (pos.y >> SHIFT) * 8 + (pos.x >> SHIFT);
+            char *x_walls_ptr = (char *)(&x_walls) + (pos.y >> SHIFT) * 16 + (pos.x >> SHIFT);
             if (*x_walls_ptr != ' ') {
                 if (((pos.y) >> SHIFT) != ((pos.y - SPACE + incY) >> SHIFT)) {
                     incY = SPACE - int(pos.y & int(255));
@@ -133,9 +131,10 @@ int main(void) {
     gfx_SetTransparentColor(1);
     gfx_SetTextTransparentColor(1);
     gfx_SetTextBGColor(1);
+    gfx_SetPalette(global_palette, sizeof_global_palette, 0);
 
-    clock_t start_t, end_t;
-    double total_t = 1;
+    clock_t start_t;
+    int total_t = 1;
 
     Player player(ivec2(256 * 3 + 128, 256 * 4), 0);
 
@@ -165,6 +164,18 @@ int main(void) {
     imat2 rot = imat2();
 
     Enemy test_thing(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
+    gfx_ZeroScreen();
+    if (!Enemy::InitTextures()) {
+        gfx_SetTextFGColor(2);
+        gfx_PrintStringXY("Zombieman textures not found, please load", 5, 5);
+        gfx_PrintStringXY("EnemyPt1.8xv and EnemyPt2.8xv", 5, 15);
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
 
     // render buffers
     int dists[NUM_RAYS] = {0};
@@ -180,11 +191,6 @@ int main(void) {
         player.forward = rot * ivec2(0, 1 << SHIFT);
         ivec2 ray;
 
-        end_t = clock();
-
-        clock_t start_r_t, end_r_t;
-        double total_r_t = 1;
-        start_r_t = clock();
         for (uint8_t a = 0; a < NUM_RAYS; ++a) {
             ray = rot * rayOffsets[a];
 
@@ -193,11 +199,7 @@ int main(void) {
             raycast(player.pos.x, player.pos.y, ray.x, ray.y, &hit.x, &hit.y, &(texCoords[a]), &(texTypes[a]));
             dists[a] = dot(hit, player.forward);
         }
-        end_r_t = clock();
 
-        clock_t start_d_t, end_d_t;
-        double total_d_t = 1;
-        start_d_t = clock();
         for (uint8_t a = 0; a < NUM_RAYS; ++a) {
             int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dists[a]) * 160;
 
@@ -211,27 +213,23 @@ int main(void) {
                     a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoords[a]);
             }
         }
-        end_d_t = clock();
-        test_thing.Update(end_d_t - start_t);
-        test_thing.Render(rotate(uint8_t(-player.rot)), player.pos, &(dists[0]));
-        gfx_SetPalette(global_palette, sizeof_global_palette, 0);
+        Enemy::RenderAll(total_t, rotate(uint8_t(-player.rot)), player.pos, &(dists[0]));
 
-        total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-        total_r_t = (double)(end_r_t - start_r_t) / CLOCKS_PER_SEC;
-        total_d_t = (double)(end_d_t - start_d_t) / CLOCKS_PER_SEC;
         char str[100];
-
-        double total = (double)(clock() - start_t) / CLOCKS_PER_SEC;
-        sprintf(str, "fps:%d,cpp:%fs,rc:%fs,d:%fs", int(1.0 / total), total_t, total_r_t, total_d_t);
+        total_t = clock() - start_t;
+        sprintf(str, "fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
         gfx_SetTextFGColor(255);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
-
+#define PRINT_NAME
 #ifdef PRINT_NAME
         sprintf(str, "Created by Eugene Choi");
         offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
         gfx_PrintStringXY(str, offsetX, 20);
 #endif
+        if (kb_Data[1] & kb_2nd) {
+            new Enemy(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
+        }
 
         if (pistol_current_frame) {
             ++pistol_current_frame;
@@ -243,6 +241,7 @@ int main(void) {
 
         if (alpha_key && !alpha_prevkey) {
             pistol_current_frame = 1;
+            Enemy::registerShot(rand() % 10 + 5);
         }
         alpha_prevkey = alpha_key;
 

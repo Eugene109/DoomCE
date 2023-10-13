@@ -3,6 +3,7 @@ palettes:
     fixed-entries:
       - color: {index: 0, r: 0, g: 0, b: 0}
       - color: {index: 1, r: 255, g: 0, b: 255}
+      - color: {index: 2, r: 255, g: 5, b: 5}
       - color: {index: 255, r: 255, g: 255, b: 255}
     images:
       automatic
@@ -12,14 +13,25 @@ converts:
     palette: global_palette
     transparent-color-index: 1
     images:
-      - ceiling_floor_tex.png
+      - thing_tex.png
+converts:
+  - name: textures
+    palette: global_palette
+    rotate: 270
+    images:
       - textures/brick_wall.png
       - textures/portrait.png
-      - thing_tex.png
+converts:
+  - name: HUDImages
+    palette: global_palette
+    width-and-height: false
+    images:
+      - HUD.png
 converts:
   - name: zombieman_pt1_conv
     palette: global_palette
     transparent-color-index: 1
+    rotate: 270
     images:
       - zombieman/zombiemanF0.png
       - zombieman/zombiemanF1.png
@@ -37,6 +49,7 @@ converts:
   - name: zombieman_pt2_conv
     palette: global_palette
     transparent-color-index: 1
+    rotate: 270
     images:
       - zombieman/zombiemanBR0.png
       - zombieman/zombiemanBR1.png
@@ -71,6 +84,8 @@ outputs:
     converts:
       - sprites
       - rlet_sprites
+      - textures
+      - HUDImages
 
   - type: appvar
     name: EnemyPt1
