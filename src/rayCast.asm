@@ -23,46 +23,46 @@
     gaps := 16
 
 _x_walls:
-    db  "AAACAAAAAAAAAAAA                                                                                                                                                                      AA                          A A                               AAA         AAAAAAAAAAAAAAAA"
+    db  "AAACAAAAAAAAAAAA                                                  A A             A0A                                                                                                 AAA         A A  AA                                           AA          AAAAAAAAAAAAAAAA"
 _y_walls:
-    db  "B B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  DB         BB B  BBB        BB  BB BB        BB  BB BB        BB  B            B"
+    db  "B B  B          BB D  D          BB B  B          BB D  D          BB  BB           BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  DB         BB  BB BB        BB  BB BB        BB  BB BB        BB  B   B        B"
 _y_walls_transposed:
-    db  "BBBBBBBBBBBBBBBB                BDBDBDBDBDBDB                BBB             BB BDBDBDBDBDBDB              BBBB             BBB                                                                                                                                 BBBBBBBBBBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                BDBD DBDBDBD        B       BBBB    B       BBB BDBD DBDBDBD               BBBB             BBBB                                                                                                                                BBBBBBBBBBBBBBBB"
 _x_walls_transposed:
-    db  "A               AA               AA            A  AC               AA            A AAA              AAA          A   AAA          A    AA               AA               AA               AA               AA               AA               AA               AA               A"
+    db  "A               AA               AA   AA      A   AC    0          AA   AA      A  AAA              AAA          A    AA          AA   AA          AA   AA               AA               AA               AA               AA               AA               AA               A"
 
 
 
 _x_walls_q2:
-    db  "AAAAAAAAAAAACAAA                                                                                                                                                                        AA                                 A A                           AAA    AAAAAAAAAAAAAAAA"
+    db  "AAAAAAAAAAAACAAA                                                           A A             A0A                                                                                         AAA             AA  A A                                            AA    AAAAAAAAAAAAAAAA"
 _y_walls_q2:
-    db  "B          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB         BD  D BB        BBB  B BB        BB BB  BB        BB BB  BB            B  B"
+    db  "B          B  B BB          D  D BB          B  B BB          D  D BB           BB  BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB         BD  D BB        BB BB  BB        BB BB  BB        BB BB  BB        B   B  B"
 _y_walls_transposed_q2:
-    db  "BBBBBBBBBBBBBBBB                                                                                                                                            BBB            BBBB BDBDBDBDBDBDB                BB              BBBBDBDBDBDBDBDB                   BBBBBBBBBBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                                                                                                                                            BBBB           BBBB BDBD DBDBDBD        B       BBB     B       BBBBBDBD DBDBDBD                    BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q2:
-    db  "A               AA               AA               AA               AA               AA               AA               AA               AA          A    AA          A   AAA              AAA            A AAC               AA            A  AA               AA               A"
+    db  "A               AA               AA               AA               AA               AA               AA               AA          AA   AA          AA   AA          A    AA              AAA   AA      A  AAC    0          AA   AA      A   AA               AA               A"
 
 
 
 _x_walls_q3:
-    db  "AAAAAAAAAAAAAAAA         AAA                               A A                          AA                                                                                                                                                                      AAAAAAAAAAAACAAA"
+    db  "AAAAAAAAAAAAAAAA          AA                                           AA  A A         AAA                                                                                                 A0A             A A                                                  AAAAAAAAAAAACAAA"
 _y_walls_q3:
-    db  "B            B  BB        BB BB  BB        BB BB  BB        BBB  B BB         BD  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B B"
+    db  "B        B   B  BB        BB BB  BB        BB BB  BB        BB BB  BB         BD  D BB          B  B BB          D  D BB          B  B BB          D  D BB          B  B BB          D  D BB           BB  BB          D  D BB          B  B BB          D  D BB          B  B B"
 _y_walls_transposed_q3:
-    db  "BBBBBBBBBBBBBBBB                                                                                                                                 BBB             BBBB              BDBDBDBDBDBDB BB             BBB                BDBDBDBDBDBDB                BBBBBBBBBBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                                                                                                                                BBBB             BBBB               DBDBDBD DBDB BBB       B    BBBB       B        DBDBDBD DBDB                BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q3:
-    db  "A               AA               AA               AA               AA               AA               AA               AA               AA    A          AAA   A          AAA              AAA A            AA               CA  A            AA               AA               A"
+    db  "A               AA               AA               AA               AA               AA               AA               AA   AA          AA   AA          AA    A          AAA              AAA  A      AA   AA          0    CA   A      AA   AA               AA               A"
 
 
 
 _x_walls_q4:
-    db  "AAAAAAAAAAAAAAAA    AAA                           A A                                 AA                                                                                                                                                                        AAACAAAAAAAAAAAA"
+    db  "AAAAAAAAAAAAAAAA    AA                                            A A  AA             AAA                                                                                         A0A             A A                                                           AAACAAAAAAAAAAAA"
 _y_walls_q4:
-    db  "B  B            BB  BB BB        BB  BB BB        BB B  BBB        BB D  DB         BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          B"
+    db  "B  B   B        BB  BB BB        BB  BB BB        BB  BB BB        BB D  DB         BB B  B          BB D  D          BB B  B          BB D  D          BB B  B          BB D  D          BB  BB           BB D  D          BB B  B          BB D  D          BB B  B          B"
 _y_walls_transposed_q4:
-    db  "BBBBBBBBBBBBBBBB                   BDBDBDBDBDBDBBBB              BB                BDBDBDBDBDBDB BBBB            BBB                                                                                                                                            BBBBBBBBBBBBBBBB"
+    db  "BBBBBBBBBBBBBBBB                    DBDBDBD DBDBBBBB       B     BBB       B        DBDBDBD DBDB BBBB           BBBB                                                                                                                                            BBBBBBBBBBBBBBBB"
 _x_walls_transposed_q4:
-    db  "A               AA               AA  A            AA               CAA A            AAA              AAA   A          AA    A          AA               AA               AA               AA               AA               AA               AA               AA               A"
+    db  "A               AA               AA   A      AA   AA          0    CAA  A      AA   AAA              AA    A          AA   AA          AA   AA          AA               AA               AA               AA               AA               AA               AA               A"
 
 
 
@@ -199,7 +199,8 @@ _raycast_asm:
     inc iy
     inc h               ;  increment x, go sideways
     exx
-    jp  .loop
+    ; jp  .loop
+;  let control fall through
 
 .loop:
     and a,a
@@ -335,7 +336,7 @@ _raycast_asm:
     add hl,de           ;  hl += y
     jp  .init_D_done
 
-.dy_is_one:             ;  means that dy is 0, can skip
+.dy_is_one:             ;  means that dx is 0, can skip
     ld  de,0
     ld  e,a             ;  a stores x
     add hl,de           ;  hl += x

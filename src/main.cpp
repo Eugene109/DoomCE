@@ -8,6 +8,8 @@
 // then can just memcpy into different sprite;
 #include "gfx/gfx.h"
 
+#include "gfx/textures.h"
+
 #include <cassert>
 #include <cstring>
 #include <math.h>
@@ -21,6 +23,8 @@
 
 #include "drawStrip.h"
 #include "raycast.h"
+
+#include "font.h"
 
 #include "enemy.h"
 #include "thing.h"
@@ -38,9 +42,14 @@ class Player {
     ivec2 forward;
     uint8_t rot;
     uint8_t health;
+    uint8_t armour;
     Player(ivec2 position, uint8_t rotation) : pos(position), rot(rotation) {
         forward = rotate(rot) * ivec2(0, 1 << SHIFT);
+        health = 100;
+        armour = 0;
     }
+    // protected:
+    void dealDamage(uint8_t dmg) { health -= dmg; }
     void Update() {
         // movement & collision detection
         if (kb_Data[7] & kb_Up) {
@@ -86,14 +95,14 @@ class Player {
     void DetectCollisions(fixed &incX, fixed &incY) {
         if (incX > 0) {
             char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
-            if (*y_walls_ptr != ' ') {
+            if (*y_walls_ptr >> 6) {
                 if (((pos.x) >> SHIFT) != ((pos.x + SPACE + incX) >> SHIFT)) {
                     incX = (255 - SPACE) - int(pos.x & int(255));
                 }
             }
         } else {
             char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT);
-            if (*y_walls_ptr != ' ') {
+            if (*y_walls_ptr >> 6) {
                 if (((pos.x) >> SHIFT) != ((pos.x - SPACE + incX) >> SHIFT)) {
                     incX = SPACE - int(pos.x & int(255));
                 }
@@ -101,14 +110,14 @@ class Player {
         }
         if (incY > 0) {
             char *x_walls_ptr = (char *)(&x_walls) + ((pos.y >> SHIFT) + 1) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr != ' ') {
+            if (*x_walls_ptr >> 6) {
                 if (((pos.y) >> SHIFT) != ((pos.y + SPACE + incY) >> SHIFT)) {
                     incY = (255 - SPACE) - int(pos.y & int(255));
                 }
             }
         } else {
             char *x_walls_ptr = (char *)(&x_walls) + (pos.y >> SHIFT) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr != ' ') {
+            if (*x_walls_ptr >> 6) {
                 if (((pos.y) >> SHIFT) != ((pos.y - SPACE + incY) >> SHIFT)) {
                     incY = SPACE - int(pos.y & int(255));
                 }
@@ -123,7 +132,15 @@ const gfx_rletsprite_t *pistol_anim[NUM_FRAMES_PISTOL] = {
     pistol_1, pistol_2, pistol_4, pistol_5, pistol_5, pistol_7, pistol_8,
 };
 
-const uint8_t *textures[2] = {&(brick_wall->data[0]), &(portrait->data[0])};
+void drawNumBigRed(int num, int xPos) {
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14]), &(numbers_big_data[0]), 15, 16, num % 10);
+    if (num < 10)
+        return;
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 2]), &(numbers_big_data[0]), 15, 16, num % 100 / 10);
+    if (num < 100)
+        return;
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 3]), &(numbers_big_data[0]), 15, 16, num % 1000 / 100);
+}
 
 int main(void) {
     gfx_Begin();
@@ -177,6 +194,19 @@ int main(void) {
         return -1;
     }
 
+    if (textures_init() == 0) {
+        gfx_SetTextFGColor(2);
+        gfx_PrintStringXY("Wall textures not found, ", 5, 5);
+        gfx_PrintStringXY("please load textures.8xv", 5, 15);
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
+    const uint8_t *textures[3] = {&(brick_wall->data[0]), &(portrait->data[0]), &(door_gray->data[0])};
+
     // render buffers
     int dists[NUM_RAYS] = {0};
     uint8_t texCoords[NUM_RAYS] = {0};
@@ -215,15 +245,31 @@ int main(void) {
         }
         Enemy::RenderAll(total_t, rotate(uint8_t(-player.rot)), player.pos, &(dists[0]));
 
+        // draw hud;
+        memcpy(&(gfx_vbuffer[208][0]), HUD_data, HUD_width * HUD_height);
+        // gfx_TransparentSprite(numbers_small, 123, 240 - 18);
+        draw_font(&(gfx_vbuffer[240 - 28][111]), &(numbers_small_selected_data[0]), 5, 6, 2);
+        draw_font(&(gfx_vbuffer[240 - 28][123]), &(numbers_small_data[0]), 5, 6, 3);
+        draw_font(&(gfx_vbuffer[240 - 28][135]), &(numbers_small_data[0]), 5, 6, 4);
+        draw_font(&(gfx_vbuffer[240 - 18][111]), &(numbers_small_data[0]), 5, 6, 5);
+        draw_font(&(gfx_vbuffer[240 - 18][123]), &(numbers_small_data[0]), 5, 6, 6);
+        draw_font(&(gfx_vbuffer[240 - 18][135]), &(numbers_small_data[0]), 5, 6, 7);
+
+        drawNumBigRed(500, 44);
+        draw_font(&(gfx_vbuffer[240 - 29][104 - 14]), &(numbers_big_data[0]), 15, 16, 10);
+        drawNumBigRed(200, 90);
+        draw_font(&(gfx_vbuffer[240 - 29][235 - 14]), &(numbers_big_data[0]), 15, 16, 10);
+        drawNumBigRed(200, 235 - 14);
+
         char str[100];
         total_t = clock() - start_t;
         sprintf(str, "fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
         gfx_SetTextFGColor(255);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
-#define PRINT_NAME
+// #define PRINT_NAME
 #ifdef PRINT_NAME
-        sprintf(str, "Created by Eugene Choi");
+        sprintf(str, "Built by Eugene Choi using ASM & C++");
         offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) / 2;
         gfx_PrintStringXY(str, offsetX, 20);
 #endif

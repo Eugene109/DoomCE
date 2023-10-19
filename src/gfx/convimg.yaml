@@ -15,12 +15,24 @@ converts:
     images:
       - thing_tex.png
 converts:
+  - name: fonts
+    palette: global_palette
+    width-and-height: false
+    transparent-color-index: 1
+    images:
+      - numbers_small.png
+      - numbers_small_selected.png
+      - numbers_big.png
+converts:
   - name: textures
     palette: global_palette
+    transparent-color-index: 1
+    flip-y: true
     rotate: 270
     images:
       - textures/brick_wall.png
       - textures/portrait.png
+      - textures/door_gray.png
 converts:
   - name: HUDImages
     palette: global_palette
@@ -64,7 +76,7 @@ converts:
       - zombieman/zombiemanD2.png
       - zombieman/zombiemanD3.png
       - zombieman/zombiemanD4.png
-  - name: rlet_sprites
+  - name: rlet_weapon_sprites
     palette: global_palette
     transparent-color-index: 1
     style: rlet
@@ -83,9 +95,16 @@ outputs:
       - global_palette
     converts:
       - sprites
-      - rlet_sprites
-      - textures
+      - rlet_weapon_sprites
       - HUDImages
+      - fonts
+
+  - type: appvar
+    name: textures
+    include-file: textures.h
+    source-format: c
+    converts:
+      - textures
 
   - type: appvar
     name: EnemyPt1
