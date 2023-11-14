@@ -50,6 +50,8 @@ class Player {
     }
     // protected:
     void dealDamage(uint8_t dmg) { health -= dmg; }
+    uint8_t getHealth() { return health; }
+    uint8_t getArmour() { return armour; }
     void Update() {
         // movement & collision detection
         if (kb_Data[7] & kb_Up) {
@@ -94,30 +96,30 @@ class Player {
 #define SPACE 64
     void DetectCollisions(fixed &incX, fixed &incY) {
         if (incX > 0) {
-            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
-            if (*y_walls_ptr >> 6) {
+            char *y_walls_ptr = (char *)(&y_walls_q1) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
+            if (*y_walls_ptr >> 6 && !(*y_walls_ptr & 32)) {
                 if (((pos.x) >> SHIFT) != ((pos.x + SPACE + incX) >> SHIFT)) {
                     incX = (255 - SPACE) - int(pos.x & int(255));
                 }
             }
         } else {
-            char *y_walls_ptr = (char *)(&y_walls) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT);
-            if (*y_walls_ptr >> 6) {
+            char *y_walls_ptr = (char *)(&y_walls_q1) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT);
+            if (*y_walls_ptr >> 6 && !(*y_walls_ptr & 32)) {
                 if (((pos.x) >> SHIFT) != ((pos.x - SPACE + incX) >> SHIFT)) {
                     incX = SPACE - int(pos.x & int(255));
                 }
             }
         }
         if (incY > 0) {
-            char *x_walls_ptr = (char *)(&x_walls) + ((pos.y >> SHIFT) + 1) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr >> 6) {
+            char *x_walls_ptr = (char *)(&x_walls_q1) + ((pos.y >> SHIFT) + 1) * 16 + (pos.x >> SHIFT);
+            if (*x_walls_ptr >> 6 && !(*x_walls_ptr & 32)) {
                 if (((pos.y) >> SHIFT) != ((pos.y + SPACE + incY) >> SHIFT)) {
                     incY = (255 - SPACE) - int(pos.y & int(255));
                 }
             }
         } else {
-            char *x_walls_ptr = (char *)(&x_walls) + (pos.y >> SHIFT) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr >> 6) {
+            char *x_walls_ptr = (char *)(&x_walls_q1) + (pos.y >> SHIFT) * 16 + (pos.x >> SHIFT);
+            if (*x_walls_ptr >> 6 && !(*x_walls_ptr & 32)) {
                 if (((pos.y) >> SHIFT) != ((pos.y - SPACE + incY) >> SHIFT)) {
                     incY = SPACE - int(pos.y & int(255));
                 }
@@ -153,7 +155,7 @@ int main(void) {
     clock_t start_t;
     int total_t = 1;
 
-    Player player(ivec2(256 * 3 + 128, 256 * 4), 0);
+    Player player(ivec2(256 * 2 + 128, 256 * 3), 0);
 
     uint8_t pistol_current_frame = 0;
     bool alpha_key, alpha_prevkey;
@@ -161,23 +163,10 @@ int main(void) {
     const uint8_t SKIP = 4;
     const uint8_t NUM_RAYS = GFX_LCD_WIDTH / SKIP;
 
-    // will want to make const later
-    ivec2 rayOffsets[NUM_RAYS] = {
-        ivec2(-181, 181), ivec2(-178, 183), ivec2(-176, 185), ivec2(-173, 187), ivec2(-171, 190), ivec2(-168, 192),
-        ivec2(-165, 195), ivec2(-162, 197), ivec2(-159, 199), ivec2(-156, 202), ivec2(-153, 204), ivec2(-150, 207),
-        ivec2(-146, 209), ivec2(-143, 212), ivec2(-139, 214), ivec2(-135, 217), ivec2(-131, 219), ivec2(-127, 221),
-        ivec2(-123, 224), ivec2(-118, 226), ivec2(-114, 228), ivec2(-109, 231), ivec2(-105, 233), ivec2(-100, 235),
-        ivec2(-95, 237),  ivec2(-89, 239),  ivec2(-84, 241),  ivec2(-79, 243),  ivec2(-73, 245),  ivec2(-67, 246),
-        ivec2(-62, 248),  ivec2(-56, 249),  ivec2(-50, 251),  ivec2(-44, 252),  ivec2(-37, 253),  ivec2(-31, 254),
-        ivec2(-25, 254),  ivec2(-19, 255),  ivec2(-12, 255),  ivec2(-6, 255),   ivec2(0, 256),    ivec2(6, 255),
-        ivec2(12, 255),   ivec2(19, 255),   ivec2(25, 254),   ivec2(31, 254),   ivec2(37, 253),   ivec2(44, 252),
-        ivec2(50, 251),   ivec2(56, 249),   ivec2(62, 248),   ivec2(67, 246),   ivec2(73, 245),   ivec2(79, 243),
-        ivec2(84, 241),   ivec2(89, 239),   ivec2(95, 237),   ivec2(100, 235),  ivec2(105, 233),  ivec2(109, 231),
-        ivec2(114, 228),  ivec2(118, 226),  ivec2(123, 224),  ivec2(127, 221),  ivec2(131, 219),  ivec2(135, 217),
-        ivec2(139, 214),  ivec2(143, 212),  ivec2(146, 209),  ivec2(150, 207),  ivec2(153, 204),  ivec2(156, 202),
-        ivec2(159, 199),  ivec2(162, 197),  ivec2(165, 195),  ivec2(168, 192),  ivec2(171, 190),  ivec2(173, 187),
-        ivec2(176, 185),  ivec2(178, 183),
-    };
+    ivec2 rayOffsets[NUM_RAYS] = {0};
+    for (uint8_t a = 0; a < NUM_RAYS; a++) {
+        rayOffsets[a] = normalize(ivec2((a * 512) / (NUM_RAYS - 1) - 256, 256));
+    }
     imat2 rot = imat2();
 
     Enemy test_thing(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
@@ -231,7 +220,7 @@ int main(void) {
         }
 
         for (uint8_t a = 0; a < NUM_RAYS; ++a) {
-            int stripLen = ((1 << SHIFT) * (1 << SHIFT) / dists[a]) * 160;
+            int stripLen = ((1 << (SHIFT + SHIFT)) / dists[a]) * 160;
 
             if ((stripLen >> SHIFT) <= RENDER_H) {
                 draw_strip(&(gfx_vbuffer[0][0]),
@@ -255,15 +244,20 @@ int main(void) {
         draw_font(&(gfx_vbuffer[240 - 18][123]), &(numbers_small_data[0]), 5, 6, 6);
         draw_font(&(gfx_vbuffer[240 - 18][135]), &(numbers_small_data[0]), 5, 6, 7);
 
-        drawNumBigRed(500, 44);
+        // ammo
+        drawNumBigRed(50, 44);
+
+        // health
         draw_font(&(gfx_vbuffer[240 - 29][104 - 14]), &(numbers_big_data[0]), 15, 16, 10);
-        drawNumBigRed(200, 90);
+        drawNumBigRed(player.getHealth(), 90);
+
+        // armour
         draw_font(&(gfx_vbuffer[240 - 29][235 - 14]), &(numbers_big_data[0]), 15, 16, 10);
-        drawNumBigRed(200, 235 - 14);
+        drawNumBigRed(player.getArmour(), 235 - 14);
 
         char str[100];
         total_t = clock() - start_t;
-        sprintf(str, "fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
+        sprintf(str, "rev 0.3.7  fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
         gfx_SetTextFGColor(255);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);

@@ -15,59 +15,59 @@
 
 using namespace std;
 
-class vec2 {
-  public:
-    vec2() : x(0), y(0) {}
-    vec2(double x_in, double y_in) : x(x_in), y(y_in) {}
-    vec2(double in) : x(in), y(in) {}
+// class vec2 {
+//   public:
+//     vec2() : x(0), y(0) {}
+//     vec2(double x_in, double y_in) : x(x_in), y(y_in) {}
+//     vec2(double in) : x(in), y(in) {}
 
-    double operator[](unsigned i) {
-        switch (i) {
-        case 0:
-            return x;
-        case 1:
-            return y;
-        default:
-            return 6969696969.69;
-        }
-    }
+//     double operator[](unsigned i) {
+//         switch (i) {
+//         case 0:
+//             return x;
+//         case 1:
+//             return y;
+//         default:
+//             return 6969696969.69;
+//         }
+//     }
 
-    vec2 operator*(const double &a) { return vec2(x * a, y * a); }
-    void operator*=(double a) { // or this
-        x *= a;
-        y *= a;
-    }
-    vec2 operator/(const double &a) { return vec2(x / a, y / a); }
-    const vec2 operator/(const double &a) const { return vec2(x / a, y / a); }
-    void operator/=(double a) { // or this
-        x /= a;
-        y /= a;
-    }
+//     vec2 operator*(const double &a) { return vec2(x * a, y * a); }
+//     void operator*=(double a) { // or this
+//         x *= a;
+//         y *= a;
+//     }
+//     vec2 operator/(const double &a) { return vec2(x / a, y / a); }
+//     const vec2 operator/(const double &a) const { return vec2(x / a, y / a); }
+//     void operator/=(double a) { // or this
+//         x /= a;
+//         y /= a;
+//     }
 
-    const vec2 operator+(const vec2 &a) const { return vec2(x + a.x, y + a.y); }
+//     const vec2 operator+(const vec2 &a) const { return vec2(x + a.x, y + a.y); }
 
-    vec2 operator+(const vec2 &a) { return vec2(x + a.x, y + a.y); }
+//     vec2 operator+(const vec2 &a) { return vec2(x + a.x, y + a.y); }
 
-    vec2 operator+(double a) { return vec2(x + a, y + a); }
-    void operator+=(vec2 a) {
-        x += a.x;
-        y += a.y;
-    }
+//     vec2 operator+(double a) { return vec2(x + a, y + a); }
+//     void operator+=(vec2 a) {
+//         x += a.x;
+//         y += a.y;
+//     }
 
-    const vec2 operator-(const vec2 &a) const { return vec2(x - a.x, y - a.y); }
+//     const vec2 operator-(const vec2 &a) const { return vec2(x - a.x, y - a.y); }
 
-    vec2 operator-(const vec2 &a) { return vec2(x - a.x, y - a.y); }
-    vec2 operator-(double a) { return vec2(x - a, y - a); }
-    void operator-=(vec2 a) {
-        x -= a.x;
-        y -= a.y;
-    }
+//     vec2 operator-(const vec2 &a) { return vec2(x - a.x, y - a.y); }
+//     vec2 operator-(double a) { return vec2(x - a, y - a); }
+//     void operator-=(vec2 a) {
+//         x -= a.x;
+//         y -= a.y;
+//     }
 
-    double x;
-    double y;
-};
+//     double x;
+//     double y;
+// };
 
-vec2 operator*(double a, vec2 b) { return b * a; }
+// vec2 operator*(double a, vec2 b) { return b * a; }
 
 class ivec2 {
   public:
@@ -126,18 +126,6 @@ class ivec2 {
 
 ivec2 operator*(int a, ivec2 b) { return b * a; }
 
-unsigned inv_sqrt_lut[256] = {
-    0xFFFFFF, 256, 181, 147, 128, 114, 104, 96, 90, 85, 80, 77, 73, 71, 68, 66, 64, 62, 60, 58, 57, 55, 54, 53, 52, 51,
-    50,       49,  48,  47,  46,  45,  45,  44, 43, 43, 42, 42, 41, 40, 40, 39, 39, 39, 38, 38, 37, 37, 36, 36, 36, 35,
-    35,       35,  34,  34,  34,  33,  33,  33, 33, 32, 32, 32, 32, 31, 31, 31, 31, 30, 30, 30, 30, 29, 29, 29, 29, 29,
-    28,       28,  28,  28,  28,  28,  27,  27, 27, 27, 27, 27, 26, 26, 26, 26, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25,
-    25,       24,  24,  24,  24,  24,  24,  24, 24, 24, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 22, 22, 22, 22, 22, 22,
-    22,       22,  22,  22,  22,  22,  21,  21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20,
-    20,       20,  20,  20,  20,  20,  20,  20, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
-    18,       18,  18,  18,  18,  18,  18,  18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17,
-    17,       17,  17,  17,  17,  17,  17,  17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16,
-    16,       16,  16,  16,  16,  16,  16,  16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-};
 unsigned inv_sqrt_lut_lsb[256] = {
     0xFFFFFF, 4096, 2896, 2364, 2048, 1831, 1672, 1548, 1448, 1365, 1295, 1234, 1182, 1136, 1094, 1057, 1024, 993, 965,
     939,      915,  893,  873,  854,  836,  819,  803,  788,  774,  760,  747,  735,  724,  713,  702,  692,  682, 673,
@@ -153,6 +141,19 @@ unsigned inv_sqrt_lut_lsb[256] = {
     283,      282,  281,  281,  280,  279,  279,  278,  278,  277,  276,  276,  275,  274,  274,  273,  273,  272, 271,
     271,      270,  270,  269,  268,  268,  267,  267,  266,  266,  265,  264,  264,  263,  263,  262,  262,  261, 261,
     260,      260,  259,  259,  258,  258,  257,  257,  256,
+};
+
+unsigned inv_sqrt_lut[256] = {
+    0xFFFFFF, 256, 181, 147, 128, 114, 104, 96, 90, 85, 80, 77, 73, 71, 68, 66, 64, 62, 60, 58, 57, 55, 54, 53, 52, 51,
+    50,       49,  48,  47,  46,  45,  45,  44, 43, 43, 42, 42, 41, 40, 40, 39, 39, 39, 38, 38, 37, 37, 36, 36, 36, 35,
+    35,       35,  34,  34,  34,  33,  33,  33, 33, 32, 32, 32, 32, 31, 31, 31, 31, 30, 30, 30, 30, 29, 29, 29, 29, 29,
+    28,       28,  28,  28,  28,  28,  27,  27, 27, 27, 27, 27, 26, 26, 26, 26, 26, 26, 26, 25, 25, 25, 25, 25, 25, 25,
+    25,       24,  24,  24,  24,  24,  24,  24, 24, 24, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 22, 22, 22, 22, 22, 22,
+    22,       22,  22,  22,  22,  22,  21,  21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 20, 20, 20, 20, 20,
+    20,       20,  20,  20,  20,  20,  20,  20, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
+    18,       18,  18,  18,  18,  18,  18,  18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 17, 17, 17, 17, 17,
+    17,       17,  17,  17,  17,  17,  17,  17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16,
+    16,       16,  16,  16,  16,  16,  16,  16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
 };
 
 fixed inv_sqrt(fixed number) {
@@ -181,7 +182,7 @@ class vec3 {
     vec3(double x_in, double y_in, double z_in) : x(x_in), y(y_in), z(z_in) {}
     vec3(double in) : x(in), y(in), z(in) {}
 
-    vec2 xy() { return vec2(x, y); }
+    // vec2 xy() { return vec2(x, y); }
 
     double operator[](unsigned i) {
         switch (i) {
@@ -248,8 +249,8 @@ class vec4 {
     vec4(double x_in, double y_in, double z_in, double w_in) : x(x_in), y(y_in), z(z_in), w(w_in) {}
     vec4(double in) : x(in), y(in), z(in), w(in) {}
 
-    vec2 xy() { return vec2(x, y); }
-    vec3 xyz() { return vec3(x, y, z); }
+    // vec2 xy() { return vec2(x, y); }
+    // vec3 xyz() { return vec3(x, y, z); }
 
     double operator[](unsigned i) {
         switch (i) {
@@ -310,7 +311,7 @@ vec3 cross(const vec3 &a, const vec3 &b) {
 
 vec4 operator*(double a, const vec4 &b) { return b * a; }
 
-double dot(const vec2 &a, const vec2 &b) { return a.x * b.x + a.y * b.y; }
+// double dot(const vec2 &a, const vec2 &b) { return a.x * b.x + a.y * b.y; }
 int dot(const ivec2 &a, const ivec2 &b) { return (a.x * b.x + a.y * b.y) >> SHIFT; }
 double dot(const vec3 &a, const vec3 &b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
@@ -351,18 +352,13 @@ vec3 normalize(const vec3 &in) {
     return in / length;
 }
 
-vec2 normalize(const vec2 &in) {
-    double length = sqrt(in.x * in.x + in.y * in.y);
-    return in / length;
-}
-
-ivec2 i_normalize(const ivec2 &in) {
-    int length = sqrt(in.x * in.x + in.y * in.y);
-    return ivec2((in.x << SHIFT) / length, (in.y << SHIFT) / length);
-}
+// vec2 normalize(const vec2 &in) {
+//     double length = sqrt(in.x * in.x + in.y * in.y);
+//     return in / length;
+// }
 
 double lengthSQ(const vec3 &in) { return in.x * in.x + in.y * in.y + in.z * in.z; }
-double lengthSQ(const vec2 &in) { return in.x * in.x + in.y * in.y; }
+// double lengthSQ(const vec2 &in) { return in.x * in.x + in.y * in.y; }
 
 float clamp(double in, double min = 0, double max = 1) {
     if (in < min) {

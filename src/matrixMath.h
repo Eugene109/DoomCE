@@ -23,9 +23,9 @@ class mat2 {
         data[0][1] = a[2];
         data[1][1] = a[3];
     }
-    vec2 operator*(const vec2 &in) {
-        return vec2(data[0][0] * in.x + data[1][0] * in.y, data[0][1] * in.x + data[1][1] * in.y);
-    }
+    // vec2 operator*(const vec2 &in) {
+    //     return vec2(data[0][0] * in.x + data[1][0] * in.y, data[0][1] * in.x + data[1][1] * in.y);
+    // }
     mat2 operator*(const mat2 &in) {
         mat2 out = mat2();
         out.data[0][0] = in.data[0][0] * data[0][0] + in.data[0][1] * data[1][0];

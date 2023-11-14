@@ -12,18 +12,55 @@
 #include "gfx/zombieman_pt1.h"
 #include "gfx/zombieman_pt2.h"
 
-#define NUM_FRAMES_ENEMY 4
+#define NUM_FRAMES_ENEMY_WALK 4
+#define NUM_FRAMES_ENEMY_DEATH 5
+#define NUM_VIEWS_ENEMY 8
 
-gfx_sprite_t *zombiemanF[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanFR[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanR[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanBR[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanB[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanBL[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanL[NUM_FRAMES_ENEMY] = {0};
-gfx_sprite_t *zombiemanFL[NUM_FRAMES_ENEMY] = {0};
+enum ViewDir { F = 0, FR = 1, R = 2, BR = 3, B = 4, BL = 5, L = 6, FL = 7 };
 
-gfx_sprite_t *zombiemanD[5] = {0};
+gfx_sprite_t *zombieman_walk[NUM_FRAMES_ENEMY_WALK][NUM_VIEWS_ENEMY] = {{0}};
+
+gfx_sprite_t *zombieman_death[NUM_FRAMES_ENEMY_DEATH] = {0};
+
+void initZombieTexArrs() {
+    zombieman_walk[0][0] = zombiemanF0;
+    zombieman_walk[1][0] = zombiemanF1;
+    zombieman_walk[2][0] = zombiemanF2;
+    zombieman_walk[3][0] = zombiemanF3;
+    zombieman_walk[0][1] = zombiemanFR0;
+    zombieman_walk[1][1] = zombiemanFR1;
+    zombieman_walk[2][1] = zombiemanFR2;
+    zombieman_walk[3][1] = zombiemanFR3;
+    zombieman_walk[0][2] = zombiemanR0;
+    zombieman_walk[1][2] = zombiemanR1;
+    zombieman_walk[2][2] = zombiemanR2;
+    zombieman_walk[3][2] = zombiemanR3;
+    zombieman_walk[0][3] = zombiemanBR0;
+    zombieman_walk[1][3] = zombiemanBR1;
+    zombieman_walk[2][3] = zombiemanBR2;
+    zombieman_walk[3][3] = zombiemanBR3;
+    zombieman_walk[0][4] = zombiemanB0;
+    zombieman_walk[1][4] = zombiemanB1;
+    zombieman_walk[2][4] = zombiemanB2;
+    zombieman_walk[3][4] = zombiemanB3;
+    zombieman_walk[0][5] = zombiemanBR2;
+    zombieman_walk[1][5] = zombiemanBR3;
+    zombieman_walk[2][5] = zombiemanBR0;
+    zombieman_walk[3][5] = zombiemanBR1;
+    zombieman_walk[0][6] = zombiemanR2;
+    zombieman_walk[1][6] = zombiemanR3;
+    zombieman_walk[2][6] = zombiemanR0;
+    zombieman_walk[3][6] = zombiemanR1;
+    zombieman_walk[0][7] = zombiemanFR2;
+    zombieman_walk[1][7] = zombiemanFR3;
+    zombieman_walk[2][7] = zombiemanFR0;
+    zombieman_walk[3][7] = zombiemanFR1;
+    zombieman_death[0] = zombiemanD0;
+    zombieman_death[1] = zombiemanD1;
+    zombieman_death[2] = zombiemanD2;
+    zombieman_death[3] = zombiemanD3;
+    zombieman_death[4] = zombiemanD4;
+}
 
 //      b
 //  bl     br
@@ -38,6 +75,24 @@ class Enemy : public Thing {
     inline static vector<Enemy *> enemies;
     inline static bool shotFired;
     inline static vector<int> shots;
+
+    ivec2 forward;
+    uint8_t frame_num;
+    unsigned long prev_frame_time;
+    gfx_sprite_t **anim_tex_arr;
+    bool dead;
+    bool flipTex;
+    int health;
+    enum State {
+        STATE_IDLE,
+        STATE_WALK,
+        STATE_SHOOT,
+        STATE_PAIN,
+        STATE_DYING,
+        STATE_DEAD,
+    };
+    State state;
+
     inline static void registerShot(int dmg) {
         shotFired = true;
         shots.push_back(dmg);
@@ -50,7 +105,8 @@ class Enemy : public Thing {
     Enemy(const ivec2 &p) {
         pos = p;
         frame_num = 0;
-        tex = zombiemanF[frame_num];
+        tex = zombieman_walk[frame_num][F];
+        anim_tex_arr = zombieman_walk[frame_num];
         prev_frame_time = 0;
         forward = ivec2(0, 1 << SHIFT);
         enemies.push_back(this);
@@ -65,43 +121,7 @@ class Enemy : public Thing {
         if (EnemyPt2_init() == 0) {
             return false;
         }
-        zombiemanF[0] = zombiemanF0;
-        zombiemanF[1] = zombiemanF1;
-        zombiemanF[2] = zombiemanF2;
-        zombiemanF[3] = zombiemanF3;
-        zombiemanFR[0] = zombiemanFR0;
-        zombiemanFR[1] = zombiemanFR1;
-        zombiemanFR[2] = zombiemanFR2;
-        zombiemanFR[3] = zombiemanFR3;
-        zombiemanR[0] = zombiemanR0;
-        zombiemanR[1] = zombiemanR1;
-        zombiemanR[2] = zombiemanR2;
-        zombiemanR[3] = zombiemanR3;
-        zombiemanBR[0] = zombiemanBR0;
-        zombiemanBR[1] = zombiemanBR1;
-        zombiemanBR[2] = zombiemanBR2;
-        zombiemanBR[3] = zombiemanBR3;
-        zombiemanB[0] = zombiemanB0;
-        zombiemanB[1] = zombiemanB1;
-        zombiemanB[2] = zombiemanB2;
-        zombiemanB[3] = zombiemanB3;
-        zombiemanBL[0] = zombiemanBR2;
-        zombiemanBL[1] = zombiemanBR3;
-        zombiemanBL[2] = zombiemanBR0;
-        zombiemanBL[3] = zombiemanBR1;
-        zombiemanL[0] = zombiemanR2;
-        zombiemanL[1] = zombiemanR3;
-        zombiemanL[2] = zombiemanR0;
-        zombiemanL[3] = zombiemanR1;
-        zombiemanFL[0] = zombiemanFR2;
-        zombiemanFL[1] = zombiemanFR3;
-        zombiemanFL[2] = zombiemanFR0;
-        zombiemanFL[3] = zombiemanFR1;
-        zombiemanD[0] = zombiemanD0;
-        zombiemanD[1] = zombiemanD1;
-        zombiemanD[2] = zombiemanD2;
-        zombiemanD[3] = zombiemanD3;
-        zombiemanD[4] = zombiemanD4;
+        initZombieTexArrs();
         return true;
     }
     static void RenderAll(unsigned long delta_time, const imat2 &inv_cam_rot, const ivec2 &cam_pos,
@@ -119,34 +139,35 @@ class Enemy : public Thing {
 
             prev_frame_time = 0;
         }
+        anim_tex_arr = zombieman_walk[(frame_num)&0x03];
     }
-    void UpdateAnim(fixed dotF, fixed dotR) {
+    void UpdateView(fixed dotF, fixed dotR) {
         flipTex = false;
         if (dotF > 236) {
-            tex = zombiemanF[(frame_num)&0x03];
+            tex = anim_tex_arr[F];
         } else if (dotF > 98) {
             if (dotR > 0) {
-                tex = zombiemanFR[(frame_num)&0x03];
+                tex = anim_tex_arr[FR];
             } else {
-                tex = zombiemanFL[(frame_num)&0x03];
+                tex = anim_tex_arr[FL];
                 flipTex = true;
             }
         } else if (dotF > -98) {
             if (dotR > 0) {
-                tex = zombiemanR[(frame_num)&0x03];
+                tex = anim_tex_arr[R];
             } else {
-                tex = zombiemanL[(frame_num)&0x03];
+                tex = anim_tex_arr[L];
                 flipTex = true;
             }
         } else if (dotF > -236) {
             if (dotR > 0) {
-                tex = zombiemanBR[(frame_num)&0x03];
+                tex = anim_tex_arr[BR];
             } else {
-                tex = zombiemanBL[(frame_num)&0x03];
+                tex = anim_tex_arr[BL];
                 flipTex = true;
             }
         } else {
-            tex = zombiemanB[(frame_num)&0x03];
+            tex = anim_tex_arr[B];
         }
     }
     void Render(unsigned long delta_time, const imat2 &inv_cam_rot, const ivec2 &cam_pos, int *dists_arr_ptr) {
@@ -161,7 +182,7 @@ class Enemy : public Thing {
         UpdateFrame(delta_time);
         ivec2 viewDir = normalize(cam_pos - pos);
         ivec2 right = ivec2(forward.y, -forward.x);
-        UpdateAnim(dot(forward, viewDir), -dot(right, viewDir));
+        UpdateView(dot(forward, viewDir), -dot(right, viewDir));
         bool painState = false;
         if (shotFired && !dead) {
             for (int c = 0; c < shots.size(); c++) {
@@ -180,9 +201,9 @@ class Enemy : public Thing {
             }
         }
         if (dead) {
-            tex = zombiemanD[(frame_num) % 5];
+            tex = zombieman_death[(frame_num) % 5];
             if (frame_num >= 5) {
-                tex = zombiemanD[4];
+                tex = zombieman_death[4];
             }
             flipTex = false;
         }
@@ -225,22 +246,6 @@ class Enemy : public Thing {
             }
         }
     }
-    ivec2 forward;
-    uint8_t frame_num;
-    unsigned long prev_frame_time;
-    gfx_sprite_t **anim_tex_arr;
-    bool dead;
-    bool flipTex;
-    int health;
-    enum State {
-        STATE_IDLE,
-        STATE_WALK,
-        STATE_SHOOT,
-        STATE_PAIN,
-        STATE_DYING,
-        STATE_DEAD,
-    };
-    State state;
 };
 
 #endif

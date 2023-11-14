@@ -1,0 +1,16 @@
+b b b b b b b b b b b b b b b b 
+b b b e e e e e e e e e b b b b 
+b b e e b e e e e b e e e e e b 
+b e e e e e e b b b e e e e b b 
+b e e e e b b e b e e e e e e b 
+b b d b b b e e b e b d b e e e 
+b e e e b e e b b b b e b e e b 
+b e e e d e e e b p e e b b b b 
+b e e e b e e e b e e e b p b b 
+b b d b b b e e e e e e e e e b 
+b e e e b b b e e e b e e e e b 
+p e e e b e b b p b b b e e b b 
+b e e e d e e b e e e b e b b b 
+p e e e b e e e e b e e e p b b 
+b e e e b p b e e b e e e b b b 
+b b p b b b b b b b b p b b b b 

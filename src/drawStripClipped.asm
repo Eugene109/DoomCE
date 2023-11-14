@@ -1,6 +1,5 @@
 
     assume adl=1
-    ;https://youtube.com/shorts/f0--ib8HpOM?feature=share
 
     section .rodata
     ; public lcdWidth
