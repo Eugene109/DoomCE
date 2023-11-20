@@ -70,8 +70,26 @@ _x_walls_transposed_q4:
 
 _door_states:
     dl $000000,$000000,$000000,$000000,$000000,$000000
-
-
+    public _set_door_state
+_set_door_state:
+; sets the state of a door
+; Arguments:
+;    // technically arg0: return address
+;    arg1: door name, starts at 'a', 
+; Returns:
+;  None
+    ld  iy,0
+    add iy,sp
+    ld  a,(iy+3)
+    sub a,'a'
+    ld  l,a
+    ld  h,3
+    mlt hl
+    ld  de,_door_states
+    add hl,de
+    ld  bc,(iy+6)
+    ld  (hl),bc
+    ret
 _xy_save:
     dl $000000
 _dx_save:
@@ -399,17 +417,23 @@ _raycast_asm:
 .dark_matter_x_wall:
     ;  this is a hit on a x-wall, so letters b and d are possible
     ;  check bit 2 for y-door or x-door
-    ; bit 2,a
-    ; jp  nz,.notDoneYet ;.dark_matter_d ;  x-door
-    jp  .notDoneYet
     exx
+    sra b
+    rr  c
     and a,a
-    rr d
-    rr e
-    and a,a
-    adc hl,de           ;  D += 1/2 dy
+    adc hl,bc           ;  D += 1/2 dy            // WRONG MATH IDIOT add half of bc and test if positive, 
     exx
-    jp  p,.jump_to_hit_y
+    jp  p,.door_hit
+
+.jump_to_hit_y:
+    ; inc iy
+    add iy,de
+    ld  a,(iy)
+    jp  .hit_y
+
+.door_hit:
+    ld  (_xy_save),hl
+    ld  (_iy_save),iy
 
     ld  iy,3
     add iy,sp
@@ -421,10 +445,61 @@ _raycast_asm:
     cpl
     add a,129
 
-    jp  .hit_x_jumpInLate
+    ld  bc,0
+    adc hl,bc           ;  add carry to l
+    ld  h,l             ;  total increase in y grid lines
+    ld  l,a
+    ld  ix,(iy+18)
+    ld  (ix),hl         ;  total change in y
 
-.jump_to_hit_y:
-    ; inc iy
+    add hl,hl           ;  *2, or shift left
+    add hl,hl           ;  #2
+    add hl,hl           ;  #3
+    add hl,hl           ;  #4
+    add hl,hl           ;  #5
+    add hl,hl           ;  #6
+    add hl,hl           ;  #7
+    add hl,hl           ;  #8  (8 bits shifted left)
+
+    ld  bc,(iy+12)      ;  dy
+    call __idivu        ;  hl = (total change in y << SHIFT)/(dy),   <- scale factor
+    ld  bc,(iy+9)       ;  dx
+    call __imulu        ;  hl = total change in y << SHIFT
+    ;  >> SHIFT
+    push hl
+    ld  hl, 2
+    add hl, sp
+    ld  a,(hl)
+    pop hl
+    ld  de,0
+    ld  e,h
+    ld  d,a
+
+    ; de now contains total change in x
+    ld  ix,(iy+15)
+    ld  (ix),de         ;  total change in x
+    ld  bc,(iy+3)       ;  x position
+    ld  a,c
+    add a,e
+    
+    bit 0,(iy+30)
+    jp  z, .dark_matter_keepTexCoord_x_door
+    neg
+.dark_matter_keepTexCoord_x_door:
+    ld  ix,(iy+21)      ;  texCoord
+    ld  hl,_door_states
+    add a, (hl)
+    ld  (ix),a
+    jp  nc,.return_to_hit_y
+
+    ei
+    pop ix
+    ret
+
+.return_to_hit_y:
+    ld  iy,(_iy_save)
+    ld  hl,(_xy_save)
+    ld  de,divs
     add iy,de
     ld  a,(iy)
     jp  .hit_y
@@ -432,9 +507,6 @@ _raycast_asm:
 .dark_matter_y_wall:
     ;  this is a hit on a y-wall, so letters a and e are possible
     ;  check bit 2 for y-door or x-door
-    ; bit 2,a
-    ; jp  nz,.notDoneYet ;.dark_matter_e ;  x-door
-    ; jp  .dark_matter_a
 .dark_matter_a:
     ld  (_xy_save),hl
     exx
@@ -501,13 +573,14 @@ _raycast_asm:
     add a,e
 
     bit 0,(iy+30)
-    jp  z, .dark_matter_keepTexCoord
+    jp  z, .dark_matter_keepTexCoord_y_wall
     neg
-.dark_matter_keepTexCoord:
+.dark_matter_keepTexCoord_y_wall:
     ld  ix,(iy+21)      ;  texCoord
+    ld  hl,_door_states
+    add a, (hl)
     ld  (ix),a
-    cp  a,16
-    jp  p,.return_to_main_loop
+    jp  nc,.return_to_main_loop
 
     ei
     pop ix

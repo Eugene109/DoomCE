@@ -37,7 +37,7 @@ class mat2 {
     double data[2][2];
 };
 
-mat2 rotate(double theta) { return mat2((double[]){cos(theta), -sin(theta), sin(theta), cos(theta)}); }
+mat2 rotate(double Θ) { return mat2((double[]){cos(Θ), -sin(Θ), sin(Θ), cos(Θ)}); }
 
 class imat2 {
   public:
@@ -72,21 +72,21 @@ class imat2 {
     int data[2][2];
 };
 
-imat2 rotate(uint8_t theta) {
+imat2 rotate(uint8_t Θ) {
     return imat2((fixed[]){
-        f_cos(theta),
-        -f_sin(theta),
-        f_sin(theta),
-        f_cos(theta),
+        f_cos(Θ),
+        -f_sin(Θ),
+        f_sin(Θ),
+        f_cos(Θ),
     });
 }
 
-imat2 f_rotate(fixed theta) {
+imat2 f_rotate(fixed Θ) {
     return imat2((fixed[]){
-        f_cos(theta),
-        -f_sin(theta),
-        f_sin(theta),
-        f_cos(theta),
+        f_cos(Θ),
+        -f_sin(Θ),
+        f_sin(Θ),
+        f_cos(Θ),
     });
 }
 

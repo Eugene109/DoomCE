@@ -310,6 +310,11 @@ for x in range(0,16):
         column[y].bind('<Leave>', blockLeft)
         column[y].setvar('x', x)
         column[y].setvar('y', y)
+        column[y].grid_propagate(0)
+        text = ttk.Label(column[y],text="a",background="gray")
+        text.grid(column=0, row=0, sticky=(N, W, E, S))
+        text.grid_configure(padx=5, pady=2)
+
         ttk.Frame()
     levelMapArr.append(column)
 

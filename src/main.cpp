@@ -4,7 +4,7 @@
 #include <sys/timers.h>
 #include <ti/getcsc.h>
 
-// should probably rotate images 90deg clockwise because row-major order
+// should probably rotate images 90° clockwise because row-major order
 // then can just memcpy into different sprite;
 #include "gfx/gfx.h"
 
@@ -201,7 +201,12 @@ int main(void) {
     uint8_t texCoords[NUM_RAYS] = {0};
     char texTypes[NUM_RAYS] = {0};
 
+    char currentDoor = 'a';
+    uint8_t doorState = 0;
     do {
+        if (doorState && doorState < 255) {
+            set_door_state(currentDoor, doorState += 5);
+        }
         start_t = clock();
         gfx_ZeroScreen();
 
@@ -268,7 +273,7 @@ int main(void) {
         gfx_PrintStringXY(str, offsetX, 20);
 #endif
         if (kb_Data[1] & kb_2nd) {
-            new Enemy(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
+            doorState = 5;
         }
 
         if (pistol_current_frame) {

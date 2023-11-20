@@ -139,7 +139,7 @@ class Enemy : public Thing {
 
             prev_frame_time = 0;
         }
-        anim_tex_arr = zombieman_walk[(frame_num)&0x03];
+        anim_tex_arr = zombieman_walk[(frame_num) & 0x03];
     }
     void UpdateView(fixed dotF, fixed dotR) {
         flipTex = false;

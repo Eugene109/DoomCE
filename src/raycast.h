@@ -34,6 +34,8 @@ void x_walls_transposed_q4();
 
 void door_states();
 
+void set_door_state(char name, int state);
+
 const int MAP_SIZE = 16;
 
 void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
