@@ -183,7 +183,6 @@ class Enemy : public Thing {
         ivec2 viewDir = normalize(cam_pos - pos);
         ivec2 right = ivec2(forward.y, -forward.x);
         UpdateView(dot(forward, viewDir), -dot(right, viewDir));
-        bool painState = false;
         if (shotFired && !dead) {
             for (int c = 0; c < shots.size(); c++) {
                 if (abs((viewSpacePos.x * inv_sqrt(viewSpacePos.y)) >> SHIFT) < 32 &&

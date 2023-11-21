@@ -204,8 +204,11 @@ int main(void) {
     char currentDoor = 'a';
     uint8_t doorState = 0;
     do {
-        if (doorState && doorState < 255) {
-            set_door_state(currentDoor, doorState += 5);
+        if (doorState % 10 == 5 && doorState < 255) {
+            set_door_state(currentDoor, doorState += 10);
+        }
+        if (doorState % 10 == 0 && doorState > 0) {
+            set_door_state(currentDoor, doorState -= 10);
         }
         start_t = clock();
         gfx_ZeroScreen();
@@ -262,7 +265,7 @@ int main(void) {
 
         char str[100];
         total_t = clock() - start_t;
-        sprintf(str, "rev 0.3.7  fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
+        sprintf(str, "rev 0.3.9  fps:%d, %fs", int(CLOCKS_PER_SEC / total_t), double(total_t) / double(CLOCKS_PER_SEC));
         gfx_SetTextFGColor(255);
         uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
         gfx_PrintStringXY(str, offsetX, 4);
@@ -273,7 +276,7 @@ int main(void) {
         gfx_PrintStringXY(str, offsetX, 20);
 #endif
         if (kb_Data[1] & kb_2nd) {
-            doorState = 5;
+            doorState ^= 5;
         }
 
         if (pistol_current_frame) {

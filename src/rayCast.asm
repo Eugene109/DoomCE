@@ -69,7 +69,7 @@ _x_walls_transposed_q4:
 
 
 _door_states:
-    dl $000000,$000000,$000000,$000000,$000000,$000000
+    db $00,$00,$00,$00,$00,$00
     public _set_door_state
 _set_door_state:
 ; sets the state of a door
@@ -80,11 +80,10 @@ _set_door_state:
 ;  None
     ld  iy,0
     add iy,sp
-    ld  a,(iy+3)
-    sub a,'a'
-    ld  l,a
-    ld  h,3
-    mlt hl
+    ld  hl,(iy+3)
+    ld  bc,'a'
+    and a,a
+    sbc hl,bc
     ld  de,_door_states
     add hl,de
     ld  bc,(iy+6)
