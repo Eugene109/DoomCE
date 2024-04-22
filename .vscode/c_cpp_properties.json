@@ -5,8 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/msys64/mingw64/include/",
-                "C:/Users/920257/Documents/CEdev/include",
-                "C:/Users/920257/Documents/CEdev/include"
+                "C:/Users/920257/CEdev/include",
+                "C:/Users/920257/CEdev/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -14,10 +14,10 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.22000.0",
-            "compilerPath": "C:/msys64/mingw64/bin/gcc.exe",
+            "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64",
+            "intelliSenseMode": "${default}",
             "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],

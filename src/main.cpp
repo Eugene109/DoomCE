@@ -27,6 +27,7 @@
 #include "font.h"
 
 #include "enemy.h"
+#include "player.h"
 #include "thing.h"
 
 // #define DEBUG
@@ -36,112 +37,21 @@
 
 void draw();
 
-class Player {
-  public:
-    ivec2 pos;
-    ivec2 forward;
-    uint8_t rot;
-    uint8_t health;
-    uint8_t armour;
-    Player(ivec2 position, uint8_t rotation) : pos(position), rot(rotation) {
-        forward = rotate(rot) * ivec2(0, 1 << SHIFT);
-        health = 100;
-        armour = 0;
-    }
-    // protected:
-    void dealDamage(uint8_t dmg) { health -= dmg; }
-    uint8_t getHealth() { return health; }
-    uint8_t getArmour() { return armour; }
-    void Update() {
-        // movement & collision detection
-        if (kb_Data[7] & kb_Up) {
-            int incX = forward.x >> 3;
-            int incY = forward.y >> 3;
-            DetectCollisions(incX, incY);
-            pos.x += incX;
-            pos.y += incY;
-        }
-        if (kb_Data[7] & kb_Down) {
-            int incX = -forward.x >> 3;
-            int incY = -forward.y >> 3;
-            DetectCollisions(incX, incY);
-            pos.x += incX;
-            pos.y += incY;
-        }
-        if (kb_Data[4] & kb_Prgm) {
-            int incX = forward.y >> 3;
-            int incY = -forward.x >> 3;
-            DetectCollisions(incX, incY);
-            pos.x += incX;
-            pos.y += incY;
-        }
-        if (kb_Data[3] & kb_Apps) {
-            int incX = -forward.y >> 3;
-            int incY = forward.x >> 3;
-            DetectCollisions(incX, incY);
-            pos.x += incX;
-            pos.y += incY;
-        }
-
-        // rotation
-        if (kb_Data[7] & kb_Right) {
-            rot -= 8;
-        }
-        if (kb_Data[7] & kb_Left) {
-            rot += 8;
-        }
-    }
-
-  private:
-#define SPACE 64
-    void DetectCollisions(fixed &incX, fixed &incY) {
-        if (incX > 0) {
-            char *y_walls_ptr = (char *)(&y_walls_q1) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
-            if (*y_walls_ptr >> 6 && !(*y_walls_ptr & 32)) {
-                if (((pos.x) >> SHIFT) != ((pos.x + SPACE + incX) >> SHIFT)) {
-                    incX = (255 - SPACE) - int(pos.x & int(255));
-                }
-            }
-        } else {
-            char *y_walls_ptr = (char *)(&y_walls_q1) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT);
-            if (*y_walls_ptr >> 6 && !(*y_walls_ptr & 32)) {
-                if (((pos.x) >> SHIFT) != ((pos.x - SPACE + incX) >> SHIFT)) {
-                    incX = SPACE - int(pos.x & int(255));
-                }
-            }
-        }
-        if (incY > 0) {
-            char *x_walls_ptr = (char *)(&x_walls_q1) + ((pos.y >> SHIFT) + 1) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr >> 6 && !(*x_walls_ptr & 32)) {
-                if (((pos.y) >> SHIFT) != ((pos.y + SPACE + incY) >> SHIFT)) {
-                    incY = (255 - SPACE) - int(pos.y & int(255));
-                }
-            }
-        } else {
-            char *x_walls_ptr = (char *)(&x_walls_q1) + (pos.y >> SHIFT) * 16 + (pos.x >> SHIFT);
-            if (*x_walls_ptr >> 6 && !(*x_walls_ptr & 32)) {
-                if (((pos.y) >> SHIFT) != ((pos.y - SPACE + incY) >> SHIFT)) {
-                    incY = SPACE - int(pos.y & int(255));
-                }
-            }
-        }
-    }
-};
-
 #define NUM_FRAMES_PISTOL 7
 
 const gfx_rletsprite_t *pistol_anim[NUM_FRAMES_PISTOL] = {
     pistol_1, pistol_2, pistol_4, pistol_5, pistol_5, pistol_7, pistol_8,
 };
 
-void drawNumBigRed(int num, int xPos) {
-    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14]), &(numbers_big_data[0]), 15, 16, num % 10);
-    if (num < 10)
-        return;
-    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 2]), &(numbers_big_data[0]), 15, 16, num % 100 / 10);
-    if (num < 100)
-        return;
-    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 3]), &(numbers_big_data[0]), 15, 16, num % 1000 / 100);
+void drawNumBigRed(int num, int xPos);
+
+void drawWalls(Player &player);
+void drawHUD(Player &player);
+void drawWeapon(Player &player);
+void draw(Player &player) {
+    drawWalls(player);
+    drawHUD(player);
+    drawWeapon(player);
 }
 
 int main(void) {
@@ -242,26 +152,7 @@ int main(void) {
         }
         Enemy::RenderAll(total_t, rotate(uint8_t(-player.rot)), player.pos, &(dists[0]));
 
-        // draw hud;
-        memcpy(&(gfx_vbuffer[208][0]), HUD_data, HUD_width * HUD_height);
-        // gfx_TransparentSprite(numbers_small, 123, 240 - 18);
-        draw_font(&(gfx_vbuffer[240 - 28][111]), &(numbers_small_selected_data[0]), 5, 6, 2);
-        draw_font(&(gfx_vbuffer[240 - 28][123]), &(numbers_small_data[0]), 5, 6, 3);
-        draw_font(&(gfx_vbuffer[240 - 28][135]), &(numbers_small_data[0]), 5, 6, 4);
-        draw_font(&(gfx_vbuffer[240 - 18][111]), &(numbers_small_data[0]), 5, 6, 5);
-        draw_font(&(gfx_vbuffer[240 - 18][123]), &(numbers_small_data[0]), 5, 6, 6);
-        draw_font(&(gfx_vbuffer[240 - 18][135]), &(numbers_small_data[0]), 5, 6, 7);
-
-        // ammo
-        drawNumBigRed(50, 44);
-
-        // health
-        draw_font(&(gfx_vbuffer[240 - 29][104 - 14]), &(numbers_big_data[0]), 15, 16, 10);
-        drawNumBigRed(player.getHealth(), 90);
-
-        // armour
-        draw_font(&(gfx_vbuffer[240 - 29][235 - 14]), &(numbers_big_data[0]), 15, 16, 10);
-        drawNumBigRed(player.getArmour(), 235 - 14);
+        drawHUD(player);
 
         char str[100];
         total_t = clock() - start_t;
@@ -287,8 +178,9 @@ int main(void) {
 
         alpha_key = kb_Data[2] & kb_Alpha;
 
-        if (alpha_key && !alpha_prevkey) {
+        if (alpha_key && !alpha_prevkey && player.hasAmmo()) {
             pistol_current_frame = 1;
+            player.shoot();
             Enemy::registerShot(rand() % 10 + 5);
         }
         alpha_prevkey = alpha_key;
@@ -303,4 +195,39 @@ int main(void) {
     gfx_End();
 
     return 0;
+}
+
+void drawNumBigRed(int num, int xPos) {
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14]), &(numbers_big_data[0]), 15, 16, num % 10);
+    if (num < 10)
+        return;
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 2]), &(numbers_big_data[0]), 15, 16, num % 100 / 10);
+    if (num < 100)
+        return;
+    draw_font(&(gfx_vbuffer[240 - 29][xPos - 14 * 3]), &(numbers_big_data[0]), 15, 16, num % 1000 / 100);
+}
+
+void drawWalls(Player &player) {}
+
+void drawHUD(Player &player) {
+    // draw hud;
+    memcpy(&(gfx_vbuffer[208][0]), HUD_data, HUD_width * HUD_height);
+    // gfx_TransparentSprite(numbers_small, 123, 240 - 18);
+    draw_font(&(gfx_vbuffer[240 - 28][111]), &(numbers_small_selected_data[0]), 5, 6, 2);
+    draw_font(&(gfx_vbuffer[240 - 28][123]), &(numbers_small_data[0]), 5, 6, 3);
+    draw_font(&(gfx_vbuffer[240 - 28][135]), &(numbers_small_data[0]), 5, 6, 4);
+    draw_font(&(gfx_vbuffer[240 - 18][111]), &(numbers_small_data[0]), 5, 6, 5);
+    draw_font(&(gfx_vbuffer[240 - 18][123]), &(numbers_small_data[0]), 5, 6, 6);
+    draw_font(&(gfx_vbuffer[240 - 18][135]), &(numbers_small_data[0]), 5, 6, 7);
+
+    // ammo
+    drawNumBigRed(player.getAmmo(), 44);
+
+    // health
+    draw_font(&(gfx_vbuffer[240 - 29][104 - 14]), &(numbers_big_data[0]), 15, 16, 10);
+    drawNumBigRed(player.getHealth(), 90);
+
+    // armour
+    draw_font(&(gfx_vbuffer[240 - 29][235 - 14]), &(numbers_big_data[0]), 15, 16, 10);
+    drawNumBigRed(player.getArmour(), 235 - 14);
 }

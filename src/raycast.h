@@ -1,3 +1,6 @@
+#ifndef RAYCAST_H
+#define RAYCAST_H
+
 #include <graphx.h>
 
 #include "fixed.h"
@@ -85,4 +88,6 @@ void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, i
 
 #ifdef __cplusplus
 };
+#endif
+
 #endif
