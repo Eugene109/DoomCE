@@ -23,6 +23,7 @@
 
 #include "drawStrip.h"
 #include "raycast.h"
+#include "renderbsp.h"
 
 #include "font.h"
 
@@ -67,6 +68,8 @@ int main(void) {
 
     Player player(ivec2(256 * 2 + 128, 256 * 3), 0);
 
+    render_bsp((unsigned char *)root_node, player.pos.x, player.pos.y, player.forward.x, player.forward.y);
+
     uint8_t pistol_current_frame = 0;
     bool alpha_key, alpha_prevkey;
 
@@ -81,6 +84,54 @@ int main(void) {
 
     Enemy test_thing(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
     gfx_ZeroScreen();
+
+#define TEST_FMULS 1
+    if (TEST_FMULS) {
+        gfx_SetTextFGColor(2);
+        char str[100];
+        sprintf(str, "fmuls: 0x2CE9 * 0x16C5 = 0x%X", fmuls(0x2CE9, 0x16C5));
+        gfx_PrintStringXY(str, 5, 5);
+        sprintf(str, "long: 0x2CE9 * 0x16C5 = 0x%X", ((long)0x2CE9 * (long)0x16C5) >> SHIFT);
+        gfx_PrintStringXY(str, 5, 15);
+
+        // for (int i = 0; i < 4; i++) {
+        //     int a = rand() % 0x10000;
+        //     int b = rand() % 0x10000;
+        //     sprintf(str, "fmuls: %f * %f = %f", a / 256.0, b / 256.0, fmuls(a, b) / 256.0);
+        //     gfx_PrintStringXY(str, 5, 25 + i * 40);
+        //     sprintf(str, "long: %f * %f = %f", a / 256.0, b / 256.0, ((long(a) * long(b)) >> SHIFT) / 256.0);
+        //     gfx_PrintStringXY(str, 5, 35 + i * 40);
+        //     sprintf(str, "float: %f * %f = %f", a / 256.0, b / 256.0, (a / 256.0) * (b / 256.0));
+        //     gfx_PrintStringXY(str, 5, 45 + i * 40);
+        // }
+
+        sprintf(str, "fmuls: 0xFF970A * 0xFFDB48 = 0x%X", fmuls(0xFF970A, 0xFFDB48));
+        gfx_PrintStringXY(str, 5, 25);
+        sprintf(str, "long: 0xFF970A * 0xFFDB48 = 0x%X", ((long)0xFF970A * (long)0xFFDB48) >> SHIFT);
+        gfx_PrintStringXY(str, 5, 35);
+
+        sprintf(str, "fmuls: 0x5399 * 0xFFF2EC = 0x%X", fmuls(0x5399, 0xFFF2EC));
+        gfx_PrintStringXY(str, 5, 45);
+        sprintf(str, "long: 0x5399 * 0xFFF2EC = 0x%X", ((long)0x5399 * (long)0xFFF2EC) >> SHIFT);
+        gfx_PrintStringXY(str, 5, 55);
+
+        sprintf(str, "fmuls: 0x16C5 * 0xFFF2EC = 0x%X", fmuls(0x16C5, 0xFFFE32));
+        gfx_PrintStringXY(str, 5, 65);
+        sprintf(str, "long: 0x16C5 * 0xFFF2EC = 0x%X", ((long)0x16C5 * (long)0xFFFE32) >> SHIFT);
+        gfx_PrintStringXY(str, 5, 75);
+
+        // sprintf(str, "fmuls: 0x5399 * 0xFFF2EC = 0x%X", fmuls(0x5399, 0xFFF2EC));
+        // gfx_PrintStringXY(str, 5, 85);
+        // sprintf(str, "long: 0x5399 * 0xFFF2EC = 0x%X", ((long)0x5399 * (long)0xFFF2EC) >> SHIFT);
+        // gfx_PrintStringXY(str, 5, 95);
+
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
     if (!Enemy::InitTextures()) {
         gfx_SetTextFGColor(2);
         gfx_PrintStringXY("Zombieman textures not found, please load", 5, 5);
