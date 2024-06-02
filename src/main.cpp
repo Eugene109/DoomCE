@@ -1,6 +1,8 @@
 #include <graphx.h>
 #include <keypadc.h>
 
+#include <sys/util.h>
+
 #include <sys/timers.h>
 #include <ti/getcsc.h>
 
@@ -55,6 +57,13 @@ void draw(Player &player) {
     drawWeapon(player);
 }
 
+float f_abs(float a) {
+    if (a < 0) {
+        return -a;
+    }
+    return a;
+}
+
 int main(void) {
     gfx_Begin();
     gfx_SetDrawBuffer();
@@ -94,36 +103,17 @@ int main(void) {
         sprintf(str, "long: 0x2CE9 * 0x16C5 = 0x%X", ((long)0x2CE9 * (long)0x16C5) >> SHIFT);
         gfx_PrintStringXY(str, 5, 15);
 
-        // for (int i = 0; i < 4; i++) {
-        //     int a = rand() % 0x10000;
-        //     int b = rand() % 0x10000;
-        //     sprintf(str, "fmuls: %f * %f = %f", a / 256.0, b / 256.0, fmuls(a, b) / 256.0);
-        //     gfx_PrintStringXY(str, 5, 25 + i * 40);
-        //     sprintf(str, "long: %f * %f = %f", a / 256.0, b / 256.0, ((long(a) * long(b)) >> SHIFT) / 256.0);
-        //     gfx_PrintStringXY(str, 5, 35 + i * 40);
-        //     sprintf(str, "float: %f * %f = %f", a / 256.0, b / 256.0, (a / 256.0) * (b / 256.0));
-        //     gfx_PrintStringXY(str, 5, 45 + i * 40);
-        // }
-
-        sprintf(str, "fmuls: 0xFF970A * 0xFFDB48 = 0x%X", fmuls(0xFF970A, 0xFFDB48));
-        gfx_PrintStringXY(str, 5, 25);
-        sprintf(str, "long: 0xFF970A * 0xFFDB48 = 0x%X", ((long)0xFF970A * (long)0xFFDB48) >> SHIFT);
-        gfx_PrintStringXY(str, 5, 35);
-
-        sprintf(str, "fmuls: 0x5399 * 0xFFF2EC = 0x%X", fmuls(0x5399, 0xFFF2EC));
-        gfx_PrintStringXY(str, 5, 45);
-        sprintf(str, "long: 0x5399 * 0xFFF2EC = 0x%X", ((long)0x5399 * (long)0xFFF2EC) >> SHIFT);
+        float fpErr = 0;
+        float lErr = 0;
+        srandom(clock());
+        for (int i = 0; i < 500; i++) {
+            int a = randInt(-32768, 32767);
+            int b = randInt(-32768, 32767);
+            fpErr += f_abs((fmuls(a, b) / 256.0) - (a / 256.0) * (b / 256.0));
+            lErr += f_abs((((long(a) * long(b)) >> SHIFT) / 256.0) - (a / 256.0) * (b / 256.0));
+        }
+        sprintf(str, "Avg Err: fp:%f vs l:%f", fpErr / 500.0, lErr / 500.0);
         gfx_PrintStringXY(str, 5, 55);
-
-        sprintf(str, "fmuls: 0x16C5 * 0xFFF2EC = 0x%X", fmuls(0x16C5, 0xFFFE32));
-        gfx_PrintStringXY(str, 5, 65);
-        sprintf(str, "long: 0x16C5 * 0xFFF2EC = 0x%X", ((long)0x16C5 * (long)0xFFFE32) >> SHIFT);
-        gfx_PrintStringXY(str, 5, 75);
-
-        // sprintf(str, "fmuls: 0x5399 * 0xFFF2EC = 0x%X", fmuls(0x5399, 0xFFF2EC));
-        // gfx_PrintStringXY(str, 5, 85);
-        // sprintf(str, "long: 0x5399 * 0xFFF2EC = 0x%X", ((long)0x5399 * (long)0xFFF2EC) >> SHIFT);
-        // gfx_PrintStringXY(str, 5, 95);
 
         gfx_SwapDraw();
         while (!os_GetCSC()) {

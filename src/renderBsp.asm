@@ -166,9 +166,81 @@ _fmuls:
     ld  iy,0
     add iy,sp
     ld  hl,(iy+3)
-    ld  bc,(iy+6)
+    ld  de,(iy+6)
 
-; v4: 44 cc     (accounts for l*c>>16)
+
+; v5:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+    ; hl & de input
+    bit 7,h
+    ld  a,0
+    jp  z,.pos_m1
+    ; negate hl
+    ld  sp,hl
+    sbc hl,hl     ;  (add iy,sp) reset carry bit
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m1:
+    bit 7,d
+    jp  z,.pos_m2
+    ; negate de
+    ex  de,hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m2:
+    ex  af,af'
+
+    ld  b,l
+    ld  c,e
+    mlt bc        ;  bc = e*l
+    ld  a,b       ;  a = e*l >> 8, only taking 1st byte
+
+    ld  b,d
+    ld  c,l       ;  bc = d l
+    ld  d,h       ;  de = h e
+    ld  l,b ; b=d ;  hl = h d
+    mlt hl        ;  hl = h*d
+    mlt de        ;  de = h*e
+    mlt bc        ;  bc = d*l
+    add a,c
+    ld  c,a       ;  adding msb of e*l>>8 to bc, which goes to hl
+    ld  a,0
+    adc a,l
+    ld  l,a       ;  adding carry bit from before, and hoping it doesn't overflow
+            ld  a,0
+            adc a,h
+            ld  h,a       ;  This part would fix the hoping bit for 3 cc
+
+    add hl,hl     ;  hl << 8
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+
+    add hl,bc
+    add hl,de     ;  hl = h*d<<8 + h*e + d*l + l*e>>8
+
+    ; 16 cc if negate   10 cc if not
+    ex  af,af'
+    bit 0,a
+    jp  z,.ret_fmuls
+    ; negate hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+
+.ret_fmuls:
+                                                    ld sp,iy
+    ret
+; v5 end
+
+; v4: 46cc     (accounts for l*c>>16)
     ; hl & bc input
     ld  d,l
     ld  e,c
@@ -183,9 +255,15 @@ _fmuls:
     mlt bc        ;  bc = h*c
     mlt de        ;  de = b*l
     add a,e
-    ld  e,a
+    ld  e,a       ;  adding msb of e*l>>8 to de, which goes to hl
+    ld  a,0
+    adc a,l
+    ld  l,a       ;  adding carry bit from before, and hoping it doesn't overflow
+            ; ld  a,0
+            ; adc a,h
+            ; ld  h,a       ;  This part would fix the hoping bit for 3 ccs
 
-    adc hl,hl     ;  hl << 8
+    add hl,hl     ;  hl << 8
     add hl,hl
     add hl,hl
     add hl,hl
@@ -201,7 +279,7 @@ _fmuls:
 ; v4 end
 
 
-; v3: 32 cc     (does not account for l*c>>16, max error <= 255ish)
+; v3: 32cc     (does not account for l*c>>16, max error <= 255ish)
     ; hl & bc input
     ld  d,b
     ld  e,l       ;  de = b l
