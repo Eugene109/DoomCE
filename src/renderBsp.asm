@@ -2,8 +2,16 @@ assume adl=1
 
 section .data
 
+public x1
+public y1
+public dx
+public dy
+public x2
+public y2
+public c1
+public c2
+public parent
 
-numSectors:=0
 x1:=1
 y1:=4
 dx:=7
@@ -13,6 +21,47 @@ y2:=16
 c1:=19
 c2:=22
 parent:=26
+
+
+public _cos_table_255_256
+_cos_table_255_256:
+    db $FF,$FE,$FE,$FE,$FD,$FD,$FC,$FB,$FA,$F8,$F7,$F5,$F4,$F2,$F0,$ED,$EB,$E9,$E6,$E3,$E0,$DD,$DA,$D7,$D4,$D0,$CC,$C9,$C5,$C1
+    db $BC,$B8,$B4,$AF,$AB,$A6,$A1,$9C,$97,$92,$8D,$88,$83,$7D,$78,$72,$6D,$67,$61,$5B,$55,$4F,$4A,$44,$3D,$37,$31,$2B,$25,$1F
+    db $18,$12,$0C,$06,$00,$06,$0C,$12,$18,$1F,$25,$2B,$31,$37,$3D,$44,$4A,$4F,$55,$5B,$61,$67,$6D,$72,$78,$7D,$83,$88,$8D,$92
+    db $97,$9C,$A1,$A6,$AB,$AF,$B4,$B8,$BC,$C1,$C5,$C9,$CC,$D0,$D4,$D7,$DA,$DD,$E0,$E3,$E6,$E9,$EB,$ED,$F0,$F2,$F4,$F5,$F7,$F8
+    db $FA,$FB,$FC,$FD,$FD,$FE,$FE,$FE,$FF,$FE,$FE,$FE,$FD,$FD,$FC,$FB,$FA,$F8,$F7,$F5,$F4,$F2,$F0,$ED,$EB,$E9,$E6,$E3,$E0,$DD
+    db $DA,$D7,$D4,$D0,$CC,$C9,$C5,$C1,$BC,$B8,$B4,$AF,$AB,$A6,$A1,$9C,$97,$92,$8D,$88,$83,$7D,$78,$72,$6D,$67,$61,$5B,$55,$4F
+    db $4A,$44,$3D,$37,$31,$2B,$25,$1F,$18,$12,$0C,$06,$00,$06,$0C,$12,$18,$1F,$25,$2B,$31,$37,$3D,$44,$4A,$4F,$55,$5B,$61,$67
+    db $6D,$72,$78,$7D,$83,$88,$8D,$92,$97,$9C,$A1,$A6,$AB,$AF,$B4,$B8,$BC,$C1,$C5,$C9,$CC,$D0,$D4,$D7,$DA,$DD,$E0,$E3,$E6,$E9
+    db $EB,$ED,$F0,$F2,$F4,$F5,$F7,$F8,$FA,$FB,$FC,$FD,$FD,$FE,$FE,$FE
+
+public _sin_table_255_256
+_sin_table_255_256:
+    db $00,$06,$0C,$12,$18,$1F,$25,$2B,$31,$37,$3D,$44,$4A,$4F,$55,$5B,$61,$67,$6D,$72,$78,$7D,$83,$88,$8D,$92,$97,$9C,$A1,$A6
+    db $AB,$AF,$B4,$B8,$BC,$C1,$C5,$C9,$CC,$D0,$D4,$D7,$DA,$DD,$E0,$E3,$E6,$E9,$EB,$ED,$F0,$F2,$F4,$F5,$F7,$F8,$FA,$FB,$FC,$FD
+    db $FD,$FE,$FE,$FE,$FF,$FE,$FE,$FE,$FD,$FD,$FC,$FB,$FA,$F8,$F7,$F5,$F4,$F2,$F0,$ED,$EB,$E9,$E6,$E3,$E0,$DD,$DA,$D7,$D4,$D0
+    db $CC,$C9,$C5,$C1,$BC,$B8,$B4,$AF,$AB,$A6,$A1,$9C,$97,$92,$8D,$88,$83,$7D,$78,$72,$6D,$67,$61,$5B,$55,$4F,$4A,$44,$3D,$37
+    db $31,$2B,$25,$1F,$18,$12,$0C,$06,$00,$06,$0C,$12,$18,$1F,$25,$2B,$31,$37,$3D,$44,$4A,$4F,$55,$5B,$61,$67,$6D,$72,$78,$7D
+    db $83,$88,$8D,$92,$97,$9C,$A1,$A6,$AB,$AF,$B4,$B8,$BC,$C1,$C5,$C9,$CC,$D0,$D4,$D7,$DA,$DD,$E0,$E3,$E6,$E9,$EB,$ED,$F0,$F2
+    db $F4,$F5,$F7,$F8,$FA,$FB,$FC,$FD,$FD,$FE,$FE,$FE,$FF,$FE,$FE,$FE,$FD,$FD,$FC,$FB,$FA,$F8,$F7,$F5,$F4,$F2,$F0,$ED,$EB,$E9
+    db $E6,$E3,$E0,$DD,$DA,$D7,$D4,$D0,$CC,$C9,$C5,$C1,$BC,$B8,$B4,$AF,$AB,$A6,$A1,$9C,$97,$92,$8D,$88,$83,$7D,$78,$72,$6D,$67
+    db $61,$5B,$55,$4F,$4A,$44,$3D,$37,$31,$2B,$25,$1F,$18,$12,$0C,$06
+
+public _sign_table_fx_fy
+_sign_table_fx_fy:
+    db 0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b
+    db 0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b
+    db 0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b,0000b
+    db 0000b,0000b,0000b,0000b,0000b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b
+    db 1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b
+    db 1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b
+    db 1010b,1010b,1010b,1010b,1010b,1010b,1010b,1010b,0000b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b
+    db 1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b
+    db 1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b
+    db 1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,1111b,0000b,0101b,0101b,0101b,0101b,0101b,0101b,0101b
+    db 0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b
+    db 0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b
+    db 0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b,0101b
 
 public _root_node
 _root_node:
@@ -240,6 +289,57 @@ _fmuls:
     ret
 ; v5 end
 
+
+; ------------------ idk
+    ; hl contains screenspace x-coord [-1.0, 1.0]
+    inc h
+    srl h
+    ld  a,l
+    rra
+    ; (hl+1)/2 -> [h][a]
+    rr  h        ;  will put set carry if hl >= 1, else reset
+    sbc a,0      ;  subs 1 from 256 if carry
+    ; a now contains ndc x-coord [0,1.0)
+    ld  h,80
+    ld  l,a
+    mlt hl       ;  contains pixel group number
+            ;  alternative to find exact pixel x-coord
+            ; ld  h,240
+            ; ld  l,a
+            ; mlt hl       ;  contains pixel line number
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; -----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ; v4: 46cc     (accounts for l*c>>16)
     ; hl & bc input
     ld  d,l
@@ -308,7 +408,11 @@ _render_bsp:
 ; renders the binary space partition tree
 ; Arguments:
 ;    // technically arg0: return address
-;    arg1: door name, starts at 'a', 
+;    arg1: pointer to wall
+;    arg2: player x
+;    arg3: player y
+;    arg4: forward x
+;    arg5: forward y
 ; Returns:
 ;  None
     di                  ;  disables interrupts, these use alternate register set, which this needs
@@ -320,7 +424,7 @@ _render_bsp:
 
 .check_node:
     ; ix: pointer to node
-    ld  a,(ix+numSectors)
+    ld  a,(ix)          ;  numSectors
     cp  a,0
     jp  nz,.leaf_node
 
@@ -471,8 +575,7 @@ _render_bsp:
 
 
 .continue:
-    ld  bc, 3*6+1
-    add ix,bc
+    lea ix, ix+3*6+1
     dec a
     jp  nz,.loop
 
@@ -482,5 +585,300 @@ _render_bsp:
     ei
     pop ix
     ret
+
+public _render_wall
+_render_wall:
+; renders just one wall
+; Arguments:
+;    // technically arg0: return address
+;    arg1: pointer to wall
+;    arg2: player x
+;    arg3: player y
+;    arg4: forward angle
+; Returns:
+;  None
+    di                  ;  disables interrupts, these use alternate register set, which this needs
+
+    ld  iy,0
+    add iy,sp
+
+    push ix             ;  needs to be preserved
+    ld  ix,(iy+3)       ;  pointer to start of line seg
+
+;    a will be used to determine if the product needs to be negated
+;    %0000[m4][m3][m2][m1]
+;    m1: x1*fy
+;    m2: x1*fx
+;    m3: y1*fy
+;    m4: y1*fx
+
+;    x1: |= 0011
+;    fy: |= 0101
+;    y1: |= 1100
+;    fx: |= 1010
+    ld  bc,(iy+12)
+    ld  hl,_cos_table_255_256
+    add hl,bc
+    ld  a,(hl)          ;  forward x
+    ex  af,af'
+    inc h
+    ld  c,(hl)          ;  forward y
+    inc h
+    ld  a,(hl)          ;  quadrant
+    xor a,1000b         ;  m4 is subtracted, so negate it
+
+
+    ld  hl,(ix)         ;  segment start x
+    ld  de,(iy+6)       ;  player x
+    and a,a
+    sbc hl,de           ;  seg x1 with origin at player
+
+    ; multiply x*fy
+        jp  p,.pos_x1 ;  testing sign of (sbc hl,bc)
+    ; negate hl
+        add hl,de
+        ex  de,hl
+        xor a,0011b   ;  resets carry
+        sbc hl,de
+    .pos_x1:
+        ld  sp,hl
+        exx
+        and a,a
+        sbc hl,hl
+        add hl,sp     ;  this x1 onto hl'
+        exx
+    .x1_done:
+        ; now multiply 0.c * h.l
+        ld  e,l
+        ld  d,c
+        ld  l,c
+        mlt hl        ;  (h.c)
+        mlt de        ;  (.cl)
+
+        ld  e,d       ;  de >> 8
+        ld  d,0
+        add hl,de
+
+        ; ld  d,0     ;  already 0
+        ld  e,h
+        add hl,de     ;  mult by ~ 256/255    (hl+0h)
+
+    ;  hl now contains x1*fy
+    ;  c contains fy
+    ;  hl' contains  abs(x1)
+    ;  a' contains  abs(fx)
+
+    ex  af,af'
+    exx
+    ;  multiply x1*fx
+        ld  e,l
+        ld  d,a
+        ld  l,a
+        mlt hl
+        mlt de
+
+        ld  e,d       ;  de >> 8
+        ld  d,0
+        add hl,de
+
+        ; ld  d,0     ;  already 0
+        ld  e,h
+        add hl,de     ;  mult by ~ 256/255    (hl+0h)
+    ;  hl' now contains x1*fx
+    ;  a' contains  abs(fx)
+    ;  c contains fy
+    ;  hl contains x1*fy
+
+
+
+    exx
+    ld  b,a
+    ld  a,c
+    exx
+    ex  af,af'
+
+    ld  sp,hl
+    ld  hl,(ix+3)       ;  seg y1
+    ld  de,(iy+9)       ;  player y
+    sbc hl,de           ;  carry reset by (add hl,de)
+
+    ; abs of y1
+        jp  p,.pos_y1 ;  testing sign of (sbc hl,bc)
+    ; negate hl
+        add hl,de
+        ex  de,hl
+        xor a,1100b   ;  resets carry
+        sbc hl,de
+    .pos_y1:
+        ex  af,af'
+        ; working in alt register set
+        ;  hl' now contains abs(y1)
+        ;  sp now contains x1*fx
+        ;  a' contains  abs(fy)
+        ;  b contains fx
+        ;  hl contains x1*fy
+        ld  c,a
+        ld  a,l
+        exx
+        ld  de,0
+        ld  e,a
+        exx
+        ld  a,h
+        exx
+        ld  d,a
+        exx           ;  puts hl' into de
+    .y1_done:
+        ex  af,af'
+
+        ; working in alt register set
+        ;  hl' now contains abs(y1)
+        ;  sp now contains x1*fx
+        ;  c' contains  abs(fy)
+        ;  b contains fx
+        ;  hl contains x1*fy
+        ;  de contains abs(y1)
+
+    ;  multiply x1*fx
+        ld  e,l
+        ld  d,c
+        ld  l,c
+        mlt hl
+        mlt de
+
+        ld  e,d       ;  de >> 8
+        ld  d,0
+        add hl,de
+
+        ; ld  d,0     ;  already 0
+        ld  e,h
+        add hl,de     ;  mult by ~ 256/255    (hl+0h)
+
+
+    ; working in alt register set
+    ;  hl' now contains y1*fy     ;  m3
+    ;  sp now contains x1*fx      ;  m2
+    ;  c' contains  abs(fy)
+    ;  b contains fx
+    ;  hl contains x1*fy          ;  m1
+    ;  de contains abs(y1)
+
+    bit 3-1,a
+    jp  z,.m3_pos
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+    bit 2-1,a
+    jp  nz,.both_neg_y1
+    add hl,sp
+    sbc hl,de
+
+    jp  .test_y1_sign
+.both_neg_y1:
+    sbc hl,de
+    and a,a
+    sbc hl,sp
+
+    jp  .negative_y1
+.m3_pos:
+    bit 2-1,a
+    jp  nz,.m2_neg
+    add hl,sp
+    add a,0          ;  set sign to +
+
+    jp  .positive_y1
+.m2_neg:
+    and a,a
+    sbc hl,sp
+.test_y1_sign:
+
+    jp  m,.negative_y1
+
+.negative_y1:
+    ld  a,a
+.positive_y1:
+    jp .ret_val
+
+    ; working in alt register set
+    ;  hl' now contains y1*fy + x1*fx
+    ;  c' contains  abs(fy)
+    ;  b contains fx
+    ;  hl contains x1*fy          ;  m1
+    ;  de contains abs(y1)
+    exx
+    ld  sp,hl
+    ;  multiply y1*fx
+        ld  h,d
+        ld  l,b
+        ld  d,b
+        mlt hl
+        mlt de
+        ld  e,d
+        ld  d,0
+        add hl,de
+
+        ld  e,h
+        add hl,de
+
+    ;  test m1 & m4
+    bit 4-1,a
+    jp  z,.m4_pos
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+    bit 1-1,a
+    jp  nz,.both_neg_x1
+    add hl,sp
+    sbc hl,de
+
+    jp  .test_x1_sign
+.both_neg_x1:
+    sbc hl,de
+    and a,a
+    sbc hl,sp
+
+    jp  .negative_x1
+.m4_pos:
+    bit 2-1,a
+    jp  nz,.m1_neg
+    add hl,sp
+    add a,0          ;  set sign to +
+
+    jp  .positive_x1
+.m1_neg:
+    and a,a
+    sbc hl,sp
+.test_x1_sign:
+
+    jp  m,.negative_x1
+.positive_x1:
+
+    ld  a,5
+.negative_x1:
+    ld  a,2
+
+
+
+
+.ret_val:
+    lea iy,iy-3
+    ld  sp,iy
+    pop ix
+    ei
+    ret
+
+
+
+public _test_wall
+_test_wall:
+    dl $00165C    ; x1
+    dl $0018A3    ; y1 
+    dl $000000    ; dx
+    dl $000200    ; dy
+    dl $000600    ; x2
+    dl $000700    ; y2
+    db "A"        ; wallType
+
+
+
 
 extern __imuls

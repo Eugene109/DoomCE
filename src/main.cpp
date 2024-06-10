@@ -77,7 +77,7 @@ int main(void) {
 
     Player player(ivec2(256 * 2 + 128, 256 * 3), 0);
 
-    render_bsp((unsigned char *)root_node, player.pos.x, player.pos.y, player.forward.x, player.forward.y);
+    // render_bsp((unsigned char *)root_node, player.pos.x, player.pos.y, player.forward.x, player.forward.y);
 
     uint8_t pistol_current_frame = 0;
     bool alpha_key, alpha_prevkey;
@@ -94,7 +94,7 @@ int main(void) {
     Enemy test_thing(ivec2((3 << SHIFT) + 128, (1 << SHIFT) + 128));
     gfx_ZeroScreen();
 
-#define TEST_FMULS 1
+#define TEST_FMULS 0
     if (TEST_FMULS) {
         gfx_SetTextFGColor(2);
         char str[100];
@@ -114,6 +114,33 @@ int main(void) {
         }
         sprintf(str, "Avg Err: fp:%f vs l:%f", fpErr / 500.0, lErr / 500.0);
         gfx_PrintStringXY(str, 5, 55);
+
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
+#define TEST_WALL 1
+    if (TEST_WALL) {
+        gfx_SetTextFGColor(2);
+        char str[100];
+        sprintf(str, "72.9deg y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(72.9 * 256.0 / 360))) / 256.0);
+        gfx_PrintStringXY(str, 5, 5);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(142.46 * 256.0 / 360))) / 256.0);
+        gfx_PrintStringXY(str, 5, 15);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
+        gfx_PrintStringXY(str, 5, 25);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(345.09283 * 256.0 / 360))) / 256.0);
+        gfx_PrintStringXY(str, 5, 35);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360))) / 256.0);
+        gfx_PrintStringXY(str, 5, 45);
 
         gfx_SwapDraw();
         while (!os_GetCSC()) {

@@ -12,7 +12,9 @@ extern "C" {
 int fmuls(int a, int b);
 
 void root_node();
+void test_wall();
 void render_bsp(unsigned char *root, fixed playerX, fixed playerY, fixed fX, fixed fY);
+fixed render_wall(unsigned char *wall, fixed playerX, fixed playerY, fixed forward_angle);
 
 #ifdef __cplusplus
 };
