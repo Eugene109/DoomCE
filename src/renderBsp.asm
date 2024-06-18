@@ -258,8 +258,8 @@ _fdivs:
     jp  z,.ret_fdivs
     ; negate hl
     ex  af, af'
-    and a,a
-    sbc hl,hl
+    scf
+    sbc hl,hl     ;  $FFFFFF
     neg
     ld  l,a
                                                     ld sp,iy

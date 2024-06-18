@@ -18,9 +18,11 @@ extern "C" {
 #define HUDImages_palette_offset 0
 #include "HUD.h"
 #define fonts_palette_offset 0
+#include "numbers_big.h"
 #include "numbers_small.h"
 #include "numbers_small_selected.h"
-#include "numbers_big.h"
+
+#include "div_table_255.h"
 
 #ifdef __cplusplus
 }

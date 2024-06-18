@@ -122,25 +122,36 @@ int main(void) {
         gfx_End();
         return -1;
     }
-#define TEST_FDIVS 0
+#define TEST_FDIVS 1
     if (TEST_FDIVS) {
+        if (divTable_init() == 0) {
+            gfx_SetTextFGColor(2);
+            gfx_PrintStringXY("Needs div table Shifted Look Up Table,", 5, 5);
+            gfx_PrintStringXY("please load divTables.8xv", 5, 15);
+            gfx_SwapDraw();
+            while (!os_GetCSC()) {
+                usleep(1000);
+            }
+            gfx_End();
+            return -1;
+        }
         gfx_SetTextFGColor(2);
         char str[100];
-        sprintf(str, "fmuls: 0x2CE9 * 0x16C5 = 0x%X", fmuls(0x2CE9, 0x16C5));
+        sprintf(str, "fdivs: 0x2CE9 / 0x16C5 = 0x%X", fdivs(0x16C5, 0x2CE9, divTable_appvar[0]));
         gfx_PrintStringXY(str, 5, 5);
-        sprintf(str, "long: 0x2CE9 * 0x16C5 = 0x%X", ((long)0x2CE9 * (long)0x16C5) >> SHIFT);
+        sprintf(str, "long: 0x2CE9 / 0x16C5 = 0x%X", ((long)((long)0x16C5 << SHIFT) / (long)0x2CE9));
         gfx_PrintStringXY(str, 5, 15);
 
         float fpErr = 0;
         float lErr = 0;
         srandom(clock());
-        for (int i = 0; i < 500; i++) {
-            int a = randInt(-32768, 32767);
-            int b = randInt(-32768, 32767);
-            fpErr += f_abs((fmuls(a, b) / 256.0) - (a / 256.0) * (b / 256.0));
-            lErr += f_abs((((long(a) * long(b)) >> SHIFT) / 256.0) - (a / 256.0) * (b / 256.0));
+        for (int i = 0; i < 1000; i++) {
+            int b = randInt(1, 32767);
+            int a = randInt(1, abs(b));
+            fpErr += f_abs((fdivs(a, b, divTable_appvar[0]) / 255.0) - (a / 256.0) / (b / 256.0));
+            lErr += f_abs(((((long(a) << SHIFT) / long(b))) / 256.0) - (a / 256.0) / (b / 256.0));
         }
-        sprintf(str, "Avg Err: fp:%f vs l:%f", fpErr / 500.0, lErr / 500.0);
+        sprintf(str, "Avg Err: fp:%f vs l:%f", fpErr / 1000.0, lErr / 1000.0);
         gfx_PrintStringXY(str, 5, 55);
 
         gfx_SwapDraw();
