@@ -66,39 +66,33 @@ _sign_table_fx_fy:
 public _root_node
 _root_node:
     db $00        ; numSectors              ; Mmn
-    dl $000300    ; x1                      ; Mmn+1
+    dl $000200    ; x1                      ; Mmn+1
     dl $000500    ; y1                      ; Mmn+4
-    dl $FFFF00    ; dx                      ; Mmn+7
+    dl $000100    ; dx                      ; Mmn+7
     dl $000000    ; dy                      ; Mmn+10
-    dl $000200    ; x2                      ; Mmn+13
-    dl $000500    ; y2                      ; Mmn+16
-    dl _node_a    ; + child                 ; Mmn+19
-    dl _node_b    ; - child                 ; Mmn+22
+    dl _node_a    ; - child                 ; Mmn+19
+    dl _node_b    ; + child                 ; Mmn+22
     db "A"        ; wallType                ; Mmn+25
     dl $000000    ; parent node pointer
 
 _node_a:
     db $00        ; numSectors
-    dl $000000    ; x1
+    dl $000400    ; x1
     dl $000300    ; y1 
-    dl $000400    ; dx
+    dl $FFFC00    ; dx
     dl $000000    ; dy
-    dl $000400    ; x2
-    dl $000300    ; y2
-    dl _leaf_a    ; + child
-    dl _leaf_b    ; - child
+    dl _leaf_a    ; - child
+    dl _leaf_b    ; + child
     db "A"        ; wallType
     dl _root_node ; parent node pointer
 _node_b:
     db $00        ; numSectors
-    dl $000200    ; x1
-    dl $000500    ; y1 
-    dl $0000C0    ; dx
-    dl $0000C0    ; dy
-    dl $0002C0    ; x2
-    dl $0005C0    ; y2
-    dl _leaf_c    ; + child
-    dl _leaf_d    ; - child
+    dl $0002C0    ; x1
+    dl $0005C0    ; y1
+    dl $FFFF40    ; dx
+    dl $FFFF40    ; dy
+    dl _leaf_c    ; - child
+    dl _leaf_d    ; + child
     db "A"        ; wallType
     dl _root_node ; parent node pointer
 
@@ -106,54 +100,50 @@ _leaf_a:
     db $02
 
     dl $000000    ; x1
-    dl $000500    ; y1 
-    dl $000000    ; dx
-    dl $FFFE00    ; dy
-    dl $000000    ; x2
-    dl $000300    ; y2
-    db "A"        ; wallType
-
-    dl $000600    ; x1
     dl $000300    ; y1 
     dl $000000    ; dx
     dl $000200    ; dy
-    dl $000600    ; x2
-    dl $000500    ; y2
+    db "A"        ; wallType
+
+    dl $000600    ; x1
+    dl $000500    ; y1 
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
     db "A"        ; wallType
 
     dl _node_a    ; parent node pointer
 _leaf_b:
     db $04
 
-    dl $000400    ; x1
-    dl $000300    ; y1 
-    dl $FFFFC0    ; dx
-    dl $FFFE80    ; dy
-    dl $0003C0    ; x2
-    dl $000180    ; y2
-    db "A"        ; wallType
-
-    dl $0003C0    ; x1
-    dl $000180    ; y1 
-    dl $000150    ; dx
-    dl $FFFEE0    ; dy
-    dl $000520    ; x2
-    dl $000060    ; y2
-    db "A"        ; wallType
-
-    dl $000520    ; x1
-    dl $000060    ; y1 
-    dl $000160    ; dx
-    dl $0000C0    ; dy
+    dl $000600    ; x1
+    dl $000300    ; y1
+    dl $000080    ; dx
+    dl $FFFE20    ; dy
     dl $000680    ; x2
     dl $000120    ; y2
     db "A"        ; wallType
 
     dl $000680    ; x1
-    dl $000120    ; y1 
-    dl $FFFF80    ; dx
-    dl $0001E0    ; dy
-    dl $000600    ; x2
+    dl $000120    ; y1
+    dl $FFFEA0    ; dx
+    dl $FFFF40    ; dy
+    dl $000520    ; x2
+    dl $000060    ; y2
+    db "A"        ; wallType
+
+    dl $000520    ; x1
+    dl $000060    ; y1
+    dl $FFFEA0    ; dx
+    dl $000120    ; dy
+    dl $0003C0    ; x2
+    dl $000180    ; y2
+    db "A"        ; wallType
+
+    dl $0003C0    ; x1
+    dl $000180    ; y1
+    dl $000040    ; dx
+    dl $000180    ; dy
+    dl $000400    ; x2
     dl $000300    ; y2
     db "A"        ; wallType
 
@@ -161,47 +151,47 @@ _leaf_b:
 _leaf_c:
     db $02
 
-    dl $000400    ; x1
-    dl $000700    ; y1 
-    dl $FFFC00    ; dx
-    dl $000000    ; dy
     dl $000000    ; x2
-    dl $000700    ; y2
+    dl $000500    ; y2
+    dl $000000    ; dx
+    dl $000200    ; dy
+    dl $000000    ; x1
+    dl $000700    ; y1
     db "A"        ; wallType
 
     dl $000000    ; x1
-    dl $000700    ; y1 
-    dl $000000    ; dx
-    dl $00FE00    ; dy
-    dl $000000    ; x2
-    dl $000500    ; y2
+    dl $000700    ; y1
+    dl $000400    ; dx
+    dl $000000    ; dy
+    dl $000400    ; x2
+    dl $000700    ; y2
     db "A"        ; wallType
 
     dl _node_b    ; parent node pointer
 _leaf_d:
     db $03
 
-    dl $000600    ; x1
-    dl $000500    ; y1 
-    dl $000000    ; dx
-    dl $000200    ; dy
+    dl $000300    ; x1
+    dl $000500    ; y1
+    dl $FFFFC0    ; dx
+    dl $0000C0    ; dy
+    dl $0002C0    ; x2
+    dl $0005C0    ; y2
+    db "A"        ; wallType
+
+    dl $000400    ; x1
+    dl $000700    ; y1
+    dl $000200    ; dx
+    dl $000000    ; dy
     dl $000600    ; x2
     dl $000700    ; y2
     db "A"        ; wallType
 
     dl $000600    ; x1
-    dl $000700    ; y1 
-    dl $FFFE00    ; dx
-    dl $000000    ; dy
-    dl $000400    ; x2
-    dl $000700    ; y2
-    db "A"        ; wallType
-
-    dl $0002C0    ; x1
-    dl $0005C0    ; y1 
-    dl $000040    ; dx
-    dl $FFFF40    ; dy
-    dl $000300    ; x2
+    dl $000700    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    dl $000600    ; x2
     dl $000500    ; y2
     db "A"        ; wallType
 
@@ -209,6 +199,81 @@ _leaf_d:
 
 
 section .text
+
+
+public _fdivs
+_fdivs:
+    ld  iy,0
+    add iy,sp
+    ld  hl,(iy+3)
+    ld  de,(iy+6)
+
+
+; v1:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+    ; hl & de input
+    bit 7,h
+    ld  a,0
+    jp  z,.pos_m1
+    ; negate hl
+    ld  sp,hl
+    sbc hl,hl     ;  (add iy,sp) reset carry bit
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m1:
+    bit 7,d
+    jp  z,.pos_m2
+    ; negate de
+    ex  de,hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m2:
+    ex  af,af'
+
+    ld  a,0
+.loop:
+    srl h
+    rr  l
+    srl d
+    rr  e
+
+    cp  a,d
+    jp  nz,.loop
+
+    ld  d,e
+    inc d
+    mlt de
+    srl d
+    rr  e         ;  divide by 2
+    add hl,de
+    ld  bc,(iy+9) ;  address of LUT
+    add hl,bc
+    ld  a,(hl)    ;  use the LUT
+
+    ; 16 cc if negate   10 cc if not
+    ex  af,af'
+    bit 0,a
+    jp  z,.ret_fdivs
+    ; negate hl
+    ex  af, af'
+    and a,a
+    sbc hl,hl
+    neg
+    ld  l,a
+                                                    ld sp,iy
+    ret
+
+.ret_fdivs:
+    ex  af, af'
+    and a,a
+    sbc hl,hl
+    ld  l,a
+                                                    ld sp,iy
+    ret
+; v1 end
+
 
 public _fmuls
 _fmuls:
@@ -403,6 +468,13 @@ _fmuls:
 ; v3 end
 
 
+
+
+
+
+
+
+
 public _render_bsp
 _render_bsp:
 ; renders the binary space partition tree
@@ -493,13 +565,13 @@ _render_bsp:
 
     and a,a
     sbc hl,de           ;  Ax*By - Ay*Bx
-    jp  m,.negative
+    jp  p,.positive
 
-
-.positive:
+.negative:
     ld  ix,(ix+c1)
     jp  .check_node
-.negative:
+
+.positive:
     ld  ix,(ix+c2)
     jp  .check_node
 
@@ -773,6 +845,7 @@ _render_wall:
     sbc hl,de
 
     jp  .test_y1_sign
+
 .both_neg_y1:
     sbc hl,de
     and a,a
@@ -796,7 +869,6 @@ _render_wall:
 .negative_y1:
     ld  a,a
 .positive_y1:
-    jp .ret_val
 
     ; working in alt register set
     ;  hl' now contains y1*fy + x1*fx
@@ -838,7 +910,7 @@ _render_wall:
 
     jp  .negative_x1
 .m4_pos:
-    bit 2-1,a
+    bit 1-1,a
     jp  nz,.m1_neg
     add hl,sp
     add a,0          ;  set sign to +
@@ -856,6 +928,18 @@ _render_wall:
 .negative_x1:
     ld  a,2
 
+    ;
+
+    ; working in main register set
+    ;  hl contains x1*fy - y1*fx          ;  m1
+    ;  hl' now contains y1*fy + x1*fx
+    ex  de,hl
+    exx
+    ld  sp,hl
+    exx
+    and a,a
+    sbc hl,hl
+    add hl,sp
 
 
 
@@ -865,6 +949,25 @@ _render_wall:
     pop ix
     ei
     ret
+
+
+
+
+;
+; .rot
+;   srl h
+;   jp  z,.fin
+;   rr  l
+;   jp  .rot
+
+; .fin
+;   rr  l
+;   do something
+
+
+
+
+
 
 
 

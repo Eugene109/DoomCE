@@ -6,7 +6,45 @@ palettes:
       - color: {index: 2, r: 255, g: 5, b: 5}
       - color: {index: 255, r: 255, g: 255, b: 255}
     images:
-      automatic
+      - thing_tex.png
+      - numbers_small.png
+      - numbers_small_selected.png
+      - numbers_big.png
+      - textures/brick_wall.png
+      - textures/portrait.png
+      - textures/door_gray.png
+      - HUD.png
+      - zombieman/zombiemanF0.png
+      - zombieman/zombiemanF1.png
+      - zombieman/zombiemanF2.png
+      - zombieman/zombiemanF3.png
+      - zombieman/zombiemanFR0.png
+      - zombieman/zombiemanFR1.png
+      - zombieman/zombiemanFR2.png
+      - zombieman/zombiemanFR3.png
+      - zombieman/zombiemanR0.png
+      - zombieman/zombiemanR1.png
+      - zombieman/zombiemanR2.png
+      - zombieman/zombiemanR3.png
+      - zombieman/zombiemanBR0.png
+      - zombieman/zombiemanBR1.png
+      - zombieman/zombiemanBR2.png
+      - zombieman/zombiemanBR3.png
+      - zombieman/zombiemanB0.png
+      - zombieman/zombiemanB1.png
+      - zombieman/zombiemanB2.png
+      - zombieman/zombiemanB3.png
+      - zombieman/zombiemanD0.png
+      - zombieman/zombiemanD1.png
+      - zombieman/zombiemanD2.png
+      - zombieman/zombiemanD3.png
+      - zombieman/zombiemanD4.png
+      - pistol_anim/pistol_1.png
+      - pistol_anim/pistol_2.png
+      - pistol_anim/pistol_4.png
+      - pistol_anim/pistol_5.png
+      - pistol_anim/pistol_7.png
+      - pistol_anim/pistol_8.png
 
 converts:
   - name: sprites
@@ -14,7 +52,7 @@ converts:
     transparent-color-index: 1
     images:
       - thing_tex.png
-converts:
+
   - name: fonts
     palette: global_palette
     width-and-height: false
@@ -23,7 +61,7 @@ converts:
       - numbers_small.png
       - numbers_small_selected.png
       - numbers_big.png
-converts:
+
   - name: textures
     palette: global_palette
     transparent-color-index: 1
@@ -33,13 +71,13 @@ converts:
       - textures/brick_wall.png
       - textures/portrait.png
       - textures/door_gray.png
-converts:
+
   - name: HUDImages
     palette: global_palette
     width-and-height: false
     images:
       - HUD.png
-converts:
+
   - name: zombieman_pt1_conv
     palette: global_palette
     transparent-color-index: 1
@@ -57,7 +95,7 @@ converts:
       - zombieman/zombiemanR1.png
       - zombieman/zombiemanR2.png
       - zombieman/zombiemanR3.png
-converts:
+
   - name: zombieman_pt2_conv
     palette: global_palette
     transparent-color-index: 1
@@ -87,7 +125,12 @@ converts:
       - pistol_anim/pistol_5.png
       - pistol_anim/pistol_7.png
       - pistol_anim/pistol_8.png
-
+  - name: div_table_255
+    palette: global_palette
+    width-and-height: false
+    images:
+      - divTableImg.png
+    
 outputs:
   - type: c
     include-file: gfx.h
@@ -120,3 +163,9 @@ outputs:
     converts:
       - zombieman_pt2_conv
 
+  - type: appvar
+    name: div_table
+    include-file: div_table_255.h
+    source-format: c
+    converts:
+      - div_table_255
