@@ -164,7 +164,7 @@ outputs:
       - zombieman_pt2_conv
 
   - type: appvar
-    name: div_table
+    name: divTable
     include-file: div_table_255.h
     source-format: c
     converts:

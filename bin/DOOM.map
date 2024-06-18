@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A94D D1A94D             0h
 .init            D1A94D D1A983            36h
 .fini            D1A983 D1A9B7            34h
-.text            D1A9B7 D1EABE          4107h
-.data            D1EABE D2775B          8C9Dh
-.rodata          D2775B D278BC           161h
+.text            D1A9B7 D1EB1E          4167h
+.data            D1EB1E D1F73B           C1Dh
+.rodata          D1F73B D1F89C           161h
 .init_array      000000 000009             9h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -91,12 +91,12 @@ _free                                                                           
 _malloc                                                                                          = D1AFE0
 __alloc_base                                                                                     = D052C6
 _npf_vpprintf                                                                                    = D1B07F
-JTI0_0                                                                                           = D2775B
-JTI0_1                                                                                           = D27779
-JTI0_2                                                                                           = D277BE
-JTI0_3                                                                                           = D277DF
-JTI0_4                                                                                           = D277F7
-JTI0_5                                                                                           = D2780F
+JTI0_0                                                                                           = D1F73B
+JTI0_1                                                                                           = D1F759
+JTI0_2                                                                                           = D1F79E
+JTI0_3                                                                                           = D1F7BF
+JTI0_4                                                                                           = D1F7D7
+JTI0_5                                                                                           = D1F7EF
 _npf_utoa_rev                                                                                    = D1C7E9
 __printf_c                                                                                       = D1C8B1
 __vsnprintf_c                                                                                    = D1C8D0
@@ -107,9 +107,9 @@ __vsprintf_c                                                                    
 __vprintf_c                                                                                      = D1C9C9
 _npf_putc_std                                                                                    = D1C9E9
 __sprintf_c                                                                                      = D1C9F9
-_.str                                                                                            = D27827
-_.str.1                                                                                          = D2782B
-_.str.2                                                                                          = D2782F
+_.str                                                                                            = D1F807
+_.str.1                                                                                          = D1F80B
+_.str.2                                                                                          = D1F80F
 _clock                                                                                           = D1CA22
 _memcpy                                                                                          = 0000A4
 _outchar                                                                                         = D1CA2D
@@ -117,7 +117,7 @@ _sprintf                                                                        
 _vprintf                                                                                         = D1C9C9
 _vsnprintf                                                                                       = D1C8D0
 _sbrk                                                                                            = D1CA43
-__sbrkbase                                                                                       = D1EABE
+__sbrkbase                                                                                       = D1EB1E
 __Znwj                                                                                           = D1CA61
 __ZdlPv                                                                                          = D1CAA2
 __Znaj                                                                                           = D1CAB2
@@ -129,12 +129,12 @@ __ZNK10__cxxabiv117__class_type_info21__search_above_targetEPNS_19__dynamic_cast
 __ZNK10__cxxabiv117__class_type_info21__search_below_targetEPNS_19__dynamic_cast_infoEPKvb       = D1CB8A
 __ZNK10__cxxabiv120__si_class_type_info21__search_above_targetEPNS_19__dynamic_cast_infoEPKvS4_b = D1CC5D
 __ZNK10__cxxabiv120__si_class_type_info21__search_below_targetEPNS_19__dynamic_cast_infoEPKvb    = D1CCBB
-__ZTVN10__cxxabiv117__class_type_infoE                                                           = D27833
-__ZTVN10__cxxabiv120__si_class_type_infoE                                                        = D27845
-.missingappvar                                                                                   = D27857
-.libloadname                                                                                     = D2785C
+__ZTVN10__cxxabiv117__class_type_infoE                                                           = D1F813
+__ZTVN10__cxxabiv120__si_class_type_infoE                                                        = D1F825
+.missingappvar                                                                                   = D1F837
+.libloadname                                                                                     = D1F83C
 .libloadnamelen                                                                                  = 000007
-.webaddress                                                                                      = D27864
+.webaddress                                                                                      = D1F844
 ___init_clock                                                                                    = D1A932
 __start                                                                                          = D1A94D
 ___exithl                                                                                        = D1A983
@@ -157,8 +157,8 @@ _main                                                                           
 __ZN5EnemyC2ERK5ivec2                                                                            = D1D68D
 __ZN6vectorIP5EnemyE9push_backERKS1_                                                             = D1D709
 __ZN6vectorIP5EnemyE7reserveEj                                                                   = D1D767
-_inv_sqrt_lut_lsb                                                                                = D1EAC1
-_inv_sqrt_lut                                                                                    = D1EDC1
+_inv_sqrt_lut_lsb                                                                                = D1EB21
+_inv_sqrt_lut                                                                                    = D1EE21
 __ZN5Thing21all_things_everywhereE                                                               = D052CF
 __ZGVN5Thing21all_things_everywhereE                                                             = D052D8
 _zombieman_walk                                                                                  = D052E0
@@ -166,16 +166,16 @@ __ZN5Enemy7enemiesE                                                             
 __ZGVN5Enemy7enemiesE                                                                            = D05349
 __ZN5Enemy5shotsE                                                                                = D05351
 __ZGVN5Enemy5shotsE                                                                              = D0535A
-_global_palette                                                                                  = D1F0C1
-_.str.6                                                                                          = D27879
-_.str.3                                                                                          = D27887
-__ZTV5Enemy                                                                                      = D2788D
+_global_palette                                                                                  = D1F121
+_.str.8                                                                                          = D1F859
+_.str.3                                                                                          = D1F867
+__ZTV5Enemy                                                                                      = D1F86D
 __ZN5Enemy9shotFiredE                                                                            = D05362
-__ZTS5Enemy                                                                                      = D27896
-__ZTS5Thing                                                                                      = D2789D
-__ZTI5Thing                                                                                      = D278A4
-__ZTI5Enemy                                                                                      = D278AA
-__ZTV5Thing                                                                                      = D278B3
+__ZTS5Enemy                                                                                      = D1F876
+__ZTS5Thing                                                                                      = D1F87D
+__ZTI5Thing                                                                                      = D1F884
+__ZTI5Enemy                                                                                      = D1F88A
+__ZTV5Thing                                                                                      = D1F893
 _64_divis_lut                                                                                    = D1D7E0
 _draw_strip_transparent                                                                          = D1DABB
 _64_divis_lut_ext                                                                                = D1DB23
@@ -186,10 +186,10 @@ dx                                                                              
 dy                                                                                               = 00000A
 c1                                                                                               = 000013
 c2                                                                                               = 000016
-_cos_table_255_256                                                                               = D27341
-_root_node                                                                                       = D27641
-_render_wall                                                                                     = D1E997
-_test_wall                                                                                       = D1EAAB
+_cos_table_255_256                                                                               = D1F321
+_root_node                                                                                       = D1F621
+_render_wall                                                                                     = D1E9F7
+_test_wall                                                                                       = D1EB0B
 lib.LibLoad                                                                                      = D1A8F3
 _#gfx_Begin                                                                                      = D1A906
 _#gfx_End                                                                                        = D1A90A

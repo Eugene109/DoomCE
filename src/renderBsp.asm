@@ -233,14 +233,14 @@ _fdivs:
     ex  af,af'
 
     ld  a,0
-.loop:
+.fdivs_loop:
     srl h
     rr  l
     srl d
     rr  e
 
     cp  a,d
-    jp  nz,.loop
+    jp  nz,.fdivs_loop
 
     ld  d,e
     inc d

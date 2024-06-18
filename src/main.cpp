@@ -122,6 +122,34 @@ int main(void) {
         gfx_End();
         return -1;
     }
+#define TEST_FDIVS 0
+    if (TEST_FDIVS) {
+        gfx_SetTextFGColor(2);
+        char str[100];
+        sprintf(str, "fmuls: 0x2CE9 * 0x16C5 = 0x%X", fmuls(0x2CE9, 0x16C5));
+        gfx_PrintStringXY(str, 5, 5);
+        sprintf(str, "long: 0x2CE9 * 0x16C5 = 0x%X", ((long)0x2CE9 * (long)0x16C5) >> SHIFT);
+        gfx_PrintStringXY(str, 5, 15);
+
+        float fpErr = 0;
+        float lErr = 0;
+        srandom(clock());
+        for (int i = 0; i < 500; i++) {
+            int a = randInt(-32768, 32767);
+            int b = randInt(-32768, 32767);
+            fpErr += f_abs((fmuls(a, b) / 256.0) - (a / 256.0) * (b / 256.0));
+            lErr += f_abs((((long(a) * long(b)) >> SHIFT) / 256.0) - (a / 256.0) * (b / 256.0));
+        }
+        sprintf(str, "Avg Err: fp:%f vs l:%f", fpErr / 500.0, lErr / 500.0);
+        gfx_PrintStringXY(str, 5, 55);
+
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
 #define TEST_WALL 1
     if (TEST_WALL) {
         gfx_SetTextFGColor(2);

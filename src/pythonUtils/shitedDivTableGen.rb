@@ -26,4 +26,4 @@ end
 puts string
 puts numBytes
 
-File.binwrite("./src/gfx/div_table.bin", my_binary_data.pack("C"*my_binary_data.length))
+File.binwrite("./src/gfx/divTable.bin", my_binary_data.pack("C"*my_binary_data.length))

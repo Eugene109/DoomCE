@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 int fmuls(int a, int b);
+int fdivs(int a, int b, unsigned char *sLUT_ptr);
 
 void root_node();
 void test_wall();

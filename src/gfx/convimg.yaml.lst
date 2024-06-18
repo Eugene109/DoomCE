@@ -33,5 +33,5 @@ zombieman_pt2.h
 EnemyPt2.c
 EnemyPt2.8xv
 div_table_255.h
-div_table.c
-div_table.8xv
+divTable.c
+divTable.8xv
