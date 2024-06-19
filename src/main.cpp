@@ -122,19 +122,8 @@ int main(void) {
         gfx_End();
         return -1;
     }
-#define TEST_FDIVS 1
+#define TEST_FDIVS 0
     if (TEST_FDIVS) {
-        if (divTable_init() == 0) {
-            gfx_SetTextFGColor(2);
-            gfx_PrintStringXY("Needs div table Shifted Look Up Table,", 5, 5);
-            gfx_PrintStringXY("please load divTables.8xv", 5, 15);
-            gfx_SwapDraw();
-            while (!os_GetCSC()) {
-                usleep(1000);
-            }
-            gfx_End();
-            return -1;
-        }
         gfx_SetTextFGColor(2);
         char str[100];
         sprintf(str, "fdivs: 0x2CE9 / 0x16C5 = 0x%X", fdivs(0x16C5, 0x2CE9, divTable_appvar[0]));
@@ -161,26 +150,10 @@ int main(void) {
         gfx_End();
         return -1;
     }
-#define TEST_WALL 1
-    if (TEST_WALL) {
+    if (divTable_init() == 0) {
         gfx_SetTextFGColor(2);
-        char str[100];
-        sprintf(str, "72.9deg y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(72.9 * 256.0 / 360))) / 256.0);
-        gfx_PrintStringXY(str, 5, 5);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(142.46 * 256.0 / 360))) / 256.0);
-        gfx_PrintStringXY(str, 5, 15);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
-        gfx_PrintStringXY(str, 5, 25);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(345.09283 * 256.0 / 360))) / 256.0);
-        gfx_PrintStringXY(str, 5, 35);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360))) / 256.0);
-        gfx_PrintStringXY(str, 5, 45);
-
+        gfx_PrintStringXY("Needs div table Shifted Look Up Table,", 5, 5);
+        gfx_PrintStringXY("please load divTables.8xv", 5, 15);
         gfx_SwapDraw();
         while (!os_GetCSC()) {
             usleep(1000);
@@ -217,6 +190,37 @@ int main(void) {
     int dists[NUM_RAYS] = {0};
     uint8_t texCoords[NUM_RAYS] = {0};
     char texTypes[NUM_RAYS] = {0};
+#define TEST_WALL 1
+    if (TEST_WALL) {
+        gfx_SetTextFGColor(2);
+        char str[100];
+        // sprintf(str, "72.9deg y: %f",
+        //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(72.9 * 256.0 / 360))) / 256.0);
+        // gfx_PrintStringXY(str, 5, 5);
+        // sprintf(str, "y: %f",
+        //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(142.46 * 256.0 / 360))) / 256.0);
+        // gfx_PrintStringXY(str, 5, 15);
+        // sprintf(str, "y: %f",
+        //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
+        // gfx_PrintStringXY(str, 5, 25);
+        // sprintf(str, "y: %f",
+        //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(345.09283 * 256.0 / 360)), dists,
+        //                     texCoords, texTypes, divTable_appvar[0]) /
+        //             256.0);
+        // gfx_PrintStringXY(str, 5, 35);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360)), dists, texCoords,
+                            texTypes, divTable_appvar[0]) /
+                    256.0);
+        gfx_PrintStringXY(str, 5, 45);
+
+        gfx_SwapDraw();
+        while (!os_GetCSC()) {
+            usleep(1000);
+        }
+        gfx_End();
+        return -1;
+    }
 
     char currentDoor = 'a';
     uint8_t doorState = 0;

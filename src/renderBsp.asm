@@ -667,6 +667,10 @@ _render_wall:
 ;    arg2: player x
 ;    arg3: player y
 ;    arg4: forward angle
+;    arg5: pointer to distances
+;    arg6: pointer to texCoords
+;    arg7: pointer to wall Types
+;    arg8: division lut address
 ; Returns:
 ;  None
     di                  ;  disables interrupts, these use alternate register set, which this needs
@@ -864,10 +868,36 @@ _render_wall:
     sbc hl,sp
 .test_y1_sign:
 
-    jp  m,.negative_y1
+    jp  p,.positive_y1
 
 .negative_y1:
-    ld  a,a
+    ;  sooooo
+    ;  this is awkward
+    ;  idk what to do here except like crazy algebra
+    ; so this is a problem for future me
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ; good luck!
+; you'll need it
+    jp .ret_val        ; temp return
+
+
+
 .positive_y1:
 
     ; working in alt register set
@@ -921,26 +951,111 @@ _render_wall:
     sbc hl,sp
 .test_x1_sign:
 
-    jp  m,.negative_x1
-.positive_x1:
+    jp  p,.positive_x1
 
-    ld  a,5
 .negative_x1:
-    ld  a,2
+    ; idk man deal with the negative
+                            jp .ret_val ;  remove this when you actually code this part
 
-    ;
 
+.positive_x1:
     ; working in main register set
     ;  hl contains x1*fy - y1*fx          ;  m1
     ;  hl' now contains y1*fy + x1*fx
-    ex  de,hl
+
+    ;  compare x & y
     exx
     ld  sp,hl
     exx
     and a,a
+    sbc hl,sp        ;  x - y
+    jp  p,.x_greater_than_y
+
+    ;  reset hl to x
+    add hl,sp
+    ex  de,hl
+    ;  move over y into main register set
+    and a,a
     sbc hl,hl
     add hl,sp
+    ex  de,hl
+    ;  divide!
+    ;  x/y
 
+    ; v1:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+        ; hl & de input
+        ex  af,af'
+        ld  a,0
+.fdivs_x_y_loop:
+        srl h
+        rr  l
+        srl d
+        rr  e
+
+        cp  a,d
+        jp  nz,.fdivs_x_y_loop
+
+        ld  d,e
+        inc d
+        mlt de
+        srl d
+        rr  e         ;  divide by 2
+        add hl,de
+        ld  bc,(iy+24);  address of LUT
+        add hl,bc
+        ld  a,(hl)    ;  use the LUT
+        sbc hl,hl
+        ld  l,a
+    jp  .ret_fdivs_x_y                             ;  temporary, don't need to negate just yet
+        ; 16 cc if negate   10 cc if not
+        ex  af,af'
+        bit 0,a
+        jp  z,.ret_fdivs_x_y
+        ; negate hl
+        ex  af, af'
+        scf
+        sbc hl,hl     ;  $FFFFFF
+        neg
+        ld  l,a
+                                                        ld sp,iy
+        ret
+
+.ret_fdivs_x_y:
+    ;  yay!
+    ;  hl now contains x/y
+
+    ;  hl contains screenspace x-coord [-1.0, 1.0]
+        inc h
+        srl h
+        ld  a,l
+        rra
+        ; (hl+1)/2 -> [h][a]
+        rr  h        ;  will put set carry if hl >= 1, else reset
+        sbc a,0      ;  subs 1 from 256 if carry
+        ; a now contains ndc x-coord [0,1.0)
+        ld  h,80
+        ld  l,a
+        mlt hl       ;  contains pixel group number (array index)
+        ld  l,h
+    ;  hl now contains array index
+
+    ;  hl' still contains y!
+    ;  lets GOO
+    ld  a,(ix+12)
+    ex  de,hl
+    ld  hl,(iy+21)
+    add hl,de
+    ld  (hl),a        ;  wall type
+    ld  hl,(iy+18)
+    ld  (hl),0        ;  texture coordinate
+    inc e             ;  add 3 for (push hl)
+    ld  d,3
+    mlt de
+    ld  hl,(iy+15)
+    add hl,de
+    ld  sp,hl
+    exx
+    push hl           ;  ld hl to sp - 3
 
 
 .ret_val:
@@ -951,19 +1066,9 @@ _render_wall:
     ret
 
 
-
-
-;
-; .rot
-;   srl h
-;   jp  z,.fin
-;   rr  l
-;   jp  .rot
-
-; .fin
-;   rr  l
-;   do something
-
+.x_greater_than_y:
+; need to clip here
+    jp  .ret_val            ;temporary
 
 
 
@@ -977,8 +1082,8 @@ _test_wall:
     dl $0018A3    ; y1 
     dl $000000    ; dx
     dl $000200    ; dy
-    dl $000600    ; x2
-    dl $000700    ; y2
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
     db "A"        ; wallType
 
 
