@@ -203,11 +203,11 @@ int main(void) {
         // sprintf(str, "y: %f",
         //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
         // gfx_PrintStringXY(str, 5, 25);
-        // sprintf(str, "y: %f",
-        //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(345.09283 * 256.0 / 360)), dists,
-        //                     texCoords, texTypes, divTable_appvar[0]) /
-        //             256.0);
-        // gfx_PrintStringXY(str, 5, 35);
+        sprintf(str, "y: %f",
+                render_wall((unsigned char *)test_wall2, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360)), dists, texCoords,
+                            texTypes, divTable_appvar[0]) /
+                    256.0);
+        gfx_PrintStringXY(str, 5, 35);
         sprintf(str, "y: %f",
                 render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360)), dists, texCoords,
                             texTypes, divTable_appvar[0]) /
@@ -218,6 +218,48 @@ int main(void) {
         while (!os_GetCSC()) {
             usleep(1000);
         }
+        player.pos = ivec2(0x18A2, 0x2A3E);
+        player.rot = (int)(298.6 * 256.0 / 360.0);
+        do {
+            gfx_ZeroScreen();
+            gfx_SetTextFGColor(2);
+
+            player.forward = ivec2(f_cos(player.rot), f_sin(player.rot));
+            player.Update();
+            sprintf(str, "rotation: %d", player.rot);
+            gfx_PrintStringXY(str, 5, 45);
+            sprintf(str, "pos: (%d,%d)", player.pos.x, player.pos.y);
+            gfx_PrintStringXY(str, 5, 60);
+
+            for (uint8_t a = 0; a < NUM_RAYS; ++a) {
+                dists[a] = 0;
+            }
+            render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, dists, texCoords, texTypes,
+                        divTable_appvar[0]);
+            // render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, dists, texCoords,
+            // texTypes,
+            //             divTable_appvar[0]);
+            // render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, (int)(298.6 * 256.0 / 360.0), dists, texCoords,
+            //             texTypes, divTable_appvar[0]);
+            for (uint8_t a = 0; a < NUM_RAYS; ++a) {
+                if (!dists[a])
+                    continue;
+                int stripLen = ((1 << (SHIFT + SHIFT)) / dists[a]) * 160;
+
+                if ((stripLen >> SHIFT) <= RENDER_H) {
+                    draw_strip(&(gfx_vbuffer[0][0]),
+                               textures[(texTypes[a] - 65) >> 1] + (int(uint8_t(texTypes[a] - 65) & 1) << 12), a * SKIP,
+                               (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoords[a]);
+                } else {
+                    draw_strip_clipped(&(gfx_vbuffer[0][0]),
+                                       textures[(texTypes[a] - 65) >> 1] + ((uint8_t(texTypes[a] - 65) & 1) << 12),
+                                       a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT),
+                                       texCoords[a]);
+                }
+            }
+            gfx_SwapDraw();
+            usleep(30);
+        } while (os_GetCSC() != sk_Enter);
         gfx_End();
         return -1;
     }

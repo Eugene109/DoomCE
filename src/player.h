@@ -85,6 +85,7 @@ class Player {
   private:
 #define SPACE 64
     void DetectCollisions(fixed &incX, fixed &incY) {
+        return;
         if (incX > 0) {
             char *y_walls_ptr = (char *)(&y_walls_q1) + (pos.y >> SHIFT) * 17 + (pos.x >> SHIFT) + 1;
             if (*y_walls_ptr >> 6 && !(*y_walls_ptr & 32)) {

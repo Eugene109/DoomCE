@@ -119,32 +119,32 @@ _leaf_b:
     dl $000300    ; y1
     dl $000080    ; dx
     dl $FFFE20    ; dy
-    dl $000680    ; x2
-    dl $000120    ; y2
+;    dl $000680    ; x2
+;    dl $000120    ; y2
     db "A"        ; wallType
 
     dl $000680    ; x1
     dl $000120    ; y1
     dl $FFFEA0    ; dx
     dl $FFFF40    ; dy
-    dl $000520    ; x2
-    dl $000060    ; y2
+;    dl $000520    ; x2
+;    dl $000060    ; y2
     db "A"        ; wallType
 
     dl $000520    ; x1
     dl $000060    ; y1
     dl $FFFEA0    ; dx
     dl $000120    ; dy
-    dl $0003C0    ; x2
-    dl $000180    ; y2
+;    dl $0003C0    ; x2
+;    dl $000180    ; y2
     db "A"        ; wallType
 
     dl $0003C0    ; x1
     dl $000180    ; y1
     dl $000040    ; dx
     dl $000180    ; dy
-    dl $000400    ; x2
-    dl $000300    ; y2
+;    dl $000400    ; x2
+;    dl $000300    ; y2
     db "A"        ; wallType
 
     dl _node_a    ; parent node pointer
@@ -155,16 +155,16 @@ _leaf_c:
     dl $000500    ; y2
     dl $000000    ; dx
     dl $000200    ; dy
-    dl $000000    ; x1
-    dl $000700    ; y1
+;    dl $000000    ; x1
+;    dl $000700    ; y1
     db "A"        ; wallType
 
     dl $000000    ; x1
     dl $000700    ; y1
     dl $000400    ; dx
     dl $000000    ; dy
-    dl $000400    ; x2
-    dl $000700    ; y2
+;    dl $000400    ; x2
+;    dl $000700    ; y2
     db "A"        ; wallType
 
     dl _node_b    ; parent node pointer
@@ -175,24 +175,24 @@ _leaf_d:
     dl $000500    ; y1
     dl $FFFFC0    ; dx
     dl $0000C0    ; dy
-    dl $0002C0    ; x2
-    dl $0005C0    ; y2
+;    dl $0002C0    ; x2
+;    dl $0005C0    ; y2
     db "A"        ; wallType
 
     dl $000400    ; x1
     dl $000700    ; y1
     dl $000200    ; dx
     dl $000000    ; dy
-    dl $000600    ; x2
-    dl $000700    ; y2
+;    dl $000600    ; x2
+;    dl $000700    ; y2
     db "A"        ; wallType
 
     dl $000600    ; x1
     dl $000700    ; y1
     dl $000000    ; dx
     dl $FFFE00    ; dy
-    dl $000600    ; x2
-    dl $000500    ; y2
+;    dl $000600    ; x2
+;    dl $000500    ; y2
     db "A"        ; wallType
 
     dl _node_b    ; parent node pointer
@@ -693,14 +693,15 @@ _render_wall:
 ;    y1: |= 1100
 ;    fx: |= 1010
     ld  bc,(iy+12)
+    ld  de,$000100
     ld  hl,_cos_table_255_256
     add hl,bc
-    ld  a,(hl)          ;  forward x
+        ld  a,(hl)          ;  forward x
     ex  af,af'
-    inc h
-    ld  c,(hl)          ;  forward y
-    inc h
-    ld  a,(hl)          ;  quadrant
+    add hl,de
+        ld  c,(hl)          ;  forward y
+    add hl,de
+        ld  a,(hl)          ;  quadrant
     xor a,1000b         ;  m4 is subtracted, so negate it
 
 
@@ -924,20 +925,28 @@ _render_wall:
     ;  test m1 & m4
     bit 4-1,a
     jp  z,.m4_pos
+
     ex  de,hl
     and a,a
     sbc hl,hl
+
     bit 1-1,a
     jp  nz,.both_neg_x1
+
     add hl,sp
     sbc hl,de
+    jp  p,.positive_x1
 
-    jp  .test_x1_sign
-.both_neg_x1:
+    add hl,de
+    ex  de,hl
     sbc hl,de
-    and a,a
-    sbc hl,sp
-
+    jp  .negative_x1
+.both_neg_x1:
+            ; sbc hl,de
+            ; and a,a
+            ; sbc hl,sp
+    add hl,de
+    add hl,sp
     jp  .negative_x1
 .m4_pos:
     bit 1-1,a
@@ -949,13 +958,17 @@ _render_wall:
 .m1_neg:
     and a,a
     sbc hl,sp
-.test_x1_sign:
-
     jp  p,.positive_x1
+    add hl,sp
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+    add hl,sp
+    sbc hl,de
 
 .negative_x1:
     ; idk man deal with the negative
-                            jp .ret_val ;  remove this when you actually code this part
+    xor a,10000b
 
 
 .positive_x1:
@@ -1004,23 +1017,24 @@ _render_wall:
         ld  bc,(iy+24);  address of LUT
         add hl,bc
         ld  a,(hl)    ;  use the LUT
-        sbc hl,hl
-        ld  l,a
-    jp  .ret_fdivs_x_y                             ;  temporary, don't need to negate just yet
+
         ; 16 cc if negate   10 cc if not
         ex  af,af'
-        bit 0,a
+        bit 4,a
         jp  z,.ret_fdivs_x_y
         ; negate hl
         ex  af, af'
-        scf
-        sbc hl,hl     ;  $FFFFFF
+            and a,a   ;  tests a for zero, also resets carry
+            jp  z,.fdivs_0
         neg
-        ld  l,a
-                                                        ld sp,iy
-        ret
+        scf
+.fdivs_0:
+        ex  af, af'
 
 .ret_fdivs_x_y:
+    ex  af, af'
+    sbc hl,hl     ;  $FFFFFF
+    ld  l,a
     ;  yay!
     ;  hl now contains x/y
 
@@ -1037,6 +1051,7 @@ _render_wall:
         ld  l,a
         mlt hl       ;  contains pixel group number (array index)
         ld  l,h
+        ld  h,0
     ;  hl now contains array index
 
     ;  hl' still contains y!
@@ -1082,6 +1097,16 @@ _test_wall:
     dl $0018A3    ; y1 
     dl $000000    ; dx
     dl $000200    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+public _test_wall2
+_test_wall2:
+    dl $001F00    ; x1
+    dl $002600    ; y1 
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
     ; dl $000600    ; x2
     ; dl $000700    ; y2
     db "A"        ; wallType
