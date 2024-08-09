@@ -222,6 +222,7 @@ int main(void) {
         player.rot = (int)(298.6 * 256.0 / 360.0);
         do {
             gfx_ZeroScreen();
+            start_t = clock();
             gfx_SetTextFGColor(2);
 
             player.forward = ivec2(f_cos(player.rot), f_sin(player.rot));
@@ -236,6 +237,10 @@ int main(void) {
             }
             render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, dists, texCoords, texTypes,
                         divTable_appvar[0]);
+            for (int a = 1; a < 80; a++) {
+                render_wall((unsigned char *)test_wall2 + (13 * a), player.pos.x, player.pos.y, player.rot, dists,
+                            texCoords, texTypes, divTable_appvar[0]);
+            }
             // render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, dists, texCoords,
             // texTypes,
             //             divTable_appvar[0]);
@@ -257,8 +262,14 @@ int main(void) {
                                        texCoords[a]);
                 }
             }
+            total_t = clock() - start_t;
+            sprintf(str, "rev 0.3.9  fps:%d, %fs", int(CLOCKS_PER_SEC / total_t),
+                    double(total_t) / double(CLOCKS_PER_SEC));
+            gfx_SetTextFGColor(255);
+            uint8_t offsetX = (GFX_LCD_WIDTH - gfx_GetStringWidth(str)) >> 1;
+            gfx_PrintStringXY(str, offsetX, 4);
             gfx_SwapDraw();
-            usleep(30);
+
         } while (os_GetCSC() != sk_Enter);
         gfx_End();
         return -1;

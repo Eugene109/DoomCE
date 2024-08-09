@@ -658,6 +658,15 @@ _render_bsp:
     pop ix
     ret
 
+
+
+public _pixel_num
+_pixel_num:
+    db $00        ; pixel number
+public _hit_depth
+_hit_depth:
+    dl $000000    ; depth
+
 public _render_wall
 _render_wall:
 ; renders just one wall
@@ -673,7 +682,7 @@ _render_wall:
 ;    arg8: division lut address
 ; Returns:
 ;  None
-    di                  ;  disables interrupts, these use alternate register set, which this needs
+    di                  ;  disables interrupts to enable the alternate register set
 
     ld  iy,0
     add iy,sp
@@ -710,14 +719,15 @@ _render_wall:
     and a,a
     sbc hl,de           ;  seg x1 with origin at player
 
-    ; multiply x*fy
-        jp  p,.pos_x1 ;  testing sign of (sbc hl,bc)
+; multiply x*fy
+        jp  p,.pos_x1 ;  testing sign of x1(with player-centric coords)
     ; negate hl
         add hl,de
         ex  de,hl
         xor a,0011b   ;  resets carry
         sbc hl,de
     .pos_x1:
+    ; back up x1
         ld  sp,hl
         exx
         and a,a
@@ -747,7 +757,7 @@ _render_wall:
 
     ex  af,af'
     exx
-    ;  multiply x1*fx
+; multiply x1*fx
         ld  e,l
         ld  d,a
         ld  l,a
@@ -975,6 +985,8 @@ _render_wall:
     ; working in main register set
     ;  hl contains x1*fy - y1*fx          ;  m1
     ;  hl' now contains y1*fy + x1*fx
+    ;  c' contains  abs(fy)
+    ;  b contains  abs(fx)
 
     ;  compare x & y
     exx
@@ -1091,10 +1103,20 @@ _render_wall:
 
 
 
+
+
+
+
+
+
+
+
+
+
 public _test_wall
 _test_wall:
     dl $00165C    ; x1
-    dl $0018A3    ; y1 
+    dl $0018A3    ; y1
     dl $000000    ; dx
     dl $000200    ; dy
     ; dl $000600    ; x2
@@ -1111,6 +1133,1301 @@ _test_wall2:
     ; dl $000700    ; y2
     db "A"        ; wallType
 
+    dl $00171B    ; x1
+    dl $002C44    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F0E    ; x1
+    dl $00276E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0011DD    ; x1
+    dl $0021BF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001513    ; x1
+    dl $0025B3    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001ECB    ; x1
+    dl $002113    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F13    ; x1
+    dl $0023D1    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00127A    ; x1
+    dl $002357    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00143C    ; x1
+    dl $002B2A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001073    ; x1
+    dl $0028FC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001FA0    ; x1
+    dl $0028DA    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0014E4    ; x1
+    dl $0028CF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001198    ; x1
+    dl $002482    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001355    ; x1
+    dl $00235C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0014F1    ; x1
+    dl $002F50    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001764    ; x1
+    dl $002DCF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001DF5    ; x1
+    dl $002597    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001E14    ; x1
+    dl $002EC0    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00114E    ; x1
+    dl $002E56    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001AAF    ; x1
+    dl $002FFC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001EC2    ; x1
+    dl $002FFC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001BA9    ; x1
+    dl $00232C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001B5F    ; x1
+    dl $002A01    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0014D6    ; x1
+    dl $0023B2    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001035    ; x1
+    dl $00200F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019B1    ; x1
+    dl $002BDE    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001510    ; x1
+    dl $0022E8    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0015A0    ; x1
+    dl $002F90    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0013CB    ; x1
+    dl $002D2A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001D9C    ; x1
+    dl $002166    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0016FF    ; x1
+    dl $002A1C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001715    ; x1
+    dl $0027D0    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0015D1    ; x1
+    dl $002627    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0013B0    ; x1
+    dl $002C5F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0011CB    ; x1
+    dl $002300    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001419    ; x1
+    dl $0024F7    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001AFC    ; x1
+    dl $002B0C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00104F    ; x1
+    dl $0025C4    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001932    ; x1
+    dl $0028EF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001140    ; x1
+    dl $002D6E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001987    ; x1
+    dl $0025A4    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001E28    ; x1
+    dl $002422    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001390    ; x1
+    dl $0022CD    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001A51    ; x1
+    dl $00231E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001357    ; x1
+    dl $002C0A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00127F    ; x1
+    dl $002448    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0013B1    ; x1
+    dl $0023E7    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001671    ; x1
+    dl $002E70    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0016CA    ; x1
+    dl $00276E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001287    ; x1
+    dl $002416    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00129B    ; x1
+    dl $002DEA    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001645    ; x1
+    dl $002D1A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F2F    ; x1
+    dl $00228F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00113A    ; x1
+    dl $002D1C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001545    ; x1
+    dl $002D42    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012A8    ; x1
+    dl $002166    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00129A    ; x1
+    dl $002783    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F36    ; x1
+    dl $002908    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0018D8    ; x1
+    dl $002C11    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0015C5    ; x1
+    dl $002F13    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001232    ; x1
+    dl $002E31    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001E90    ; x1
+    dl $002A89    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00181B    ; x1
+    dl $002152    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012BC    ; x1
+    dl $002EB5    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0018ED    ; x1
+    dl $002590    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001A12    ; x1
+    dl $002F81    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00137A    ; x1
+    dl $002D05    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00136A    ; x1
+    dl $002E58    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0016C1    ; x1
+    dl $002809    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001BB1    ; x1
+    dl $00289A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001ED9    ; x1
+    dl $002060    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001CA9    ; x1
+    dl $002E4F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001A21    ; x1
+    dl $0029BA    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001B26    ; x1
+    dl $002230    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019F7    ; x1
+    dl $00235C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001311    ; x1
+    dl $0020BB    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012BA    ; x1
+    dl $002D84    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00194B    ; x1
+    dl $002A00    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001D57    ; x1
+    dl $002EF4    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001FDF    ; x1
+    dl $002769    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001624    ; x1
+    dl $002B32    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+
+    dl $001378    ; x1
+    dl $00256E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001331    ; x1
+    dl $0026C7    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001221    ; x1
+    dl $002C4B    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012ED    ; x1
+    dl $002813    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F36    ; x1
+    dl $002F3F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001341    ; x1
+    dl $002636    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012A6    ; x1
+    dl $002317    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001087    ; x1
+    dl $002544    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001661    ; x1
+    dl $002A6B    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001D4E    ; x1
+    dl $002F01    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00139B    ; x1
+    dl $002EA6    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001CB1    ; x1
+    dl $002B92    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001291    ; x1
+    dl $0022E7    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019C0    ; x1
+    dl $0024F0    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001867    ; x1
+    dl $002E25    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001191    ; x1
+    dl $0022B3    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001EE8    ; x1
+    dl $0025D0    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001C5B    ; x1
+    dl $0028A5    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0016D8    ; x1
+    dl $00224A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001966    ; x1
+    dl $0024BC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0018AC    ; x1
+    dl $002E70    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00152B    ; x1
+    dl $002F9F    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0010A0    ; x1
+    dl $002790    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001295    ; x1
+    dl $002E8A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00150D    ; x1
+    dl $002DFC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019B8    ; x1
+    dl $002613    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F9E    ; x1
+    dl $002986    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001368    ; x1
+    dl $00249D    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001358    ; x1
+    dl $0022C1    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001D3D    ; x1
+    dl $002957    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00138B    ; x1
+    dl $0022C4    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F5F    ; x1
+    dl $002012    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001235    ; x1
+    dl $0020F6    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F20    ; x1
+    dl $0020CA    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001E2B    ; x1
+    dl $0023FC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001165    ; x1
+    dl $00218D    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00142B    ; x1
+    dl $002118    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001683    ; x1
+    dl $002D59    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0011EC    ; x1
+    dl $0024BB    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001C72    ; x1
+    dl $002FD5    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012E9    ; x1
+    dl $0023F6    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0016AD    ; x1
+    dl $0024F5    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001CA0    ; x1
+    dl $0020EB    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00178F    ; x1
+    dl $002954    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001B1D    ; x1
+    dl $002CAC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001A9F    ; x1
+    dl $00293B    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001696    ; x1
+    dl $0028EB    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00166B    ; x1
+    dl $002BCA    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001138    ; x1
+    dl $002A71    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001937    ; x1
+    dl $002C9D    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00133B    ; x1
+    dl $002739    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0017B2    ; x1
+    dl $002F81    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001FDA    ; x1
+    dl $002D65    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001FA1    ; x1
+    dl $002816    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001BB2    ; x1
+    dl $0023BF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00131F    ; x1
+    dl $002B03    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001BE3    ; x1
+    dl $002012    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001876    ; x1
+    dl $0022A9    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0011A8    ; x1
+    dl $00217A    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001B10    ; x1
+    dl $002DC7    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001CF8    ; x1
+    dl $002E77    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019B3    ; x1
+    dl $002E51    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00104A    ; x1
+    dl $002EAC    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0013D3    ; x1
+    dl $0020F8    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00199F    ; x1
+    dl $002FDD    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001277    ; x1
+    dl $0027C3    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001A82    ; x1
+    dl $002BDE    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001B45    ; x1
+    dl $002029    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0012C1    ; x1
+    dl $00295D    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001293    ; x1
+    dl $0022FF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F95    ; x1
+    dl $0029BF    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0015BE    ; x1
+    dl $002F69    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0019DF    ; x1
+    dl $002F9D    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001E3D    ; x1
+    dl $002C77    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001872    ; x1
+    dl $0021F6    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001F44    ; x1
+    dl $0027A3    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001CF0    ; x1
+    dl $002AEB    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $0017DA    ; x1
+    dl $00222C    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $00126E    ; x1
+    dl $00229E    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+    dl $001327    ; x1
+    dl $0020ED    ; y1
+    dl $000000    ; dx
+    dl $FFFE00    ; dy
+    ; dl $000600    ; x2
+    ; dl $000700    ; y2
+    db "A"        ; wallType
+
+;
+;
+;   void renderWall(bro idk){
+;       //blah blah,
+;       
+;       
+;       
+;       
+;
+;
+;
+;
+;
+;
 
 
 
