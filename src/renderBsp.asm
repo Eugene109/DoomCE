@@ -659,10 +659,12 @@ _render_bsp:
     ret
 
 
-
+public _x1_proj
+_x1_proj:
+    dl $000000    ; x1
 public _pixel_num
 _pixel_num:
-    db $00        ; pixel number
+    dl $000000    ; pixel number
 public _hit_depth
 _hit_depth:
     dl $000000    ; depth
@@ -825,7 +827,7 @@ _render_wall:
         ;  hl contains x1*fy
         ;  de contains abs(y1)
 
-    ;  multiply x1*fx
+; multiply y1*fy
         ld  e,l
         ld  d,c
         ld  l,c
@@ -888,21 +890,6 @@ _render_wall:
     ; so this is a problem for future me
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ; good luck!
 ; you'll need it
     jp .ret_val        ; temp return
@@ -932,7 +919,7 @@ _render_wall:
         ld  e,h
         add hl,de
 
-    ;  test m1 & m4
+;  test m1 & m4
     bit 4-1,a
     jp  z,.m4_pos
 
@@ -945,6 +932,7 @@ _render_wall:
 
     add hl,sp
     sbc hl,de
+                ld  (_x1_proj),hl
     jp  p,.positive_x1
 
     add hl,de
@@ -952,11 +940,14 @@ _render_wall:
     sbc hl,de
     jp  .negative_x1
 .both_neg_x1:
-            ; sbc hl,de
-            ; and a,a
-            ; sbc hl,sp
-    add hl,de
-    add hl,sp
+            sbc hl,de
+            and a,a
+            sbc hl,sp
+                ld  (_x1_proj),hl
+        ex  de,hl
+        ld  hl,0
+        and a,a
+        sbc hl,de
     jp  .negative_x1
 .m4_pos:
     bit 1-1,a
@@ -964,10 +955,12 @@ _render_wall:
     add hl,sp
     add a,0          ;  set sign to +
 
+                ld  (_x1_proj),hl
     jp  .positive_x1
 .m1_neg:
     and a,a
     sbc hl,sp
+                ld  (_x1_proj),hl
     jp  p,.positive_x1
     add hl,sp
     ex  de,hl
@@ -1066,23 +1059,416 @@ _render_wall:
         ld  h,0
     ;  hl now contains array index
 
-    ;  hl' still contains y!
-    ;  lets GOO
-    ld  a,(ix+12)
+; saving progress for pixel num & y1
+                                                                ld  (_pixel_num),hl
+
+            ;  hl' still contains y!
+            ;  lets GOO
+            ld  a,(ix+13)
+            ex  de,hl
+            ld  hl,(iy+21)
+            add hl,de
+            ld  (hl),a        ;  wall type
+            ld  hl,(iy+18)
+            ld  (hl),0        ;  texture coordinate
+            inc e             ;  add 3 for (push hl)
+            ld  d,3
+            mlt de
+            ld  hl,(iy+15)
+            add hl,de
+            ld  sp,hl
+            exx
+    
+                                                                ld  (_hit_depth),hl
+            push hl           ;  ld hl to sp - 3s
+
+
+
+
+
+
+
+
+
+
+
+;
+;
+;     Start of line segment is done
+;
+;
+
+
+
+
+
+;     now calculating the orientation and size of the wall in screenspace:
+
+    ld  bc,(iy+12)          ;  forward angle
+    ld  de,$000100
+    ld  hl,_cos_table_255_256
+    add hl,bc
+        ld  a,(hl)          ;  forward x
+    ex  af,af'
+    add hl,de
+        ld  c,(hl)          ;  forward y
+    add hl,de
+        ld  a,(hl)          ;  quadrant
+    xor a,1000b         ;  m4 is subtracted, so negate it
+
+    xor a,(ix+12)      ;  dx & dy signs
+    ex  af,af'
+
+
+    ; put dx into both hl & hl'
+    ld  hl,(ix+6)         ;  segment dx
+
+    ; multiply dx*fy
+        ; backup dx
+        ld  sp,hl
+        exx
+        sbc hl,hl         ;  carry reset by xor a
+        add hl,sp
+        exx
+        ; now multiply 0.c * h.l
+        ld  e,l
+        ld  d,c
+        ld  l,c
+        mlt hl        ;  (h.c)
+        mlt de        ;  (.cl)
+
+        ld  e,d       ;  de >> 8
+        ld  d,0
+        add hl,de
+
+        ; ld  d,0     ;  already 0
+        ld  e,h
+        add hl,de     ;  mult by ~ 256/255    (hl+0h)
+
+    ;  hl now contains dx*fy
+    ;  c contains fy
+    ;  hl' contains  dx
+    ;  a' contains  fx
+
+    exx
+    ; multiply dx*fx
+        ld  e,l
+        ld  d,a
+        ld  l,a
+        mlt hl
+        mlt de
+
+        ld  e,d       ;  de >> 8
+        ld  d,0
+        add hl,de
+
+        ; ld  d,0     ;  already 0
+        ld  e,h
+        add hl,de     ;  mult by ~ 256/255    (hl+0h)
+    ;  hl' now contains dx*fx
+    ;  a' contains  fx
+    ;  c contains fy
+    ;  hl contains dx*fy
+
+
+
+    exx
+    ld  b,a
+    ld  a,c
+    exx
+
     ex  de,hl
-    ld  hl,(iy+21)
+    ld  hl,(ix+9)       ;  seg dy
+
+    ; working in alt register set
+    ;  hl' now contains dy
+    ;  sp now contains dx*fx
+    ;  a' contains  fy
+    ;  b contains fx
+    ;  hl contains dx*fy
+    ; multiply dy*fy
+        ld  c,a
+            ld  a,l
+            exx
+            ld  de,0
+            ld  e,a
+            exx
+            ld  a,h
+            exx
+            ld  d,a
+            exx           ;  puts dy into main de
+        ld  a,c
+
+        ; working in alt register set
+        ;  hl' now contains y1
+        ;  sp now contains dx*fx
+        ;  c' contains fy
+        ;  b contains fx
+        ;  hl contains dx*fy
+        ;  de contains dy
+        ; multiply
+        ld  c,l
+        ld  b,a
+        ld  l,a
+        mlt hl
+        mlt bc
+
+        ld  c,b       ;  bc >> 8
+        ld  b,0
+        add hl,bc
+
+        ; ld  b,0     ;  already 0
+        ld  c,h
+        add hl,bc     ;  mult by ~ 256/255    (hl+0h)
+
+
+    ; working in alt register set (alt af)
+    ;  hl' now contains dy*fy     ;  m3
+    ;  de' now contains dx*fx     ;  m2
+    ;  a' contains  fy
+    ;  b contains fx
+    ;  hl contains dx*fy          ;  m1
+    ;  de contains dy
+
+; test sign of dy
+    ex af,af'
+    bit 3-1,a
+    jp  z,.d_m3_pos
+    ex  de,hl
+    bit 2-1,a
+    jp  nz,.both_neg_dy
+    and a,a
+    sbc hl,de
+
+    jp  .test_dy_sign
+
+.both_neg_dy:
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp
+    sbc hl,de
+
+    jp  .negative_dy
+.d_m3_pos:
+    bit 2-1,a
+    jp  nz,.d_m2_neg
     add hl,de
-    ld  (hl),a        ;  wall type
-    ld  hl,(iy+18)
-    ld  (hl),0        ;  texture coordinate
-    inc e             ;  add 3 for (push hl)
-    ld  d,3
-    mlt de
-    ld  hl,(iy+15)
+
+    jp  .positive_dy
+.d_m2_neg:
+    and a,a
+    sbc hl,de
+.test_dy_sign:
+    ; unneeded?
+    ; jp  p,.positive_dy
+
+.negative_dy:
+    ;  sooooo
+    ;  I think this should just work? maybe
+
+.positive_dy:
+
+    ; working in alt register set
+    ;  hl' now contains dy*fy + dx*fx
+    ;  a contains  fy
+    ;  b contains fx
+    ;  hl contains dx*fy          ;  m1
+    ;  de contains dy
+    ; multiply dy*fx
+        exx
+        ld  sp,hl
+
+        ld  h,d
+        ld  l,b
+        ld  d,b
+        mlt hl
+        mlt de
+        ld  e,d
+        ld  d,0
+        add hl,de
+
+        ld  e,h
+        add hl,de
+
+; test m1 & m4
+    bit 4-1,a
+    jp  z,.d_m4_pos
+
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+
+    bit 1-1,a
+    jp  nz,.both_neg_dx
+
+    add hl,sp
+    sbc hl,de
+    jp  p,.positive_dx
+
     add hl,de
+    ex  de,hl
+    sbc hl,de
+    jp  .negative_dx
+.both_neg_dx:
+            ; and a,a
+            ; sbc hl,de
+            ; and a,a
+            ; sbc hl,sp
+    add hl,de
+    add hl,sp
+    jp  .negative_dx
+.d_m4_pos:
+    bit 1-1,a
+    jp  nz,.d_m1_neg
+    add hl,sp
+
+    jp  .positive_dx
+.d_m1_neg:
+    and a,a
+    sbc hl,sp
+    jp  p,.positive_dx
+    add hl,sp
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+    add hl,sp
+    sbc hl,de
+
+.negative_dx:
+    ; idk man deal with the negative
+    ex  de,hl
+    ld  hl,(_x1_proj)
+    and a,a
+    sbc hl,de
+    jp  p,.positive_x2
+    xor a,10000b      ;  make note of negative
+    add hl,de     ; negate
+    ex  de,hl
+    sbc hl,de
+    jp  .positive_x2
+
+.positive_dx:
+    ld  de,(_x1_proj)
+    and a,a
+    adc hl,de
+    jp  p,.positive_x2
+    xor a,10000b      ;  make note of negative
+    ex  de,hl
+    and a,a
+    sbc hl,hl
+    and a,a
+    sbc hl,de
+
+.positive_x2:
+
+    ; working in main register set
+    ;  hl contains dx*fy - dy*fx          ;  dx'
+    ;  hl' now contains dy*fy + dx*fx     ;  dy'
+    ;  c' contains  abs(fy)
+    ;  b contains  abs(fx)
+
+
+    ;  compare x2 & y2
+    exx
     ld  sp,hl
     exx
-    push hl           ;  ld hl to sp - 3
+    ex  de,hl
+    ld  hl,(_hit_depth)
+    add hl,sp        ;  y2 = y1+dy
+    ld  sp,hl
+    ex  de,hl
+
+    and a,a
+    sbc hl,de        ;  x2 - y2
+    jp  p,.x2_greater_than_y2
+
+    ;  reset hl to dx
+    add hl,de
+    ;  divide!
+    ;  dx/y
+
+    ; v1:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+        ; hl & de input
+        ex  af,af'
+        ld  a,0
+.fdivs_dx_y_loop:
+        srl h
+        rr  l
+        srl d
+        rr  e
+
+        cp  a,d
+        jp  nz,.fdivs_dx_y_loop
+
+        ld  d,e
+        inc d
+        mlt de
+        srl d
+        rr  e         ;  divide by 2
+        add hl,de
+        ld  bc,(iy+24);  address of LUT
+        add hl,bc
+        ld  a,(hl)    ;  use the LUT
+
+        ; 16 cc if negate   10 cc if not
+        ex  af,af'
+        bit 4,a
+        jp  z,.ret_fdivs_dx_y
+        ; negate hl
+        ex  af, af'
+            and a,a   ;  tests a for zero, also resets carry
+            jp  z,.d_fdivs_0
+        neg
+        scf
+.d_fdivs_0:
+        ex  af, af'
+
+.ret_fdivs_dx_y:
+    ex  af, af'
+    sbc hl,hl     ;  $FFFFFF
+    ld  l,a
+    ;  yay!
+    ;  hl now contains x/y
+
+    ;  hl contains screenspace x-coord [-1.0, 1.0]
+        inc h
+        srl h
+        ld  a,l
+        rra
+        ; (hl+1)/2 -> [h][a]
+        rr  h        ;  will put set carry if hl >= 1, else reset
+        sbc a,0      ;  subs 1 from 256 if carry
+        ; a now contains ndc x-coord [0,1.0)
+        ld  h,80
+        ld  l,a
+        mlt hl       ;  contains pixel group number (array index)
+        ld  l,h
+        ld  h,0
+    ;  hl now contains array index
+
+            ;  hl' still contains y!
+            ;  lets GOO
+            ld  a,(ix+13)
+            ex  de,hl
+            ld  hl,(iy+21)
+            add hl,de
+            ld  (hl),a        ;  wall type
+            ld  hl,(iy+18)
+            ld  (hl),0        ;  texture coordinate
+            ld  d,3
+            mlt de
+            ld  hl,(iy+15)
+            add hl,de
+            ex  de,hl
+            ld  hl,0
+            add hl,sp
+            ex  de,hl
+            ld  (hl),de
+
+
+
+    
 
 
 .ret_val:
@@ -1095,10 +1481,14 @@ _render_wall:
 
 .x_greater_than_y:
 ; need to clip here
+    ld  hl,42*256
     jp  .ret_val            ;temporary
 
 
-
+.x2_greater_than_y2:
+; need to clip here
+    ld  hl,42*256
+    jp  .ret_val            ;temporary
 
 
 
@@ -1117,8 +1507,9 @@ public _test_wall
 _test_wall:
     dl $00165C    ; x1
     dl $0018A3    ; y1
-    dl $000000    ; dx
-    dl $000200    ; dy
+    dl $000200    ; dx
+    dl $000100    ; dy
+    db 0011b      ; sign tester
     ; dl $000600    ; x2
     ; dl $000700    ; y2
     db "A"        ; wallType
@@ -1127,8 +1518,9 @@ public _test_wall2
 _test_wall2:
     dl $001F00    ; x1
     dl $002600    ; y1 
-    dl $000000    ; dx
-    dl $FFFE00    ; dy
+    dl $000500    ; dx
+    dl $000100    ; dy
+    db 1111b      ; sign tester
     ; dl $000600    ; x2
     ; dl $000700    ; y2
     db "A"        ; wallType

@@ -203,22 +203,22 @@ int main(void) {
         // sprintf(str, "y: %f",
         //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
         // gfx_PrintStringXY(str, 5, 25);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall2, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360)), dists, texCoords,
-                            texTypes, divTable_appvar[0]) /
-                    256.0);
+        sprintf(
+            str, "wall2: y: %f",
+            render_wall((unsigned char *)test_wall2, 6081, 11161, 212, dists, texCoords, texTypes, divTable_appvar[0]) /
+                256.0);
         gfx_PrintStringXY(str, 5, 35);
-        sprintf(str, "y: %f",
-                render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(298.6 * 256.0 / 360)), dists, texCoords,
-                            texTypes, divTable_appvar[0]) /
-                    256.0);
+        sprintf(
+            str, "wall1: y: %f",
+            render_wall((unsigned char *)test_wall, 6081, 11161, 212, dists, texCoords, texTypes, divTable_appvar[0]) /
+                256.0);
         gfx_PrintStringXY(str, 5, 45);
 
         gfx_SwapDraw();
         while (!os_GetCSC()) {
             usleep(1000);
         }
-        player.pos = ivec2(0x18A2, 0x2A3E);
+        player.pos = ivec2(6081, 11161);
         player.rot = (int)(298.6 * 256.0 / 360.0);
         do {
             gfx_ZeroScreen();
@@ -235,12 +235,14 @@ int main(void) {
             for (uint8_t a = 0; a < NUM_RAYS; ++a) {
                 dists[a] = 0;
             }
+            render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, dists, texCoords, texTypes,
+                        divTable_appvar[0]);
             render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, dists, texCoords, texTypes,
                         divTable_appvar[0]);
-            for (int a = 1; a < 80; a++) {
-                render_wall((unsigned char *)test_wall2 + (13 * a), player.pos.x, player.pos.y, player.rot, dists,
-                            texCoords, texTypes, divTable_appvar[0]);
-            }
+            // for (int a = 1; a < 80; a++) {
+            //     render_wall((unsigned char *)test_wall2 + (13 * a), player.pos.x, player.pos.y, player.rot, dists,
+            //                 texCoords, texTypes, divTable_appvar[0]);
+            // }
             // render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, dists, texCoords,
             // texTypes,
             //             divTable_appvar[0]);
@@ -249,17 +251,21 @@ int main(void) {
             for (uint8_t a = 0; a < NUM_RAYS; ++a) {
                 if (!dists[a])
                     continue;
-                int stripLen = ((1 << (SHIFT + SHIFT)) / dists[a]) * 160;
+                int stripLen = ((160 << (SHIFT)) / dists[a]);
+                int numerator = 160;
+                for (; dists[a] > 256; dists[a] >>= 1) {
+                    numerator >>= 1;
+                }
+                stripLen = divTable_appvar[0][dists[a] * (dists[a] + 1) / 2 + numerator] * 2;
 
-                if ((stripLen >> SHIFT) <= RENDER_H) {
+                if ((stripLen) <= RENDER_H) {
                     draw_strip(&(gfx_vbuffer[0][0]),
                                textures[(texTypes[a] - 65) >> 1] + (int(uint8_t(texTypes[a] - 65) & 1) << 12), a * SKIP,
-                               (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT), texCoords[a]);
+                               (RENDER_H - ((stripLen))) >> 1, (stripLen), texCoords[a]);
                 } else {
                     draw_strip_clipped(&(gfx_vbuffer[0][0]),
                                        textures[(texTypes[a] - 65) >> 1] + ((uint8_t(texTypes[a] - 65) & 1) << 12),
-                                       a * SKIP, (RENDER_H - ((stripLen) >> SHIFT)) >> 1, (stripLen >> SHIFT),
-                                       texCoords[a]);
+                                       a * SKIP, (RENDER_H - ((stripLen))) >> 1, (stripLen), texCoords[a]);
                 }
             }
             total_t = clock() - start_t;

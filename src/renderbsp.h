@@ -9,13 +9,13 @@
 extern "C" {
 #endif
 
-int fmuls(int a, int b);
-int fdivs(int a, int b, unsigned char *sLUT_ptr);
+fixed fmuls(fixed a, fixed b);
+fixed fdivs(fixed a, fixed b, unsigned char *sLUT_ptr);
 
 void root_node();
 void test_wall();
 void test_wall2();
-void render_bsp(unsigned char *root, fixed playerX, fixed playerY, fixed fX, fixed fY);
+int render_bsp(unsigned char *root, fixed playerX, fixed playerY, fixed fX, fixed fY);
 fixed render_wall(unsigned char *wall, fixed playerX, fixed playerY, fixed forward_angle, fixed *dists,
                   uint8_t *texCoords, char *wall_types, unsigned char *sLUT_ptr);
 
