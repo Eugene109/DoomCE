@@ -665,9 +665,12 @@ _x1_proj:
 public _pixel_num
 _pixel_num:
     dl $000000    ; pixel number
-public _hit_depth
-_hit_depth:
-    dl $000000    ; depth
+public _y1_proj
+_y1_proj:
+    dl $000000    ; y1
+public _wall_height
+_wall_height:
+    dl $000000    ; height
 
 public _render_wall
 _render_wall:
@@ -1060,27 +1063,44 @@ _render_wall:
     ;  hl now contains array index
 
 ; saving progress for pixel num & y1
-                                                                ld  (_pixel_num),hl
+                                                                ld  a,l
+                                                                ld  (_pixel_num),a
 
             ;  hl' still contains y!
             ;  lets GOO
-            ld  a,(ix+13)
-            ex  de,hl
-            ld  hl,(iy+21)
-            add hl,de
-            ld  (hl),a        ;  wall type
-            ld  hl,(iy+18)
-            ld  (hl),0        ;  texture coordinate
-            inc e             ;  add 3 for (push hl)
-            ld  d,3
-            mlt de
-            ld  hl,(iy+15)
-            add hl,de
-            ld  sp,hl
             exx
     
-                                                                ld  (_hit_depth),hl
-            push hl           ;  ld hl to sp - 3s
+                                                                ld  (_y1_proj),hl
+        ;  find wall height
+        ex  de,hl
+        ld  l,40
+            ; hl & de input
+            ld  a,0
+.fdivs_wall_height_loop:
+            srl l
+            srl d
+            rr  e
+
+            cp  a,d
+            jp  nz,.fdivs_wall_height_loop
+
+            ld  d,e
+            inc d
+            mlt de
+            srl d
+            rr  e         ;  divide by 2
+            add hl,de
+            ld  bc,(iy+24);  address of LUT
+            add hl,bc
+            ld  a,(hl)    ;  use the LUT
+
+    ld  hl,0
+    ld  l,a
+    ; ld  h,a               ;  shift over << 8
+    ; add hl,hl             ;  multiply by 4
+    ; adc hl,hl
+                                                                ld  (_wall_height),hl
+
 
 
 
@@ -1374,7 +1394,7 @@ _render_wall:
     ld  sp,hl
     exx
     ex  de,hl
-    ld  hl,(_hit_depth)
+    ld  hl,(_y1_proj)
     add hl,sp        ;  y2 = y1+dy
     ld  sp,hl
     ex  de,hl
@@ -1447,24 +1467,93 @@ _render_wall:
         ld  h,0
     ;  hl now contains array index
 
-            ;  hl' still contains y!
-            ;  lets GOO
-            ld  a,(ix+13)
-            ex  de,hl
-            ld  hl,(iy+21)
-            add hl,de
-            ld  (hl),a        ;  wall type
-            ld  hl,(iy+18)
-            ld  (hl),0        ;  texture coordinate
-            ld  d,3
+        ;  hl' still contains y!
+        ;  lets GOO
+        ;  find wall height
+        ld sp,hl
+        exx
+        ex  de,hl
+        ld  l,40
+            ; hl & de input
+            ld  a,0
+.fdivs_wall_height_loop_2:
+            srl l
+            srl d
+            rr  e
+
+            cp  a,d
+            jp  nz,.fdivs_wall_height_loop_2
+
+            ld  d,e
+            inc d
             mlt de
-            ld  hl,(iy+15)
+            srl d
+            rr  e         ;  divide by 2
             add hl,de
-            ex  de,hl
-            ld  hl,0
-            add hl,sp
-            ex  de,hl
-            ld  (hl),de
+            ld  bc,(iy+24);  address of LUT
+            add hl,bc
+            ld  a,(hl)    ;  use the LUT
+
+    ld  hl,0
+    ld  l,a
+    ; ld  h,a               ;  shift over << 8
+    ; add hl,hl             ;  multiply by 4
+    ; adc hl,hl
+        ; a now contains wall height #2
+    ; sp contains pixel col number
+
+
+
+; now interpolating between point 1 & point 2
+    ; pt2 - pt1
+    ld  de,(_wall_height)
+    sbc hl,de
+    ex  de,hl
+    ld  hl,0
+    add hl,sp
+    ld  de,(_pixel_num)
+    sbc hl,de
+    ex  de,hl
+
+    ; hl is change in wall height (in fixed point)s
+    ; de is horizontal pixel width
+
+
+
+; call __idivs
+  ; slight problem, i'm abusing the stack pointer for some algebra, so I can't use any stack operations like push or pop or call
+  ; stack ops are slow anyways
+  ; who needs them
+    ; __idvrmu:
+    ; I: UHL=dividend, UBC=divisor
+    ; O: ude=UHL/UBC, uhl=UHL%UBC
+
+        ex	de, hl
+
+        ld	a, 24
+
+        or	a, a
+        sbc	hl, hl
+
+    .loop_idvrmu:
+        ex	de, hl
+        add	hl, hl
+        ex	de, hl
+        adc	hl, hl
+
+        sbc	hl, bc
+        inc	e
+
+        jr	nc, .restore_skip_idvrmu
+        add	hl, bc
+        dec	e
+    .restore_skip_idvrmu:
+
+        dec	a
+        jr	nz, .loop_idvrmu
+; end of __idivs
+
+    ; end of calculations!
 
 
 
@@ -2824,3 +2913,4 @@ _test_wall2:
 
 
 extern __imuls
+extern __idivs
