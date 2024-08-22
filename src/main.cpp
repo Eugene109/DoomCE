@@ -189,9 +189,15 @@ int main(void) {
 
     // render buffers
     int dists[NUM_RAYS] = {0};
-    uint8_t heights[NUM_RAYS] = {0};
-    uint8_t texCoords[NUM_RAYS] = {0};
-    char texTypes[NUM_RAYS] = {0};
+    // uint8_t heights[NUM_RAYS] = {0};
+    // uint8_t texCoords[NUM_RAYS] = {0};
+    // char texTypes[NUM_RAYS] = {0};
+
+    uint8_t unified_buff[NUM_RAYS * 3] = {0};
+    uint8_t *heights = unified_buff + NUM_RAYS;
+    uint8_t *texCoords = unified_buff + NUM_RAYS * 2;
+    uint8_t *texTypes = unified_buff;
+
 #define TEST_WALL 1
     if (TEST_WALL) {
         gfx_SetTextFGColor(2);
@@ -206,14 +212,10 @@ int main(void) {
         //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
         // gfx_PrintStringXY(str, 5, 25);
         sprintf(str, "wall2: y: %f",
-                render_wall((unsigned char *)test_wall2, 6081, 11161, 212, heights, texCoords, texTypes,
-                            divTable_appvar[0]) /
-                    256.0);
+                render_wall((unsigned char *)test_wall2, 6081, 11161, 212, unified_buff, divTable_appvar[0]) / 256.0);
         gfx_PrintStringXY(str, 5, 35);
         sprintf(str, "wall1: y: %f",
-                render_wall((unsigned char *)test_wall, 6081, 11161, 212, heights, texCoords, texTypes,
-                            divTable_appvar[0]) /
-                    256.0);
+                render_wall((unsigned char *)test_wall, 6081, 11161, 212, unified_buff, divTable_appvar[0]) / 256.0);
         gfx_PrintStringXY(str, 5, 45);
 
         gfx_SwapDraw();
@@ -237,10 +239,10 @@ int main(void) {
             for (uint8_t a = 0; a < NUM_RAYS; ++a) {
                 heights[a] = 0;
             }
-            render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, heights, texCoords,
-                        texTypes, divTable_appvar[0]);
-            render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, heights, texCoords,
-                        texTypes, divTable_appvar[0]);
+            render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, unified_buff,
+                        divTable_appvar[0]);
+            render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, unified_buff,
+                        divTable_appvar[0]);
             // for (int a = 1; a < 80; a++) {
             //     render_wall((unsigned char *)test_wall2 + (13 * a), player.pos.x, player.pos.y, player.rot, dists,
             //                 texCoords, texTypes, divTable_appvar[0]);

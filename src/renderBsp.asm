@@ -681,10 +681,8 @@ _render_wall:
 ;    arg2: player x
 ;    arg3: player y
 ;    arg4: forward angle
-;    arg5: pointer to distances
-;    arg6: pointer to texCoords
-;    arg7: pointer to wall Types
-;    arg8: division lut address
+;    arg5: pointer to unified buffer
+;    arg6: division lut address
 ; Returns:
 ;  None
     di                  ;  disables interrupts to enable the alternate register set
@@ -1022,7 +1020,7 @@ _render_wall:
         srl d
         rr  e         ;  divide by 2
         add hl,de
-        ld  bc,(iy+24);  address of LUT
+        ld  bc,(iy+18);  address of LUT
         add hl,bc
         ld  a,(hl)    ;  use the LUT
 
@@ -1090,15 +1088,12 @@ _render_wall:
             srl d
             rr  e         ;  divide by 2
             add hl,de
-            ld  bc,(iy+24);  address of LUT
+            ld  bc,(iy+18);  address of LUT
             add hl,bc
             ld  a,(hl)    ;  use the LUT
 
     ld  hl,0
-    ld  l,a
-    ; ld  h,a               ;  shift over << 8
-    ; add hl,hl             ;  multiply by 4
-    ; adc hl,hl
+    ld  h,a               ;  shift over << 8
                                                                 ld  (_wall_height),hl
 
 
@@ -1427,7 +1422,7 @@ _render_wall:
         srl d
         rr  e         ;  divide by 2
         add hl,de
-        ld  bc,(iy+24);  address of LUT
+        ld  bc,(iy+18);  address of LUT
         add hl,bc
         ld  a,(hl)    ;  use the LUT
 
@@ -1490,37 +1485,42 @@ _render_wall:
             srl d
             rr  e         ;  divide by 2
             add hl,de
-            ld  bc,(iy+24);  address of LUT
+            ld  bc,(iy+18);  address of LUT
             add hl,bc
             ld  a,(hl)    ;  use the LUT
 
     ld  hl,0
-    ld  l,a
-    ; ld  h,a               ;  shift over << 8
-    ; add hl,hl             ;  multiply by 4
-    ; adc hl,hl
-        ; a now contains wall height #2
+    ld  h,a               ;  shift over << 8
+    ; hl now contains wall height #2
     ; sp contains pixel col number
 
 
 
 ; now interpolating between point 1 & point 2
     ; pt2 - pt1
-    ld  de,(_wall_height)
-    sbc hl,de
     ex  de,hl
     ld  hl,0
     add hl,sp
-    ld  de,(_pixel_num)
-    sbc hl,de
+    ld  sp,(_pixel_num)
+    sbc hl,sp
+                ld  a,l
+                ex  af,af'
+    ld  bc,0
+    ld  c,l
     ex  de,hl
+    ld  de,(_wall_height)
+    sbc hl,de
+    ld  a,e
+    exx
+    ld  e,a
+    exx
 
-    ; hl is change in wall height (in fixed point)s
-    ; de is horizontal pixel width
+    jp  m,.negative_delta_wall_height
 
+    ; hl is change in wall height (in fixed point)
+    ; bc is horizontal pixel width
 
-
-; call __idivs
+; call __idvrmu
   ; slight problem, i'm abusing the stack pointer for some algebra, so I can't use any stack operations like push or pop or call
   ; stack ops are slow anyways
   ; who needs them
@@ -1528,36 +1528,81 @@ _render_wall:
     ; I: UHL=dividend, UBC=divisor
     ; O: ude=UHL/UBC, uhl=UHL%UBC
 
-        ex	de, hl
+        ex  de, hl
 
-        ld	a, 24
+        ld  a, 24
 
-        or	a, a
-        sbc	hl, hl
+        or  a, a
+        sbc hl, hl
 
     .loop_idvrmu:
-        ex	de, hl
-        add	hl, hl
-        ex	de, hl
-        adc	hl, hl
+        ex  de, hl
+        add hl, hl
+        ex  de, hl
+        adc hl, hl
 
-        sbc	hl, bc
-        inc	e
+        sbc hl, bc
+        inc e
 
-        jr	nc, .restore_skip_idvrmu
-        add	hl, bc
-        dec	e
+        jr  nc, .restore_skip_idvrmu
+        add hl, bc
+        dec e
     .restore_skip_idvrmu:
 
-        dec	a
-        jr	nz, .loop_idvrmu
-; end of __idivs
+        dec a
+        jr  nz, .loop_idvrmu
+; end of __idvrmu
 
     ; end of calculations!
+        ; a' contains the number of loops to do
+        ; sp contains the starting pixel
+        ; e' contains the starting wall height
+        ; d  contains the integer component of the change in wall height
+        ; e  contains the fractional
 
 
+; setting up writing loop
 
+    ; hl  
+    ; d   contains the integer component of the change in wall height
+    ; e   contains the integer component of the change in texcoord
+    ; b   contains the wall type
+    ; c   contains the counter for the loop
+    ; a   contains the integer component of the wall height
+
+    ; ix  contains wall height write address, texture coordinate write address is 80 higher, wall type adress is 80 lower
+            ; ld (ix),r
+            ; ld (ix+80),r
+            ; ld (ix-80),r
+
+    ; hl' contains whatever
+    ; de' contains the fractional component of the change in wall height
+    ; bc' contains the fractional component of the change in texcoord
+    ; a'  contains the integer component of the texture coordinate
+    ex  af,af'
+    ld  c,a             ;  number of loops
+    ld  a,e
+    exx
+    ld  d,a             ;  fractional component of the change in wall height
+    ld  a,e             ;  starting integer component of wall height
+    ld  h,0
+    exx
     
+    ld  b,(ix+13)       ;  wall type
+
+    ld  ix,(iy+15)
+    lea ix,ix+80        ;  unified buffer
+    add ix,sp           ;  starting pixel number
+
+.output_loop:
+
+
+    dec c
+    jp  nz,.output_loop
+
+
+
+
 
 
 .ret_val:
@@ -1566,6 +1611,54 @@ _render_wall:
     pop ix
     ei
     ret
+
+.negative_delta_wall_height:
+; negate hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp
+    ; hl is change in wall height (in fixed point)
+    ; de is horizontal pixel width
+    ex  de,hl
+    ld  sp,hl
+    ex  de,hl
+
+; call __idvrmu
+  ; slight problem, i'm abusing the stack pointer for some algebra, so I can't use any stack operations like push or pop or call
+  ; stack ops are slow anyways
+  ; who needs them
+    ; __idvrmu:
+    ; I: UHL=dividend, UBC=divisor
+    ; O: ude=UHL/UBC, uhl=UHL%UBC
+
+        ex  de, hl
+
+        ld  a, 24
+
+        or  a, a
+        sbc hl, hl
+
+    .loop_idvrmu_neg:
+        ex  de, hl
+        add hl, hl
+        ex  de, hl
+        adc hl, hl
+
+        sbc hl, bc
+        inc e
+
+        jr  nc, .restore_skip_idvrmu_neg
+        add hl, bc
+        dec e
+    .restore_skip_idvrmu_neg:
+
+        dec a
+        jr  nz, .loop_idvrmu_neg
+; end of __idvrmu
+
+    ; end of calculations!
+
 
 
 .x_greater_than_y:

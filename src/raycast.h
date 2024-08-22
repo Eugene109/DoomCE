@@ -16,7 +16,7 @@ struct HitInfo {
 };
 
 void raycast_asm(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-                 char *texType, void *x_walls_ptr, int flipTexCoord);
+                 uint8_t *texType, void *x_walls_ptr, int flipTexCoord);
 
 void x_walls_q1();
 void y_walls_q1();
@@ -42,7 +42,7 @@ void set_door_state(char name, int state);
 const int MAP_SIZE = 16;
 
 void raycast(fixed playerX, fixed playerY, fixed rayX, fixed rayY, int *distX, int *distY, uint8_t *texCoord,
-             char *texType) {
+             uint8_t *texType) {
     if (rayY > 0) {
         if (rayX > 0) {
             if (rayX > rayY) {

@@ -16,8 +16,8 @@ void root_node();
 void test_wall();
 void test_wall2();
 int render_bsp(unsigned char *root, fixed playerX, fixed playerY, fixed fX, fixed fY);
-fixed render_wall(unsigned char *wall, fixed playerX, fixed playerY, fixed forward_angle, uint8_t *heights,
-                  uint8_t *texCoords, char *wall_types, unsigned char *sLUT_ptr);
+fixed render_wall(unsigned char *wall, fixed playerX, fixed playerY, fixed forward_angle, uint8_t *unified_buff,
+                  unsigned char *sLUT_ptr);
 
 #ifdef __cplusplus
 };
