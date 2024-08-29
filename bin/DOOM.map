@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A967 D1A967             0h
 .init            D1A967 D1A99D            36h
 .fini            D1A99D D1A9D1            34h
-.text            D1A9D1 D1FF13          5542h
-.data            D1FF13 D20B4E           C3Bh
-.rodata          D20B4E D210C8           57Ah
+.text            D1A9D1 D1FF61          5590h
+.data            D1FF61 D20B9C           C3Bh
+.rodata          D20B9C D21116           57Ah
 .init_array      000000 000009             9h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -92,12 +92,12 @@ _free                                                                           
 _malloc                                                                                          = D1B003
 __alloc_base                                                                                     = D052C6
 _npf_vpprintf                                                                                    = D1B0A2
-JTI0_0                                                                                           = D20B4E
-JTI0_1                                                                                           = D20B6C
-JTI0_2                                                                                           = D20BB1
-JTI0_3                                                                                           = D20BD2
-JTI0_4                                                                                           = D20BEA
-JTI0_5                                                                                           = D20C02
+JTI0_0                                                                                           = D20B9C
+JTI0_1                                                                                           = D20BBA
+JTI0_2                                                                                           = D20BFF
+JTI0_3                                                                                           = D20C20
+JTI0_4                                                                                           = D20C38
+JTI0_5                                                                                           = D20C50
 _npf_utoa_rev                                                                                    = D1C80C
 __printf_c                                                                                       = D1C8D4
 __vsnprintf_c                                                                                    = D1C8F3
@@ -108,9 +108,9 @@ __vsprintf_c                                                                    
 __vprintf_c                                                                                      = D1C9EC
 _npf_putc_std                                                                                    = D1CA0C
 __sprintf_c                                                                                      = D1CA1C
-_.str                                                                                            = D20C1A
-_.str.1                                                                                          = D20C1E
-_.str.2                                                                                          = D20C22
+_.str                                                                                            = D20C68
+_.str.1                                                                                          = D20C6C
+_.str.2                                                                                          = D20C70
 _clock                                                                                           = D1CA45
 _memcpy                                                                                          = 0000A4
 _outchar                                                                                         = D1CA50
@@ -118,7 +118,7 @@ _sprintf                                                                        
 _vprintf                                                                                         = D1C9EC
 _vsnprintf                                                                                       = D1C8F3
 _sbrk                                                                                            = D1CA66
-__sbrkbase                                                                                       = D1FF13
+__sbrkbase                                                                                       = D1FF61
 __Znwj                                                                                           = D1CA84
 __ZdlPv                                                                                          = D1CAC5
 __Znaj                                                                                           = D1CAD5
@@ -130,12 +130,12 @@ __ZNK10__cxxabiv117__class_type_info21__search_above_targetEPNS_19__dynamic_cast
 __ZNK10__cxxabiv117__class_type_info21__search_below_targetEPNS_19__dynamic_cast_infoEPKvb       = D1CBAD
 __ZNK10__cxxabiv120__si_class_type_info21__search_above_targetEPNS_19__dynamic_cast_infoEPKvS4_b = D1CC80
 __ZNK10__cxxabiv120__si_class_type_info21__search_below_targetEPNS_19__dynamic_cast_infoEPKvb    = D1CCDE
-__ZTVN10__cxxabiv117__class_type_infoE                                                           = D20C26
-__ZTVN10__cxxabiv120__si_class_type_infoE                                                        = D20C38
-.missingappvar                                                                                   = D20C4A
-.libloadname                                                                                     = D20C4F
+__ZTVN10__cxxabiv117__class_type_infoE                                                           = D20C74
+__ZTVN10__cxxabiv120__si_class_type_infoE                                                        = D20C86
+.missingappvar                                                                                   = D20C98
+.libloadname                                                                                     = D20C9D
 .libloadnamelen                                                                                  = 000007
-.webaddress                                                                                      = D20C57
+.webaddress                                                                                      = D20CA5
 ___init_clock                                                                                    = D1A94C
 __start                                                                                          = D1A967
 ___exithl                                                                                        = D1A99D
@@ -165,45 +165,45 @@ __ZN5Enemy12InitTexturesEv                                                      
 __ZN6Player6UpdateEv                                                                             = D1DF08
 __ZN6vectorIP5EnemyE9push_backERKS1_                                                             = D1E025
 __ZN6vectorIP5EnemyE7reserveEj                                                                   = D1E083
-_.str                                                                                            = D20C6C
-_.str.2                                                                                          = D20C75
-_.str.4                                                                                          = D20C7E
-_.str.6                                                                                          = D20C87
-_.str.1.7                                                                                        = D20C90
-_inv_sqrt_lut_lsb                                                                                = D1FF16
-_inv_sqrt_lut                                                                                    = D20216
+_.str                                                                                            = D20CBA
+_.str.2                                                                                          = D20CC3
+_.str.4                                                                                          = D20CCC
+_.str.6                                                                                          = D20CD5
+_.str.1.7                                                                                        = D20CDE
+_inv_sqrt_lut_lsb                                                                                = D1FF64
+_inv_sqrt_lut                                                                                    = D20264
 __ZN5Thing21all_things_everywhereE                                                               = D052CF
 __ZGVN5Thing21all_things_everywhereE                                                             = D052D8
 _zombieman_walk                                                                                  = D052E0
 _zombieman_death                                                                                 = D05340
-_EnemyPt1_appvar                                                                                 = D20516
-_EnemyPt2_appvar                                                                                 = D2053A
+_EnemyPt1_appvar                                                                                 = D20564
+_EnemyPt2_appvar                                                                                 = D20588
 __ZN5Enemy7enemiesE                                                                              = D0534F
 __ZGVN5Enemy7enemiesE                                                                            = D05358
 __ZN5Enemy5shotsE                                                                                = D05360
 __ZGVN5Enemy5shotsE                                                                              = D05369
-_global_palette                                                                                  = D20561
-_.str.8                                                                                          = D20C92
-_.str.3                                                                                          = D20CB9
-_.str.4.9                                                                                        = D20CD3
-_.str.5                                                                                          = D20CFD
-_.str.6.10                                                                                       = D20D1B
-_.str.7                                                                                          = D20D35
-_textures_appvar                                                                                 = D20761
-_.str.8.11                                                                                       = D20D4E
+_global_palette                                                                                  = D205AF
+_.str.8                                                                                          = D20CE0
+_.str.3                                                                                          = D20D07
+_.str.4.9                                                                                        = D20D21
+_.str.5                                                                                          = D20D4B
+_.str.6.10                                                                                       = D20D69
+_.str.7                                                                                          = D20D83
+_textures_appvar                                                                                 = D207AF
+_.str.8.11                                                                                       = D20D9C
 _divTable_appvar                                                                                 = D05371
-_.str.9                                                                                          = D20D5B
-_.str.10                                                                                         = D20D68
-_.str.11                                                                                         = D20D75
-_.str.12                                                                                         = D20D82
-_cosTable                                                                                        = D20D99
-__ZTV5Enemy                                                                                      = D21099
+_.str.9                                                                                          = D20DA9
+_.str.10                                                                                         = D20DB6
+_.str.11                                                                                         = D20DC3
+_.str.12                                                                                         = D20DD0
+_cosTable                                                                                        = D20DE7
+__ZTV5Enemy                                                                                      = D210E7
 __ZN5Enemy9shotFiredE                                                                            = D05374
-__ZTS5Enemy                                                                                      = D210A2
-__ZTS5Thing                                                                                      = D210A9
-__ZTI5Thing                                                                                      = D210B0
-__ZTI5Enemy                                                                                      = D210B6
-__ZTV5Thing                                                                                      = D210BF
+__ZTS5Enemy                                                                                      = D210F0
+__ZTS5Thing                                                                                      = D210F7
+__ZTI5Thing                                                                                      = D210FE
+__ZTI5Enemy                                                                                      = D21104
+__ZTV5Thing                                                                                      = D2110D
 _64_divis_lut                                                                                    = D1E0FC
 _draw_strip                                                                                      = D1E36C
 _draw_strip_transparent                                                                          = D1E3D7
@@ -216,15 +216,15 @@ dx                                                                              
 dy                                                                                               = 00000A
 c1                                                                                               = 000013
 c2                                                                                               = 000016
-_cos_table_255_256                                                                               = D2076A
-_root_node                                                                                       = D20A6A
+_cos_table_255_256                                                                               = D207B8
+_root_node                                                                                       = D20AB8
 _x1_proj                                                                                         = D1F313
 _pixel_num                                                                                       = D1F316
 _y1_proj                                                                                         = D1F319
 _wall_height                                                                                     = D1F31C
 _render_wall                                                                                     = D1F31F
-_test_wall                                                                                       = D1F6D7
-_test_wall2                                                                                      = D1F6E5
+_test_wall                                                                                       = D1F725
+_test_wall2                                                                                      = D1F733
 lib.LibLoad                                                                                      = D1A8F3
 _#ti_Open                                                                                        = D1A907
 _#ti_Close                                                                                       = D1A90B

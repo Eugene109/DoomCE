@@ -1071,7 +1071,7 @@ _render_wall:
                                                                 ld  (_y1_proj),hl
         ;  find wall height
         ex  de,hl
-        ld  l,40
+        ld  l,160
             ; hl & de input
             ld  a,0
 .fdivs_wall_height_loop:
@@ -1468,7 +1468,7 @@ _render_wall:
         ld sp,hl
         exx
         ex  de,hl
-        ld  l,40
+        ld  l,160
             ; hl & de input
             ld  a,0
 .fdivs_wall_height_loop_2:
@@ -1509,11 +1509,12 @@ _render_wall:
     ld  c,l
     ex  de,hl
     ld  de,(_wall_height)
-    sbc hl,de
-    ld  a,e
+
+    ld  a,d
     exx
     ld  e,a
     exx
+    sbc hl,de
 
     jp  m,.negative_delta_wall_height
 
@@ -1566,8 +1567,8 @@ _render_wall:
     ; hl  
     ; d   contains the integer component of the change in wall height
     ; e   contains the integer component of the change in texcoord
-    ; b   contains the wall type
-    ; c   contains the counter for the loop
+    ; b   contains the counter for the loop
+    ; c   contains the wall type
     ; a   contains the integer component of the wall height
 
     ; ix  contains wall height write address, texture coordinate write address is 80 higher, wall type adress is 80 lower
@@ -1580,28 +1581,39 @@ _render_wall:
     ; bc' contains the fractional component of the change in texcoord
     ; a'  contains the integer component of the texture coordinate
     ex  af,af'
-    ld  c,a             ;  number of loops
+    ld  b,a             ;  number of loops
     ld  a,e
     exx
     ld  d,a             ;  fractional component of the change in wall height
     ld  a,e             ;  starting integer component of wall height
-    ld  h,0
+    ld  e,0
+    ld  l,0
     exx
     
-    ld  b,(ix+13)       ;  wall type
+    ld  c,(ix+13)       ;  wall type
 
     ld  ix,(iy+15)
-    lea ix,ix+80        ;  unified buffer
+    lea ix,ix        ;  unified buffer
     add ix,sp           ;  starting pixel number
 
 .output_loop:
 
+    ld  (ix+80),a          ;  wall height
+    ld  (ix),c
+    exx
+    ld    h,e           ;  reloading saved fractional comp
+    ld    e,0
+    and a,a             ;  reset carry
+    adc.s hl,de         ;  adding h + d, fractional comp of wall height
+    ld    e,h           ;  save
+    exx
+    adc a,d             ;  add with carry, counting for carry from frac
 
-    dec c
-    jp  nz,.output_loop
+    inc ix
+    djnz .output_loop   ;  decrements b
 
 
-
+    ld  hl,6969*256
 
 
 
@@ -1614,15 +1626,11 @@ _render_wall:
 
 .negative_delta_wall_height:
 ; negate hl
-    ld  sp,hl
-    and a,a
-    sbc hl,hl
-    sbc hl,sp
-    ; hl is change in wall height (in fixed point)
-    ; de is horizontal pixel width
+    add hl,de
     ex  de,hl
-    ld  sp,hl
-    ex  de,hl
+    sbc hl,de
+
+    ; jp .ret_val
 
 ; call __idvrmu
   ; slight problem, i'm abusing the stack pointer for some algebra, so I can't use any stack operations like push or pop or call
@@ -1658,6 +1666,42 @@ _render_wall:
 ; end of __idvrmu
 
     ; end of calculations!
+; writing out
+    ex  af,af'
+    ld  b,a             ;  number of loops
+    ld  a,e
+    exx
+    ld  d,a             ;  fractional component of the change in wall height
+    ld  a,e             ;  starting integer component of wall height
+    ld  e,0
+    ld  l,0
+    exx
+    
+    ld  c,(ix+13)       ;  wall type
+
+    ld  ix,(iy+15)
+    lea ix,ix        ;  unified buffer
+    add ix,sp           ;  starting pixel number
+
+.output_loop_neg:
+
+    ld  (ix+80),a          ;  wall height
+    ld  (ix),c
+    exx
+    ld    h,e           ;  reloading saved fractional comp
+    ld    e,0
+    and a,a             ;  reset carry
+    adc.s hl,de         ;  adding h + d, fractional comp of wall height
+    ld    e,h           ;  save
+    exx
+    sbc a,d             ;  sub with carry, counting for carry from frac
+
+    inc ix
+    djnz .output_loop_neg   ;  decrements b
+
+
+    ld  hl,420*256
+    jp  .ret_val
 
 
 
@@ -1669,7 +1713,7 @@ _render_wall:
 
 .x2_greater_than_y2:
 ; need to clip here
-    ld  hl,42*256
+    ld  hl,6969*256
     jp  .ret_val            ;temporary
 
 

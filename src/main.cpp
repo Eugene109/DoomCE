@@ -253,24 +253,26 @@ int main(void) {
             // render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, (int)(298.6 * 256.0 / 360.0), dists, texCoords,
             //             texTypes, divTable_appvar[0]);
             for (uint8_t a = 0; a < NUM_RAYS; ++a) {
+                // dbg_printf("%d ", heights[a]);
                 if (!heights[a])
                     continue;
+                int stripLen = heights[a];
+
                 // int stripLen = ((160 << (SHIFT)) / dists[a]);
                 // int numerator = 40;
                 // for (; dists[a] >= 256; dists[a] >>= 1) {
                 //     numerator >>= 1;
                 // }
                 // stripLen = divTable_appvar[0][dists[a] * (dists[a] + 1) / 2 + numerator] * 4;
-                // dbg_printf("%d : %d\n", dists[a], stripLen);
 
-                if ((heights[a]) <= RENDER_H) {
+                if (stripLen <= RENDER_H) {
                     draw_strip(&(gfx_vbuffer[0][0]),
                                textures[(texTypes[a] - 65) >> 1] + (int(uint8_t(texTypes[a] - 65) & 1) << 12), a * SKIP,
-                               (RENDER_H - ((heights[a]))) >> 1, (heights[a]), texCoords[a]);
+                               (RENDER_H - (stripLen)) >> 1, stripLen, texCoords[a]);
                 } else {
                     draw_strip_clipped(&(gfx_vbuffer[0][0]),
                                        textures[(texTypes[a] - 65) >> 1] + ((uint8_t(texTypes[a] - 65) & 1) << 12),
-                                       a * SKIP, (RENDER_H - ((heights[a]))) >> 1, (heights[a]), texCoords[a]);
+                                       a * SKIP, (RENDER_H - (stripLen)) >> 1, stripLen, texCoords[a]);
                 }
             }
             total_t = clock() - start_t;
