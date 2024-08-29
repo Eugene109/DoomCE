@@ -1467,8 +1467,10 @@ _render_wall:
         ;  find wall height
         ld sp,hl
         exx
+        ld  bc,(_y1_proj)
+        add hl,bc
         ex  de,hl
-        ld  l,160
+        ld  hl,160
             ; hl & de input
             ld  a,0
 .fdivs_wall_height_loop_2:
@@ -1613,7 +1615,8 @@ _render_wall:
     djnz .output_loop   ;  decrements b
 
 
-    ld  hl,6969*256
+    ld  hl,0
+    ld  h,a
 
 
 
