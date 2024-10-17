@@ -75,10 +75,10 @@ class Player {
 
         // rotation
         if (kb_Data[7] & kb_Right) {
-            rot -= 8;
+            rot -= 4;
         }
         if (kb_Data[7] & kb_Left) {
-            rot += 8;
+            rot += 4;
         }
     }
 

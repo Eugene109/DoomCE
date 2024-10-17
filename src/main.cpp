@@ -185,7 +185,7 @@ int main(void) {
         gfx_End();
         return -1;
     }
-    const uint8_t *textures[3] = {&(brick_wall->data[0]), &(portrait->data[0]), &(door_gray->data[0])};
+    const uint8_t *textures[3] = {&(rusty_wall->data[0]), &(portrait->data[0]), &(door_gray->data[0])};
 
     // render buffers
     int dists[NUM_RAYS] = {0};
@@ -202,6 +202,27 @@ int main(void) {
     if (TEST_WALL) {
         gfx_SetTextFGColor(2);
         char str[100];
+
+        // render_bsp((unsigned char *)root_node, 4.5 * 256, 3.0 * 256, 212, unified_buff, divTable_appvar[0]);
+        // sprintf(str, "test: %f",
+        //         render_bsp((unsigned char *)root_node, 4.5 * 256, 3.0 * 256, 212, unified_buff, divTable_appvar[0]) /
+        //             256.0);
+        // gfx_PrintStringXY(str, 5, 35);
+
+        // sprintf(str, "(1, 4.5): %f",
+        //         render_bsp((unsigned char *)root_node, 1.5 * 256, 6.0 * 256, 212, unified_buff, divTable_appvar[0]) /
+        //             256.0);
+        // gfx_PrintStringXY(str, 5, 55);
+        // sprintf(str, "(5, 2): %f",
+        //         render_bsp((unsigned char *)root_node, 5 * 256, 2.0 * 256, 212, unified_buff, divTable_appvar[0]) /
+        //             256.0);
+        // gfx_PrintStringXY(str, 5, 70);
+
+        // gfx_SwapDraw();
+        // while (!os_GetCSC()) {
+        //     usleep(1000);
+        // }
+
         // sprintf(str, "72.9deg y: %f",
         //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(72.9 * 256.0 / 360))) / 256.0);
         // gfx_PrintStringXY(str, 5, 5);
@@ -211,19 +232,23 @@ int main(void) {
         // sprintf(str, "y: %f",
         //         render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, ((int)(205.29 * 256.0 / 360))) / 256.0);
         // gfx_PrintStringXY(str, 5, 25);
-        sprintf(str, "wall2: y: %f",
-                render_wall((unsigned char *)test_wall2, 6081, 11161, 212, unified_buff, divTable_appvar[0]) / 256.0);
-        gfx_PrintStringXY(str, 5, 35);
-        sprintf(str, "wall1: y: %f",
-                render_wall((unsigned char *)test_wall, 6081, 11161, 212, unified_buff, divTable_appvar[0]) / 256.0);
-        gfx_PrintStringXY(str, 5, 45);
+        // {
+        //     sprintf(str, "wall2: y: %f",
+        //             render_wall((unsigned char *)test_wall2, 6081, 11161, 212, unified_buff, divTable_appvar[0]) /
+        //                 256.0);
+        //     gfx_PrintStringXY(str, 5, 35);
+        //     sprintf(str, "wall1: y: %f",
+        //             render_wall((unsigned char *)test_wall, 6081, 11161, 212, unified_buff, divTable_appvar[0]) /
+        //                 256.0);
+        //     gfx_PrintStringXY(str, 5, 45);
 
-        gfx_SwapDraw();
-        while (!os_GetCSC()) {
-            usleep(1000);
-        }
-        player.pos = ivec2(6081, 11161);
-        player.rot = (int)(298.6 * 256.0 / 360.0);
+        //     gfx_SwapDraw();
+        //     while (!os_GetCSC()) {
+        //         usleep(1000);
+        //     }
+        // }
+        player.pos = ivec2(0.5 * 256, 4.4 * 256);
+        player.rot = (int)(-10 * 256.0 / 360.0);
         do {
             gfx_ZeroScreen();
             start_t = clock();
@@ -236,21 +261,23 @@ int main(void) {
             sprintf(str, "pos: (%d,%d)", player.pos.x, player.pos.y);
             gfx_PrintStringXY(str, 5, 60);
 
-            for (uint8_t a = 0; a < NUM_RAYS; ++a) {
-                heights[a] = 0;
-            }
-            render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, unified_buff,
-                        divTable_appvar[0]);
-            render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, unified_buff,
-                        divTable_appvar[0]);
-            // for (int a = 1; a < 80; a++) {
-            //     render_wall((unsigned char *)test_wall2 + (13 * a), player.pos.x, player.pos.y, player.rot, dists,
-            //                 texCoords, texTypes, divTable_appvar[0]);
+            memset(heights - NUM_RAYS, 0, NUM_RAYS * 2);
+            // render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, unified_buff,
+            //             divTable_appvar[0]);
+            // render_wall((unsigned char *)test_wall2, player.pos.x, player.pos.y, player.rot, unified_buff,
+            //             divTable_appvar[0]);
+            // for (int a = 1; a < 5; a++) {
+            //     render_wall((unsigned char *)test_wall + a * 14 + 14 + 14, player.pos.x, player.pos.y, player.rot,
+            //                 unified_buff, divTable_appvar[0]);
             // }
+            render_bsp((unsigned char *)root_node, player.pos.x, player.pos.y, player.rot, unified_buff,
+                       divTable_appvar[0]);
+
             // render_wall((unsigned char *)test_wall, player.pos.x, player.pos.y, player.rot, dists,   1texCoords,
             // texTypes,
             //             divTable_appvar[0]);
-            // render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, (int)(298.6 * 256.0 / 360.0), dists, texCoords,
+            // render_wall((unsigned char *)test_wall, 0x18A2, 0x2A3E, (int)(298.6 * 256.0 / 360.0), dists,
+            // texCoords,
             //             texTypes, divTable_appvar[0]);
             for (uint8_t a = 0; a < NUM_RAYS; ++a) {
                 // dbg_printf("%d ", heights[a]);
@@ -264,6 +291,28 @@ int main(void) {
                 //     numerator >>= 1;
                 // }
                 // stripLen = divTable_appvar[0][dists[a] * (dists[a] + 1) / 2 + numerator] * 4;
+
+                if (texTypes[a] != 'A') {
+                    gfx_ZeroScreen();
+                    sprintf(str, "texType: %d", texTypes[a]);
+                    gfx_PrintStringXY(str, 5, 5);
+                    sprintf(str, "height: %d", heights[a]);
+                    gfx_PrintStringXY(str, 5, 15);
+                    sprintf(str, "texCoord: %d", texCoords[a]);
+                    gfx_PrintStringXY(str, 5, 25);
+                    sprintf(str, "a: %d", a);
+                    gfx_PrintStringXY(str, 5, 35);
+                    sprintf(str, "texType+1: %d", texTypes[NUM_RAYS - 1]);
+                    gfx_PrintStringXY(str, 5, 45);
+                    sprintf(str, "height+1: %d", heights[NUM_RAYS - 1]);
+                    gfx_PrintStringXY(str, 5, 55);
+                    sprintf(str, "texType+1: %d", texTypes[NUM_RAYS - 1]);
+                    gfx_PrintStringXY(str, 5, 65);
+                    gfx_SwapDraw();
+                    while (os_GetCSC() != sk_Enter) {
+                        usleep(1000);
+                    }
+                }
 
                 if (stripLen <= RENDER_H) {
                     draw_strip(&(gfx_vbuffer[0][0]),

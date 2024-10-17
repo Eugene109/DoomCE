@@ -11,6 +11,7 @@ palettes:
       - numbers_small_selected.png
       - numbers_big.png
       - textures/brick_wall.png
+      - textures/rusty_wall.png
       - textures/portrait.png
       - textures/door_gray.png
       - HUD.png
@@ -69,6 +70,7 @@ converts:
     rotate: 270
     images:
       - textures/brick_wall.png
+      - textures/rusty_wall.png
       - textures/portrait.png
       - textures/door_gray.png
 

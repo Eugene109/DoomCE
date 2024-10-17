@@ -1,0 +1,298 @@
+
+
+
+public _fdivs
+_fdivs:
+    ld  iy,0
+    add iy,sp
+    ld  hl,(iy+3)
+    ld  de,(iy+6)
+
+
+; v1:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+    ; hl & de input
+    bit 7,h
+    ld  a,0
+    jp  z,.pos_m1
+    ; negate hl
+    ld  sp,hl
+    sbc hl,hl     ;  (add iy,sp) reset carry bit
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m1:
+    bit 7,d
+    jp  z,.pos_m2
+    ; negate de
+    ex  de,hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m2:
+    ex  af,af'
+
+    ld  a,0
+.fdivs_loop:
+    srl h
+    rr  l
+    srl d
+    rr  e
+
+    cp  a,d
+    jp  nz,.fdivs_loop
+
+    ld  d,e
+    inc d
+    mlt de
+    srl d
+    rr  e         ;  divide by 2
+    add hl,de
+    ld  bc,(iy+9) ;  address of LUT
+    add hl,bc
+    ld  a,(hl)    ;  use the LUT
+
+    ; 16 cc if negate   10 cc if not
+    ex  af,af'
+    bit 0,a
+    jp  z,.ret_fdivs
+    ; negate hl
+    ex  af, af'
+    scf
+    sbc hl,hl     ;  $FFFFFF
+    neg
+    ld  l,a
+                                                    ld sp,iy
+    ret
+
+.ret_fdivs:
+    ex  af, af'
+    and a,a
+    sbc hl,hl
+    ld  l,a
+                                                    ld sp,iy
+    ret
+; v1 end
+
+
+public _fmuls
+_fmuls:
+    ld  iy,0
+    add iy,sp
+    ld  hl,(iy+3)
+    ld  de,(iy+6)
+
+
+; v5:   ++: 75cc, -+: 87cc, +- : 89cc, --: 89cc
+    ; hl & de input
+    bit 7,h
+    ld  a,0
+    jp  z,.pos_m1
+    ; negate hl
+    ld  sp,hl
+    sbc hl,hl     ;  (add iy,sp) reset carry bit
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m1:
+    bit 7,d
+    jp  z,.pos_m2
+    ; negate de
+    ex  de,hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+    inc a
+.pos_m2:
+    ex  af,af'
+
+    ld  b,l
+    ld  c,e
+    mlt bc        ;  bc = e*l
+    ld  a,b       ;  a = e*l >> 8, only taking 1st byte
+
+    ld  b,d
+    ld  c,l       ;  bc = d l
+    ld  d,h       ;  de = h e
+    ld  l,b ; b=d ;  hl = h d
+    mlt hl        ;  hl = h*d
+    mlt de        ;  de = h*e
+    mlt bc        ;  bc = d*l
+    add a,c
+    ld  c,a       ;  adding msb of e*l>>8 to bc, which goes to hl
+    ld  a,0
+    adc a,l
+    ld  l,a       ;  adding carry bit from before, and hoping it doesn't overflow
+            ld  a,0
+            adc a,h
+            ld  h,a       ;  This part would fix the hoping bit for 3 cc
+
+    add hl,hl     ;  hl << 8
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+
+    add hl,bc
+    add hl,de     ;  hl = h*d<<8 + h*e + d*l + l*e>>8
+
+    ; 16 cc if negate   10 cc if not
+    ex  af,af'
+    bit 0,a
+    jp  z,.ret_fmuls
+    ; negate hl
+    ld  sp,hl
+    and a,a
+    sbc hl,hl
+    sbc hl,sp     ;  should not have had to borrow
+
+.ret_fmuls:
+                                                    ld sp,iy
+    ret
+; v5 end
+
+
+; ------------------ idk
+    ; hl contains screenspace x-coord [-1.0, 1.0]
+    inc h
+    srl h
+    ld  a,l
+    rra
+    ; (hl+1)/2 -> [h][a]
+    rr  h        ;  will put set carry if hl >= 1, else reset
+    sbc a,0      ;  subs 1 from 256 if carry
+    ; a now contains ndc x-coord [0,1.0)
+    ld  h,80
+    ld  l,a
+    mlt hl       ;  contains pixel group number
+            ;  alternative to find exact pixel x-coord
+            ; ld  h,240
+            ; ld  l,a
+            ; mlt hl       ;  contains pixel line number
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; -----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; v4: 46cc     (accounts for l*c>>16)
+    ; hl & bc input
+    ld  d,l
+    ld  e,c
+    mlt de
+    ld  a,d
+
+    ld  d,b
+    ld  e,l       ;  de = b l
+    ld  b,h       ;  bc = h c
+    ld  l,d ; d=b ;  hl = h b
+    mlt hl        ;  hl = h*b
+    mlt bc        ;  bc = h*c
+    mlt de        ;  de = b*l
+    add a,e
+    ld  e,a       ;  adding msb of e*l>>8 to de, which goes to hl
+    ld  a,0
+    adc a,l
+    ld  l,a       ;  adding carry bit from before, and hoping it doesn't overflow
+            ; ld  a,0
+            ; adc a,h
+            ; ld  h,a       ;  This part would fix the hoping bit for 3 ccs
+
+    add hl,hl     ;  hl << 8
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+
+    add hl,bc
+    add hl,de     ;  hl = d*b<<8 + b*c + d*e
+
+    ret
+; v4 end
+
+
+; v3: 32cc     (does not account for l*c>>16, max error <= 255ish)
+    ; hl & bc input
+    ld  d,b
+    ld  e,l       ;  de = b l
+    ld  b,h       ;  bc = h c
+    ld  l,d ; d=b ;  hl = h b
+    mlt hl        ;  hl = h*b
+    add hl,hl     ;  hl << 8
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    mlt bc        ;  bc = h*c
+    mlt de        ;  de = b*l
+    add hl,bc
+    add hl,de     ;  hl = d*b<<8 + b*c + d*e
+    
+    ret
+; v3 end
+
+
+
+; v6: 32cc     (does not account for l*c>>16, max error <= 255ish)
+    ; hl & bc input
+    ld  d,b
+    ld  e,l       ;  de = b l
+    ld  b,h       ;  bc = h c
+    ld  l,d ; d=b ;  hl = h b
+    mlt hl        ;  hl = h*b
+    add hl,hl     ;  hl << 8
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    add hl,hl
+    mlt bc        ;  bc = h*c
+    mlt de        ;  de = b*l
+    add hl,bc
+    add hl,de     ;  hl = d*b<<8 + b*c + d*e
+    
+    ret
+; v6 end
+
+
+
+
+

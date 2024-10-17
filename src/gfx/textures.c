@@ -3,11 +3,12 @@
 
 #define textures_HEADER_SIZE 0
 
-unsigned char *textures_appvar[3] =
+unsigned char *textures_appvar[4] =
 {
     (unsigned char*)0,
     (unsigned char*)8194,
     (unsigned char*)16388,
+    (unsigned char*)24582,
 };
 
 unsigned char textures_init(void)
@@ -22,7 +23,7 @@ unsigned char textures_init(void)
     }
 
     data = (unsigned int)ti_GetDataPtr(appvar) - (unsigned int)textures_appvar[0] + textures_HEADER_SIZE;
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 4; i++)
     {
         textures_appvar[i] += data;
     }
